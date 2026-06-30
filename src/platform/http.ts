@@ -13,8 +13,59 @@ import type {
   SkillCheckResult,
 } from './types';
 
-// Defaults to the relative `/api` (proxied to the server in dev, same-origin in prod).
-const API_BASE = import.meta.env.VITE_API_BASE ?? '/api';
+// API base resolution, in priority order:
+//   1. ?api=<url> query param (persisted to localStorage) — handy in the OBR popover URL
+//   2. localStorage (set once via the Entry screen's connection field)
+//   3. VITE_API_BASE build-time env
+//   4. relative `/api` (dev proxy / same-origin)
+// A pasted root URL (e.g. a Cloudflare Tunnel URL) gets `/api` appended automatically.
+const API_BASE_KEY = 'sm_api_base';
+
+function normalizeBase(value: string): string {
+  const b = value.trim().replace(/\/+$/, '');
+  if (!b) return '/api';
+  if (/^https?:\/\//i.test(b)) return b.endsWith('/api') ? b : `${b}/api`;
+  return b;
+}
+
+function resolveApiBase(): string {
+  if (typeof window !== 'undefined') {
+    try {
+      const fromQuery = new URLSearchParams(window.location.search).get('api');
+      if (fromQuery) {
+        const normalized = normalizeBase(fromQuery);
+        window.localStorage.setItem(API_BASE_KEY, normalized);
+        return normalized;
+      }
+      const stored = window.localStorage.getItem(API_BASE_KEY);
+      if (stored) return normalizeBase(stored);
+    } catch {
+      /* storage blocked (e.g. partitioned iframe) — fall through */
+    }
+  }
+  return import.meta.env.VITE_API_BASE ?? '/api';
+}
+
+let API_BASE = resolveApiBase();
+
+/** Current effective API base (e.g. for display in a settings field). */
+export function getApiBase(): string {
+  return API_BASE;
+}
+
+/** Set the backend URL at runtime (persisted). Pass '' to reset to the default. */
+export function setApiBase(value: string): void {
+  const trimmed = value.trim();
+  if (typeof window !== 'undefined') {
+    try {
+      if (trimmed) window.localStorage.setItem(API_BASE_KEY, normalizeBase(trimmed));
+      else window.localStorage.removeItem(API_BASE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }
+  API_BASE = trimmed ? normalizeBase(trimmed) : (import.meta.env.VITE_API_BASE ?? '/api');
+}
 
 export interface VitalsPatch {
   currentHp?: number;

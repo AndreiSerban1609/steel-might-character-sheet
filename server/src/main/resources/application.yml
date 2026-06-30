@@ -15,3 +15,8 @@ server:
 
 game:
   data-path: ${GAME_DATA_PATH:../src/data}
+
+app:
+  cors:
+    # Comma-separated. Override with CORS_ORIGINS when exposing the API (tunnel/Pages origin).
+    origins: ${CORS_ORIGINS:https://andreiserban1609.github.io,http://localhost:5173}

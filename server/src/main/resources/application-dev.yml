@@ -7,7 +7,9 @@ spring:
 
   h2:
     console:
-      enabled: true
+      # Off by default — the console allows arbitrary SQL and must never be reachable
+      # through a tunnel. Set H2_CONSOLE=true only for local, non-exposed inspection.
+      enabled: ${H2_CONSOLE:false}
       path: /h2-console
 
   jpa:

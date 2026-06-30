@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import { getApiBase, setApiBase } from '../platform/http';
 
 export function EntryView() {
   const roomName = useCharacterStore((s) => s.roomName);
@@ -9,6 +11,15 @@ export function EntryView() {
   const setEmail = useCharacterStore((s) => s.setEmail);
   const enterAsPlayer = useCharacterStore((s) => s.enterAsPlayer);
   const enterAsGm = useCharacterStore((s) => s.enterAsGm);
+
+  const [apiInput, setApiInput] = useState(getApiBase());
+  const [apiSaved, setApiSaved] = useState(false);
+
+  function applyApi() {
+    setApiBase(apiInput);
+    setApiInput(getApiBase());
+    setApiSaved(true);
+  }
 
   return (
     <section className="form-view entry">
@@ -46,6 +57,27 @@ export function EntryView() {
         Players enter their room and email to open or create their own character. The GM enters a room to see
         everyone at the table.
       </p>
+
+      <details className="conn">
+        <summary>Server connection</summary>
+        <p className="conn-hint">
+          Running inside Owlbear or against a hosted backend? Paste the backend URL (e.g. your Cloudflare
+          Tunnel URL). Leave as <code>/api</code> for local development.
+        </p>
+        <div className="conn-row">
+          <input
+            value={apiInput}
+            onChange={(e) => {
+              setApiInput(e.target.value);
+              setApiSaved(false);
+            }}
+            placeholder="https://xxxx.trycloudflare.com"
+          />
+          <button className="btn btn--ghost" onClick={applyApi}>
+            {apiSaved ? 'Saved' : 'Apply'}
+          </button>
+        </div>
+      </details>
     </section>
   );
 }

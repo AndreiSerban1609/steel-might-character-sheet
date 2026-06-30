@@ -1221,6 +1221,49 @@ body {
   width: 100%;
 }
 
+/* ── Entry: server connection ── */
+
+.conn {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.conn summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.conn-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+.conn-hint code {
+  color: var(--gold);
+  font-size: 0.85em;
+}
+
+.conn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.conn-row input {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 9px;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 460px) {
   .vitals,
   .stat-grid {
