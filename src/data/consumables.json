@@ -1,0 +1,107 @@
+{
+  "healingPotions": {
+    "sizes": [
+      { "id": "small", "name": "Small Healing Potion", "healPerLevel": 5, "apCost": 1, "inventorySpace": 0.1 },
+      { "id": "medium", "name": "Medium Healing Potion", "healPerLevel": 10, "apCost": 2, "inventorySpace": 0.1 },
+      { "id": "large", "name": "Large Healing Potion", "healPerLevel": 15, "apCost": 3, "inventorySpace": 0.1 },
+      { "id": "extra-large", "name": "Extra Large Healing Potion", "healPerLevel": 35, "apCost": 11, "inventorySpace": 0.2 }
+    ],
+    "pricesBySize": {
+      "small":       [2, 4, 6, 8, 12, 19, 28, 42, 65, 95, 145, 215, 325, 485, 725, 1100, 1650, 2450, 3700, 5500],
+      "medium":      [5, 8, 12, 17, 25, 38, 57, 85, 130, 190, 290, 430, 650, 970, 1450, 2200, 3300, 4900, 7400, 11000],
+      "large":       [7, 12, 18, 25, 37, 57, 85, 127, 195, 285, 435, 645, 975, 1450, 2170, 3300, 4950, 7350, 11000, 16500],
+      "extra-large": [15, 23, 34, 50, 75, 115, 170, 255, 385, 575, 865, 1300, 1950, 2900, 4400, 6550, 9850, 15000, 22000, 33000]
+    }
+  },
+  "magicShopItems": [
+    {
+      "id": "mask-of-disguise",
+      "name": "Mask of Disguise",
+      "price": 750,
+      "inventorySpace": 0.3,
+      "slot": "helmet",
+      "description": "Stores 1 disguise from a corpse. 1 AP to activate/deactivate. DC [10 + 2*prof] investigation to detect."
+    },
+    {
+      "id": "mask-of-shapeshifter",
+      "name": "Mask of the Shapeshifter",
+      "price": 1280,
+      "inventorySpace": 0.3,
+      "slot": "helmet",
+      "description": "Stores 6 disguises from corpses. Changes appearance and race abilities (passive + active). DC [14 + 2*prof] investigation to detect."
+    },
+    {
+      "id": "hood-of-shadow-step",
+      "name": "Hood of Shadow Step",
+      "price": 800,
+      "inventorySpace": 0.3,
+      "slot": "helmet",
+      "description": "Proficient in stealth checks and +2 bonus to stealth."
+    },
+    {
+      "id": "cloak-of-invisibility",
+      "name": "Cloak of Invisibility",
+      "price": 2500,
+      "inventorySpace": 0.4,
+      "slot": "cloak",
+      "apCost": 2,
+      "usesPerLongRest": 3,
+      "description": "Go invisible for up to 1 minute. Any combat ability ends the effect."
+    },
+    {
+      "id": "ring-of-finesse",
+      "name": "Ring of Finesse",
+      "price": 450,
+      "inventorySpace": 0.1,
+      "slot": "ring",
+      "description": "Use DEX for all CHA checks (only checks, not saving throws)."
+    },
+    {
+      "id": "potion-of-invisibility",
+      "name": "Potion of Invisibility",
+      "price": 400,
+      "inventorySpace": 0.2,
+      "description": "Invisible for up to 1 minute. Any combat action ends the effect."
+    },
+    {
+      "id": "potion-of-resistance",
+      "name": "Potion of Resistance",
+      "price": 1000,
+      "inventorySpace": 0.2,
+      "description": "Resistance to chosen magic damage type for 1 minute. If vulnerable, becomes normal instead. Exists for each magic damage type."
+    },
+    {
+      "id": "boots-of-swiftness",
+      "name": "Boots of Swiftness",
+      "price": 500,
+      "inventorySpace": 0.2,
+      "slot": "boots",
+      "description": "Movement speed increased by 10."
+    }
+  ],
+  "scrolls": [
+    { "id": "minor-scroll-1", "name": "Minor Caster Spell Scroll (1st level)", "spellLevel": 1, "casterType": "minor", "minCharLevel": 1, "price": 12, "inventorySpace": 0.1 },
+    { "id": "minor-scroll-2", "name": "Minor Caster Spell Scroll (2nd level)", "spellLevel": 2, "casterType": "minor", "minCharLevel": 4, "price": 143, "inventorySpace": 0.1 },
+    { "id": "minor-scroll-3", "name": "Minor Caster Spell Scroll (3rd level)", "spellLevel": 3, "casterType": "minor", "minCharLevel": 9, "price": 16300, "inventorySpace": 0.1 },
+    { "id": "minor-scroll-4", "name": "Minor Caster Spell Scroll (4th level)", "spellLevel": 4, "casterType": "minor", "minCharLevel": 14, "price": 55000, "inventorySpace": 0.1 },
+    { "id": "major-scroll-1", "name": "Major Caster Spell Scroll (1st level)", "spellLevel": 1, "casterType": "major", "minCharLevel": 1, "price": 8, "inventorySpace": 0.1 },
+    { "id": "major-scroll-2", "name": "Major Caster Spell Scroll (2nd level)", "spellLevel": 2, "casterType": "major", "minCharLevel": 3, "price": 63, "inventorySpace": 0.1 },
+    { "id": "major-scroll-3", "name": "Major Caster Spell Scroll (3rd level)", "spellLevel": 3, "casterType": "major", "minCharLevel": 5, "price": 320, "inventorySpace": 0.1 },
+    { "id": "major-scroll-4", "name": "Major Caster Spell Scroll (4th level)", "spellLevel": 4, "casterType": "major", "minCharLevel": 8, "price": 720, "inventorySpace": 0.1 },
+    { "id": "major-scroll-5", "name": "Major Caster Spell Scroll (5th level)", "spellLevel": 5, "casterType": "major", "minCharLevel": 10, "price": 2450, "inventorySpace": 0.1 },
+    { "id": "major-scroll-6", "name": "Major Caster Spell Scroll (6th level)", "spellLevel": 6, "casterType": "major", "minCharLevel": 13, "price": 8200, "inventorySpace": 0.1 },
+    { "id": "major-scroll-7", "name": "Major Caster Spell Scroll (7th level)", "spellLevel": 7, "casterType": "major", "minCharLevel": 15, "price": 27500, "inventorySpace": 0.1 }
+  ],
+  "generalShop": [
+    { "id": "food-ration", "name": "Food Ration", "price": 2, "inventorySpace": 0.2, "description": "Feeds a character for up to 1 day." },
+    { "id": "water-1l", "name": "Water (1L)", "price": 1, "inventorySpace": 0.2, "description": "Hydrates a character for up to 1 day." },
+    { "id": "bedroll", "name": "Bedroll", "price": 10, "inventorySpace": 1, "description": "Allows resting properly outside a regular bed." },
+    { "id": "lockpicks", "name": "Lockpicks (5 uses)", "price": 20, "inventorySpace": 0.1, "description": "Allows attempting to pick a lock." },
+    { "id": "rope-50ft", "name": "Rope (50 ft)", "price": 10, "inventorySpace": 1 },
+    { "id": "matches", "name": "Matches", "price": 1, "inventorySpace": 0.1 },
+    { "id": "torch", "name": "Torch", "price": 1, "inventorySpace": 0.2, "description": "Bright light within 30ft and dim light for an additional 30ft for up to 1 hour." },
+    { "id": "nails-10", "name": "Nails (10)", "price": 1, "inventorySpace": 0.1 },
+    { "id": "grappling-hook", "name": "Grappling Hook", "price": 50, "inventorySpace": 0.3 },
+    { "id": "bottle-of-oil", "name": "Bottle of Oil (1L)", "price": 5, "inventorySpace": 0.1, "description": "A bottle containing 1 liter of oil." }
+  ]
+}

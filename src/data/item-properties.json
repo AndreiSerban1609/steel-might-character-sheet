@@ -1,0 +1,15 @@
+[
+  { "id": "finesse", "description": "Can use either STR or DEX modifier." },
+  { "id": "throwable", "description": "Can be thrown at specified range.", "hasRange": true },
+  { "id": "reach", "description": "Increased melee range (10ft default). When a creature moves from within reach to adjacent, reaction attack allowed.", "defaultRange": 10 },
+  { "id": "light", "description": "Can be used while dual wielding." },
+  { "id": "two-handed", "description": "Must be wielded with both hands." },
+  { "id": "reload", "description": "Must reload after each attack, costing X AP.", "hasApCost": true },
+  { "id": "range", "description": "Ranged weapon with normal/disadvantage ranges.", "hasRange": true },
+  { "id": "heavy", "description": "Movement speed reduced by 5 while wielding." },
+  { "id": "attachable", "description": "Can be attached to medium/heavy armor arm, requiring no hands to use." },
+  { "id": "dual-damage-type", "description": "Can deal either slashing or piercing damage." },
+  { "id": "shuriken", "description": "Upgrade cost reduced by 5x. Draw up to 5. Throwing costs 2 AP. No melee disadvantage at range. Cannot be used as melee." },
+  { "id": "warhammer", "description": "Each warhammer used in an attack action increases its AP cost by 1." },
+  { "id": "shield-bound", "description": "Attached to a shield. One-handed. Grants +3 AC while equipped." }
+]

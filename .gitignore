@@ -34,3 +34,8 @@ Thumbs.db
 
 .claude
 .claude/
+
+# H2 file database (dev)
+server/data/
+*.mv.db
+*.trace.db

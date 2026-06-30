@@ -1,0 +1,106 @@
+[
+  {
+    "id": "arcane-spellbook-3",
+    "name": "Arcane Spellbook (Lvl 3)",
+    "type": "spellbook",
+    "itemLevel": 3,
+    "spellModifier": 0,
+    "spellDamage": 0,
+    "manaCostReduction": 0,
+    "extraSpellsKnown": 1,
+    "damageType": null,
+    "uniqueEffect": "Spells learnt with the spellbook don't require any components.",
+    "priceTier": "one-handed"
+  },
+  {
+    "id": "arcane-spellbook-10",
+    "name": "Arcane Spellbook (Lvl 10)",
+    "type": "spellbook",
+    "itemLevel": 10,
+    "spellModifier": 0,
+    "spellDamage": 0,
+    "manaCostReduction": 0,
+    "extraSpellsKnown": 4,
+    "damageType": null,
+    "uniqueEffect": "-25 mana cost to increase spell level for spells learnt with the spellbook.",
+    "priceTier": "one-handed"
+  },
+  {
+    "id": "arcane-orb-3",
+    "name": "Arcane Orb (Lvl 3)",
+    "type": "orb",
+    "itemLevel": 3,
+    "spellModifier": 3,
+    "spellDamage": 0,
+    "manaCostReduction": 0,
+    "extraSpellsKnown": 0,
+    "damageType": null,
+    "uniqueEffect": "Effects don't apply on spells higher than level 2.",
+    "priceTier": "one-handed"
+  },
+  {
+    "id": "arcane-orb-10",
+    "name": "Arcane Orb (Lvl 10)",
+    "type": "orb",
+    "itemLevel": 10,
+    "spellModifier": 5,
+    "spellDamage": 0,
+    "manaCostReduction": 0,
+    "extraSpellsKnown": 0,
+    "damageType": null,
+    "uniqueEffect": "Whenever a creature you have damaged dies, regain 50 mana.",
+    "priceTier": "one-handed"
+  },
+  {
+    "id": "arcane-wand-3",
+    "name": "Arcane Wand (Lvl 3)",
+    "type": "wand",
+    "itemLevel": 3,
+    "spellModifier": 0,
+    "spellDamage": 4,
+    "manaCostReduction": 4,
+    "extraSpellsKnown": 0,
+    "damageType": null,
+    "uniqueEffect": null,
+    "wandAttack": {
+      "apCost": 3,
+      "damage": { "modMultiplier": 1, "flat": 2, "dice": "1d6", "scalingPerLevel": 2 },
+      "manaRestored": "10 * (wandLevel - 2)",
+      "autoHit": true
+    },
+    "priceTier": "two-handed"
+  },
+  {
+    "id": "arcane-wand-10",
+    "name": "Arcane Wand (Lvl 10)",
+    "type": "wand",
+    "itemLevel": 10,
+    "spellModifier": 0,
+    "spellDamage": 10,
+    "manaCostReduction": 10,
+    "extraSpellsKnown": 0,
+    "damageType": null,
+    "uniqueEffect": null,
+    "wandAttack": {
+      "apCost": 3,
+      "damage": { "modMultiplier": 1, "flat": 2, "dice": "1d6", "scalingPerLevel": 2 },
+      "manaRestored": "10 * (wandLevel - 2)",
+      "autoHit": true
+    },
+    "priceTier": "two-handed"
+  },
+  {
+    "id": "arcane-staff-10",
+    "name": "Arcane Staff (Lvl 10)",
+    "type": "staff",
+    "itemLevel": 10,
+    "spellModifier": 3,
+    "spellDamage": 5,
+    "manaCostReduction": 5,
+    "extraSpellsKnown": 1,
+    "damageType": null,
+    "uniqueEffect": null,
+    "staffAccuracy": { "spellAttackBonus": 4, "spellSaveDCBonus": 2 },
+    "priceTier": "one-handed"
+  }
+]

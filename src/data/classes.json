@@ -1,0 +1,101 @@
+[
+  {
+    "id": "musician",
+    "name": "Musician",
+    "description": "Support caster focused on inspiring allies and controlling the battlefield through songs and music.",
+    "classes": ["bard", "virtuoso", "minstrel"],
+    "roles": ["support", "control"],
+    "armorProficiencies": ["light-armor", "medium-armor"],
+    "savingThrowProficiencies": ["cha", "wis"]
+  },
+  {
+    "id": "disciple",
+    "name": "Disciple",
+    "description": "Divine servant channeling the power of their god for protection, healing, and smiting the unholy.",
+    "classes": ["paladin", "cleric", "exorcist"],
+    "roles": ["tank", "support", "healer"],
+    "armorProficiencies": ["light-armor", "medium-armor", "heavy-armor", "shield"],
+    "savingThrowProficiencies": ["will", "const"]
+  },
+  {
+    "id": "wildborn",
+    "name": "Wildborn",
+    "description": "Nature-attuned warrior drawing power from the natural world through shapeshifting, storms, and druidic magic.",
+    "classes": ["druid", "shapeshifter", "stormbringer"],
+    "roles": ["caster", "tank", "damage"],
+    "armorProficiencies": ["light-armor", "medium-armor"],
+    "savingThrowProficiencies": ["wis", "const"]
+  },
+  {
+    "id": "warrior",
+    "name": "Warrior",
+    "description": "Martial combatant excelling in physical combat through rage, defensive mastery, or tactical prowess.",
+    "classes": ["barbarian", "guardian", "conqueror"],
+    "roles": ["tank", "damage"],
+    "armorProficiencies": ["light-armor", "medium-armor", "heavy-armor", "shield"],
+    "savingThrowProficiencies": ["str", "const"]
+  },
+  {
+    "id": "monk",
+    "name": "Monk",
+    "description": "Unarmed combatant channeling inner energy through martial arts, self-sacrifice, or sacred healing touch.",
+    "classes": ["shaolin", "martyr", "hierophant"],
+    "roles": ["damage", "support", "healer"],
+    "armorProficiencies": [],
+    "savingThrowProficiencies": ["dex", "will"]
+  },
+  {
+    "id": "archer",
+    "name": "Archer",
+    "description": "Ranged specialist mastering precision shots, magical arrows, or beast companion tactics.",
+    "classes": ["marksman", "arcane-ranger", "hunter"],
+    "roles": ["damage", "control"],
+    "armorProficiencies": ["light-armor", "medium-armor"],
+    "savingThrowProficiencies": ["dex", "wis"]
+  },
+  {
+    "id": "rogue",
+    "name": "Rogue",
+    "description": "Stealth-focused operative specializing in assassination, thievery, or shadow magic.",
+    "classes": ["assassin", "burglar", "shadow-trickster"],
+    "roles": ["damage", "stealth"],
+    "armorProficiencies": ["light-armor", "medium-armor"],
+    "savingThrowProficiencies": ["dex", "int"]
+  },
+  {
+    "id": "corruptor",
+    "name": "Corruptor",
+    "description": "Dark caster wielding spirits, undead, or demonic pacts to corrupt and control.",
+    "classes": ["spirit-master", "necromancer", "warlock"],
+    "roles": ["caster", "control", "summoner"],
+    "armorProficiencies": ["light-armor"],
+    "savingThrowProficiencies": ["will", "int"]
+  },
+  {
+    "id": "wizard",
+    "name": "Wizard",
+    "description": "Arcane scholar mastering raw sorcery, mental manipulation, or elemental destruction.",
+    "classes": ["sorcerer", "mindbender", "elementalist"],
+    "roles": ["caster", "damage", "control"],
+    "armorProficiencies": ["light-armor"],
+    "savingThrowProficiencies": ["int", "wis"]
+  },
+  {
+    "id": "battlemage",
+    "name": "Battlemage",
+    "description": "Armored spellcaster blending martial combat with magic for frontline spellcasting.",
+    "classes": ["striker", "battlecaster", "inquisitor"],
+    "roles": ["damage", "tank", "caster"],
+    "armorProficiencies": ["light-armor", "medium-armor", "heavy-armor", "shield"],
+    "savingThrowProficiencies": ["str", "int"]
+  },
+  {
+    "id": "wraith-hunter",
+    "name": "Wraith Hunter",
+    "description": "Supernatural hunter specializing in tracking and destroying otherworldly threats through runes, curses, or phantom powers.",
+    "classes": ["runekeeper", "tormentor", "phantom"],
+    "roles": ["damage", "control"],
+    "armorProficiencies": ["light-armor", "medium-armor"],
+    "savingThrowProficiencies": ["will", "dex"]
+  }
+]

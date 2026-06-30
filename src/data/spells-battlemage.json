@@ -1,0 +1,2807 @@
+[
+  {
+    "id": "incinerating-strikes",
+    "name": "Incinerating Strikes",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0,
+      "dice": "1d4"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d4"
+      }
+    },
+    "description": "You enhance a weapon with a fiery aura. Attacking a target sets it on fire; at the start of their turn they burn for [spell modifier + 1d4] fire damage. Stacks up to 3 times."
+  },
+  {
+    "id": "chilling-edge",
+    "name": "Chilling Edge",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0,
+      "dice": null
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "You enhance a weapon with a frost aura. Attacks deal [spell modifier] additional ice damage and reduce MS by 5 for 1 turn. Stacks up to 4 times."
+  },
+  {
+    "id": "corroding-slashes",
+    "name": "Corroding Slashes",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 13,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 3,
+      "dice": "1d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d8"
+      }
+    },
+    "description": "You enhance a weapon with an acidic aura. Attacks deal [spell modifier + 3 + 1d8] bonus poison damage and lower AC by 1. Stacks up to 3 times; stacks disappear at end of creature's turn."
+  },
+  {
+    "id": "impact-wave",
+    "name": "Impact Wave",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 3,
+      "dice": "1d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d6"
+      }
+    },
+    "description": "You enhance a weapon with stored force. Attacks produce a 15 ft long, 5 ft wide impact wave; creatures failing a DEX save take [spell modifier + 3 + 1d6] force damage (ignores armor)."
+  },
+  {
+    "id": "hasting-attacks",
+    "name": "Hasting Attacks",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 12,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon to be swift. Attacking a target grants you 1 more AP at the start of your next turn. Stacks up to 2 times."
+  },
+  {
+    "id": "weapon-defence",
+    "name": "Weapon Defence",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 round",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Until the end of your next turn your weapons deal 0 damage and you gain the weapon's damage value as PA (average value for dice; only main weapon if dual wielding)."
+  },
+  {
+    "id": "mend-weapon",
+    "name": "Mend Weapon",
+    "classId": "striker",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "5 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You mend and repair weapons, reducing effects of usage or other debuffs, as long as the weapon is still usable when you begin fixing it."
+  },
+  {
+    "id": "shocking-slashes",
+    "name": "Shocking Slashes",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 35,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": null
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "You enhance a weapon with a shock aura. Attacks deal [2 x spell modifier] additional lightning damage and a spark jumps to the nearest enemy within 15 ft dealing [4d8] lightning damage (ignores armor)."
+  },
+  {
+    "id": "brightness-strikes",
+    "name": "Brightness Strikes",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 30,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with a bright aura. Attacks illuminate a 10 ft area around the target until the start of your next turn. Light applies before the attack roll, removing darkness disadvantage."
+  },
+  {
+    "id": "sparkswinger",
+    "name": "Sparkswinger",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 65,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "2d10"
+      }
+    },
+    "description": "You enhance a weapon with fire sparks. Attacks cause 2 sparks to jump to the 2 nearest enemies within 10 ft, each taking [2 x spell modifier + 4d10] fire damage (ignores armor)."
+  },
+  {
+    "id": "lightning-call",
+    "name": "Lightning Call",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "2d12"
+      }
+    },
+    "description": "You enhance a weapon with lightning aura. Attacks call lightning on the target's location; all creatures (except you) within 10 ft must DEX save or take [2 x spell modifier + 4d12] lightning damage."
+  },
+  {
+    "id": "ray-weapons",
+    "name": "Ray Weapons",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 40,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 20
+    },
+    "description": "You enhance a weapon to strike at range. For the rest of the turn your attacks with that weapon have 20 ft range. At higher levels: +10 ft range."
+  },
+  {
+    "id": "snaring-flurry",
+    "name": "Snaring Flurry",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 35,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon. Attacks add stacks on the target. At 3 stacks the target must CON save or become snared for 1 turn."
+  },
+  {
+    "id": "weapon-sentinel",
+    "name": "Weapon Sentinel",
+    "classId": "striker",
+    "level": 2,
+    "apCost": 11,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "8 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You animate a weapon to stand guard for the duration. It can alert you to danger or fight on its own (standard weapon damage, your AC, 0 PA, 0 MA, 10% of your max HP). Cannot dual wield while active."
+  },
+  {
+    "id": "stone-strike",
+    "name": "Stone Strike",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with the power of the mountain. The next attack that hits forces a CON save or the target is knocked prone. Targets that save are immune for the rest of the turn."
+  },
+  {
+    "id": "blinding-strikes",
+    "name": "Blinding Strikes",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with a blinding aura. Attacks force a CON save or the target is blinded for 1 turn. Targets that save are immune for the rest of the turn."
+  },
+  {
+    "id": "strikers-shield",
+    "name": "Striker's Shield",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon to create a shield with every hit. Weapon damage dealt grants temporary HP equal to half the damage dealt. Shield cannot exceed 150. Persists after duration but stops regenerating."
+  },
+  {
+    "id": "silencing-slash",
+    "name": "Silencing Slash",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon to silence a foe. The next hit forces a CON save, silencing the target for 1 turn on fail. Immune for the rest of the turn on success."
+  },
+  {
+    "id": "firebrand",
+    "name": "Firebrand",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 80,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 9,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d10"
+      }
+    },
+    "description": "You enhance a weapon with an ancient brand of fire. The weapon deals [3 x spell modifier + 9 + 3d10] bonus fire damage on hit for the duration."
+  },
+  {
+    "id": "poisonous-edge",
+    "name": "Poisonous Edge",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with a poisonous aura. Targets must CON save or become poisoned for 1 turn. Immune for the rest of the turn on success."
+  },
+  {
+    "id": "indestructible-steel",
+    "name": "Indestructible Steel",
+    "classId": "striker",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Your weapons take no damage from oozes or hitting surfaces for the duration."
+  },
+  {
+    "id": "chaining-strikes",
+    "name": "Chaining Strikes",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 120,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon to spawn magical chains. On hit, up to 2 creatures of your choice within 30 ft of the target must STR save or be pulled up to 15 ft to the closest unoccupied space to the target."
+  },
+  {
+    "id": "contaminating-blows",
+    "name": "Contaminating Blows",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 33,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d10"
+      }
+    },
+    "description": "You enhance a weapon to contaminate targets. Each hit applies a contamination stack. At the start of their turn, the creature takes [4 x spell modifier + 33 + 4d10] poison damage per stack. At 5 stacks, contamination spreads to all enemies within 10 ft."
+  },
+  {
+    "id": "phantasmal-strikes",
+    "name": "Phantasmal Strikes",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 170,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 30,
+      "dice": "8d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "2d8"
+      }
+    },
+    "description": "You enhance a weapon to call upon the dead. Each hit spawns a ghostly apparition that makes a ranged attack against a foe within 40 ft, dealing [4 x spell modifier + 30 + 8d8] spectral damage (does not ignore armor)."
+  },
+  {
+    "id": "thunder-blow",
+    "name": "Thunder Blow",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 63,
+      "dice": "8d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d10"
+      }
+    },
+    "description": "You enhance a weapon. The next hit summons a thunder wave in a 40 ft long, 5 ft wide line. Creatures must STR save or take [4 x spell modifier + 63 + 8d10] force damage and be pushed back 1d4 x 10 ft. Half damage on success."
+  },
+  {
+    "id": "circle-of-the-steel",
+    "name": "Circle of the Steel",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 135,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a 30 ft radius circle centered on you (does not move). Creatures in the circle have halved speeds, spells cost 1 more AP (2 more for concentration/channelling), and weapon attacks cost 1 less AP."
+  },
+  {
+    "id": "teleporting-attacks",
+    "name": "Teleporting Attacks",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 80,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with teleportation power. On hit, you can teleport the target up to 20 ft (on a safe surface)."
+  },
+  {
+    "id": "evade",
+    "name": "Evade",
+    "classId": "striker",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 160,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration all attacks against you have disadvantage and you have advantage on all saving throws, but you take double damage."
+  },
+  {
+    "id": "stunning-blows",
+    "name": "Stunning Blows",
+    "classId": "striker",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 300,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon to stun foes. On hit, the target must CON save or be stunned for 1 turn. A target that saves is immune for the rest of the turn."
+  },
+  {
+    "id": "final-stand",
+    "name": "Final Stand",
+    "classId": "striker",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 500,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration your AC, PA, MA and all speeds drop to 0. Weapon attacks gain 100 ft range (must see target), 50% lifesteal, +10 to hit, and ignore up to [5 x spell modifier] armor. Immune to all CC."
+  },
+  {
+    "id": "striker-overload",
+    "name": "Striker Overload",
+    "classId": "striker",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 350,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration your on-hit effects trigger twice instead of once (including added weapon damage from spells like Firebrand)."
+  },
+  {
+    "id": "arcane-enhancement",
+    "name": "Arcane Enhancement",
+    "classId": "striker",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 250,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": "10d12"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance a weapon with the essence of magic. Every hit deals [5 x spell modifier + 10d12] pure damage and applies an arcane stack. At 6 arcane stacks the target takes [10d20] pure damage."
+  },
+  {
+    "id": "magic-touch",
+    "name": "Magic Touch",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "2d10"
+      }
+    },
+    "description": "Make a melee spell attack against a target. On hit, the target takes [spell modifier + 11 + 2d10] pure damage."
+  },
+  {
+    "id": "burning-hands",
+    "name": "Burning Hands",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 13,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "2d12"
+      }
+    },
+    "description": "You cast a wave of fire in a 15 ft cone in front of you. Creatures must DEX save or take [spell modifier + 9 + 2d12] fire damage."
+  },
+  {
+    "id": "light-orb",
+    "name": "Light Orb",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d8"
+      }
+    },
+    "description": "You throw a radiant orb that bounces up to 1 time to random enemies within 10 ft. Targets must DEX save or take [spell modifier + 9 + 2d8] light damage and illuminates 5 ft area for 1 min."
+  },
+  {
+    "id": "thunder-wave",
+    "name": "Thunder Wave",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "thunder",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 13,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d8"
+      }
+    },
+    "description": "You create a wave of thunder in a 10 ft area around you. Creatures must CON save or take [spell modifier + 13 + 2d8] thunder damage."
+  },
+  {
+    "id": "ignition",
+    "name": "Ignition",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 4,
+      "dice": "1d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d8"
+      }
+    },
+    "description": "You slam the ground creating a thin sheet of fire within 30 ft. Enemy creatures must DEX save or take [spell modifier + 4 + 1d8] fire damage. All ignitable surfaces catch fire."
+  },
+  {
+    "id": "chilling-touch",
+    "name": "Chilling Touch",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": "1 round",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "2d12"
+      }
+    },
+    "description": "Make a melee spell attack. On hit the target takes [spell modifier + 10 + 2d12] ice damage and MS is reduced by 10 for a round."
+  },
+  {
+    "id": "weakening-magic",
+    "name": "Weakening Magic",
+    "classId": "battlecaster",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 12,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create an aura centered on you that moves with you. Creatures in the aura that you have damaged since their last turn have a [spell modifier] penalty to attacks against you."
+  },
+  {
+    "id": "corrosive-touch",
+    "name": "Corrosive Touch",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 30,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d12"
+      }
+    },
+    "description": "Make a melee spell attack. On hit, the target takes [2 x spell modifier + 30 + 4d12] poison damage and AC is reduced by 2 (cannot stack)."
+  },
+  {
+    "id": "poison-wave",
+    "name": "Poison Wave",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 28,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "2d10"
+      }
+    },
+    "description": "You emit a wave of poison. All creatures (except you) within range must CON save or take [2 x spell modifier + 28 + 4d10] poison damage. You become resistant to poison for the duration."
+  },
+  {
+    "id": "breath-of-darkness",
+    "name": "Breath of Darkness",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 33,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "2d12"
+      }
+    },
+    "description": "You exhale darkness in a 15 ft cone. All creatures (including you) must DEX save or take [2 x spell modifier + 33 + 4d12] shadow damage. You automatically take the damage."
+  },
+  {
+    "id": "ice-orb",
+    "name": "Ice Orb",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 24,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d8"
+      }
+    },
+    "description": "You throw an ice orb that bounces up to 3 times to random enemies within 10 ft. Targets must DEX save or take [2 x spell modifier + 24 + 4d8] ice damage. Consuming a slow grants an additional bounce."
+  },
+  {
+    "id": "scorching-touch",
+    "name": "Scorching Touch",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 31,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a melee spell attack. On hit the target takes [2 x spell modifier + 31 + 2d10] fire damage and is set on fire, taking [4d10] fire damage at the start of their turn (ignores armor)."
+  },
+  {
+    "id": "blinding-radiance",
+    "name": "Blinding Radiance",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 16,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d8"
+      }
+    },
+    "description": "You cast an aura of light. All enemy creatures within 15 ft must CON save or take [2 x spell modifier + 16 + 4d8] light damage and be blinded for 1 turn."
+  },
+  {
+    "id": "shield-of-the-brave",
+    "name": "Shield of the Brave",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 65,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 50,
+      "dice": "4d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 25,
+        "dice": "2d12"
+      }
+    },
+    "description": "You gain temporary HP equal to [2 x spell modifier + 50 + 4d12] for each enemy creature within 10 ft. Temporary HP expires at the end of the duration."
+  },
+  {
+    "id": "exposing-magic",
+    "name": "Exposing Magic",
+    "classId": "battlecaster",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 60,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn have one lower level of resistance to the last damage type you dealt."
+  },
+  {
+    "id": "supernova",
+    "name": "Supernova",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 130,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 47,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "2d12"
+      }
+    },
+    "description": "You explode in a burst of fire. All creatures within 10 ft must DEX save or take [3 x spell modifier + 47 + 6d12] fire damage, half on success. You take full damage. The area becomes a fire surface."
+  },
+  {
+    "id": "earthquake",
+    "name": "Earthquake",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 135,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 24,
+      "dice": "3d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d6"
+      }
+    },
+    "description": "You create an earthquake in the area within 60 ft. Enemy creatures must CON save or take [3 x spell modifier + 24 + 3d6] force damage and be knocked prone."
+  },
+  {
+    "id": "poison-breath",
+    "name": "Poison Breath",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 23,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d10"
+      }
+    },
+    "description": "You breathe poison in a 15 ft cone. Creatures must CON save or take [3 x spell modifier + 23 + 6d10] poison damage and become poisoned until the end of your next turn."
+  },
+  {
+    "id": "shadow-orb",
+    "name": "Shadow Orb",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 16,
+      "dice": "6d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "2d8"
+      }
+    },
+    "description": "You throw a shadow orb that bounces up to 4 times. Targets must DEX save or take [3 x spell modifier + 16 + 6d8] shadow damage and be engulfed in shadows, taking [3d8] shadow damage at the start of each turn until they deal damage to you."
+  },
+  {
+    "id": "shocking-touch",
+    "name": "Shocking Touch",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 24,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "2d12"
+      }
+    },
+    "description": "Make a melee spell attack. On hit the target takes [3 x spell modifier + 24 + 6d12] lightning damage and starts their turn with 2 less AP (cannot stack)."
+  },
+  {
+    "id": "silencing-touch",
+    "name": "Silencing Touch",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 15,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d10"
+      }
+    },
+    "description": "You force a target in melee range to make a CON save. On fail they take [3 x spell modifier + 15 + 6d10] pure damage and are silenced for 1 turn."
+  },
+  {
+    "id": "super-conductor",
+    "name": "Super Conductor",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 115,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 45,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "1d10"
+      }
+    },
+    "description": "You release up to 6 arcing bolts of electricity to creatures within 30 ft (no 2 arcs to the same creature). Targets must DEX save or take [3 x spell modifier + 45 + 3d10] lightning damage."
+  },
+  {
+    "id": "bloodless-magic",
+    "name": "Bloodless Magic",
+    "classId": "battlecaster",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to heal (considered 'decaying'). Some spells can overwrite this."
+  },
+  {
+    "id": "ice-breath",
+    "name": "Ice Breath",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 5,
+    "manaCost": 255,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 47,
+      "dice": "8d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d10"
+      }
+    },
+    "description": "You breathe freezing wind in a 15 ft cone. Creatures must CON save or take [4 x spell modifier + 47 + 8d10] ice damage and be frozen for 1 round. Half damage on success."
+  },
+  {
+    "id": "spectral-touch",
+    "name": "Spectral Touch",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "melee",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 46,
+      "dice": "8d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d12"
+      }
+    },
+    "description": "Make a melee spell attack. On hit the target takes [4 x spell modifier + 46 + 8d12] spectral damage and becomes ethereal for 1 turn."
+  },
+  {
+    "id": "pyroclasm",
+    "name": "Pyroclasm",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 170,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 42,
+      "dice": "8d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d6"
+      }
+    },
+    "description": "You throw a fireball that bounces up to 5 times to enemies within 10 ft. Targets must DEX save or take [4 x spell modifier + 42 + 8d6] fire damage, half on success. Kills reset the bounce count."
+  },
+  {
+    "id": "closed-circuit",
+    "name": "Closed Circuit",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 62,
+      "dice": "8d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d10"
+      }
+    },
+    "description": "You cast lightning in a 15 ft area around you. ALL creatures (including you) must DEX save. You auto-take half damage. On fail: [4 x spell modifier + 62 + 8d10] lightning damage. If no allies harmed, targets have doubled AP costs next turn."
+  },
+  {
+    "id": "poison-orbs",
+    "name": "Poison Orbs",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 6,
+      "dice": "4d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 2,
+        "dice": "1d6"
+      }
+    },
+    "description": "You throw a poison orb that bounces up to 10 times to creatures within 10 ft. Targets must DEX save or take [4 x spell modifier + 6 + 4d6] poison damage. Taking damage 3 times triggers an additional [20d6] poison damage."
+  },
+  {
+    "id": "arcane-hibernation",
+    "name": "Arcane Hibernation",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration you take only half damage, all spells cost only half mana, but all attacking or casting spells costs double the AP."
+  },
+  {
+    "id": "disruptive-magic",
+    "name": "Disruptive Magic",
+    "classId": "battlecaster",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are disarmed at the start of their turn and interrupted from channelling or concentration."
+  },
+  {
+    "id": "epidemic-of-fire",
+    "name": "Epidemic of Fire",
+    "classId": "battlecaster",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 255,
+    "range": "20 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 70,
+      "dice": "10d12"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "You cast a ray of fire that forks to the 5 nearest enemies within 30 ft. All targets must DEX save or take [5 x spell modifier + 70 + 10d12] fire damage, half on success. Targets take double damage from mass destruction."
+  },
+  {
+    "id": "chain-shock",
+    "name": "Chain Shock",
+    "classId": "battlecaster",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 600,
+    "range": "15 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": "10d8"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "You cast a bolt of lightning that bounces up to 3 times within 10 ft. Targets must CON save or take [5 x spell modifier + 10d8] lightning damage and be stunned for 3 turns. Half damage on success. CON save to end stun early."
+  },
+  {
+    "id": "arcane-devastation",
+    "name": "Arcane Devastation",
+    "classId": "battlecaster",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 255,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": "30d8"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "You let out an explosion of magic. All creatures including you within 30 ft take [5 x spell modifier + 30d8] pure damage."
+  },
+  {
+    "id": "battlelust-arcana",
+    "name": "Battlelust Arcana",
+    "classId": "battlecaster",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 300,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "until long rest",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Until a long rest your spells do not cost mana, but you can only cast each spell once (consumed), after which the spell is unavailable until the long rest is completed."
+  },
+  {
+    "id": "enprison",
+    "name": "Enprison",
+    "classId": "battlecaster",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to leave the circle."
+  },
+  {
+    "id": "burning-agony",
+    "name": "Burning Agony",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 3,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "1d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "1d12"
+      }
+    },
+    "description": "Your next 2 attacks deal [spell modifier] additional fire damage. On the third hit against the same target, the creature bursts into flames taking [spell modifier + 10 + 1d12] fire damage and gaining 1 stack of lasting punishment. Spell ends early if you switch targets."
+  },
+  {
+    "id": "chilling-rupture",
+    "name": "Chilling Rupture",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 8,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 21,
+        "dice": "4d8"
+      }
+    },
+    "description": "You strike the ground in a 10 ft long, 5 ft wide line. Creatures must DEX save or take [spell modifier + 8 + 2d8] cold damage and have halved movement speed when moving away from you until end of your next turn."
+  },
+  {
+    "id": "fiery-aura",
+    "name": "Fiery Aura",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 5,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 3,
+      "dice": "2d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "4d6"
+      }
+    },
+    "description": "A burning aura surrounds you. At the start of each turn, all creatures within 5 ft take [spell modifier + 3 + 2d6] fire damage (ignores armor). Concentration cannot be broken by damage."
+  },
+  {
+    "id": "judgement-bolt",
+    "name": "Judgement Bolt",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 18,
+      "dice": "1d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 23,
+        "dice": "3d10"
+      }
+    },
+    "description": "You release a wave of force from your weapon at a creature within range. Make a ranged spell attack dealing [spell modifier + 18 + 1d10] force damage."
+  },
+  {
+    "id": "uldurs-shield",
+    "name": "Uldur's Shield",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 round",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 20
+    },
+    "description": "While you have at least 2 stacks of lasting punishment on any target, you become resistant to physical damage from normal and silvered weapons for 1 round. Effect ends if the target loses its stacks. At higher levels: +1 round duration."
+  },
+  {
+    "id": "interrogation",
+    "name": "Interrogation",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You project intense menace and clarity. You add [4 x spell modifier] to your next Intimidation check."
+  },
+  {
+    "id": "lasting-endurance",
+    "name": "Lasting Endurance",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 8,
+      "dice": "2d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 40,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "4d8"
+      }
+    },
+    "description": "If any creature has stacks of lasting punishment, you gain temporary HP equal to [spell modifier + 8 + 2d8] per stack. Temp HP expires after duration or at end of combat. Cannot recast until duration ends."
+  },
+  {
+    "id": "condemning-vigil",
+    "name": "Condemning Vigil",
+    "classId": "inquisitor",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "If the enemy has at least 2 stacks of lasting punishment, all their weapon and spell attacks against you have disadvantage. Lasts for the duration or until the stacks are removed."
+  },
+  {
+    "id": "vampiric-swing",
+    "name": "Vampiric Swing",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 65,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 37,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 55,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 27,
+        "dice": "2d10"
+      }
+    },
+    "description": "You swing your weapon in a 10 ft cone. Enemy creatures must DEX save or take [2 x spell modifier + 37 + 4d10] weapon damage type. You heal for half the total damage dealt."
+  },
+  {
+    "id": "venom-infusion",
+    "name": "Venom Infusion",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 30,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You convert all damage your weapon attacks deal into poison damage for up to 1 minute. You may end the effect early at any time."
+  },
+  {
+    "id": "poisonous-aura",
+    "name": "Poisonous Aura",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 30,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 6,
+      "dice": "4d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "2d6"
+      }
+    },
+    "description": "A poisonous aura surrounds you. At the start of each turn, creatures within 5 ft take [2 x spell modifier + 6 + 4d6] poison damage. Consecutive turn hits also deal [2 x spell modifier + 25 + 6d12] bonus poison damage. Concentration unbreakable by damage."
+  },
+  {
+    "id": "mountain-strike",
+    "name": "Mountain Strike",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25
+    },
+    "description": "Your next weapon attack that hits a creature with at least 2 stacks of lasting punishment forces a CON save or knocked prone. Cannot cast if no target has 2+ stacks. At higher levels: -1 stack required."
+  },
+  {
+    "id": "burst-of-renewal",
+    "name": "Burst of Renewal",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For 3 turns, you and the creature with 2+ stacks of lasting punishment receive twice as much healing from all sources. Ends if the condition is no longer met."
+  },
+  {
+    "id": "apprehend",
+    "name": "Apprehend",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You incapacitate a creature that is unconscious or has surrendered. The target can speak but cannot act. You may selectively restore certain capabilities (walking, hand use, spellcasting, teleportation)."
+  },
+  {
+    "id": "aegis-of-reckoning",
+    "name": "Aegis of Reckoning",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45
+    },
+    "description": "Consume lasting punishment stacks to gain a shield that negates the next [stacks consumed] weapon attacks. At 3rd level (+45 mana): also blocks spell attacks. At 4th level (+45 mana): blocks any damage source."
+  },
+  {
+    "id": "judgments-grasp",
+    "name": "Judgment's Grasp",
+    "classId": "inquisitor",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": "10 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15
+    },
+    "description": "You bind a creature with an arcane tether. If it moves more than 20 ft away, it must CHA save or be stopped. Lasting punishment stacks add effects: 1=disadvantage on save, 2=auto-fail, 3=halved speed, 4=speed 0, 5=undispellable, 6=target dragged. At higher levels: -5 ft tether range."
+  },
+  {
+    "id": "shackles-of-pain",
+    "name": "Shackles of Pain",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Target with 2+ lasting punishment stacks must WILL save. On fail, damage you take is also dealt to the target (reduced by their armor). Ends if stacks are removed. Range only matters for casting."
+  },
+  {
+    "id": "duel",
+    "name": "Duel",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 105,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Target with 3+ lasting punishment stacks must WIS save or be unable to damage any creature other than you for the duration."
+  },
+  {
+    "id": "arm-of-justice",
+    "name": "Arm of Justice",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 140,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 58,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 23,
+        "dice": "2d10"
+      }
+    },
+    "description": "You create a 60 ft long, 5 ft wide magic surface. A spectral arm drags creatures toward you. DEX save or take [3 x spell modifier + 58 + 6d10] spectral damage and be pulled to nearest unoccupied space."
+  },
+  {
+    "id": "steel-aura",
+    "name": "Steel Aura",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 13,
+      "dice": "3d4"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d4"
+      }
+    },
+    "description": "A grey aura lingers around you. At the start of each turn, spears pierce the ground hitting creatures within 5 ft for [3 x spell modifier + 13 + 3d4] piercing damage. STR save or rooted for 1 turn. Hit by all 6 waves = rooted for 1 hour (unbreakable)."
+  },
+  {
+    "id": "channelled-fury",
+    "name": "Channelled Fury",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 round",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "Choose a target. Your attacks against the target have 50 ft range until the end of your next turn. At higher levels: +25 ft range."
+  },
+  {
+    "id": "breakthrough",
+    "name": "Breakthrough",
+    "classId": "inquisitor",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration your attacks against objects deal double damage and you can break through tougher objects, including metal."
+  },
+  {
+    "id": "circle-of-uldur",
+    "name": "Circle of Uldur",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a 15 ft radius circle centered on you (moves with you). At the start of each turn, creatures without lasting punishment stacks are pushed back 10 ft. Creatures entering must STR save. You can protect any number of creatures."
+  },
+  {
+    "id": "power-burst",
+    "name": "Power Burst",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 170,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration you leech energy from the target with 4+ lasting punishment stacks. You start your turn with 2 extra AP while the target starts with 2 less."
+  },
+  {
+    "id": "forcefield",
+    "name": "Forcefield",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": "8d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "2d6"
+      }
+    },
+    "description": "A brown aura lingers around you. At the start of your turn all creatures within 5 ft take [4 x spell modifier + 8d6] force damage. A creature hit 2 turns in a row is knocked prone."
+  },
+  {
+    "id": "shield-of-justice",
+    "name": "Shield of Justice",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration all damage you deal with lasting pain is converted to temporary HP."
+  },
+  {
+    "id": "vengeance",
+    "name": "Vengeance",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Reaction: instantly make a weapon attack against the creature that attacked you (regardless of range). If not targeting the stacked creature, you use the stack damage. CON save or silenced/disarmed until end of their next turn."
+  },
+  {
+    "id": "breakdown",
+    "name": "Breakdown",
+    "classId": "inquisitor",
+    "level": 4,
+    "apCost": 11,
+    "manaCost": 150,
+    "range": "self",
+    "components": [],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "A creature within range must WIS save. On fail they are unable to talk or think coherently, only speaking gibberish. Neither the target nor anyone else knows magic was used."
+  },
+  {
+    "id": "living-on-the-edge",
+    "name": "Living on the Edge",
+    "classId": "inquisitor",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 400,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration you cannot drop below 1 HP as long as you have 6 stacks of lasting pain on a target."
+  },
+  {
+    "id": "blind-justice",
+    "name": "Blind Justice",
+    "classId": "inquisitor",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration all damage you deal to a target with 6 stacks of lasting pain is converted to true damage."
+  },
+  {
+    "id": "uldurs-power",
+    "name": "Uldur's Power",
+    "classId": "inquisitor",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 500,
+    "range": "melee",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "meleeSpellAttack",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 105,
+      "dice": "10d12"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Make a melee spell attack against a creature with 6 stacks of lasting pain. On hit: [5 x spell modifier + 105 + 10d12] pure damage. CON save or stunned for 1 min."
+  },
+  {
+    "id": "terrifying-aura",
+    "name": "Terrifying Aura",
+    "classId": "inquisitor",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "A dark aura surrounds you. At the start of your turn, creatures within 5 ft without lasting punishment stacks become terrified. The terrify effect ends when they move more than 60 ft away."
+  },
+  {
+    "id": "endless-power",
+    "name": "Endless Power",
+    "classId": "inquisitor",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 300,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration both you and the target with 6 stacks of lasting pain have no mana/energy/etc costs."
+  }
+]

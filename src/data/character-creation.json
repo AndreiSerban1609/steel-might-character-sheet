@@ -1,0 +1,24 @@
+{
+  "statArray": [15, 13, 12, 11, 10, 9, 8],
+  "bonusPoints": 5,
+  "maxBonusPerStat": 2,
+  "statIncreaseLevels": [6, 12, 18],
+  "abilities": ["str", "dex", "const", "int", "wis", "will", "cha"],
+  "modifierFormula": "(stat - 10) / 2 rounded down",
+  "hpFormula": "(classHpPerLevel + 3 * constModifier) * level",
+  "defaultAP": {
+    "starting": 6,
+    "recovery": 6,
+    "maximum": 10
+  },
+  "standardWeaponAttackAP": 3,
+  "movementCost": {
+    "apPerMove": 1,
+    "movementPerAP": "full MS"
+  },
+  "defaultSkillProficiencies": 3,
+  "baseInitiative": "dex modifier",
+  "stackThreshold": {
+    "player": "ceil(level / 2)"
+  }
+}

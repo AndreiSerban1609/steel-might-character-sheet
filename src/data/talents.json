@@ -1,0 +1,192 @@
+[
+  {
+    "id": "executioner",
+    "name": "Executioner",
+    "description": "When you kill a target, regain AP equal to your recovery AP. Can only trigger once per turn."
+  },
+  {
+    "id": "first-move",
+    "name": "First Move",
+    "description": "If you start your turn by moving, the first 1 AP of movement is free."
+  },
+  {
+    "id": "guerilla",
+    "name": "Guerilla",
+    "description": "Attempting to hide costs 1 less AP, and you can now attempt it even while half-covered."
+  },
+  {
+    "id": "stand-fast",
+    "name": "Stand Fast",
+    "description": "After recovering from a CC effect, negate the next CC effect that would affect you (damage from the ability still applies)."
+  },
+  {
+    "id": "blood-rush",
+    "name": "Blood Rush",
+    "description": "You are hasted while below half HP (hasted = +1 AP each round and MS increased by 10)."
+  },
+  {
+    "id": "relentless-march",
+    "name": "Relentless March",
+    "description": "MS is doubled when walking straight towards enemies. Ignore non-magical difficult terrain. Climbing does not require additional AP (but may still require a skill check)."
+  },
+  {
+    "id": "erratic-presence",
+    "name": "Erratic Presence",
+    "description": "Whenever you take damage, you are teleported 1d4 × 10 feet in a random direction (cannot teleport through walls)."
+  },
+  {
+    "id": "change-fate",
+    "name": "Change Fate",
+    "description": "Once per long rest, you can have a failed die roll succeed instead. Cannot be used on CHA checks (persuasion, seduction, deception, etc.) and cannot make an enemy's successful save fail."
+  },
+  {
+    "id": "alert",
+    "name": "Alert",
+    "description": "Cannot be surprised. Advantage on initiative rolls. Become proficient in perception; if already proficient, choose another WIS-based skill instead."
+  },
+  {
+    "id": "last-breath",
+    "name": "Last Breath",
+    "description": "When you would enter the dying state, remain conscious at 1 HP and become immune to all damage and control effects. On your next turn, start with 10 AP. At the end of that turn, fall unconscious with one less turn remaining before death than normal (can result in instant death)."
+  },
+  {
+    "id": "overpower",
+    "name": "Overpower",
+    "description": "Roll max damage dice values for any attack and spell if your current HP is greater than the target's current HP."
+  },
+  {
+    "id": "protection",
+    "name": "Protection",
+    "description": "AC increased by 2 while dual wielding or wielding a shield."
+  },
+  {
+    "id": "predator",
+    "name": "Predator",
+    "description": "Your targeted attacks and spells (not AoE) against a stunned or knocked-down target always critically hit."
+  },
+  {
+    "id": "quick-shot",
+    "name": "Quick Shot",
+    "description": "Ranged attacks no longer have disadvantage at melee range or against prone targets. When performing a ranged attack from melee range, you can bolt 10ft in the opposite direction (considered a dash, does not trigger attacks of opportunity)."
+  },
+  {
+    "id": "refresher",
+    "name": "Refresher",
+    "description": "At the start of each of your turns, choose one ability on cooldown; reduce its cooldown by 1."
+  },
+  {
+    "id": "restless",
+    "name": "Restless",
+    "description": "While spending all AP each turn: immune to being slowed, rooted, paralyzed, or displaced (teleported) against your will. If you end your turn without spending all AP, you are stunned on your next turn (this stun does not cascade)."
+  },
+  {
+    "id": "one-trick",
+    "name": "One Trick",
+    "description": "The third consecutive ability that deals the same type of damage as the first two deals true damage instead."
+  },
+  {
+    "id": "shattering-body",
+    "name": "Shattering Body",
+    "description": "Max HP becomes your proficiency value. Can only take 1 damage from any attack or source. Cannot heal more than 1 per round. Cannot benefit from shields, HP increases, etc."
+  },
+  {
+    "id": "glass-cannon",
+    "name": "Glass Cannon",
+    "description": "AC, PA, and MA become 0 and cannot be modified by any source. Critical chance on all abilities increased by 4 (e.g., crit on 16-20 instead of 20)."
+  },
+  {
+    "id": "cycle-of-pain",
+    "name": "Cycle of Pain",
+    "description": "Enter combat with two alternating stances, swapping at start of each turn. Steel stance: +50% physical damage dealt/taken, magic damage halved. Arcane stance: +50% magic damage dealt/taken, physical damage halved."
+  },
+  {
+    "id": "eyes-of-the-keeper",
+    "name": "Eyes of the Keeper",
+    "description": "Gain 30ft darkvision, or extend existing darkvision by 30ft."
+  },
+  {
+    "id": "escapist",
+    "name": "Escapist",
+    "description": "Choose three stats; become proficient on saving throws made with those stats (if not already proficient)."
+  },
+  {
+    "id": "arcane-reprise",
+    "name": "Arcane Reprise",
+    "description": "When a spell you cast misses entirely (dealt no damage and had no effect due to missing or saving throws), regain half the mana consumed (using the final cost after all reductions/increases)."
+  },
+  {
+    "id": "battle-hoarder",
+    "name": "Battle Hoarder",
+    "description": "10 identical weapons count as 1 in your inventory. Applies to potions as well. Swapping weapons no longer costs AP."
+  },
+  {
+    "id": "living-armor",
+    "name": "Living Armor",
+    "description": "Your armor (PA and MA) is applied against all damage including start/end of turn effects, unless a spell/attack specifies it pierces armor. First time you become injured in combat: PA and MA doubled for 1 round. First time you become severely injured: PA and MA doubled for 1 round."
+  },
+  {
+    "id": "universal-mastery",
+    "name": "Universal Mastery",
+    "description": "The next time you must choose between increasing damage or increasing mana at a proficiency milestone, you increase both instead."
+  },
+  {
+    "id": "fury",
+    "name": "Fury",
+    "description": "Dealing direct damage grants 1 fury stack. If you do not deal damage in a turn, lose all stacks. Each stack lets you increase one stat modifier by 1 (max +2 per stat). Stacks up to 5."
+  },
+  {
+    "id": "luck-crafter",
+    "name": "Luck Crafter",
+    "description": "Once per long rest, reroll any single die and keep the better result."
+  },
+  {
+    "id": "all-brawn",
+    "name": "All Brawn",
+    "description": "You can use STR instead of DEX for AC calculation and initiative."
+  },
+  {
+    "id": "second-chance",
+    "name": "Second Chance",
+    "description": "When you would die, hang on for up to 1 minute (incapacitated). An ally can attempt a 3 AP medicine check against DC [your level] to return you to 1 HP and prevent the death stack."
+  },
+  {
+    "id": "athlete",
+    "name": "Athlete",
+    "description": "Become proficient in athletics. All proficient weapons without throwable gain a base throwing range equal to your STR (extended range = 2× STR)."
+  },
+  {
+    "id": "torturer",
+    "name": "Torturer",
+    "description": "Damage over time you deal to a creature is increased by [your level] for every stack/effect affecting the target."
+  },
+  {
+    "id": "riding-fury",
+    "name": "Riding Fury",
+    "description": "Whenever you would increase weapon damage or stats, your mount also gains the increase."
+  },
+  {
+    "id": "mounted-marksman",
+    "name": "Mounted Marksman",
+    "description": "You no longer attack at range with disadvantage while mounted."
+  },
+  {
+    "id": "unconventional-charisma",
+    "name": "Unconventional Charisma",
+    "description": "In any CHA skill check, you can replace the CHA component with the equivalent modifier of the other stat the skill uses (e.g., deception: 3×CHA + 2×INT → 5×INT)."
+  },
+  {
+    "id": "versatile-charisma",
+    "name": "Versatile Charisma",
+    "description": "In any skill check with a CHA component, replace the non-CHA stat component with the equivalent CHA modifier (e.g., deception: 3×CHA + 2×INT → 5×CHA)."
+  },
+  {
+    "id": "forger",
+    "name": "Forger",
+    "description": "You are proficient with smith's tools and can craft or repair weapons and armor during downtime at half the normal cost."
+  },
+  {
+    "id": "quick-draw",
+    "name": "Quick Draw",
+    "description": "Drawing or stowing a weapon no longer costs AP. You can swap weapons freely during your turn."
+  }
+]

@@ -1,0 +1,3075 @@
+[
+  {
+    "id": "magic-blast",
+    "name": "Magic Blast",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "damageTypeNote": "varies (depends on spirit type)",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": "2d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": "4d10"
+      }
+    },
+    "spellType": "caster",
+    "description": "You draw raw energy from the arcane veil and release it in a focused surge toward your foe. The target must succeed on a [Const, Int, Wis, Dex] saving throw (based on your current spirit), or on a Will saving throw if you have no spirit, or take [spell modifier + 12 + 2d10] damage of your spirit’s damage type [crushing, fire, lightning, spectral], or pure if you have no spirit. This spell can be cast again in the same turn."
+  },
+  {
+    "id": "earth-shock",
+    "name": "Earth Shock",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 rounds",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 13,
+      "dice": "2d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 32,
+        "dice": "3d6"
+      }
+    },
+    "spellType": "caster",
+    "description": "You channel the weight and inevitability of the earth, sending a crushing force through your target. The target must succeed on a Constitution saving throw, or take [spell modifier + 13 + 2d6] force damage and have its movement speed reduced by [10] while moving toward you for the duration."
+  },
+  {
+    "id": "spirit-strike",
+    "name": "Spirit Strike",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 4,
+    "manaCost": 10,
+    "range": "5 / 90 / 5 / 5",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "spiritAttack",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d8"
+    },
+    "healing": {
+      "modMultiplier": 0,
+      "flat": 0,
+      "dice": "3d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 55,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 24,
+        "dice": "4d8"
+      }
+    },
+    "spellType": "spirit command",
+    "description": "You issue a sharp command, and your spirit lunges to strike with its own nature. Your spirit makes an attack roll. On hit, it deals [spell modifier + 9 + 2d8] damage of its type and applies an additional effect: Earth: the spirit heals for the damage dealt​ Fire: the target gains a [3d8] Burning effect lasting 2 rounds​ Lightning: the target gains [1] Dazed stack​ Spectral: the target gains [1] Prone stack"
+  },
+  {
+    "id": "wild-attack",
+    "name": "Wild Attack",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 10
+    },
+    "spellType": "spirit unlock",
+    "description": "You unleash a fragment of your spirit’s untamed nature, granting it a sudden, instinctive surge of power. Your spirit gains one use of the following (based on its type): Earth: 0 AP - next attack applies [2] Taunted stacks (on hit)​ Fire: 0 AP - next attack has advantage​ Lightning: 0 AP - next attack becomes a 90 ft lightning bolt, dealing the combined damage of an attack with both claws in a single instance as lightning damage​ Spectral: 0 AP - next attack becomes a dash, allowing the spirit to move up to 20 ft as part of the attack This spell can be cast again in the same turn at no mana cost, but only after the previous Wild Attack has been used."
+  },
+  {
+    "id": "phantasmagorical-spirit",
+    "name": "Phantasmagorical Spirit",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 15
+    },
+    "spellType": "spirit enhancement​",
+    "description": "You blur the boundary between your spirit’s physical shape and the arcane veil from which you created it. It enters a ghost-like intangible state. For the duration, the spirit can move through solid objects and creatures, and its vision range becomes 20 ft. While active, you may channel to see through your spirit’s eyes. While doing so, your body becomes unconscious and unaware of its surroundings. If the spirit moves more than [200 ft] away from you, the effect ends immediately and the spirit is unsummoned (this does not consume your summon; see Summon Spirit)."
+  },
+  {
+    "id": "spiked-weapon",
+    "name": "Spiked Weapon",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": "2d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "6d6"
+      }
+    },
+    "spellType": "spirit weapon​",
+    "description": "You anchor a jagged construct of condensed arcane energy into the battlefield, its presence threatening any who move too close. While active, when a creature leaves the space within 5 ft of the construct, you may use your reaction to make an attack of opportunity against it. On hit, the target takes [spell modifier + 7 + 2d6] piercing damage. You may spend 1 AP to move the construct up to 30 ft. You must be within range to do so."
+  },
+  {
+    "id": "protective-energy",
+    "name": "Protective Energy",
+    "classId": "spirit-master",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 0,
+      "flat": 0,
+      "dice": "2d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 10,
+      "damageIncrease": {
+        "modMultiplier": 0,
+        "flat": 0,
+        "dice": "5d4"
+      }
+    },
+    "spellType": "spirit weapon​",
+    "description": "You conjure a hovering shard of protective energy that lingers above an ally, ready to intercept incoming harm. When the target is damaged by a direct ability (not damage over time or secondary instances of the same ability), and is within 20 ft of your spirit, it gains [2d4] temporary HP lasting until the end of combat."
+  },
+  {
+    "id": "exploding-darkness",
+    "name": "Exploding darkness",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 29,
+      "dice": "4d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": "2d8"
+      }
+    },
+    "spellType": "caster",
+    "description": "You shoot a projectile of dark energy at an enemy within range. On a hit, the orb explodes and all creatures within 10 ft of the target, including the target, take [2 x spell modifier + 29 + 4d8] shadow damage."
+  },
+  {
+    "id": "force-crush",
+    "name": "Force crush",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 33,
+      "dice": "4d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "2d10"
+      }
+    },
+    "spellType": "caster",
+    "description": "You force a creature within range to make a Str saving throw. On a fail, the creature takes [2 x spell modifier + 33 + 4d10] force damage and is pushed up to 15 ft towards your spirit."
+  },
+  {
+    "id": "spirit-lash",
+    "name": "Spirit lash",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 65,
+    "range": "90/90/90/90",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 19,
+      "dice": "3d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d10"
+      }
+    },
+    "spellType": "spirit command",
+    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [2 x spell modifier + 19 + 3d12] spirit damage. Fire spirit: the target has its PA reduced by [15] for a round. Earth spirit: the target must succeed on a Const saving throw or be rooted for a round Lightning spirit: the target has its resistance to lightning reduced by one level for a round Spectral spirit: the spirit’s next attack on the target will deal [5d8] additional spectral damage]"
+  },
+  {
+    "id": "magic-imbue",
+    "name": "Magic imbue",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 55,
+    "range": "90/90/90/90",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "spellType": "spirit unlock",
+    "description": "You unlock 2 use(s) of the following spell for your spirit (you must choose one spell that is granted at the moment of the cast) Fire spirit: any elementalist or battlecaster spell of the same level that deals fire damage Earth spirit: any guardian or druid spell of the same level Lightning spirit: any elementalist or stormbringer spell of the same level that deal lightning damage Spectral spirit: any phantom special attack (special attack 1 for 2nd level spell; special attack 2 for 3rd level spell; special attack 3 for 4th level spell or higher); the spirit is considered in the right form to apply the mark and then prock it with a different attack, without needing to consume any ap to change forms;"
+  },
+  {
+    "id": "cunning-spirit",
+    "name": "Cunning spirit",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "spellType": "spirit enhancement",
+    "description": "You enhance your spirit, making it more elusive. Your spirit removes one negative effect affecting it, and nullifies the first negative effect (not the damage that caused it) that would affect it."
+  },
+  {
+    "id": "shadow-energy",
+    "name": "Shadow energy",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 8,
+      "dice": "2d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d8"
+      }
+    },
+    "spellType": "spirit weapon",
+    "description": "You create a dark artefact covered in shadows at a point within range. For the duration you can use the spirit weapon once per turn for 1 ap to force ALL creatures within 10 ft of the weapon to roll a dex saving throw.. On a fail, a target takes [2 x spell modifier + 8 + 2d8] shadow damage. For 1 ap you can move the weapon up to 30 ft. (but you must be in [range] ft of it to cast this)."
+  },
+  {
+    "id": "energy-of-swiftness",
+    "name": "Energy of swiftness",
+    "classId": "spirit-master",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 60,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "spellType": "spirit weapon",
+    "description": "You create a windy artefact on top of a creature. At the end of each of your turns, the artefact grants the creature +[4] bonus AC for a round. For 1 ap, you can move the artefact to another creature within range."
+  },
+  {
+    "id": "banish",
+    "name": "Banish",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "spellType": "caster",
+    "description": "You force a creature within range to make a Cha saving throw. On a fail, the creature is banished (turned ethereal) for up to 3 turns. An ethereal creature takes half damage from physical sources, but double from magic. The creature can repeat the saving throw at the end of each of their turns."
+  },
+  {
+    "id": "forced-kneel",
+    "name": "Forced kneel",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 35,
+      "dice": "3d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d10"
+      }
+    },
+    "spellType": "caster",
+    "description": "You force a creature within range to make a Const saving throw. On a fail, the creature takes [3 x spell modifier + 35 + 3d10] force damage and is knocked prone."
+  },
+  {
+    "id": "spirit-onslaught",
+    "name": "Spirit onslaught",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 135,
+    "range": "60/5/5/5",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 48,
+      "dice": "6d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d12"
+      }
+    },
+    "spellType": "spirit command",
+    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [3 x spell modifier + 48 + 6d12] spirit damage. Fire spirit: the attack deal another [2d12] damage for every [10 ft] range between the spirit and the target Earth spirit: the attack deals another [2d12] damage for every [50] current hp your spirit has Lightning spirit: the attack deals another [2d12] damage for every [50] missing hp your target has Spectral spirit: the attack also reduces the target’s PA and MA until the end of their turn for [2d12] for every time your spirit damaged them since the end of your last turn"
+  },
+  {
+    "id": "elemental-powers",
+    "name": "Elemental powers",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "spiritAttack",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 23,
+      "dice": "6d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d6"
+      }
+    },
+    "spellType": "spirit unlock",
+    "description": "You unlock 2 USES of your spirit’s elemental power for your spirit (the spirit must be in range for the cast). Fire spirit: Melting doom (3 ap) - your spirit spits lava in a 10 ft wide 100 ft long line in a direction that lasts for up to 3 turns; all creatures that starts its turn in the lava, or move through it (they take the damage for every ap of movement - at the first step of the ap) automatically takes [3 x spell modifier + 23 + 6d6] fire damage (normally ignores armor) Earth spirit: Shockwave (3 ap) - your spirit slams the ground, forcing all enemies within 30 ft to roll a str saving throw; on a fail they take [3 x spell modifier + 60 + 6d8] force damage and are pulled to the nearest unoccupied space to next to the spirit Lightning spirit: Lightning onslaught (4 ap) your spirit makes 5 attacks on a target (requiring attack roll), each dealing [3 x spell modifier + 11 + 3d10] lightning damage and reducing the target’s ap by 1 Spectral spirit: Spectral breath (3 ap) - your spirit breaths a wave of spectral energy in a 15 ft long cone in front of it; all creatures within range must roll a dex saving throw; on a fail they take [3 x spell modifier + 50 + 6d12] spectral damage, and on a success they take half the amount;"
+  },
+  {
+    "id": "spirit-wings",
+    "name": "Spirit wings",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 35,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 15
+    },
+    "spellType": "spirit enhancement",
+    "description": "You enhance your spirit, giving it [30] flying speed for the duration."
+  },
+  {
+    "id": "siege-weapon",
+    "name": "Siege weapon",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 0,
+    "manaCost": 180,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 0,
+      "flat": 100,
+      "dice": "8d20"
+    },
+    "scaling": {
+      "manaCostIncrease": 100,
+      "damageIncrease": {
+        "modMultiplier": 0,
+        "flat": 30,
+        "dice": "4d20"
+      }
+    },
+    "spellType": "spirit weapon",
+    "description": "You create a giant artifact, similarly looking to a giant ram. For the duration you can use the spirit weapon once per turn for 6 ap to attack a creature within range. The attack automatically hits, and deals [100 + 8d20] crushing damage. This damage is doubled against constructs, and quadrupled against structures and objects."
+  },
+  {
+    "id": "hasting-energy",
+    "name": "Hasting energy",
+    "classId": "spirit-master",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "spellType": "spirit weapon",
+    "description": "You create a glowing artifact of light on top of a creature. That creature has [2] increased ap recovery. For 1 ap you can move the artifact to another creature."
+  },
+  {
+    "id": "spirit-swap",
+    "name": "Spirit swap",
+    "classId": "spirit-master",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 160,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "spellType": "caster",
+    "description": "You move your spirit up to 30 ft, then switch places with it."
+  },
+  {
+    "id": "occult-blast",
+    "name": "Occult blast",
+    "classId": "spirit-master",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 150,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "rangedSpellAttack",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 58,
+      "dice": "8d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 0,
+        "flat": 0,
+        "dice": "6d10"
+      }
+    },
+    "spellType": "caster",
+    "description": "Make a ranged attack against a creature. On a hit, the target takes [4 x spell modifier + 58 + 8d10] shadow damage. If the target is affected by a negative effect, the attack automatically hits. For every additional negative effect affecting the target (beyond the first), the attack deals [4d10] additional damage"
+  },
+  {
+    "id": "spirit-signature",
+    "name": "Spirit signature",
+    "classId": "spirit-master",
+    "level": 4,
+    "apCost": 6,
+    "manaCost": 170,
+    "range": "90/5/5/-",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 170,
+      "dice": "8d12"
+    },
+    "spellType": "spirit command",
+    "description": "You instantly command your spirit to use their signature ability. Fire spirit: spits a giant fireball at a point within range. all creatures within 30 ft roll a dex saving throw, taking [4 x spell modifier + 170 + 8d12] fire damage on a fail, or half as much on a success Earth spirit: forces all enemy targets within 30 ft to make a will saving throw or be taunted for up to 3 turns; they can repeat the saving throw at the end of every turn; while any creature is still taunted, the spirit reduces all received by half (after all other reductions) Lightning spirit: deals [4 x spell modifier + 140 + 8d12] lightning damage and forces the target to succeed on a const saving throw or be stunned for a turn; Spectral spirit: Absorb essence - the spirit deals [4 x spell modifier + 98 + 8d10] spectral damage to all enemies within 20 ft, and heals for half the damage dealt"
+  },
+  {
+    "id": "spirit-rage",
+    "name": "Spirit rage",
+    "classId": "spirit-master",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "spellType": "spirit unlock",
+    "description": "You unlock 3 USES of your spirit’s special rage power for your spirit (the spirit must be in range for the cast). Fire spirit: 0 ap, for 1 round the spirit deals x1.5 damage, but takes x1.5 damage; Earth spirit: 0 ap; for 1 round, the spirit doubles its armor, but deals no more modifier damage with its attacks (or commands/abilities that occur through it). Lightning spirit: 0 ap; for 1 round, the spirit has doubled ap recovery, but it automatically fails all saving throws and all attacks automatically hit it; Spectral spirit: 0 ap; for 1 round, the spirit heals for 100% of the damage it deals (or damage dealt through commands/abilities that occur through it), but has its PA and MA reduced to 0."
+  },
+  {
+    "id": "shadow-bolt",
+    "name": "Shadow bolt",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "rangedSpellAttack",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 16,
+      "dice": "1d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "2d10"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 16 + 1d10] shadow damage."
+  },
+  {
+    "id": "raise-skeleton",
+    "name": "Raise skeleton",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "slashing",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 8,
+      "dice": "1d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 0,
+      "summonIncrease": "+80 HP, +2 AC, +5 MS",
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "1d8"
+      }
+    },
+    "description": "You raise a skeleton from a corpse. The skeleton has 45 hp, 12 AC, 0 PA, 0 MA, 20 MS, 4 ap recovery, and an attack deals [spell modifier + 8 + 1d8] slashing damage. The skeleton takes 25% of its max HP as true damage at the end of each of its turns. It takes its turn right after yours."
+  },
+  {
+    "id": "shadow-hand",
+    "name": "Shadow hand",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 4,
+    "manaCost": 15,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "1d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "1d12"
+      }
+    },
+    "description": "You raise a shadow hand from the ground to grab a target. The target must succeed on a Str saving throw or take [spell modifier + 10 + 1d12] shadow damage and be restrained (snared) for a turn (rooted if the creature is larger than a regular humanoid)."
+  },
+  {
+    "id": "bone-eater",
+    "name": "Bone eater",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 12,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0
+      }
+    },
+    "description": "You consume a corpse, absorbing the essence of their bones. Increases your armors (PA and MA) by [spell modifier] for the duration."
+  },
+  {
+    "id": "shadow-bird",
+    "name": "Shadow bird",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 11,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 5,
+      "dice": "2d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d6"
+      }
+    },
+    "description": "You create a shadow bird at an unoccupied space within range and choose a creature. At the start of each of the creature’s turns, if it is within [30 ft] of it, the bird shoots a magic ray at the target. The creature must succeed on a const saving throw or take [spell modifier + 5 + 2d6] shadow damage and be slowed by 10 speed while still within 30 ft of the bird. During your turn you can consume 1 ap to change the target of the bird, but not the position."
+  },
+  {
+    "id": "wicked-epiphany",
+    "name": "Wicked epiphany",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "90 ft",
+    "components": [
+      "V"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 3,
+      "dice": "1d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d4"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target starts seeing all that is dark and gloomy as the absolute truth of the world. The target takes [spell modifier + 3 + 1d4] shadow damage at the start of each of their turns. The target can repeat the saving throw whenever they are healed, but not at the end of each turn."
+  },
+  {
+    "id": "shadow-wave",
+    "name": "Shadow wave",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d8"
+      }
+    },
+    "description": "You create a wave of darkness in a 15 long cone in front of you. All creatures within range must succeed on a Str saving throw or take [spell modifier + 10 + 2d8] shadow damage and be pushed back 15 ft."
+  },
+  {
+    "id": "pitch-black",
+    "name": "Pitch black",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You instantly snuff out all (or the ones you choose) torches, lights, etc. within range that are not kept lit by magical means."
+  },
+  {
+    "id": "breathless",
+    "name": "Breathless",
+    "classId": "necromancer",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "self",
+    "components": [],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "For the duration you are cold to the touch and you do not appear to be breathing (but you are, so you can still suffocate etc.). An investigation check or passive investigation against your spell DC reveal these effects to be nothing more than a mirage. You can end the effect early (no cost required)"
+  },
+  {
+    "id": "dark-echoes",
+    "name": "Dark echoes",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "rangedSpellAttack",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 32,
+      "dice": "4d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "2d10"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [2 x spell modifier + 32 + 4d10] shadow damage. If you attack the same target with a single-target (targeted) spell until the end of your next turn you can also cast the spell (free of all costs) on another target within 10 ft of the initial one."
+  },
+  {
+    "id": "dark-shield",
+    "name": "Dark shield",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "self",
+    "components": [],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 20
+    },
+    "description": "You create a dark shield around you. The first time a targeted (weapon) attack hits you you take no damage and if the attack was melee the attacker is pushed back 15 ft. Only triggers and works on creatures of size large or smaller."
+  },
+  {
+    "id": "murderous-crows",
+    "name": "Murderous crows",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 60,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 39,
+      "dice": "4d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d12"
+      }
+    },
+    "description": "You send forth a murder of shadow crows against a foe within range. The target must roll a Const saving throw. On a fail they take [2 x spell modifier + 39 + 4d12] shadow damage and are blinded for 1 turn."
+  },
+  {
+    "id": "corpse-explosion",
+    "name": "Corpse explosion",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "40 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 21,
+      "dice": "6d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "4d8"
+      }
+    },
+    "description": "You make a corpse explode. Targets within 10 ft of it must roll a Dex saving throw. On a fail they take [2 x spell modifier + 21 + 6d8] force damage. On a success they take only half."
+  },
+  {
+    "id": "necrophagy",
+    "name": "Necrophagy",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 55,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 30
+    },
+    "description": "You consume a corpse, absorbing the essence of their flesh. For the duration your AC increases by [4] for the duration."
+  },
+  {
+    "id": "spreading-void",
+    "name": "Spreading void",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 35,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 8,
+      "dice": "2d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d6"
+      }
+    },
+    "description": "You force a creature within range to make a Const saving throw. On a fail they are infected with darkness. They are surrounded by a shadowy aura and take [2 x spell modifier + 8 + 2d6] shadow damage at the start of each of their turns. If the target dies the effect is automatically transmitted to the nearest enemy creatures, should any exist within 20 ft of the target, and the duration resets. A target can repeat the saving throw every time they get healed, but not at the end of each turn."
+  },
+  {
+    "id": "raising-darkness",
+    "name": "Raising darkness",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 65,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 26,
+      "dice": "4d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "2d8"
+      }
+    },
+    "description": "Mark a point within range. The area on the ground within 15 ft of the point starts glowing in black. At the end of the turn a wave of darkness springs out of the ground and towards the sky. All creatures in the area must succeed on a Dex saving throw or take [2 x spell modifier + 26 + 4d8] shadow damage. If you choose to concentrate on the spell the area remains gloomy, and at the end of each turn of concentration the wave of darkness explodes again, the damage being increased by [5 + 2d8] every time."
+  },
+  {
+    "id": "insecurity",
+    "name": "Insecurity",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 20,
+    "range": "30 ft",
+    "components": [
+      "V"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0
+      }
+    },
+    "description": "You force a target to make a Will saving throw. On a fail the target becomes insecure and afraid, becoming more susceptible to shadow damage. Their SA is reduced by [3 x spell modifier] for the duration."
+  },
+  {
+    "id": "darkness",
+    "name": "Darkness",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 50,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "concentration You create a sphere of darkness (15 ft radius) centered on a point within range. The darkness blocks all light and all creatures in the area are effectively blind (if they don't have darkvision). Creatures outside the area cannot see inside it."
+  },
+  {
+    "id": "despair",
+    "name": "Despair",
+    "classId": "necromancer",
+    "level": 2,
+    "apCost": 11,
+    "manaCost": 50,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "description": "You force a creature within range to make a Will saving throw or fall in the depths of despair. The target becomes lethargic and lacks all motivation. The target is likely to abandon its post or job. If the target is in a group the target is likely to leave and go somewhere to be alone. The final decision belongs to the dm regarding the appropriate behaviour for the target. On a fail or at the end of the spell the target knows magic was used on them but does not know by whom necessarily (they can deduct it was you or perhaps they saw you etc. but they don't automatically know)."
+  },
+  {
+    "id": "unbearable-horror",
+    "name": "Unbearable horror",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "int",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 43,
+      "dice": "6d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "2d10"
+      }
+    },
+    "description": "You force a creature to make an int saving throw. On a fail they take [3 x spell modifier + 43 + 6d10] shadow damage and are affected by weight of darkness until the end of their next turn. Whenever they move while being affected they take [3d10] true damage for every ap consumed moving."
+  },
+  {
+    "id": "confinement",
+    "name": "Confinement",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "scaling": {
+      "manaCostIncrease": 30
+    },
+    "description": "You force a target to make a Will saving throw. On a fail they target only receives half healing from all sources. If the target fails the saving throw by more than 5 (if they needed to roll a 15, and they roll 10 or below) they receive no healing instead. You cannot cast this on a creature already affected."
+  },
+  {
+    "id": "traumatise",
+    "name": "Traumatise",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "description": "You force a creature to make a Wis saving throw or become traumatised for the duration. While traumatised, a creature is stunned, but their PA and MA are tripled and all incoming damage is halved. The creature can repeat the saving throw at the end of each turn."
+  },
+  {
+    "id": "dark-sleep",
+    "name": "Dark sleep",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "self",
+    "components": [],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "You fall into a dark sleep. You are crystalised for the duration and your summons no longer take damage over time. All healing you receive is reduced to 0. You can end this effect early (but still end your turn - you wake up and then the round continues)."
+  },
+  {
+    "id": "false-promise",
+    "name": "False promise",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 125,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 89,
+      "dice": "12d12"
+    },
+    "healing": {
+      "modMultiplier": 6,
+      "flat": 89,
+      "dice": "12d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "1d12"
+      },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "1d12"
+      }
+    },
+    "description": "You heal a creature that is NOT completely healthy (full hp) for [6 x spell modifier + 89 + 12d12]. The target then takes [3 x spell modifier + 35 + 3d12] shadow damage at the start of each of their turns for the duration."
+  },
+  {
+    "id": "corpse-lunge",
+    "name": "Corpse lunge",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 115,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 44,
+      "dice": "6d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d8"
+      }
+    },
+    "description": "You consume a corpse to create a shadow spectre that lunges in a 20 ft long line 10 ft wide line in the direction opposite of you (as you are facing the body, the line continues towards the horizon). All creatures in the range must roll a dex saving throw. On a fail they take [3 x spell modifier + 44 + 6d8] spectral damage. On a success they only take half as much."
+  },
+  {
+    "id": "wits-leech",
+    "name": "Wits leech",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 0,
+    "manaCost": 50,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 0,
+      "flat": 1,
+      "dice": "1d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 15
+    },
+    "description": "You consume a corpse, absorbing their wits. For the duration you add [1d4 + 1] to your: Int and Wis saving throws, passive investigation and passive perception, Perception and Investigation checks."
+  },
+  {
+    "id": "the-four-eyed-crow",
+    "name": "The four-eyed crow",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 6,
+    "manaCost": 210,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 21,
+      "dice": "3d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d10"
+      }
+    },
+    "description": "You send forth a crow at a target within range. The crow flies from one target to another within 10 ft of them (only enemies). The crow prioritizes targets that it hasn't hit yet, but chooses randomly from them. A target “hit” by the crow must succeed on a Will saving throw or take [3 x spell modifier + 21 + 3d10] shadow damage and become terrified for 1 turn. A target can take the damage multiple times but cannot become terrified for more than 1 turn. The crow can bounce up to 5 times (“hitting” a target 6 times)."
+  },
+  {
+    "id": "wicked-telekinesis",
+    "name": "Wicked telekinesis",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 23,
+      "dice": "6d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d4"
+      }
+    },
+    "description": "You force a target to make a Str saving throw. On a fail you create a dark beam that lifts them up and drops them with force on a spot within range, damaging them for [3 x spell modifier + 23 + 6d4] crushing damage. Both the target and the “teleporting” destination must be within [range] of you. A willing creature automatically fails the saving throw."
+  },
+  {
+    "id": "dark-servant",
+    "name": "Dark servant",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 11,
+    "manaCost": 100,
+    "range": "10 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You mark a body with a mark of necromancy. The body rises as it stands and does your bidding (it is unable to fight, but can attempt to accomplish tasks to the best of its abilities). The body has the stats of the creature before death."
+  },
+  {
+    "id": "dark-sight",
+    "name": "Dark sight",
+    "classId": "necromancer",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You temporarily gain darkvision of 30 ft. This can see through magic darkness as well (that normally blocks vision)."
+  },
+  {
+    "id": "void-shard",
+    "name": "Void shard",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 44,
+      "dice": "8d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "2d10"
+      }
+    },
+    "description": "You create a shard of darkness and throw it at a creature within range. The target must succeed on a dex saving throw or take [4 x spell modifier + 44 + 8d10] shadow damage and be affected by shadow vision for the duration. (shadow vision means that a creature is covered in a darkness that follows them; they are able to see perfectly 10 ft around them but nothing further than that)."
+  },
+  {
+    "id": "corruption",
+    "name": "Corruption",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 215,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 50,
+      "dice": "4d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d12"
+      }
+    },
+    "description": "You cast a shadow ray on a creature within range that is affected by at least 3 shadow effects (shadow damage over time, or cc cast by necromancer etc.). All the shadow effects end and the creature takes [4 x spell modifier + 50 + 4d12] + [4 x spell modifier + 25 + 4d12] / shadow effect ended shadow damage and you heal for half the damage dealt."
+  },
+  {
+    "id": "void-feast",
+    "name": "Void feast",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 34,
+      "dice": "4d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d8"
+      }
+    },
+    "description": "You cast the void upon a creature within range. The creature takes [4 x spell modifier + 34 + 4d8] shadow damage at the start of each of their turns for the duration. This effect can only be ended by a 5th level spell by a normal caster or 8th level spell by a major caster that heals the target (or straight up ends the effect). You can also end the effect at any time you want. If you go more than 300 ft away from the target, the effect also ends."
+  },
+  {
+    "id": "circle-of-the-wicked",
+    "name": "Circle of the wicked",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 155,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You create a 30 ft radius circle centered on you (that does not move with you). Creatures inside the circle have their range tripled. For spells and attacks with melee range the range becomes 30 ft (all attacks have a shadow extension that casts them at the mentioned range)."
+  },
+  {
+    "id": "black-speech",
+    "name": "Black speech",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "30 ft",
+    "components": [
+      "V"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 65,
+      "dice": "4d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "1d8"
+      }
+    },
+    "description": "You speak a dark ritual. All enemy creatures within range must roll a Wis saving throw. On a fail they take [4 x spell modifier + 65 + 4d8] shadow damage, or half as much on a success. If a creature failed the saving throw, they cannot target you (can still damage you with aoes) with anything for 1 turn."
+  },
+  {
+    "id": "rotting-infestation",
+    "name": "Rotting infestation",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "description": "You explode a corpse, creating a rotting cloud of stench in a 10 ft area around it. Creatures in the area must succeed on a Const saving throw or be knocked prone (pucking) and become decaying until the end of your next turn (taking damage from healing)."
+  },
+  {
+    "id": "essence-leech",
+    "name": "Essence leech",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 155,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You consume a corpse, absorbing their essence. You become resistant to all types of magic damage that you are currently normal to."
+  },
+  {
+    "id": "mist-of-the-necromancer",
+    "name": "Mist of the necromancer",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 150,
+    "range": "90 ft",
+    "components": [],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You cover a 60 ft radius area in green mist. The mist obscures the area heavily, but can be seen through (causing disadvantage on attack rolls). If you channel for 1 minute you can cover up 6000 ft radius in mist."
+  },
+  {
+    "id": "dark-passage",
+    "name": "Dark passage",
+    "classId": "necromancer",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 160,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You enter a corpse (or skeleton) for the duration and control its MS. You are immune for the duration. On one of your turns or when the skeleton would die you exit the corpse teleporting up to 10 ft in a direction."
+  },
+  {
+    "id": "aspect-of-darkness",
+    "name": "Aspect of darkness",
+    "classId": "necromancer",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 250,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You enter a demonic overdrive. As long as you remain in combat you take 25% of your max HP as true damage (that bypasses all shields and effects that would block damage - even effects like Undying mantra), but you gain the following benefits: -your damage over time is doubled and converted to true damage (does not apply to this spell) -all healing and temporary HP you gain is doubled -you do not consume corpses when casting spells on them, but you can no longer summon skeletons; This spell ends early if you fall unconscious."
+  },
+  {
+    "id": "cannibalism",
+    "name": "Cannibalism",
+    "classId": "necromancer",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 220,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 55,
+      "dice": "10d10"
+    },
+    "healing": {
+      "modMultiplier": 5,
+      "flat": 55,
+      "dice": "10d10"
+    },
+    "description": "You consume a corpse, consuming their heart. For the duration you are immune to being terrified, mind-controlled, charmed, mad, sleeping and you heal for [5 x spell modifier + 55 + 10d10] at the start of each of your turns."
+  },
+  {
+    "id": "dark-exchange",
+    "name": "Dark exchange",
+    "classId": "necromancer",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 250,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "Choose a creature secretly. For 1 round (or until the end of your next turn if the chosen creature is you) damage and healing are swapped (the creature is damaged by healing and healed by damage - both ignoring armor and resistances). Creatures that damage/heal the chosen creature are unaware that the creature has them reversed."
+  },
+  {
+    "id": "wicked-revive",
+    "name": "Wicked revive",
+    "classId": "necromancer",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 300,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "description": "You can consume the life of an innocent creature (child, herbivore animal, true priest, etc.) to bring a dead creature to life in a mauled, deformed shape. The creature retains its knowledge, thoughts, ideas etc. from before death. You have no control over the creature. The creature’s fighting capabilities may be restricted or enhanced (neither for allies). This can be done even if the creature lost the fight with death."
+  },
+  {
+    "id": "eldritch-blast",
+    "name": "Eldritch blast",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "rangedSpellAttack",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d10"
+      }
+    },
+    "caster": "you",
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 10 + 2d10] force damage."
+  },
+  {
+    "id": "mosquito-swarm",
+    "name": "Mosquito swarm",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 12,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": "2d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "2d12"
+      }
+    },
+    "caster": "you",
+    "description": "You send forth a swarm of mosquitos upon a target. The target must succeed on a Const saving throw or take [spell modifier + 12 + 2d12] piercing damage."
+  },
+  {
+    "id": "infernal-vengeance",
+    "name": "Infernal vengeance",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 0,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "reaction": true,
+    "damageType": "fire",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 3,
+      "dice": "2d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "2d4"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord causes hellish flames to engulf a target who just damaged you. The target takes [spell modifier + 3 + 2d4] fire damage (counts for your last turn for hellish pain)."
+  },
+  {
+    "id": "cursed-lightning",
+    "name": "Cursed lightning",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 12,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 13,
+      "dice": "2d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 22,
+        "dice": "2d8"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord causes a cursed lightning to strike a target within range. The target must succeed on a dex saving throw or take [spell modifier + 13 + 2d8] lightning damage and have a [spell modifier] penalty to their next roll (attack, damage, save, etc)."
+  },
+  {
+    "id": "dark-tentacles",
+    "name": "Dark tentacles",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 5,
+      "dice": "1d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d6"
+      }
+    },
+    "caster": "overlord",
+    "description": "Dark tentacles surround you. The first time an enemy creature comes within 10 ft of you the tentacles attempt to attack the target. The target must succeed on a Str saving throw or take [spell modifier + 5 + 1d6] crushing damage and be grabbed by the tentacles - which effectively roots them (the tentacles will automatically release them at the end of their next turn if they are unable to release themselves until then)."
+  },
+  {
+    "id": "dark-curse",
+    "name": "Dark curse",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0,
+      "dice": "1d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d4"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord curses a creature within range. For the duration the target takes [spell modifier + 1d4] additional shadow damage whenever you damage the target (is considered overlord damage)."
+  },
+  {
+    "id": "doom-bolt",
+    "name": "Doom bolt",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "rangedSpellAttack",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 14,
+      "dice": "2d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d10"
+      }
+    },
+    "caster": "you",
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 14 + 2d10] lightning damage. On a hit you can choose to concentrate on the spell. If you do so you can cast this spell once on each of your turns with no mana cost (on the same target). If you do not cast it on one of your turns the effect ends and you lose concentration."
+  },
+  {
+    "id": "blood-fountain",
+    "name": "Blood fountain",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "10 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "You convert a surface of water (surface or puddle, not lakes or such) to blood."
+  },
+  {
+    "id": "demons-tongue",
+    "name": "Demon’s tongue",
+    "classId": "warlock",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 0,
+      "flat": 1,
+      "dice": "1d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "caster": "overlord",
+    "description": "You can add [1d4 + 1] to your next persuasion, seduction, deception, intimidation check."
+  },
+  {
+    "id": "fire-whip",
+    "name": "Fire whip",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 26,
+      "dice": "3d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d12"
+      }
+    },
+    "caster": "you",
+    "description": "You create a magic fire whip to strike a foe within range. The target must succeed on a const saving throw, or take [2 x spell modifier + 26 + 3d12] fire damage and be blinded for 1 turn."
+  },
+  {
+    "id": "hellfire",
+    "name": "Hellfire",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 21,
+      "dice": "6d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "3d8"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord casts a wave of fire in a 20 ft radius centered on you (or the avatar if available). All enemy creatures in range must succeed on a Dex saving throw or take [2 x spell modifier + 21 + 6d8] fire damage."
+  },
+  {
+    "id": "expanding-shadows",
+    "name": "Expanding shadows",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 80,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 44,
+      "dice": "5d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "3d10"
+      }
+    },
+    "caster": "you",
+    "description": "You create a spear of darkness that you throw in a direction. The spear travels for 60 ft (60 ft long line 5 ft wide). Each creature in the path must succeed on a dex saving throw or take [2 x spell modifier + 44+ 5d10] shadow damage."
+  },
+  {
+    "id": "curse-of-fright",
+    "name": "Curse of fright",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "caster": "overlord",
+    "description": "Your overlord curses a target with fright. Everytime the creature damages you they must succeed on a Will saving throw or become terrified until the end of their turn."
+  },
+  {
+    "id": "tides-of-blood",
+    "name": "Tides of blood",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 75,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 28,
+      "dice": "2d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d10"
+      }
+    },
+    "caster": "you",
+    "description": "You cast a wave of daggers of blood to strike all enemy foes within 15 ft of you. Any enemy within range must succeed on a const saving throw or take [2 x spell modifier + 28 + 2d10] piercing damage. If the target has blood (is not a construct, undead, etc) they become linked to all the other creatures with blood damaged by the spell. Until the end of your next turn, if one of the affected creatures deals damage to you, the same amount (after reductions) is dealt as true damage to all the other affected creatures."
+  },
+  {
+    "id": "cursed-ground",
+    "name": "Cursed ground",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 55,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "caster": "overlord",
+    "description": "You mark a point within range. The 15 ft area around it becomes cursed ground. Whenever a creature starts their turn in the area they must succeed on a Str saving throw or become rooted for the rest of their turn."
+  },
+  {
+    "id": "wicked-wall",
+    "name": "Wicked wall",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 60,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "caster": "overlord",
+    "description": "You create a 60 ft long 20 ft tall wall of darkness centered on a point within range. Enemies cannot pass through the walls, allies (including you) must succeed on a Will saving throw in order to pass through it, but all enemy attacks that pass through the wall deal double damage."
+  },
+  {
+    "id": "demonic-serpent",
+    "name": "Demonic serpent",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 18,
+      "dice": "2d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d8"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord creates a small poisonous snake at a point within range that attempts to bite a target next to it and then vanishes. The snake makes a spell attack against a target within 5 ft of it. On a hit the target takes [2 x spell modifier + 18 + 2d8] piercing damage, and [2 x spell modifier + 18 + 2d8] poison damage at the start of their turn."
+  },
+  {
+    "id": "rain-blood",
+    "name": "Rain blood",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "Your overlord rains blood in a 30 ft radius area centered on a point within range (clear surfaces in the area become blood surfaces)."
+  },
+  {
+    "id": "shadow-walk",
+    "name": "Shadow walk",
+    "classId": "warlock",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "caster": "you",
+    "description": "While you channel (you are able to move) you are invisible. A passive investigation against your spell DC might make a creature realise there is a presence, but they cannot see you. An investigation check can detect your position. Truesight and such sees you. If you touch or bump into a creature (not push or shove or knock back/prone) the creature doesn’t realise you are there and doesn’t pay much thought to the event, unless their passive investigation (or check) succeeded against your spell DC, in which case you are “revealed” to them."
+  },
+  {
+    "id": "malediction",
+    "name": "Malediction",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 23,
+      "dice": "6d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d10"
+      }
+    },
+    "caster": "overlord",
+    "description": "You curse the enemies in a 10 ft radius area centered on a point within range. Enemy targets in the area must succeed on a Cha saving throw or become cursed (they still take half damage on a success). At the start of their next turn they will take [3 x spell modifier + 23 + 6d10] shadow damage."
+  },
+  {
+    "id": "eldritch-wave",
+    "name": "Eldritch wave",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 135,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 12,
+      "dice": "6d6"
+    },
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": "2d6"
+      }
+    },
+    "caster": "you",
+    "description": "You create a wave of eldritch force around you. All enemy creatures within 15 ft of you must succeed on a const saving throw or take [3 x spell modifier + 12 + 6d6] force damage and become snared until the end of your next turn."
+  },
+  {
+    "id": "infect",
+    "name": "Infect",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 130,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 22,
+      "dice": "6d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "3d8"
+      }
+    },
+    "caster": "overlord",
+    "description": "You cast a horrid disease upon a target within range. The target must succeed on a const saving throw or take [3 x spell modifier + 22 + 6d8] poison damage and then become plagued for 1 turn (their current and max HP are reduced by 20%, and they are scaled back after). Effects that cure diseases cure infect too (it is considered a 3rd level spell disease)."
+  },
+  {
+    "id": "black-shroud",
+    "name": "Black shroud",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "You create a black shroud in a 15 ft radius area centered on a point within range. Creatures in the shroud are silenced and suffocating (these effects persist for all of the turn, even if the creature leaves the shroud)."
+  },
+  {
+    "id": "pyre",
+    "name": "Pyre",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 6,
+    "manaCost": 200,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 56,
+      "dice": "3d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 100,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 19,
+        "dice": "1d12"
+      }
+    },
+    "caster": "you",
+    "description": "You attempt to force a creature on a magical pyre that you create, practically suppressing the target (incapacitated condition). The target must succeed on a Will saving throw or become tied to the pyre. For the duration at the start of each of the creature’s turns they take [3 x spell modifier + 56 + 3d12] fire damage, that IS reduced by armor. The target repeats the saving throw at the end of each of their turns, ending the effect on both of you. The target must be of size “large” or lower."
+  },
+  {
+    "id": "death-wish",
+    "name": "Death wish",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "you",
+    "description": "For the duration the thirst for blood runs in your veins. If you are below 50% of your max HP you deal 1.5 x damage with every ability. If you are below 10% of your max HP you deal 2 x damage with every ability."
+  },
+  {
+    "id": "dark-omen",
+    "name": "Dark omen",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 75,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 34,
+      "dice": "6d8"
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "3d8"
+      }
+    },
+    "caster": "overlord",
+    "description": "You force a creature to make a Wis saving throw. On a fail they are affected by shadow vision for the duration. A creature can end the effect early if they deal damage to an ally (themselves included), in which case they take [3 x spell modifier + 34 + 6d8] psychic damage, or if they kill an opponent, in which case they take no damage."
+  },
+  {
+    "id": "sword-of-the-demon-king",
+    "name": "Sword of The Demon King",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 135,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 54,
+      "dice": "6d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": "3d12"
+      }
+    },
+    "caster": "you",
+    "description": "You create a gigantic flame sword that you control using telekinesis. You smash it to the ground in a direction in front of you. The sword hit a 60 ft long 10 ft wide line. Creatures hit must succeed on a dex saving throw or take [3 x spell modifier + 54 + 6d12] fire damage and be forced to make a const saving throw or get knocked prone."
+  },
+  {
+    "id": "excruciating-pain",
+    "name": "Excruciating pain",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "10 ft",
+    "components": [
+      "V"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0
+    },
+    "caster": "you",
+    "description": "You attempt to cause excruciating pain to a creature within range. You force the target to make a Will saving throw. On a fail the target suffers horrible pain. They are knocked prone and rooted. You can cause them to take [3 x spell modifier] true damage on your turn (for 1 ap, repeatable). A defeated target (severly injured or unconscious but out of combat) automatically fails this saving throw and is incapacitated instead of rooted, and a creature that is above 50% of their max HP and in combat automatically succeeds. The target can repeat the saving throw at the end of each of their turns."
+  },
+  {
+    "id": "harden-heart",
+    "name": "Harden heart",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 11,
+    "manaCost": 100,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 day",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "You harden the heart of a creature. They become cold blooded and uncaring. They are more susceptible to making cruel decisions, ignore pleas and be immune to any effects (magical or not) that would require a Will or resolve CHECKS. The target’s eyes become redish for the duration"
+  },
+  {
+    "id": "demonic-apparition",
+    "name": "Demonic apparition",
+    "classId": "warlock",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "You can summon a demonic apparition of your overlord. The apparition does not fight but it can aid you with a task (check if a room is safe, scare off peasants, etc.)"
+  },
+  {
+    "id": "meteorite-rain",
+    "name": "Meteorite rain",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 170,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 36,
+      "dice": "2d10"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d10"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord sends rain of burning meteorites on a 30 ft area centered on a point within range. All creatures in the area must roll a dex saving throw, taking [2 x spell modifier + 36 + 2d10] crushing damage and [2 x spell modifier + 36 + 2d10] fire damage on a fail, or half as much on a success (only one gets reduced by armor, the one that the target has higher armor against)."
+  },
+  {
+    "id": "total-annihilation",
+    "name": "Total annihilation",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 11,
+    "manaCost": 150,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "Your overlord casts a dark curse on a land, destroying all green life (plants and such, plant-like monsters are not destroyed) in a 600 ft radius area. All animals in the area become sick and die in a few hours."
+  },
+  {
+    "id": "locust-horde",
+    "name": "Locust horde",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": "24d4"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "6d4"
+      }
+    },
+    "caster": "overlord",
+    "description": "Your overlord calls a horde of locust-like insects. The wave affects a 60 ft side cube. All enemy creatures must roll a const saving throw. On a fail they take [4 x spell modifier + 24d4] piercing damage and insects enter their armor (if they are wearing armor). They must remove their armor, clean it and requip it (a total of 6 ap) to get rid of the insects. While a creature has insects in their armor they take [12d4] piercing damage at the start of each of their turns. On a success they only take half damage."
+  },
+  {
+    "id": "plague",
+    "name": "Plague",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 65,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0
+      }
+    },
+    "caster": "overlord",
+    "description": "You send forth a plague in a 40 ft cube centered on a point within range. All targets within range must succeed on a const saving throw or become plagued for the duration. A plagues creature takes [4 x spell modifier] poison damage at the start of each turn (which also reduces their max hp). They can repeat the saving throw at the end of each turn."
+  },
+  {
+    "id": "grasp-of-the-starved",
+    "name": "Grasp of the starved",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 160,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 80,
+      "dice": "8d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "2d12"
+      }
+    },
+    "caster": "overlord",
+    "description": "You summon the dead to aid you. All enemy creatures within range standing on blood are attacked by spectral hands that spring from the ground. They must roll str saving throws. On a fail, a creature takes [4 x spell modifier + 80 + 8d12] spectral damage and is rooted for 1 turn. On a success they only take half damage."
+  },
+  {
+    "id": "soul-link",
+    "name": "Soul link",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "caster": "overlord",
+    "description": "You mark a 15 ft radius area within range. All enemy creatures in the area must roll a Cha saving throw. All creatures that fail the saving throw are linked together for the duration. Whenever one of these creatures takes damage all the other linked creatures take half of the damage (after the reduction) as true damage. This effect does not apply on itself, poisons or other special effects, just on direct damage."
+  },
+  {
+    "id": "blood-starvation",
+    "name": "Blood starvation",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 86,
+      "dice": "8d12"
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 19,
+        "dice": "2d12"
+      }
+    },
+    "caster": "you",
+    "description": "You mark all enemy creatures within 20 ft of a point within range. If you manage to do [300] damage to a marked creature (while it is marked; aka within the duration; the cast turn counts towards the duration) you absorb the blood within it and it takes [4 x spell modifier + 86 + 8d12] pure damage (creatures that do not have blood in their bodies are immune) and you are healed for the same amount, consuming the mark from the creature."
+  },
+  {
+    "id": "enthral",
+    "name": "Enthral",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 11,
+    "manaCost": 160,
+    "range": "melee",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "caster": "you",
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target becomes enthralled by you, practically becoming a mindless slave to you. The target loses most of its capabilities of proper speech or behaviour (gen cuvantul mindless se refera la mindless), they are able to speak but they do so in a very unusual way. Any creature that knew them previously immediately realises something is wrong with them. At the same time the target’s fighting capabilities are reduced to 0."
+  },
+  {
+    "id": "demonic-gate",
+    "name": "Demonic gate",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 170,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0
+    },
+    "caster": "you",
+    "description": "You teleport yourself and up to [spell modifier] other creatures within range by up to 600 ft in a direction of your choice. If the arrival point is occupied you take 50% of your max HP as true damage and the spell fails."
+  },
+  {
+    "id": "circle-of-death",
+    "name": "Circle of death",
+    "classId": "warlock",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 150,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "you",
+    "description": "You create a 15 ft radius circle centered on you (that does not move with you). All creatures within the circle deal and receive double damage."
+  },
+  {
+    "id": "ultimate-service",
+    "name": "Ultimate service",
+    "classId": "warlock",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 500,
+    "range": "self",
+    "components": [],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "caster": "overlord",
+    "description": "Your overlord grants you one more chance for your service. You heal to full HP. For the duration all healing and damage (except for this spell’s) you receive is reduced to 0, you take 25% of your max HP as true damage at the end of every turn, all the spells you cast are empowered, your AC, all your armors and resistances become 0 (you also cannot benefit from any sort of shield, immunity buff or temporary HP). If combat ends this effect ends instantly. (cannot be cast out of combat; combat is considered ended only if your opponents are defeated)"
+  },
+  {
+    "id": "curse-of-death",
+    "name": "Curse of death",
+    "classId": "warlock",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 725,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "caster": "overlord",
+    "description": "You mark any number of creatures you see. If a creature’s might is lower than [your level / 8] they are automatically cursed, if their might is lower than [your level / 4] they must succeed on a Cha saving throw or be cursed, if their might is lower than [your level / 2] they have advantage on the saving throw, and they are immune otherwise. Whenever during the duration you can choose to instantly kill a cursed creature."
+  },
+  {
+    "id": "area-of-oblivion-tainted-grounds",
+    "name": "Area of oblivion (tainted grounds)",
+    "classId": "warlock",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 550,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 52,
+      "dice": "12d12"
+    },
+    "caster": "overlord",
+    "description": "You mark a spot within range. The 20 ft radius area centered on a point becomes shadowy and a blast of force rains down on it. All creatures in the area must roll a Will saving throw. They take [5 x spell modifier + 52 + 12d12] force damage, and if they fail the saving throw they are stunned for the duration. (const saving throw to end the effect early)"
+  },
+  {
+    "id": "blood-storm",
+    "name": "Blood storm",
+    "classId": "warlock",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 520,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "piercing",
+    "attackType": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 15,
+      "dice": "5d10"
+    },
+    "caster": "overlord",
+    "description": "You start channelling a storm of blood. For the duration gigantic drops of piercing blood drop in the 90 ft radius area surrounding you. At the end of every turn of channelling a number of drops equal to the AP consumed drops on each target within range. Each drop deals [5 x spell modifier + 15 + 5d10] piercing damage that pierces armor."
+  }
+]

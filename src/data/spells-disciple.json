@@ -1,0 +1,4482 @@
+[
+  {
+    "id": "radiant-aura",
+    "name": "Radiant Aura",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0,
+      "dice": null
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": null,
+      "damageIncrease": {
+        "modMultiplier": 0.5,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "Aura. Allies in range deal [spell modifier] bonus light damage on attack rolls. At higher levels: +[spell modifier / 2] bonus damage.",
+    "effects": [
+      "radiant-aura"
+    ]
+  },
+  {
+    "id": "precision-aura",
+    "name": "Precision Aura",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range gain +1 to attack rolls. Each miss increases bonus by +1, resets to +1 after a hit.",
+    "effects": [
+      "precision-aura"
+    ]
+  },
+  {
+    "id": "curing-touch",
+    "name": "Curing Touch",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "melee",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": {
+        "count": 2,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 40,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 24,
+        "dice": {
+          "count": 3,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Heal an ally for [spell modifier + 11 + 2d10] and end one minor non-magical disease or poison/poisoned effect."
+  },
+  {
+    "id": "crushing-light",
+    "name": "Crushing Light",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 11,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 24,
+      "dice": {
+        "count": 3,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 4,
+        "flat": 38,
+        "dice": {
+          "count": 5,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Strike the ground, charging a 5 ft wide, 10 ft long line with divine energy. Erupts at start of next turn dealing [2x spell modifier + 24 + 3d12] light damage."
+  },
+  {
+    "id": "lights-blessing",
+    "name": "Light's Blessing",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30
+    },
+    "description": "First saving throw against a negative condition/penalty is rolled with advantage. At higher levels: -1 AP cost."
+  },
+  {
+    "id": "divine-senses",
+    "name": "Divine Senses",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Add [spell modifier] to all insight, perception and investigation checks. Passive scores also increase by [spell modifier]."
+  },
+  {
+    "id": "stone-hammer",
+    "name": "Stone Hammer",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 6,
+    "manaCost": 20,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 13,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 80,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": {
+          "count": 8,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Ranged spell attack dealing [spell mod + 13 + 4d6] crushing damage and [spell mod + 13 + 4d6] light damage. Both reduced by armor."
+  },
+  {
+    "id": "focused-faith",
+    "name": "Focused Faith",
+    "classId": "paladin",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 25,
+      "dice": {
+        "count": 2,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 26,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 25,
+        "dice": {
+          "count": 3,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Gain [spell modifier + 25 + 2d10] temporary HP. While shield persists, cannot heal others. Disadvantage on two-handed/off-hand weapon attacks."
+  },
+  {
+    "id": "swarm-killer-aura",
+    "name": "Swarm-Killer Aura",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range are not affected by flanks/pack-tactics. Attacks against them cannot have advantage.",
+    "effects": [
+      "swarm-killer-aura"
+    ]
+  },
+  {
+    "id": "legion-aura",
+    "name": "Legion Aura",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range have advantage on attack rolls on enemies if they and another ally are within melee range of a foe.",
+    "effects": [
+      "legion-aura"
+    ]
+  },
+  {
+    "id": "holy-weapon",
+    "name": "Holy Weapon",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Weapon shines bright/dim light (sunlight). Attacked creatures must CON save or be blinded for 1 turn."
+  },
+  {
+    "id": "smite-of-wrath",
+    "name": "Smite of Wrath",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 65,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 32,
+      "dice": {
+        "count": 4,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": {
+          "count": 2,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [2x spell modifier + 32 + 4d10] lightning damage and target loses one random damage resistance until start of next turn."
+  },
+  {
+    "id": "smite-of-force",
+    "name": "Smite of Force",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 35,
+      "dice": {
+        "count": 4,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 19,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [2x spell modifier + 35 + 4d8] force damage and target is pushed 15 ft."
+  },
+  {
+    "id": "healing-orbs",
+    "name": "Healing Orbs",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 35,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": {
+        "count": 2,
+        "sides": 8
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Create 3 orbs. Each heals a creature in melee range for [2x spell modifier + 2d8]. Activate any time, no AP cost. Cannot heal self."
+  },
+  {
+    "id": "radiant-fury",
+    "name": "Radiant Fury",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 75,
+    "range": "self",
+    "components": [
+      "V"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Prepare for next attack. If hit by weapon attack, absorb damage and become enraged until end of next turn, dealing double damage. CC ends the effect."
+  },
+  {
+    "id": "radiant-explosion",
+    "name": "Radiant Explosion",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 75,
+    "range": "15 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 27,
+      "dice": {
+        "count": 3,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      }
+    },
+    "description": "AoE explosion of radiant energy. All enemies in 15 ft must CON save or take [2x spell modifier + 27 + 3d8] light damage and be knocked prone."
+  },
+  {
+    "id": "hammer-of-justice",
+    "name": "Hammer of Justice",
+    "classId": "paladin",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "30 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "rangedWeaponAttack",
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Throw weapon at target (ranged weapon attack). On hit: weapon damage + teleport to target. On miss: weapon travels to range, can teleport to it or recall."
+  },
+  {
+    "id": "vampiric-aura",
+    "name": "Vampiric Aura",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range heal for 20% of damage dealt with single target attacks and spells.",
+    "effects": [
+      "vampiric-aura"
+    ]
+  },
+  {
+    "id": "predator-aura",
+    "name": "Predator Aura",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range score critical hits when hitting a stunned or prone enemy.",
+    "effects": [
+      "predator-aura"
+    ]
+  },
+  {
+    "id": "dual-arc",
+    "name": "Dual Arc",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 130,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 25,
+      "dice": {
+        "count": 3,
+        "sides": 8
+      }
+    },
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 25,
+      "dice": {
+        "count": 3,
+        "sides": 8
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Split into 2 bolts of light dashing 30 ft creating a circle. One deals [3x spell mod + 25 + 3d8] light damage, the other heals for the same. Free basic attack at destination."
+  },
+  {
+    "id": "gaze-of-the-gods",
+    "name": "Gaze of the Gods",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 115,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Summon god's gaze on 5 ft radius area. All creatures must WILL save or be petrified for the duration. Repeat save at end of each turn."
+  },
+  {
+    "id": "searing-smite",
+    "name": "Searing Smite",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 120,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0,
+      "dice": {
+        "count": 3,
+        "sides": 6
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 10,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "On weapon attack, target takes [3x spell modifier + 3d6] bonus fire damage and takes double damage from all smites until end of next turn."
+  },
+  {
+    "id": "divine-shield",
+    "name": "Divine Shield",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 125,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "Gain temporary HP equal to half max HP until end of next turn. Immune to all CC during this time. At higher levels: -1 AP cost."
+  },
+  {
+    "id": "transposition-smite",
+    "name": "Transposition Smite",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 23,
+      "dice": {
+        "count": 6,
+        "sides": 4
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": {
+          "count": 2,
+          "sides": 4
+        }
+      }
+    },
+    "description": "Melee spell attack. On hit: [3x spell modifier + 23 + 6d4] force damage and target is teleported to a point within range."
+  },
+  {
+    "id": "godly-mend",
+    "name": "Godly Mend",
+    "classId": "paladin",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 120,
+    "range": "self",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 10,
+      "dice": {
+        "count": 3,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Heal an ally for [3x spell modifier + 10 + 3d10] and end all petrified, stunned, rooted, snared, paralysis, immobilised effects."
+  },
+  {
+    "id": "fearless-aura",
+    "name": "Fearless Aura",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range are immune to terrified. When an attempt to terrify them is made, they become enraged for 1 turn, dealing max dice damage.",
+    "effects": [
+      "fearless-aura"
+    ]
+  },
+  {
+    "id": "purity-aura",
+    "name": "Purity Aura",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range are resistant to light damage and immune to possession/enthrallment. No effect on already possessed/enthralled creatures.",
+    "effects": [
+      "purity-aura"
+    ]
+  },
+  {
+    "id": "smite-of-oblivion",
+    "name": "Smite of Oblivion",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": 70,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": {
+        "count": 4,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Smite alongside weapon attack. Target takes [4x spell modifier + 4d10] light damage. Max once per turn."
+  },
+  {
+    "id": "godly-oasis",
+    "name": "Godly Oasis",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 6,
+    "manaCost": 150,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "8 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Teleport self and up to [spell modifier] creatures to a safe god-created oasis for rest. Duration reduced to 30 min if cast in combat. Return to exact spot."
+  },
+  {
+    "id": "silence-the-heretics",
+    "name": "Silence the Heretics",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 160,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Choose a creature secretly. First time any creature tries casting a verbal spell on the target, the attacker is silenced for the duration. Half duration if attacker's might >= your level."
+  },
+  {
+    "id": "mountain-hammer",
+    "name": "Mountain Hammer",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 210,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 50,
+      "dice": {
+        "count": 4,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": {
+          "count": 1,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Up to 5 ranged spell attacks against different foes. Each deals [4x spell mod + 50 + 4d12] crushing AND [4x spell mod + 50 + 4d12] light damage. Both reduced by armor."
+  },
+  {
+    "id": "banishing-smite",
+    "name": "Banishing Smite",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "meleeSpellAttack",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": {
+        "count": 8,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Melee spell attack. On hit: [4x spell modifier + 8d10] pure damage. Target must WILL save or be banished to god's prison for the duration."
+  },
+  {
+    "id": "divine-favour",
+    "name": "Divine Favour",
+    "classId": "paladin",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 150,
+    "range": "100 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Teleport self and up to [spell modifier] allies 100 ft in one direction. Alternatively, channel 2 turns to teleport to nearest church of your god."
+  },
+  {
+    "id": "grounded-aura",
+    "name": "Grounded Aura",
+    "classId": "paladin",
+    "level": 5,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range are immune to teleportation, banishing and insta-kill effects.",
+    "effects": [
+      "grounded-aura"
+    ]
+  },
+  {
+    "id": "blessed-aura",
+    "name": "Blessed Aura",
+    "classId": "paladin",
+    "level": 5,
+    "apCost": 0,
+    "manaCost": "10%",
+    "range": "20 ft",
+    "components": [],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Aura. Allies in range roll d100 each time they take damage. On 85 or more, they take no damage.",
+    "effects": [
+      "blessed-aura"
+    ]
+  },
+  {
+    "id": "divine-wrath",
+    "name": "Divine Wrath",
+    "classId": "paladin",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "true",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 245,
+      "dice": {
+        "count": 10,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Target must WILL save, taking [5x spell modifier + 245 + 10d12] true damage on fail, or half on success."
+  },
+  {
+    "id": "ultimate-fate",
+    "name": "Ultimate Fate",
+    "classId": "paladin",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 minute",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": {
+        "count": 5,
+        "sides": 12
+      }
+    },
+    "healing": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": {
+        "count": 5,
+        "sides": 12
+      }
+    },
+    "scaling": null,
+    "description": "Channel a 60 ft long, 10 ft wide beam of fire and light. Each turn damages enemies and heals allies for [5x spell modifier + 5d12] per AP consumed. 1 AP to redirect 90 degrees."
+  },
+  {
+    "id": "sacred-bolt",
+    "name": "Sacred Bolt",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": {
+        "count": 2,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Ranged spell attack dealing [spell modifier + 11 + 2d8] light damage. Recastable same turn."
+  },
+  {
+    "id": "healing-word",
+    "name": "Healing Word",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 3,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 4,
+      "dice": {
+        "count": 2,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": {
+          "count": 3,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Heal an ally within range for [spell modifier + 4 + 2d6]. Recastable same turn at double mana each subsequent cast."
+  },
+  {
+    "id": "shaming-word",
+    "name": "Shaming Word",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 round",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Target must WILL save or cannot look at you until start of next turn, giving disadvantage on attacks against you. Recastable on different targets."
+  },
+  {
+    "id": "back-from-the-edge",
+    "name": "Back from the Edge",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Restore an unconscious creature within range to 1 HP without Medicine check. Placed last in initiative. Unavailable if campaign uses instant death."
+  },
+  {
+    "id": "healing-touch-withering-touch",
+    "name": "Healing Touch / Withering Touch",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "melee",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": "meleeSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": {
+        "count": 3,
+        "sides": 10
+      }
+    },
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": {
+        "count": 3,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 22,
+        "dice": {
+          "count": 4,
+          "sides": 10
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 22,
+        "dice": {
+          "count": 4,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Healing: heal ally in melee for [spell mod + 12 + 3d10]. Necrotic: melee spell attack dealing [spell mod + 12 + 3d10] shadow damage."
+  },
+  {
+    "id": "energy-sacrifice",
+    "name": "Energy Sacrifice",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Grant a creature within range 2 additional AP at the start of its next turn."
+  },
+  {
+    "id": "divine-chastise",
+    "name": "Divine Chastise",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45
+    },
+    "description": "Apply 1 weakened stack to a creature. Double stacks if you are severely injured. Scaling: +1 weakened stack per level."
+  },
+  {
+    "id": "illuminate-eclipse",
+    "name": "Illuminate / Eclipse",
+    "classId": "cleric",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 minutes",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Illuminate: create 15 ft radius sphere of light. Eclipse: create 15 ft radius sphere of darkness. Can be placed on an object to follow it."
+  },
+  {
+    "id": "cleansed-vision",
+    "name": "Cleansed Vision",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 80,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 minutes",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "End blinded on a creature. For duration, creature gains 30 ft darkvision."
+  },
+  {
+    "id": "lingering-light-lingering-darkness",
+    "name": "Lingering Light / Lingering Darkness",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 39,
+      "dice": {
+        "count": 4,
+        "sides": 8
+      }
+    },
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 39,
+      "dice": {
+        "count": 4,
+        "sides": 8
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 27,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 27,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Light: WILL save or [2x spell mod + 39 + 4d8] light damage, emits bright light 20 ft, auto-fails stealth. Darkness: heal [2x spell mod + 39 + 4d8], emits darkness 20 ft, advantage on stealth."
+  },
+  {
+    "id": "godly-expertise",
+    "name": "Godly Expertise",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 50,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Reaction. On Knowledge, Arcana, or Religion check to identify holy/unholy objects, blessings/curses, or removal methods: add [5x spell modifier] to the roll."
+  },
+  {
+    "id": "holy-revitalise-darkened-ruin",
+    "name": "Holy Revitalise / Darkened Ruin",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 22,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 22,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": {
+          "count": 3,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": {
+          "count": 3,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Revitalise: heal [2x spell mod + 22 + 4d6] and remove 1 burning/envenomed/bleeding/wounded. Ruin: CON save or [2x spell mod + 22 + 4d6] fire/poison damage + burning/envenomed effect."
+  },
+  {
+    "id": "healing-invocation",
+    "name": "Healing Invocation",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 6,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 rounds",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 32,
+      "dice": {
+        "count": 8,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 90,
+      "healingIncrease": {
+        "modMultiplier": 2,
+        "flat": 26,
+        "dice": {
+          "count": 4,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Heal all allies in range for [4x spell mod + 32 + 8d10]. In combat, can channel up to 3 rounds; healing doubles each turn of channeling."
+  },
+  {
+    "id": "light-ward",
+    "name": "Light Ward",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 50,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Ward a creature against harmful magic. Advantage on saving throws and spell attacks against it have disadvantage until start of your next turn."
+  },
+  {
+    "id": "peaceful-retaliation",
+    "name": "Peaceful Retaliation",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 rounds",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45
+    },
+    "description": "First weapon attack against chosen creature gives attacker 2 disarmed stacks. Can be used as reaction for half stacks. Scaling: +1 disarmed stack."
+  },
+  {
+    "id": "worthy-requite",
+    "name": "Worthy Requite",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 rounds",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Whenever you heal a creature, gain temporary HP equal to half the amount healed until start of next turn. Existing temp HP persists even if concentration breaks."
+  },
+  {
+    "id": "prayer-of-silence",
+    "name": "Prayer of Silence",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 6,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40
+    },
+    "description": "Channel. At end of each turn, all enemies in range that can hear you must WILL save or gain 3 silenced stacks. Scaling: +1 silenced stack."
+  },
+  {
+    "id": "illuminating-descent",
+    "name": "Illuminating Descent",
+    "classId": "cleric",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 27,
+      "dice": {
+        "count": 4,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 60,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": {
+          "count": 2,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Choose a point. Holy light descends in 10 ft radius. DEX save or take [2x spell mod + 27 + 4d12] light damage."
+  },
+  {
+    "id": "healing-rays",
+    "name": "Healing Rays",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 95,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 39,
+      "dice": {
+        "count": 9,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 45,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": {
+          "count": 3,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Fire up to 3 healing rays. Each heals all creatures within 5 ft of impact for [3x spell mod + 39 + 9d6]. Each creature healed by only one ray."
+  },
+  {
+    "id": "fountain-of-renewal",
+    "name": "Fountain of Renewal",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 30,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15
+    },
+    "description": "After channeling for duration, create a fountain lasting 1 day. 5 uses, 1 AP to drink, restores 10% max HP. Max 120 total HP restored. Scaling: +45 total HP."
+  },
+  {
+    "id": "repentance-subjugation",
+    "name": "Repentance / Subjugation",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 17,
+      "dice": {
+        "count": 5,
+        "sides": 8
+      }
+    },
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 0,
+      "dice": {
+        "count": 5,
+        "sides": 8
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 2,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Repentance: CHA save or [3x spell mod + 17 + 5d8] light damage. Allies within 5 ft of target heal [3x spell mod + 5d8] per turn. Subjugation: shadow variant damages nearby enemies."
+  },
+  {
+    "id": "radiant-nova-umbral-nova",
+    "name": "Radiant Nova / Umbral Nova",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 6,
+    "manaCost": 200,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 42,
+      "dice": {
+        "count": 6,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 90,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 19,
+        "dice": {
+          "count": 2,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Radiant: WIS save or [3x spell mod + 42 + 6d12] light damage; heal for half total damage. Umbral: shadow variant; can sacrifice HP for bonus damage to all who failed."
+  },
+  {
+    "id": "holy-aid",
+    "name": "Holy Aid",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 90,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 5,
+      "dice": {
+        "count": 6,
+        "sides": 4
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 15,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": {
+          "count": 2,
+          "sides": 4
+        }
+      }
+    },
+    "description": "End prone, rooted, and snared on a creature. Heal for [3x spell mod + 5 + 6d4]."
+  },
+  {
+    "id": "domain-of-tranquility",
+    "name": "Domain of Tranquility",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 65,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 30 ft radius area centered on you. All creatures within are considered weakened. Does not modify existing weakened stacks. Double AP to center on a point within 30 ft."
+  },
+  {
+    "id": "brand-of-the-infidels",
+    "name": "Brand of the Infidels",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 6,
+    "manaCost": 190,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 83,
+      "dice": {
+        "count": 10,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 90,
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 24,
+        "dice": {
+          "count": 4,
+          "sides": 10
+        }
+      }
+    },
+    "description": "CON save or [6x spell mod + 83 + 10d10] fire damage + 5 decaying stacks. Can forgo fire damage for half AP cost."
+  },
+  {
+    "id": "forced-mediation",
+    "name": "Forced Mediation",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 95,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45
+    },
+    "description": "Two creatures cannot damage each other. Each unwilling creature may WILL save; if any succeeds, spell has no effect. Scaling: +2 to spell save DC."
+  },
+  {
+    "id": "enfeeble",
+    "name": "Enfeeble",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 40,
+      "dice": {
+        "count": 3,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [3x spell mod + 40 + 3d8] psychic damage + 3 corroded stacks. Recastable same turn. Scaling: +1 corroded stack."
+  },
+  {
+    "id": "divine-premonition",
+    "name": "Divine Premonition",
+    "classId": "cleric",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Name an objective and a specific action. Make a Religion check (DC 50 baseline). On success, receive divine intuition whether the action would aid, hinder, or have no impact."
+  },
+  {
+    "id": "eyes-of-the-judge",
+    "name": "Eyes of the Judge",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 20 ft tall statue of your god. Enemies in its 30 ft cone that damage you or allies must WILL save or be frightened until end of their turn."
+  },
+  {
+    "id": "holy-cross-scorching-cross",
+    "name": "Holy Cross / Scorching Cross",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 37,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 27,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 2,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Create a cross shape on the ground. Healing: creatures at 4 ends healed for [4x spell mod + 27 + 4d6], center creature healed for additional amount. Scorching: fire damage variant [4x spell mod + 37 + 4d6]."
+  },
+  {
+    "id": "altar-of-silence",
+    "name": "Altar of Silence",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 155,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 30 ft radius sphere where no creature can talk, disabling all verbal component spells."
+  },
+  {
+    "id": "refreshing-wave",
+    "name": "Refreshing Wave",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 37,
+      "dice": {
+        "count": 4,
+        "sides": 8
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "60 degree, 90 ft cone. Heals all allies for [4x spell mod + 37 + 4d8] and removes burning and poisoned."
+  },
+  {
+    "id": "cleansing-spark",
+    "name": "Cleansing Spark",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": {
+        "count": 4,
+        "sides": 10
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 20,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Heal ally for [4x spell mod + 4d10] and end one of: terrified, stunned, incapacitated, paralysed, petrified, crystallised."
+  },
+  {
+    "id": "sanctuary",
+    "name": "Sanctuary",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 180,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 20 ft radius sphere of peace. No creature in area can take/deal damage or be targeted by negative effects. Channel/concentration can still be broken."
+  },
+  {
+    "id": "divine-spark",
+    "name": "Divine Spark",
+    "classId": "cleric",
+    "level": 4,
+    "apCost": 5,
+    "manaCost": 250,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 90,
+      "dice": {
+        "count": 10,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 85,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": {
+          "count": 2,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [4x spell mod + 90 + 10d12] light/shadow damage."
+  },
+  {
+    "id": "bells-of-the-church",
+    "name": "Bells of the Church",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 420,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "thunder",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 60,
+      "dice": {
+        "count": 10,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 5,
+      "flat": 60,
+      "dice": {
+        "count": 10,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": {
+          "count": 2,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": {
+          "count": 2,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Enemies that hear: CON save or [5x spell mod + 60 + 10d6] thunder damage + prone, half on success. Allies that hear: healed for same amount + end prone."
+  },
+  {
+    "id": "shield-of-faith",
+    "name": "Shield of Faith",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 215,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "Give creature 250 temporary HP. Immune to CC while shield persists. If shield depleted before duration, creature takes double damage for 1 round. Max once per creature per fight."
+  },
+  {
+    "id": "divine-teleportation",
+    "name": "Divine Teleportation",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 0,
+    "manaCost": 250,
+    "range": "90 ft",
+    "components": [
+      "V"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Teleport to another point within range."
+  },
+  {
+    "id": "decadent-souls",
+    "name": "Decadent Souls",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 210,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Target must WIS save or become decaying, being damaged by healing for the duration."
+  },
+  {
+    "id": "divine-light-divine-chaos",
+    "name": "Divine Light / Divine Chaos",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 140,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 minutes",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Light: 90 ft cube, dissipates winds/clouds/darkness (unless from higher level spell). Chaos: 90 ft cube, creates wind/cloud/mist/darkness."
+  },
+  {
+    "id": "messenger-of-god",
+    "name": "Messenger of God",
+    "classId": "cleric",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 220,
+    "range": "300 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 day",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Up to 100 creatures must WIS save or believe you are the true messenger of your god. Unaware of magic after spell ends. Only affects creatures capable of believing in gods."
+  },
+  {
+    "id": "revive",
+    "name": "Revive",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 6,
+    "manaCost": 500,
+    "range": "10 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "After 1 round of channeling, revive a creature dead less than 1 week. Does not regenerate limbs or cure effects at time of death. Respawns with 6 fatigue stacks and 1 HP."
+  },
+  {
+    "id": "plane-travel",
+    "name": "Plane Travel",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 6,
+    "manaCost": 280,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "After 1 hour of channeling, teleport self and up to [spell modifier] creatures to another plane of existence. Must know the plane's name. 1 day cooldown."
+  },
+  {
+    "id": "divine-glyph",
+    "name": "Divine Glyph",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 300,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "8 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 12,
+      "flat": 200,
+      "dice": {
+        "count": 24,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 22,
+        "dice": {
+          "count": 4,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Place a glyph on an object/wall. Protected against spells lvl 6 and lower and physical harm. When triggered: [12x spell mod + 200 + 24d10] damage + CON save or blinded 1 min."
+  },
+  {
+    "id": "holy-protection-unholy-protection",
+    "name": "Holy Protection / Unholy Protection",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 week",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "1 hour ritual to protect a building. Unholy/holy creatures must CHA save to enter. On success: disadvantage on all rolls, outline glows yellow."
+  },
+  {
+    "id": "holy-shelter",
+    "name": "Holy Shelter",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 2,
+    "manaCost": 200,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Protect a creature. Any attacker must WILL save or their ability fails (AP and mana still consumed)."
+  },
+  {
+    "id": "holy-relic-destruction-ward",
+    "name": "Holy Relic / Destruction Ward",
+    "classId": "cleric",
+    "level": 6,
+    "apCost": 2,
+    "manaCost": 180,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 18,
+      "dice": {
+        "count": 3,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 18,
+      "dice": {
+        "count": 3,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Relic: heals allies within 30 ft for [3x spell mod + 18 + 3d6] per round. Ward: damages enemies within 30 ft for same (shadow, ignores armor). 150 HP, 18 AC. Scaling: +25 HP, +2 AC."
+  },
+  {
+    "id": "healing-tides",
+    "name": "Healing Tides",
+    "classId": "cleric",
+    "level": 7,
+    "apCost": 5,
+    "manaCost": 325,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 7,
+      "flat": 110,
+      "dice": {
+        "count": 14,
+        "sides": 10
+      }
+    },
+    "scaling": null,
+    "description": "Heal all allies in range for [7x spell mod + 110 + 14d10] and end 1 negative effect per ally (your choice)."
+  },
+  {
+    "id": "complete-restoration",
+    "name": "Complete Restoration",
+    "classId": "cleric",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 500,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Heal creature to full HP, remove all negative effects, recover all lost limbs/body parts. Once per combat."
+  },
+  {
+    "id": "cleric-divine-blast",
+    "name": "Divine Blast",
+    "classId": "cleric",
+    "level": 7,
+    "apCost": 3,
+    "manaCost": 320,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 85,
+      "dice": {
+        "count": 7,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "Ranged spell attack. On hit: [7x spell mod + 85 + 7d12] light/shadow damage. Religion check DC 23 for bonus 200 true damage (god sends mission before reuse)."
+  },
+  {
+    "id": "divine-judgement",
+    "name": "Divine Judgement",
+    "classId": "cleric",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 550,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 0,
+      "dice": {
+        "count": 7,
+        "sides": 4
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 4
+        }
+      }
+    },
+    "description": "All enemies in range must WILL save or take [7x spell mod + 7d4] light damage and be stunned for 3 turns. Half damage on success. 24hr immunity after saving/enduring."
+  },
+  {
+    "id": "aid-of-the-divine",
+    "name": "Aid of the Divine",
+    "classId": "cleric",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 300,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Choose up to [spell modifier] creatures. All rolls of 10 and below are rerolled. Cannot be possessed, frightened or cursed/blessed."
+  },
+  {
+    "id": "tranquillity",
+    "name": "Tranquillity",
+    "classId": "cleric",
+    "level": 8,
+    "apCost": 5,
+    "manaCost": 500,
+    "range": "200 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Healing rain falls from the sky. Restore up to 1000 HP split as you like among allies."
+  },
+  {
+    "id": "true-resurrection",
+    "name": "True Resurrection",
+    "classId": "cleric",
+    "level": 8,
+    "apCost": 1,
+    "manaCost": 600,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Revive a creature dead up to 1 millennium. New body, all curses/illnesses removed. Religion check for >1000 years (DC 20 + 1 per century over). Full HP/resources. One attempt per creature ever."
+  },
+  {
+    "id": "land-of-angels-land-of-devils",
+    "name": "Land of Angels / Land of Devils",
+    "classId": "cleric",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 400,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Teleport self and up to [spell modifier] creatures to your god's domain for the duration. God will not reject you but may ignore you."
+  },
+  {
+    "id": "lightshot",
+    "name": "Lightshot",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": {
+        "count": 2,
+        "sides": 6
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Ranged spell attack against first target in path. On hit: [spell mod + 7 + 2d6] light damage."
+  },
+  {
+    "id": "echoed-healing",
+    "name": "Echoed Healing",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 12,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 6,
+      "dice": {
+        "count": 2,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": {
+          "count": 2,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Heal ally for [spell mod + 6 + 2d6]. If ally not full HP, recastable on same ally same turn (mana only on first cast)."
+  },
+  {
+    "id": "shield-of-shade",
+    "name": "Shield of Shade",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 13,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "Give creature [spell mod + 16 + 2d10] magic shield. While shield stands, creature resists shadow and light damage (only if previously normal against them)."
+  },
+  {
+    "id": "radiant-flame",
+    "name": "Radiant Flame",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": {
+        "count": 2,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "10 ft radius sphere of light from the sky. DEX save or [spell mod + 7 + 2d10] fire damage."
+  },
+  {
+    "id": "spear-of-illumination",
+    "name": "Spear of Illumination",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 16,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 17,
+      "dice": {
+        "count": 4,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": {
+          "count": 3,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Channel 2 turns. STR save or [spell mod + 17 + 4d12] light damage and pushed 1d4 x 10 ft. Half damage on success, no push."
+  },
+  {
+    "id": "chains-of-light",
+    "name": "Chains of Light",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 12,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "CHA save or rooted for duration. Only affects shadow realm creatures. CON save to end. At higher levels: can target any creature."
+  },
+  {
+    "id": "radiant-trap",
+    "name": "Radiant Trap",
+    "classId": "exorcist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 11,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 0,
+      "dice": {
+        "count": 1,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Place invisible glyph. When creature enters 5 ft: [spell mod + 1d10] damage and blinded for duration (CON save to end). Glyph lasts 3 turns."
+  },
+  {
+    "id": "summon-light-swallow",
+    "name": "Summon Light Swallow",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "100 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Summon a light bird. Telepathic communication within 100 ft. Can only move/fly. AC 10, 1 HP. If killed, you take 2d10 true damage."
+  },
+  {
+    "id": "force-blast",
+    "name": "Force Blast",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 24,
+      "dice": {
+        "count": 2,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "10 ft radius blast. All creatures (except you) must STR save or take [2x spell mod + 24 + 2d8] force damage and be pushed 15 ft."
+  },
+  {
+    "id": "armor-of-the-pure",
+    "name": "Armor of the Pure",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "First weapon attack that hits the protected creature deals no damage. If attacker is unholy, it must CON save or be stunned until end of next turn."
+  },
+  {
+    "id": "radiant-ray",
+    "name": "Radiant Ray",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 21,
+      "dice": {
+        "count": 2,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "90 ft long, 10 ft wide line of light. DEX save or [2x spell mod + 21 + 2d10] light damage, half on success."
+  },
+  {
+    "id": "streak-of-light",
+    "name": "Streak of Light",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 5,
+      "dice": {
+        "count": 2,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [2x spell mod + 5 + 2d10] light damage. Repeatable this turn with no mana cost."
+  },
+  {
+    "id": "radiant-flux",
+    "name": "Radiant Flux",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 75,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 51,
+      "dice": {
+        "count": 6,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": {
+          "count": 3,
+          "sides": 12
+        }
+      }
+    },
+    "description": "WILL save or creature is covered in bright aura. If you deal light damage to it this turn, it takes [2x spell mod + 51 + 6d12] additional light damage."
+  },
+  {
+    "id": "prison-of-the-damned",
+    "name": "Prison of the Damned",
+    "classId": "exorcist",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "10 ft radius sphere. Creatures inside must STR save (2 AP, once per turn) to leave."
+  },
+  {
+    "id": "chain-healing",
+    "name": "Chain Healing",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 28,
+      "dice": {
+        "count": 3,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Heal target for [3x spell mod + 28 + 3d6]. Bounces to another ally in range of last target. Max 5 bounces, no repeats."
+  },
+  {
+    "id": "twin-lights",
+    "name": "Twin Lights",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 20,
+      "dice": {
+        "count": 3,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Two reflecting light rays. Different targets: ranged spell attack each for [3x spell mod + 20 + 3d10] light/fire. Same target: DEX save or [3x spell mod + 48 + 3d10] combined."
+  },
+  {
+    "id": "force-field",
+    "name": "Force Field",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "str",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "STR save or push creature with magical force. If hits wall, can channel to keep snared (disadvantage on repeat saves). Can cast exorcism spells while channeling. Large or smaller only."
+  },
+  {
+    "id": "teleporting-trinity",
+    "name": "Teleporting Trinity",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 120,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Target 3 creatures (2 must be 20+ ft apart). Switch all creatures/objects in the three 10 ft radius areas cyclically (1->2, 2->3, 3->1)."
+  },
+  {
+    "id": "holy-liturgy",
+    "name": "Holy Liturgy",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 125,
+    "range": "60 ft",
+    "components": [
+      "V"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 25,
+      "dice": {
+        "count": 3,
+        "sides": 6
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "All enemies in range that hear must CHA save or take [3x spell mod + 25 + 3d6] light damage. Double damage against unholy beings."
+  },
+  {
+    "id": "divine-prison",
+    "name": "Divine Prison",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 90 ft long, 10 ft wide line of light. At end of next turn, creatures on it are lifted 30 ft in spheres of light, incapacitated. WILL save each turn to end. Max 10 ft wide creatures."
+  },
+  {
+    "id": "scorching-sins",
+    "name": "Scorching Sins",
+    "classId": "exorcist",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 65,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0,
+      "dice": {
+        "count": 4,
+        "sides": 4
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 4
+        }
+      }
+    },
+    "description": "Create up to 40 ft radius glowing coal surface. Creatures starting turn in area take [3x spell mod + 4d4] fire damage. Extra damage per AP of movement. Triple damage for unholy. Reduced by armor."
+  },
+  {
+    "id": "shaped-evil",
+    "name": "Shaped Evil",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Force invisible creature's outline to glow. Pull creature from shadow/spectral plane (CHA save). Speaking true name auto-fails save for shadow/spectral plane; allows pulling from any plane with save."
+  },
+  {
+    "id": "purging-cross",
+    "name": "Purging Cross",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 205,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 32,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Cross shape on ground. Creatures at ends: WILL save or [4x spell mod + 32 + 4d6] light damage. Center creature takes bonus. If all ends had creatures, center is stunned 1 min (no saves for 2 turns)."
+  },
+  {
+    "id": "holy-steed",
+    "name": "Holy Steed",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 210,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 31,
+      "dice": {
+        "count": 4,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Spectral steed charges in 90 ft x 10 ft line. CON save or [4x spell mod + 31 + 4d10] spectral damage + prone, half on success. Can channel for 7 steeds (70 ft wide), double damage."
+  },
+  {
+    "id": "towards-the-light",
+    "name": "Towards the Light",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 130,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Spawn light essence. Creatures within 30 ft starting turn must WILL save or consume 1d4 AP walking toward it. Attacks of opportunity auto-miss affected creatures."
+  },
+  {
+    "id": "crucifix-of-protection",
+    "name": "Crucifix of Protection",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 150,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Protect 15 ft diameter sphere around you (stationary). No magic damage can be received/dealt except light or true damage."
+  },
+  {
+    "id": "sky-strikes",
+    "name": "Sky Strikes",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 6,
+      "dice": {
+        "count": 4,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "10 ft radius light beam from sky. DEX save or [4x spell mod + 6 + 4d8] light damage. Two more free strikes (same spot same turn, or separate spots before end of next turn)."
+  },
+  {
+    "id": "healing-star",
+    "name": "Healing Star",
+    "classId": "exorcist",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": {
+        "count": 4,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "8 healing beams in star pattern, each 15 ft. Heal first creature hit for [4x spell mod + 4d6]. If X+ beams hit, recastable free (X starts at 1, increases). Does not heal self."
+  },
+  {
+    "id": "let-there-be-light",
+    "name": "Let There Be Light",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 210,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Cover 10 ft sphere in divine light until end of turn. All creatures take double light damage. At end of turn, covered creatures become immune to light damage until end of next turn."
+  },
+  {
+    "id": "light-tower",
+    "name": "Light Tower",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 200,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a 150 ft tall magical lighthouse. Light dispels fog/darkness/clouds from equal or lower level spells. Unholy beings in light: halved movement, no plane teleport, half damage."
+  },
+  {
+    "id": "soul-transfer",
+    "name": "Soul Transfer",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 215,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 10,
+      "dice": {
+        "count": 5,
+        "sides": 12
+      }
+    },
+    "healing": {
+      "modMultiplier": 5,
+      "flat": 10,
+      "dice": {
+        "count": 5,
+        "sides": 12
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 12
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 12
+        }
+      }
+    },
+    "description": "CHA save. On fail: [5x spell mod + 10 + 5d12] pure damage; heal an ally for same amount. On success: half damage, half healing."
+  },
+  {
+    "id": "fate-edict",
+    "name": "Fate Edict",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 300,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "CHA save or target takes no damage/healing for 2 turns. At end, all accumulated damage is multiplied by 1.5x and all healing is doubled. One target at a time."
+  },
+  {
+    "id": "dazing-beam",
+    "name": "Dazing Beam",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 280,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 24,
+      "dice": {
+        "count": 5,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": {
+          "count": 1,
+          "sides": 10
+        }
+      }
+    },
+    "description": "15 ft radius sphere. CON save or [5x spell mod + 24 + 5d10] light damage + prone (stunned if in center). Half damage on success."
+  },
+  {
+    "id": "divines-wrath",
+    "name": "Divine's Wrath",
+    "classId": "exorcist",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 210,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "spectral",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 37,
+      "dice": {
+        "count": 5,
+        "sides": 8
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": {
+          "count": 1,
+          "sides": 8
+        }
+      }
+    },
+    "description": "Channel. Each turn make ranged spell attacks equal to half AP consumed. Each hit: [5x spell mod + 37 + 5d8] spectral damage + push 10 ft."
+  },
+  {
+    "id": "channeled-light",
+    "name": "Channeled Light",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 6,
+    "manaCost": 270,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 28,
+      "flat": 400,
+      "dice": {
+        "count": 28,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 5,
+        "flat": 38,
+        "dice": {
+          "count": 5,
+          "sides": 10
+        }
+      }
+    },
+    "description": "Channel 2 turns. 90 ft x 10 ft beam deals [28x spell mod + 400 + 28d10] light damage. If target dies, heal 20% max HP and recover mana cost. Direction chosen at cast."
+  },
+  {
+    "id": "final-rest",
+    "name": "Final Rest",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 2,
+    "manaCost": 250,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a singing spectral maiden of light. Creatures starting turn within 30 ft must WILL save or fall asleep for 1 turn. Save also required on cast."
+  },
+  {
+    "id": "shield-of-divinity",
+    "name": "Shield of Divinity",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 3,
+    "manaCost": 265,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "2 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Create a floating 5 ft radius spectral shield. Blocks all projectiles/spells except light damage. Light damage spells passing through gain double range, AoE, and damage."
+  },
+  {
+    "id": "impenetrable-light",
+    "name": "Impenetrable Light",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 5,
+    "manaCost": 400,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 0,
+      "dice": null
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 80
+    },
+    "description": "5 ft radius light shield. Deflects ranged weapons, melee attackers take [6x spell mod] light damage. Creatures adjacent at turn start/end take same. Can absorb 350 damage. Scaling: +50 absorb, +spell mod damage."
+  },
+  {
+    "id": "piercing-light",
+    "name": "Piercing Light",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 350,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 60,
+      "dice": {
+        "count": 12,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": {
+          "count": 1,
+          "sides": 12
+        }
+      }
+    },
+    "description": "Ranged spell attack. On hit: [6x spell mod + 60 + 12d12] light or piercing damage (your choice). Ignores target's armor."
+  },
+  {
+    "id": "sense-doom",
+    "name": "Sense Doom",
+    "classId": "exorcist",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Sense any unholy curse, affliction or possession on a creature/spell, and identify which overlord/archcreature it belongs to. Greater unholy creatures can stealth check to block."
+  },
+  {
+    "id": "sacrifice-of-the-fallen",
+    "name": "Sacrifice of the Fallen",
+    "classId": "exorcist",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "true",
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Force unholy being out of a possessed creature. WILL save or the creature dies; the being takes true damage equal to the creature's HP at death. 24hr immunity on success."
+  },
+  {
+    "id": "sorrow-of-the-sinners",
+    "name": "Sorrow of the Sinners",
+    "classId": "exorcist",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 320,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 3 turns",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Channel. Each hostile creature in range must WILL save before casting a spell or attacking. On fail, AP and mana consumed but action does not happen."
+  },
+  {
+    "id": "holy-rain",
+    "name": "Holy Rain",
+    "classId": "exorcist",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 325,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 0,
+      "dice": {
+        "count": 7,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 7,
+      "flat": 0,
+      "dice": {
+        "count": 7,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "Channel. Each turn, [AP consumed] drops land at chosen points. Healing drops heal 5 ft area for [7x spell mod + 7d6]. Scorching drops deal same as fire damage (pierces armor)."
+  },
+  {
+    "id": "cross-of-the-divided",
+    "name": "Cross of the Divided",
+    "classId": "exorcist",
+    "level": 7,
+    "apCost": 3,
+    "manaCost": 310,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "4 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 44,
+      "dice": {
+        "count": 7,
+        "sides": 6
+      }
+    },
+    "healing": {
+      "modMultiplier": 7,
+      "flat": 44,
+      "dice": {
+        "count": 7,
+        "sides": 6
+      }
+    },
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": {
+          "count": 1,
+          "sides": 6
+        }
+      }
+    },
+    "description": "X-shaped cross, 120 ft lines, 4 quadrants (60 ft squares). Each area has a different effect: heal, light damage (CON save), blind+slow, or silence (CON save). Areas rotate clockwise each turn."
+  },
+  {
+    "id": "banished-horrors",
+    "name": "Banished Horrors",
+    "classId": "exorcist",
+    "level": 7,
+    "apCost": 4,
+    "manaCost": 400,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "savingThrow",
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Banish an unholy being. If it has 250 HP or less, it instantly dies. If might >= exorcist level, WILL save to avoid."
+  },
+  {
+    "id": "the-holy-spirit",
+    "name": "The Holy Spirit",
+    "classId": "exorcist",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 700,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "savingThrow",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 16,
+      "flat": 216,
+      "dice": {
+        "count": 16,
+        "sides": 10
+      }
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Giant bird of light dives in 200 ft x 50 ft line. DEX save or [16x spell mod + 216 + 16d10] light damage, half on success."
+  },
+  {
+    "id": "exorcist-divine-blast",
+    "name": "Divine Blast",
+    "classId": "exorcist",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 850,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 16,
+      "flat": 350,
+      "dice": {
+        "count": 16,
+        "sides": 12
+      }
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Ranged spell attack with spectral appearance of your god. On hit: [16x spell mod + 350 + 16d12] light damage. Double and true damage against unholy beings."
+  },
+  {
+    "id": "beacon-of-hope",
+    "name": "Beacon of Hope",
+    "classId": "exorcist",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 1000,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Become crystallized and channel. Each turn all allies heal for 50% max HP, and any single-round damage exceeding 80% max HP is nullified."
+  }
+]

@@ -1,0 +1,874 @@
+{
+  "negative": [
+    {
+      "id": "impaired",
+      "name": "Impaired",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "ownAttacks" }
+      ],
+      "description": "All attacks rolled by the target have disadvantage."
+    },
+    {
+      "id": "exposed",
+      "name": "Exposed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "advantage", "on": "incomingAttacks" }
+      ],
+      "description": "All attack rolls against the target have advantage."
+    },
+    {
+      "id": "corroded",
+      "name": "Corroded",
+      "stackBased": false,
+      "multiInstance": false,
+      "applicationBased": true,
+      "maxApplications": 3,
+      "applications": [
+        { "order": 1, "mechanics": [{ "type": "statModifier", "stat": "ac", "value": -5 }], "duration": "1 round" },
+        { "order": 2, "mechanics": [{ "type": "statModifier", "stat": "pa", "multiplier": 0.5 }], "duration": "1 round" },
+        { "order": 3, "mechanics": [{ "type": "statModifier", "stat": "ma", "multiplier": 0.5 }], "duration": "1 round" }
+      ],
+      "description": "Progresses through repeated applications: 1st -5 AC, 2nd PA halved, 3rd MA halved. Each lasts 1 round. Further applications extend existing effects in order. Requires 3 applications per round to maintain full effect."
+    },
+    {
+      "id": "rooted",
+      "name": "Rooted",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "movement", "allowTeleportation": true }
+      ],
+      "description": "Movement speed reduced to 0. Other movement types and teleportation still allowed."
+    },
+    {
+      "id": "snared",
+      "name": "Snared",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "allMovement" }
+      ],
+      "description": "All movement reduced to 0. Cannot be teleported or repositioned (except planar movement)."
+    },
+    {
+      "id": "disarmed",
+      "name": "Disarmed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "weaponAttack" }
+      ],
+      "description": "Cannot perform weapon or natural attacks."
+    },
+    {
+      "id": "poisoned",
+      "name": "Poisoned",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "savingThrows" },
+        { "type": "disadvantage", "on": "skillChecks" }
+      ],
+      "description": "Disadvantage on saving throws and skill checks."
+    },
+    {
+      "id": "paralyzed",
+      "name": "Paralyzed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "composite", "includes": ["snared", "disarmed", "exposed", "poisoned"] }
+      ],
+      "description": "Snared, disarmed, exposed, and poisoned."
+    },
+    {
+      "id": "envenomed",
+      "name": "Envenomed",
+      "stackBased": true,
+      "multiInstance": true,
+      "mechanics": [
+        { "type": "dot", "damageType": "poison", "timing": "startOfTurn", "valueFromStacks": true }
+      ],
+      "description": "Takes X poison damage at the start of each turn. Multiple independent instances."
+    },
+    {
+      "id": "burning",
+      "name": "Burning",
+      "stackBased": true,
+      "multiInstance": true,
+      "mechanics": [
+        { "type": "dot", "damageType": "fire", "timing": "startOfTurn", "valueFromStacks": true }
+      ],
+      "description": "Takes X fire damage at the start of each turn. Multiple independent instances."
+    },
+    {
+      "id": "wounded",
+      "name": "Wounded",
+      "stackBased": true,
+      "multiInstance": true,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "taken", "flat": true, "valueFromStacks": true, "source": "directAttacks" }
+      ],
+      "description": "Takes X additional damage from direct attacks and spells. Multiple independent instances."
+    },
+    {
+      "id": "taunted",
+      "name": "Taunted",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "forcedBehavior", "behavior": "mustTargetSource" }
+      ],
+      "description": "Must target the taunter with all offensive abilities. AoE must include the taunter."
+    },
+    {
+      "id": "prone",
+      "name": "Prone",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "advantage", "on": "incomingMeleeAttacks" },
+        { "type": "disadvantage", "on": "incomingRangedAttacks", "condition": "mediumOrSmaller" },
+        { "type": "preventAction", "action": "actBeforeStanding" },
+        { "type": "standUpCost", "baseCost": 2, "costPerStack": 2 }
+      ],
+      "description": "Melee attacks have advantage against target. Ranged attacks have disadvantage (medium or smaller). Standing up costs 2 AP. Each additional application increases stand cost by 2. Can spend AP across multiple turns. Cannot perform actions before standing."
+    },
+    {
+      "id": "dazed",
+      "name": "Dazed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "apRecovery", "multiplier": 0.5 }
+      ],
+      "description": "AP recovery is halved."
+    },
+    {
+      "id": "stunned",
+      "name": "Stunned",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "statModifier", "stat": "apRecovery", "value": 0, "override": true },
+        { "type": "composite", "includes": ["exposed", "poisoned"] }
+      ],
+      "description": "Cannot act. AP recovery is paused. Also exposed and poisoned."
+    },
+    {
+      "id": "silenced",
+      "name": "Silenced",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "verbalSpell" },
+        { "type": "preventAction", "action": "speech" }
+      ],
+      "description": "Cannot speak or cast spells with verbal components."
+    },
+    {
+      "id": "terrified",
+      "name": "Terrified",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "forcedBehavior", "behavior": "fleeFromSource" },
+        { "type": "removeOnEvent", "event": "sourceLeavesVision" }
+      ],
+      "description": "Must move away from the source. If unable, does nothing. Ends if the source is no longer visible."
+    },
+    {
+      "id": "petrified",
+      "name": "Petrified",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "statModifier", "stat": "apRecovery", "value": 0, "override": true },
+        { "type": "immunity", "to": "allDamage", "except": ["true"] },
+        { "type": "immunity", "to": "effects" },
+        { "type": "composite", "includes": ["exposed", "poisoned"] }
+      ],
+      "description": "Cannot act. AP recovery paused. Immune to all damage and effects except true damage. Also exposed and poisoned."
+    },
+    {
+      "id": "frozen",
+      "name": "Frozen",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "statModifier", "stat": "apRecovery", "value": 0, "override": true },
+        { "type": "immunity", "to": "allDamage" },
+        { "type": "immunity", "to": "effects" },
+        { "type": "composite", "includes": ["exposed", "poisoned"] }
+      ],
+      "description": "Cannot act. AP recovery paused. Immune to all damage and effects. Also exposed and poisoned. May be applied to willing allies intentionally."
+    },
+    {
+      "id": "sleeping",
+      "name": "Sleeping",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "removeOnEvent", "event": "takeDamage" }
+      ],
+      "description": "Cannot act. Ends if the target takes damage or is harmed."
+    },
+    {
+      "id": "blinded",
+      "name": "Blinded",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "ownAttacks" },
+        { "type": "advantage", "on": "incomingAttacks" },
+        { "type": "disadvantage", "on": "savingThrow", "saveStat": "DEX" },
+        { "type": "preventAction", "action": "attackOfOpportunity" },
+        { "type": "statModifier", "stat": "maxRange", "value": 15, "override": true }
+      ],
+      "description": "Cannot see. Attacks have disadvantage. Attacks against target have advantage. Disadvantage on DEX saving throws. Cannot perform attacks of opportunity. Range limited to 15ft unless special senses apply."
+    },
+    {
+      "id": "mad",
+      "name": "Mad",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "forcedBehavior", "behavior": "treatAllAsEnemies" }
+      ],
+      "description": "Treats all creatures as enemies."
+    },
+    {
+      "id": "charmed",
+      "name": "Charmed",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "forcedBehavior", "behavior": "treatSourceAsAlly" },
+        { "type": "removeOnEvent", "event": "harmedBySource" }
+      ],
+      "description": "Treats the charmer and their allies as allies. Ends if harmed by them."
+    },
+    {
+      "id": "maimed",
+      "name": "Maimed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "healingModifier", "multiplier": 0.5 }
+      ],
+      "description": "Healing received is halved."
+    },
+    {
+      "id": "cursed",
+      "name": "Cursed",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "healingModifier", "multiplier": 0 }
+      ],
+      "description": "Cannot benefit from healing."
+    },
+    {
+      "id": "decaying",
+      "name": "Decaying",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "healingModifier", "convertToDamage": true }
+      ],
+      "description": "Healing effects deal damage instead."
+    },
+    {
+      "id": "ethereal",
+      "name": "Ethereal",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "taken", "damageCategory": "physical", "multiplier": 0.5 },
+        { "type": "damageModifier", "direction": "taken", "damageCategory": "magical", "multiplier": 2.0 }
+      ],
+      "description": "Takes half damage from physical sources and double damage from magical sources."
+    },
+    {
+      "id": "weakened",
+      "name": "Weakened",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "dealt", "multiplier": 0.5 }
+      ],
+      "description": "Damage dealt is halved (before reductions)."
+    },
+    {
+      "id": "suffocating",
+      "name": "Suffocating",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "endOfTurn", "triggerAction": "applyEffect", "actionEffect": "exhaustion", "actionStacks": 1 }
+      ],
+      "description": "Gains 1 exhaustion stack at the end of each turn."
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "removeOnEvent", "event": "takeDamage" }
+      ],
+      "description": "Falls asleep. Cannot act. Ends if the target takes damage or is harmed. Distinct from Sleeping in that it is magically induced."
+    },
+    {
+      "id": "crystallised",
+      "name": "Crystallised",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "all" },
+        { "type": "immunity", "to": "allDamage" },
+        { "type": "immunity", "to": "effects" }
+      ],
+      "description": "Encased in crystal. Cannot act. Immune to all damage and effects. Similar to frozen but specifically from crystallisation magic."
+    },
+    {
+      "id": "sorrow",
+      "name": "Sorrow",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "ownAttacks" },
+        { "type": "disadvantage", "on": "savingThrows" }
+      ],
+      "description": "Overwhelmed by grief. Disadvantage on all attack rolls and saving throws. Imposed by bard songs of woe."
+    },
+    {
+      "id": "caged",
+      "name": "Caged",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "preventAction", "action": "leaveArea" },
+        { "type": "disadvantage", "on": "incomingAttacks" }
+      ],
+      "description": "Trapped in an area and cannot leave. Attacks against the trapped creature have disadvantage."
+    },
+    {
+      "id": "difficult-terrain",
+      "name": "Difficult Terrain",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "speed", "multiplier": 0.5, "area": true }
+      ],
+      "description": "Area effect. Movement speed is halved while traversing the affected area."
+    },
+    {
+      "id": "obscured-vision",
+      "name": "Obscured Vision",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "rangedAttacksThrough", "area": true }
+      ],
+      "description": "Area effect. Ranged attacks through the area have disadvantage."
+    },
+    {
+      "id": "pushback",
+      "name": "Pushback",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "forcedBehavior", "behavior": "pushedAway" }
+      ],
+      "description": "Target is pushed away from the source by a set distance."
+    },
+    {
+      "id": "invisibility-conditional",
+      "name": "Conditional Invisibility",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "grantAbility", "ability": "invisible" },
+        { "type": "removeOnEvent", "event": "hostileAction" }
+      ],
+      "description": "Target cannot be seen by certain creatures. Ends when the invisible creature takes a hostile action."
+    },
+    {
+      "id": "disadvantage-next-attack",
+      "name": "Disadvantage (Next Attack)",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "ownAttacks", "charges": 1 }
+      ],
+      "description": "The target has disadvantage on its next attack roll or ability requiring an attack roll."
+    },
+    {
+      "id": "disadvantage-attacks",
+      "name": "Disadvantage (All Attacks)",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "ownAttacks" }
+      ],
+      "description": "The target has disadvantage on all attack rolls for the duration."
+    },
+    {
+      "id": "disadvantage-attacks-on-target",
+      "name": "Disadvantage (Attacks Against Target)",
+      "stackBased": true,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "disadvantage", "on": "incomingAttacks" }
+      ],
+      "description": "All enemies have disadvantage on attacks against the protected target for the duration."
+    },
+    {
+      "id": "stun-on-retaliation",
+      "name": "Stun on Retaliation",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "beingAttacked", "triggerAction": "applyEffect", "actionEffect": "stunned", "requiresSave": true }
+      ],
+      "description": "When the affected creature is attacked, the attacker must save or be stunned."
+    },
+    {
+      "id": "will-save-reduction",
+      "name": "WILL Save Reduction",
+      "stackBased": false,
+      "multiInstance": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "willSave", "valueFromStacks": true, "negate": true }
+      ],
+      "description": "The target's WILL saving throws are reduced by a set value."
+    }
+  ],
+  "positive": [
+    {
+      "id": "block",
+      "name": "Block",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "instances", "valueFromStacks": true }
+      ],
+      "description": "Negates the next X damage instances that would reduce HP."
+    },
+    {
+      "id": "perseverance",
+      "name": "Perseverance",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "reachZeroHp", "triggerAction": "setHpTo1", "charges": 1 }
+      ],
+      "description": "First time HP would drop to 0, remains at 1."
+    },
+    {
+      "id": "regenerating",
+      "name": "Regenerating",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "hot", "timing": "endOfTurn", "valueFromStacks": true }
+      ],
+      "description": "Heals X at the end of each turn."
+    },
+    {
+      "id": "retaliation",
+      "name": "Retaliation",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "hitByMelee", "triggerAction": "dealDamage", "ignoresArmor": true, "valueFromStacks": true }
+      ],
+      "description": "Melee attackers take X damage (ignores armor)."
+    },
+    {
+      "id": "empowered",
+      "name": "Empowered",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "dealt", "flat": true, "valueFromStacks": true, "perAbility": true }
+      ],
+      "description": "One damage instance per ability gains +X damage."
+    },
+    {
+      "id": "warded",
+      "name": "Warded",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "immunity", "to": "negativeEffects", "consumeStacks": true }
+      ],
+      "description": "Negates incoming negative effects, consuming 1 stack per negation."
+    },
+    {
+      "id": "death-resist",
+      "name": "Death Resist",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "preventLethal", "condition": "ownTurn" }
+      ],
+      "description": "Damage cannot reduce HP below 1 during your turn."
+    },
+    {
+      "id": "haste",
+      "name": "Haste",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "apRecovery", "value": 1 },
+        { "type": "statModifier", "stat": "speed", "value": 10 }
+      ],
+      "description": "+1 AP recovery and +10 movement speed. Removes slow effects."
+    },
+    {
+      "id": "sharp",
+      "name": "Sharp",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "advantage", "on": "ownAttacks" }
+      ],
+      "description": "Advantage on attack rolls until the end of the creature's next turn."
+    },
+    {
+      "id": "temporary-hp",
+      "name": "Temporary HP",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "tempHp", "valueFromStacks": true, "noStack": true }
+      ],
+      "description": "Gains X temporary HP. Damage reduces temporary HP before actual HP. Does not stack — higher value replaces lower."
+    },
+    {
+      "id": "attack-bonus",
+      "name": "Attack Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "attackBonus", "valueFromStacks": true }
+      ],
+      "description": "Gains +X to attack rolls (physical and magical) for the duration."
+    },
+    {
+      "id": "attack-bonus-5",
+      "name": "Attack Bonus (+5)",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "attackBonus", "value": 5 }
+      ],
+      "description": "Gains +5 to all attack rolls for the duration. From Hail the Champions."
+    },
+    {
+      "id": "damage-bonus",
+      "name": "Damage Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "dealt", "flat": true, "valueFromStacks": true }
+      ],
+      "description": "Gains +X to all direct damage rolls for the duration."
+    },
+    {
+      "id": "ac-bonus",
+      "name": "AC Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "ac", "valueFromStacks": true, "specialRule": "below20Bonus" }
+      ],
+      "description": "Gains +X AC. If AC is still below 20 after increase, gains +2 instead of +1."
+    },
+    {
+      "id": "ms-bonus",
+      "name": "Movement Speed Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "speed", "valueFromStacks": true }
+      ],
+      "description": "Movement speed increased by X for the rest of the creature's turn."
+    },
+    {
+      "id": "ap-bonus",
+      "name": "AP Bonus",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "apStart", "value": 1 },
+        { "type": "statModifier", "stat": "apRecovery", "value": 1 }
+      ],
+      "description": "Starting AP and AP recovery increased by 1."
+    },
+    {
+      "id": "save-bonus",
+      "name": "Save Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "saveBonus", "valueFromStacks": true }
+      ],
+      "description": "Saving throws and ability checks increased by X."
+    },
+    {
+      "id": "spell-dc-bonus",
+      "name": "Spell DC Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "spellDC", "valueFromStacks": true }
+      ],
+      "description": "When casting a spell requiring a save, the DC is increased by X."
+    },
+    {
+      "id": "crit-bonus",
+      "name": "Critical Chance Bonus",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "critRange", "valueFromStacks": true }
+      ],
+      "description": "Critical hit chance increased by X (dice values). E.g. +2 means crit on 18-20 instead of 20."
+    },
+    {
+      "id": "crit-chance-5",
+      "name": "Critical Chance (+5)",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "statModifier", "stat": "critRange", "value": 5 }
+      ],
+      "description": "Critical hit chance increased by 5 (25%). Crit on 15-20. From Hail the Champions."
+    },
+    {
+      "id": "mana-cost-reduction",
+      "name": "Mana Cost Reduction",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "manaCost", "valueFromStacks": true, "negate": true }
+      ],
+      "description": "Mana cost of spells reduced by X. Cannot reduce below 0."
+    },
+    {
+      "id": "reduced-weapon-ap-cost",
+      "name": "Reduced Weapon AP Cost",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "statModifier", "stat": "weaponApCost", "valueFromStacks": true, "negate": true }
+      ],
+      "description": "Weapon attacks cost X less AP. If dual wielding, the reduction applies only to attacks using both weapons."
+    },
+    {
+      "id": "physical-resistance",
+      "name": "Physical Resistance",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "taken", "damageCategory": "physical", "multiplier": 0.5 }
+      ],
+      "description": "Resistant to physical damage. If vulnerable to a physical type, vulnerability is removed and treated as normal."
+    },
+    {
+      "id": "magic-shield",
+      "name": "Magic Shield",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "magicShield", "damageCategory": "magical", "valueFromStacks": true }
+      ],
+      "description": "Absorbs up to X damage from magical sources before breaking."
+    },
+    {
+      "id": "charm-immunity",
+      "name": "Charm Immunity",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "immunity", "to": "charmed", "charges": 1 }
+      ],
+      "description": "The first mind-altering or charm effect is nullified. Consumed on use."
+    },
+    {
+      "id": "reroll-ones",
+      "name": "Reroll Ones",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "grantAbility", "ability": "rerollOnes" }
+      ],
+      "description": "When rolling a 1 on any die, reroll and use the new result. Applies to all dice. Cannot be doubled."
+    },
+    {
+      "id": "telepathy",
+      "name": "Telepathy",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "grantAbility", "ability": "telepathy" }
+      ],
+      "description": "Can communicate telepathically without speaking."
+    },
+    {
+      "id": "no-verbal-components",
+      "name": "No Verbal Components",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "grantAbility", "ability": "noVerbalComponents" }
+      ],
+      "description": "Spells and abilities no longer require verbal components."
+    },
+    {
+      "id": "disarm-immunity",
+      "name": "Disarm Immunity",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "immunity", "to": "disarmed" }
+      ],
+      "description": "Cannot be disarmed."
+    },
+    {
+      "id": "grapple-advantage",
+      "name": "Grapple Advantage",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "advantage", "on": "savingThrow", "against": ["grapple", "shove", "snare"] }
+      ],
+      "description": "Advantage on saves against being grappled, shoved, or snared."
+    },
+    {
+      "id": "ignore-resistance-vulnerability",
+      "name": "Ignore Resistance/Vulnerability",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "damageModifier", "direction": "dealt", "ignoreResistance": true, "ignoreVulnerability": true, "damageCategory": "physical" }
+      ],
+      "description": "Physical weapon damage ignores resistances and vulnerabilities (not immunities, frail, or absorptions). Cannot be doubled."
+    },
+    {
+      "id": "damage-cap",
+      "name": "Damage Cap",
+      "hasValue": true,
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "percentCap", "valueFromStacks": true }
+      ],
+      "description": "Cannot take more than X% of max HP as damage in a round. Attacks exceeding the cap deal no damage. Cannot be doubled."
+    },
+    {
+      "id": "advantage-allies",
+      "name": "Advantage (Allies)",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "advantage", "on": "ownAttacks", "aura": true, "affectsAllies": true },
+        { "type": "advantage", "on": "savingThrows", "aura": true, "affectsAllies": true }
+      ],
+      "description": "Allies within the area have advantage on attack rolls and saving throws."
+    },
+    {
+      "id": "cleanse-one",
+      "name": "Cleanse One Effect",
+      "hasValue": false,
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "onApply", "triggerAction": "removeEffect", "targetCategory": "negative", "count": 1 }
+      ],
+      "description": "Removes one negative effect from the target (poison, slow, prone, or charm)."
+    },
+    {
+      "id": "radiant-aura",
+      "name": "Radiant Aura",
+      "hasValue": true,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "damageModifier", "direction": "dealt", "flat": true, "bonusDamageType": "light", "valueSource": "spellModifier", "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range deal bonus light damage equal to spell modifier on attack rolls."
+    },
+    {
+      "id": "precision-aura",
+      "name": "Precision Aura",
+      "hasValue": true,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "statModifier", "stat": "attackBonus", "value": 1, "escalateOnMiss": true, "resetOnHit": true, "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range gain +1 to attack rolls. Each miss increases bonus by +1, resets to +1 after a hit."
+    },
+    {
+      "id": "swarm-killer-aura",
+      "name": "Swarm-Killer Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "immunity", "to": "flankingAdvantage", "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range are not affected by flanks or pack-tactics. Attacks against them cannot have advantage."
+    },
+    {
+      "id": "legion-aura",
+      "name": "Legion Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "advantage", "on": "ownAttacks", "condition": "flankingWithAlly", "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range have advantage on attack rolls against enemies if they and another ally are within melee range of the foe."
+    },
+    {
+      "id": "vampiric-aura",
+      "name": "Vampiric Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "triggerOnEvent", "event": "dealSingleTargetDamage", "triggerAction": "healPercent", "value": 20, "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range heal for 20% of damage dealt with single-target attacks and spells."
+    },
+    {
+      "id": "predator-aura",
+      "name": "Predator Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "grantAbility", "ability": "autoCritOnStunnedOrProne", "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range score critical hits when hitting a stunned or prone enemy."
+    },
+    {
+      "id": "fearless-aura",
+      "name": "Fearless Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "immunity", "to": "terrified", "aura": true, "affectsAllies": true },
+        { "type": "triggerOnEvent", "event": "terrifyAttempt", "triggerAction": "grantEnraged", "duration": 1, "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range are immune to terrified. When an attempt to terrify is made, they become enraged for 1 turn (max dice damage)."
+    },
+    {
+      "id": "purity-aura",
+      "name": "Purity Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "damageModifier", "direction": "taken", "damageType": "light", "multiplier": 0.5, "aura": true, "affectsAllies": true },
+        { "type": "immunity", "to": ["possession", "enthrallment"], "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range are resistant to light damage and immune to possession/enthrallment. No effect on already possessed/enthralled."
+    },
+    {
+      "id": "grounded-aura",
+      "name": "Grounded Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "immunity", "to": ["teleportation", "banishing", "instantKill"], "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range are immune to teleportation, banishing, and instant-kill effects."
+    },
+    {
+      "id": "blessed-aura",
+      "name": "Blessed Aura",
+      "hasValue": false,
+      "source": "paladin",
+      "mechanics": [
+        { "type": "damageAbsorb", "mode": "percentChance", "chance": 15, "aura": true, "affectsAllies": true }
+      ],
+      "description": "Aura. Allies in range roll d100 each time they take damage. On 85 or higher, they take no damage."
+    }
+  ],
+  "conditionTerms": {
+    "injured": { "threshold": 0.5, "comparison": "below" },
+    "severelyInjured": { "threshold": 0.1, "comparison": "below" }
+  }
+}

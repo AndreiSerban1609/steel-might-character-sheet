@@ -1,0 +1,82 @@
+[
+  {
+    "id": "horse",
+    "name": "Horse",
+    "price": 5000,
+    "carryCapacity": 36,
+    "movementSpeed": 60,
+    "requirements": { "race": "human", "animalHandling": 10, "proficiency": 2 },
+    "abilities": ["hooves"],
+    "stats": { "str": 18 }
+  },
+  {
+    "id": "elk",
+    "name": "Elk",
+    "price": 7400,
+    "carryCapacity": 22,
+    "movementSpeed": 55,
+    "requirements": { "race": "elf", "animalHandling": 13, "proficiency": 3 },
+    "abilities": ["hooves", "antlers", "charge"],
+    "stats": { "str": 16 }
+  },
+  {
+    "id": "ram",
+    "name": "Ram",
+    "price": 6000,
+    "carryCapacity": 30,
+    "movementSpeed": 40,
+    "requirements": { "race": "dwarf", "animalHandling": 14, "proficiency": 3 },
+    "abilities": ["horns", "ram", "frenzy"],
+    "stats": { "str": 17 }
+  },
+  {
+    "id": "bull",
+    "name": "Bull",
+    "price": 10000,
+    "carryCapacity": 45,
+    "movementSpeed": 45,
+    "requirements": { "race": "goliath", "animalHandling": 12, "proficiency": 2 },
+    "abilities": ["hooves", "horns", "charge", "frenzy"],
+    "stats": { "str": 20 }
+  },
+  {
+    "id": "bear",
+    "name": "Bear",
+    "price": 24000,
+    "carryCapacity": 50,
+    "movementSpeed": 45,
+    "requirements": { "race": "forest-folk", "animalHandling": 16, "proficiency": 4 },
+    "abilities": ["claws", "bite", "charge", "frenzy", "roar"],
+    "stats": { "str": 22 }
+  },
+  {
+    "id": "warg",
+    "name": "Warg",
+    "price": 13000,
+    "carryCapacity": 42,
+    "movementSpeed": 55,
+    "requirements": { "race": "orc", "animalHandling": 15, "proficiency": 4 },
+    "abilities": ["claws", "bite"],
+    "stats": { "str": 18 }
+  },
+  {
+    "id": "giant-spider",
+    "name": "Giant Spider",
+    "price": 16000,
+    "carryCapacity": 25,
+    "movementSpeed": 50,
+    "requirements": { "race": "goblin", "animalHandling": 17, "proficiency": 5 },
+    "abilities": ["fangs", "web", "climb"],
+    "stats": { "str": 14 }
+  },
+  {
+    "id": "blaze",
+    "name": "Blaze (Embermane)",
+    "price": 14000,
+    "carryCapacity": 30,
+    "movementSpeed": 55,
+    "requirements": { "race": "tiefling", "animalHandling": 15, "proficiency": 4 },
+    "abilities": [],
+    "stats": { "str": 16 }
+  }
+]

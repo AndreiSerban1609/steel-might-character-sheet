@@ -1,0 +1,33 @@
+{
+  "tiers": {
+    "two-handed": {
+      "description": "Two-handed weapons, crossbows, longbows, heavy armor",
+      "prices": [15, 23, 34, 50, 75, 115, 170, 255, 385, 575, 865, 1300, 1950, 2900, 4400, 6550, 9850, 15000, 22000, 33000]
+    },
+    "one-handed-light": {
+      "description": "One-handed light weapons, hand crossbow, shield, light armor",
+      "prices": [5, 8, 12, 17, 25, 38, 57, 85, 130, 190, 290, 430, 650, 970, 1450, 2200, 3300, 4900, 7400, 11000]
+    },
+    "one-handed": {
+      "description": "One-handed weapons, shortbow, medium armor",
+      "prices": [10, 16, 24, 34, 50, 75, 115, 170, 260, 380, 580, 860, 1300, 1950, 2900, 4400, 6600, 9800, 15000, 22000]
+    }
+  },
+  "currency": {
+    "copperPerSilver": 10,
+    "copperPerGold": 100
+  },
+  "upgradeKit": {
+    "description": "Cost = one-handed tier price at target level / 3. Roll 1d20 + smith tools proficiency >= 5 + item current level to succeed. Multi-level upgrades require succeeding on each level. Consumed on use.",
+    "costTier": "one-handed",
+    "costDivisor": 3,
+    "checkDC": { "base": 5, "perLevel": 1 },
+    "inventorySpace": 0.4
+  },
+  "blacksmithUpgrade": {
+    "description": "Cost = (next level price - current level price) + 5% of next level price. Requires blacksmith competence level. Does not replenish durability.",
+    "surchargePercent": 5
+  },
+  "silveringMultiplier": 5,
+  "sellbackRatio": 0.5
+}

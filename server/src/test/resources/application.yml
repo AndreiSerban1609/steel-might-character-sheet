@@ -1,0 +1,22 @@
+# Test config — shadows the main application.yml on the test classpath so the suite
+# uses an isolated in-memory DB (not the dev file DB) and the dev-only seeder is inactive.
+spring:
+  profiles:
+    active: test
+
+  jackson:
+    default-property-inclusion: non_null
+
+  datasource:
+    url: jdbc:h2:mem:steelmight-test;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+
+game:
+  data-path: ${GAME_DATA_PATH:../src/data}

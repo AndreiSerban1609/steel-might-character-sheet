@@ -1,0 +1,974 @@
+[
+  {
+    "id": "aimed-shot",
+    "name": "Aimed shot",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "3d10"
+      }
+    },
+    "description": "You briefly manifest a fragile arcane field just long enough to loose an arrow through it, stripping away its physical form and converting the projectile into pure magical energy. Make a ranged spell attack against a target within range. On a hit, the target takes [spell modifier + 12 + 2d10] pure damage. This spell can be recast on the same turn."
+  },
+  {
+    "id": "searing-shot",
+    "name": "Searing shot",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": null,
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "3d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 25,
+        "dice": "5d8"
+      }
+    },
+    "description": "You loose an arrow that erupts into a roaring streak of flame, burning everything in its path and leaving the ground smoldering in its wake. You shoot a fire arrow that travels in a 100 ft long, 5 ft wide line. All creatures in the line must succeed on a Dexterity saving throw or take [spell modifier + 9 + 3d8] fire damage. The affected area becomes a [level 1] fire surface. This spell can be recast on the same turn."
+  },
+  {
+    "id": "poisonous-arrow",
+    "name": "Poisonous arrow",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 4,
+    "manaCost": 10,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 55,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 28,
+        "dice": "4d6"
+      }
+    },
+    "description": "You infuse your arrow with condensed poison essence, allowing the magic to seep into the target and weaken it from within. You shoot a poisonous arrow at a creature within range, making a ranged spell attack. On a hit, the target takes [spell modifier + 10 + 2d6] poison damage and gains [1 poisoned stack]."
+  },
+  {
+    "id": "frost-splinter-arrow",
+    "name": "Frost splinter arrow",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": null,
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "rangedSpellAttack",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 22,
+        "dice": "3d12"
+      }
+    },
+    "description": "You fire an arrow infused with brittle frost magic. Whether it strikes true or shatters apart, the cold spreads outward, freezing everything nearby. You shoot an arrow at an enemy, making a ranged spell attack. On a hit, the target takes [spell modifier + 7 + 2d12] ice damage. On a miss, the arrow splinters, striking up to three different enemies within 10 ft of the initial target, excluding the initial target. Each affected creature must succeed on a Dexterity saving throw or take [spell mod..."
+  },
+  {
+    "id": "arcane-exposure",
+    "name": "Arcane exposure",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 5,
+    "range": null,
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "int",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25
+    },
+    "description": "You expose the target to unstable arcane forces, either destabilizing their essence or stripping away their magical defenses. You force a creature within range to make an Intelligence saving throw. On a failure, it gains [1 ethereal stack]. On a success, its magic armor is reduced by [2 x spell modifier] until the end of your turn."
+  },
+  {
+    "id": "sticky-arrow",
+    "name": "Sticky arrow",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Your arrow bursts into a thick, clinging substance that gums up the ground and makes movement slow and difficult. You shoot an arrow at a point within range. On impact, it explodes, coating a 15 ft radius area in a sticky substance. The area becomes difficult terrain; creatures moving through it have their MS halved while on the surface. This spell can be recast on the same turn, but each subsequent cast costs double the AP of the previous cast."
+  },
+  {
+    "id": "nerve-toxin-arrow",
+    "name": "Nerve-toxin arrow",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 10,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40
+    },
+    "description": "You imbue your arrow with magic that disrupts the target’s nerves, weakening its body and responses. When an attack you make hits, you may apply this spell to the target. The target must succeed on a Constitution saving throw or gain [1 impaired stack] and [1 weakened stack]. You may reduce this spell’s AP cost by 1; if you do, apply only impaired or weakened stacks, chosen when the spell is cast."
+  },
+  {
+    "id": "firefly-arrow",
+    "name": "Firefly arrow",
+    "classId": "arcane-ranger",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": null,
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 10
+    },
+    "description": "You fire a glowing arrow that illuminates its path, lingering at its destination to provide steady light. You shoot an arrow at a point within range that emits light along its path and remains at the destination for the duration. The arrow creates light in a [10 ft] radius."
+  },
+  {
+    "id": "focused-aim",
+    "name": "Focused aim",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 45,
+    "range": "100 ft",
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40
+    },
+    "description": "You carve a fixed arcane sigil into space itself, anchoring your focus to a single point. As long as the mark holds, your magic instinctively bends every shot toward it, forcing arrows to seek targets along its path. Maintaining this focus is dangerous; losing control turns the magic back on you. Mark a point within range. At the end of each of your turns, you automatically fire a [2nd-level] Aimed Shot toward the marked point, ignoring range limits. The shot stops at the first creature it hi..."
+  },
+  {
+    "id": "volatile-fire-arrow",
+    "name": "Volatile Fire Arrow",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 6,
+    "manaCost": 90,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 49,
+      "dice": "7d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 80,
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 34,
+        "dice": "6d12"
+      }
+    },
+    "description": "You pour volatile fire into a single arrow until it trembles with unstable heat. Whether released immediately or overcharged beyond safety, the arrow detonates with catastrophic force, scorching everything nearby. Shoot a magical arrow at a point within range. All creatures within 20 ft of that point must make a Constitution saving throw, taking [4 × spell modifier + 49 + 7d12] fire damage on a failure, or half as much on a success. The area becomes a [level 1] fire surface. You may alter how..."
+  },
+  {
+    "id": "cobra-shot",
+    "name": "Cobra shot",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 30,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 10,
+      "dice": "4d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "3d6"
+      }
+    },
+    "description": "As the arrow leaves your bow, a spectral cobra erupts from its tip, sinking ethereal fangs into the target and flooding their body with magically amplified venom. When making a weapon attack, before rolling, you may infuse it with Cobra Shot by paying the spell’s cost. If the attack hits, the target gains an envenomed effect dealing [2 × spell modifier + 10 + 4d6] damage over the duration. This spell may be recast on the same turn, but not on the same attack. When casting this spell, you may ..."
+  },
+  {
+    "id": "halo-shot",
+    "name": "Halo-shot",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 30,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "4d4"
+      }
+    },
+    "description": "Your arrow strikes with sanctified force, leaving behind a lingering arcane halo that judges anything foolish enough to remain beneath it. Make a ranged spell attack against a target. On a hit, the target takes [2 × spell modifier + 11 + 5d4] pure damage that ignores armor, and a stationary halo appears above the target’s location. If any creature ends its turn within 20 ft of the halo, the halo immediately casts Halo-Shot on that creature and then disappears. This secondary casting can itsel..."
+  },
+  {
+    "id": "devouring-frost-arrow",
+    "name": "Devouring Frost Arrow",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 5,
+    "manaCost": 75,
+    "range": null,
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 60,
+        "dice": "3d10"
+      }
+    },
+    "description": "You loose an arrow carrying a living frost curse, one that seeps into flesh and bone and reacts to the victim’s desperation. Those who struggle violently are encased in crystal ice; those who push through with restraint are bound instead. There are places in the world where arcane rangers who wield this spell are feared or openly condemned. Make a ranged spell attack against a target. On a hit, the target takes [2 × spell modifier + 70 + 6d10] ice damage and is afflicted with Devouring Frost,..."
+  },
+  {
+    "id": "pinning-shot",
+    "name": "Pinning shot",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 25,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Your arrow strikes with disabling precision, locking the target in place just long enough to rob them of their ability to react. After one of your attacks hits a creature, you may apply Pinning Shot at no AP cost. The target must succeed on a Will saving throw or be unable to take reactions for 1 turn."
+  },
+  {
+    "id": "flashflare-shot",
+    "name": "Flashflare shot",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 60,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "light",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 19,
+      "dice": "4d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 55,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "2d6"
+      }
+    },
+    "description": "You fire an arrow of searing brilliance that bursts into radiant light, overwhelming vision and burning the eyes. Shoot an arrow at a point within range. All creatures within 10 ft must make a Constitution saving throw or take [2 × spell modifier + 19 + 4d6] light damage and gain [3 blinded stacks]."
+  },
+  {
+    "id": "smokescreen-arrow",
+    "name": "Smokescreen arrow",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": null,
+    "components": [
+      "S",
+      "W"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Your arrow bursts into a rolling cloud of thick smoke, swallowing the battlefield and masking movement within its veil. Shoot an arrow at a point within range, creating a 15 ft radius cloud of smoke for the duration. The area is considered full cover for the purposes of entering or remaining in stealth. All creatures making Stealth checks within the area have advantage."
+  },
+  {
+    "id": "molten-spire",
+    "name": "Molten Spire",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 30,
+    "range": null,
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25
+    },
+    "description": "You embed an arrow into empty ground, where it erupts into a towering pillar of molten stone, sealing space with overwhelming heat and destruction. Shoot an arrow at a point within range that has no creatures within [20] ft. If this condition is not met, the spell fails and has no effect. On activation, the arrow transforms into a pillar of lava with a [10] ft radius base and up to [30] ft height, stopping at the first solid obstacle. The pillar blocks all projectiles, and any creature that a..."
+  },
+  {
+    "id": "sonar-arrow",
+    "name": "Sonar Arrow",
+    "classId": "arcane-ranger",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 35,
+    "range": "100 ft",
+    "components": [
+      "V",
+      "S",
+      "W"
+    ],
+    "duration": null,
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30
+    },
+    "description": "You loose an arrow that hums softly as it cuts through the air, vibrating with controlled arcane resonance. As it travels, the arrow sends out invisible pulses that rebound off surfaces and bodies alike, briefly painting the surrounding space in your mind. Footsteps echo dully, voices become distorted murmurs, and hidden movement betrays itself as ripples in the air. The arrow is clearly visible, its magic obvious to any who see it, but its true purpose is felt rather than seen. Shoot an arro..."
+  },
+  {
+    "id": "sky-jump",
+    "name": "Sky jump",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "You leap to a point within range. The remainder of the turn reloading does not cost ap."
+  },
+  {
+    "id": "meteorite-shot",
+    "name": "Meteorite shot",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 120,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 10,
+      "dice": "10d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "3d12"
+      }
+    },
+    "description": "You shoot a burning arrow that becomes a flaming meteorite while travelling and hits a 20 ft radius area centered on a point within range. All creatures within range must roll a dex saving throw, taking [3 x spell modifier + 10 + 10d12] fire damage on a fail, or half as much on a success. The area becomes fire surface."
+  },
+  {
+    "id": "poison-cloud-arrow",
+    "name": "Poison cloud arrow",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 70,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 27,
+      "dice": "6d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d6"
+      }
+    },
+    "description": "You shoot an arrow whose head is a bottle of a poisonous gas. All creatures within 20 ft of the hit point must succeed on a const saving throw or take [3 x spell modifier + 27 + 6d6] poison damage. The area is covered in a poison cloud (is considered surface for your surface damage)."
+  },
+  {
+    "id": "water-serpent-arrow",
+    "name": "Water serpent arrow",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 130,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 46,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": "2d10"
+      }
+    },
+    "description": "You shoot an arrow that transforms into a serpent of the water as it flies. The serpent travels in a 200 ft long 30 ft wide line. All creatures in the path must succeed on a dex saving throw or take [3 x spell modifier + 46 + 6d10] ice damage. The serpent suddenly disappears after dealing [270 damage]. The path that the serpent travelled becomes ice surface."
+  },
+  {
+    "id": "magic-jaws",
+    "name": "Magic jaws",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 115,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "spellAttack",
+    "saveStat": "str",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 57,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "1d10"
+      }
+    },
+    "description": "You shoot an arrow at a target that takes the form of spectral jaws. Make a ranged spell attack against the target. On a hit it takes [3 x spell modifier + 57 + 3d10] pure damage. The jaws drop on the ground, becoming a 10 ft radius “trap” centered on the target that lasts for a round. All creatures who start their turn in the trap must succeed on a Str saving throw or be rooted. All magic damage dealt from the trap (the caster must be in the trap, the target’s position does not matter) is ha..."
+  },
+  {
+    "id": "draining-shot",
+    "name": "Draining shot",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 33,
+      "dice": "6d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d6"
+      }
+    },
+    "description": "Make a ranged spell attack against a target within range. On a hit the target takes [3 x spell modifier + 33 + 6d6] pure damage and you heal for the same amount."
+  },
+  {
+    "id": "paralysing-shot",
+    "name": "Paralysing shot",
+    "classId": "arcane-ranger",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50
+    },
+    "description": "You add this effect to an attack that (already) hit. The target must succeed on a const saving throw or be paralyzed until the start of your next turn."
+  },
+  {
+    "id": "quick-draw",
+    "name": "Quick draw",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 150,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Until the end of your next turn, reloading costs no ap. Additionally, you can move up to 10 ft before and after every shot you fire."
+  },
+  {
+    "id": "dragon-s-call",
+    "name": "Dragon’s call",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 6,
+    "manaCost": 300,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 100,
+      "dice": "20d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 100,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 25,
+        "dice": "5d12"
+      }
+    },
+    "description": "You shoot an arrow at a point within range. A spectral, fiery dragon springs into existence and burns the foes in a 90 degree 30 ft long cone starting at the marked point, in the direction opposite of you. All creatures there must roll a dex saving throw, taking [4 x spell modifier + 100 + 20d12] fire damage on a fail, or half as much on a success. The surface becomes fire surface."
+  },
+  {
+    "id": "blizzard-arrow",
+    "name": "Blizzard arrow",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": true,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 16,
+      "dice": "4d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d6"
+      }
+    },
+    "description": "You shoot an arrow that transforms into a raging blizzard centered at a point within range. The blizzard covers a 30 ft radius area (that is considered ice surface for the purpose of surface damage). All creatures that start their turn must succeed on a const saving throw or take [4 x spell modifier + 16 + 4d6] ice damage (pierces armor) and have their speed slowed by 10. Creatures moving through the area have doubled ap cost for moving and no ranged attacks can pass through the blizzard exce..."
+  },
+  {
+    "id": "toxic-smoke-arrow",
+    "name": "Toxic smoke arrow",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 24,
+      "dice": "8d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35
+    },
+    "description": "You shoot an arrow that creates toxic smoke (is considered poison surface for the purpose of surface damage) in a 50 ft radius centered on a point within range. Targets that start their turn in the area must hold their breath (thus unable to speak) or take [4 x spell modifier + 24 + 8d8] poison damage. Targets that inhale the smoke (take the damage at any point) become silenced until the end of their next turn. Targets that speak automatically take the damage. Targets that take damage from ot..."
+  },
+  {
+    "id": "wraith-shot",
+    "name": "Wraith shot",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 5,
+    "manaCost": 280,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "spectral",
+    "attackType": null,
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 80,
+      "dice": "5d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 80
+    },
+    "description": "You shoot a magic arrow that takes the shape of a spectral wraith that hits a target. The foe must roll a Cha saving throw. On a fail they take [4 x spell modifier + 80 + 5d10] spectral damage and are possessed by the wraith. While possessed they are enraged, dealing double damage, and they are forced to spend all ap to attack the nearest foe (be it ally or enemy to them) possible, or move in range to them (they are allowed to use aoe to attack multiple foes nearby, if the nearest foe is incl..."
+  },
+  {
+    "id": "sleeping-volley",
+    "name": "Sleeping volley",
+    "classId": "arcane-ranger",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 150,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You shoot sleeping arrows at up to [spell modifier] targets within range. Each target must succeed on a will saving throw or fall asleep for the duration."
+  },
+  {
+    "id": "soul-shot",
+    "name": "Soul shot",
+    "classId": "arcane-ranger",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 600,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "true",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 420,
+      "dice": null
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Your eyes start radiating as you shoot an arrow concentrating the very essence of your magic, power and soul. Make a ranged spell attack against a target. On a hit the target takes [5 x spell modifier + 420] true damage. This spell does not require reloading."
+  },
+  {
+    "id": "elemental-spread",
+    "name": "Elemental spread",
+    "classId": "arcane-ranger",
+    "level": 5,
+    "apCost": 0,
+    "manaCost": 150,
+    "range": null,
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You touch the ground beneath your feet. All surfaces (normal/ground surfaces included) within range become fire, poison, ice, water, oil/sticky (that slows) or arcana surfaces, you choose exactly what part of the surface becomes what surface."
+  },
+  {
+    "id": "ranger-s-frenzy",
+    "name": "Ranger’s frenzy",
+    "classId": "arcane-ranger",
+    "level": 5,
+    "apCost": 0,
+    "manaCost": 500,
+    "range": null,
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "This spell can only be cast as the first thing in your turn. You are under the effect of quick draw (see 4th level spells) this turn, gain ap to have maximum ap, and halve the cost of all spells and attacks (rounded up) until the end of your turn. At the end of"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "physical": ["slashing", "piercing", "crushing"],
+  "magical": ["shadow", "light", "fire", "ice", "lightning", "poison", "thunder", "psychic", "spectral", "pure", "force"],
+  "true": ["true"]
+}

@@ -1,0 +1,626 @@
+{
+  "_note": "Dyionies/Jarghas/Eniyans from S&M Races.pdf (current). All other races extracted 2026-06-12 from S&M Guide_OLD.docx — abilities/numbers may predate the current ruleset (flagged in .claude/requirements/OPEN-QUESTIONS.md). movementSpeed is ft per AP: old-guide speeds (ft per 2 AP) were halved; 12.5/17.5 values await rebalance confirmation. levelOneStats = the stats the old guide says can be increased at level 1. Nyxari/Stoneborn/Dwurgo mechanics extracted under their old names (Tiefling/Goliath/Goblin).",
+  "races": [
+    {
+      "id": "dyionies",
+      "name": "Dyionies",
+      "description": "Elevated race from the technological plane, extremely organized and obedient of rules.",
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": {
+        "male": { "heightCm": [160, 200], "weightKg": [50, 100] },
+        "female": { "heightCm": [150, 210], "weightKg": [40, 80] }
+      },
+      "alignmentTendency": "lawful",
+      "active": {
+        "name": "Higher Focus",
+        "description": "Abilities requiring attack rolls automatically hit for 2 rounds.",
+        "apCost": 1,
+        "duration": "2 rounds",
+        "consumed": true
+      },
+      "passive": {
+        "name": "Strategist",
+        "description": "Automatically detect 1 random vulnerability when facing an enemy, if they have any."
+      },
+      "skillAbility": {
+        "type": "deckModification",
+        "name": "Order",
+        "description": "Remove 1 encounter card from your deck."
+      }
+    },
+    {
+      "id": "jarghas",
+      "name": "Jarghas",
+      "description": "Highly intelligent race from the technological plane. Individualistic with a natural repulsion to rules.",
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": {
+        "male": { "heightCm": [185, 260], "weightKg": [80, 150] },
+        "female": { "heightCm": [180, 230], "weightKg": [60, 110] }
+      },
+      "alignmentTendency": "chaotic",
+      "active": {
+        "name": "Volatile Creation",
+        "description": "Until end of round, abilities cast on a target are recast on a random target within 20ft (except you) at no cost.",
+        "apCost": 0,
+        "duration": "until end of round",
+        "consumed": true
+      },
+      "passive": {
+        "name": "Chaotic Reprise",
+        "description": "Start of combat: roll 1d10 to gain resistance to a random magic damage type for the duration."
+      },
+      "skillAbility": {
+        "type": "deckModification",
+        "name": "Burst",
+        "description": "Add one +4 consume card."
+      }
+    },
+    {
+      "id": "eniyans",
+      "name": "Eniyans",
+      "description": "Mechanical race created by the Dyionies. Need to be created and repaired in special factories.",
+      "movementSpeed": 15,
+      "senses": null,
+      "sizeRange": {
+        "average": { "heightCm": [200, 250], "weightKg": [150, 200] },
+        "unstableThreshold": { "heightCm": 300, "weightKg": 300 }
+      },
+      "alignmentTendency": null,
+      "active": {
+        "name": "Overdrive",
+        "description": "All ability AP costs halved (rounded up) and MS doubled until end of round. Afterward: slowed by half and weakened for 1 round.",
+        "apCost": 0,
+        "duration": "rest of round",
+        "consumed": true
+      },
+      "passive": {
+        "name": "Relentless Machine",
+        "description": "No need for food, water, or sleep. Immune to exhaustion stacks."
+      },
+      "skillAbility": {
+        "type": "deckModification",
+        "name": "Mechanical Persistence",
+        "description": "Add 2 +1 draw cards."
+      }
+    },
+    {
+      "id": "human",
+      "name": "Human",
+      "description": "Humans live less than a century; their short lives drive them to act decisively.",
+      "levelOneStats": ["str", "dex", "will", "cha"],
+      "movementSpeed": 15,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "any — many want to do what they believe is right",
+      "active": {
+        "name": "Hasted Steps",
+        "description": "For the remainder of the turn you triple your MS and automatically dodge all attacks of opportunity.",
+        "apCost": 0,
+        "duration": "rest of turn",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Haste of the Short-Lived",
+        "description": "+5 to initiative."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Persuasion",
+        "description": "Proficiency in Persuasion."
+      }
+    },
+    {
+      "id": "elf",
+      "name": "Elf",
+      "description": "The longest-lived race in the realm; few die of old age — elder elves transcend, leaving their bodies for their spirits to roam the planes.",
+      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "good — find conflict and wars puerile",
+      "active": {
+        "name": "Gift of Tir'El",
+        "description": "Your next action costs no AP. If you choose to move you can move 3 AP worth of movement for free.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Fey Heritage",
+        "description": "Advantage on saving throws against being charmed or put to sleep."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Knowledge",
+        "description": "Proficiency in Knowledge."
+      }
+    },
+    {
+      "id": "dwarf",
+      "name": "Dwarf",
+      "description": "Dwarves live up to half a millennium; greedy and stubborn but good folk, organized in kingdoms and clans.",
+      "levelOneStats": ["str", "const", "wis", "will"],
+      "movementSpeed": 12.5,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "lawful good",
+      "active": {
+        "name": "Stone Shield",
+        "description": "Summon the strength of stone and mountain: gain a third of your total HP as temporary HP for up to 1 minute.",
+        "apCost": 0,
+        "duration": "up to 1 minute",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mountain's Vigor",
+        "description": "+3 HP per level."
+      },
+      "skillAbility": {
+        "type": "bonus",
+        "name": "Dwarven Craft",
+        "description": "Proficiency with upgrade kits; heavy weapons don't penalize your MS; heavy armor does not reduce your movement."
+      }
+    },
+    {
+      "id": "gnome",
+      "name": "Gnome",
+      "description": "Gnomes live for a millennium, with endless curiosity for how everything works.",
+      "levelOneStats": ["dex", "int", "wis", "will"],
+      "movementSpeed": 12.5,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "good or neutral, chaotic",
+      "active": {
+        "name": "Let the Giants Sleep",
+        "description": "Up to 2 targets within 120 ft must make a WILL saving throw or fall asleep for up to 1 hour (instantly wake on damage). Even on a success, targets are unaware a spell was cast.",
+        "apCost": 0,
+        "duration": "up to 1 hour",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Gnomish Cunning",
+        "description": "Advantage on INT saving throws."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Arcana",
+        "description": "Proficiency in Arcana."
+      }
+    },
+    {
+      "id": "nyxari",
+      "name": "Nyxari",
+      "replaces": "tiefling",
+      "description": "Live about 3 centuries thanks to their demonic parentage; inherit their mortal parent's way of behaving, with no innate inclination to evil.",
+      "levelOneStats": ["dex", "int", "will", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "any — shaped by upbringing",
+      "active": {
+        "name": "Infernal Flames",
+        "description": "Choose a target within 60 ft; flames instantly engulf them, dealing 2d6 + 2d6/level fire damage (no saving throw or attack required).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Infernal Blood",
+        "description": "Fire resistance."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Thievery",
+        "description": "Proficiency in Thievery (old guide: Sleight of Hand)."
+      }
+    },
+    {
+      "id": "stoneborn",
+      "name": "Stoneborn",
+      "replaces": "goliath",
+      "description": "Large horned humanoids with arcane tattoo marks that increase resilience; live almost a millennium, slowly eroding like mountains. Mechanics extracted from the old guide's Goliath entry.",
+      "levelOneStats": ["str", "const", "wis", "will"],
+      "movementSpeed": 17.5,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "neutral — uninvolved in others' struggles",
+      "active": {
+        "name": "Strengthened Body",
+        "description": "Until the start of your next turn, reduce all non-true damage taken by 4/level.",
+        "apCost": 0,
+        "duration": "until start of next turn",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Unmovable",
+        "description": "Advantage on saving throws against being restrained or grappled."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Athletics",
+        "description": "Proficiency in Athletics."
+      }
+    },
+    {
+      "id": "daeva",
+      "name": "Dae'va",
+      "description": "Celestial beings sent for a purpose; they live until it is accomplished, then return to nothingness.",
+      "levelOneStats": ["int", "wis", "will", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 90 },
+      "sizeRange": null,
+      "alignmentTendency": "almost always good",
+      "active": {
+        "name": "Purify Soul",
+        "description": "Heal an ally in melee range for 3d8 + 3d8/level HP and end one minor disease or curse affecting them (you must be aware of its existence and nature).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Celestial Light",
+        "description": "Resistance to light."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Medicine",
+        "description": "Proficiency in Medicine."
+      }
+    },
+    {
+      "id": "dwurgo",
+      "name": "Dwurgo",
+      "replaces": "goblin",
+      "description": "Slightly larger goblinoids with thick colored fur and small snouts; war leaders of the goblinoid families, living up to 2.5 centuries. Mechanics extracted from the old guide's Goblin entry.",
+      "levelOneStats": ["str", "const", "int", "will"],
+      "movementSpeed": 12.5,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "lawful evil — natural-born leaders of their kind",
+      "active": {
+        "name": "Warcry",
+        "description": "Allies that can hear you deal 2 + 2/level bonus damage with all weapon attacks until the end of your next turn.",
+        "apCost": 0,
+        "duration": "until end of your next turn",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Leader's Endurance",
+        "description": "First time you would be reduced below 1 HP, you remain at 1 HP instead. Recharges on a long rest."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Investigation",
+        "description": "Proficiency in Investigation."
+      }
+    },
+    {
+      "id": "kraka",
+      "name": "Kraka",
+      "description": "Bird-like petty thieves; few surpass half a century.",
+      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "movementSpeed": 12.5,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "chaotic evil — petty thieves rather than villains",
+      "active": {
+        "name": "Spread Wings",
+        "description": "Gain flying speed equal to your MS for 3 turns.",
+        "apCost": 0,
+        "duration": "3 turns",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mimicry",
+        "description": "Advantage on saving throws against silenced. You can mimic speech you hear, but can't talk without using this trait."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Thievery",
+        "description": "Proficiency in Thievery."
+      }
+    },
+    {
+      "id": "triton",
+      "name": "Triton",
+      "description": "Protectors of the deep, kind-hearted and honest; live up to 7 centuries.",
+      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "movementSpeed": 12.5,
+      "senses": { "darkvision": 120 },
+      "sizeRange": null,
+      "alignmentTendency": "good",
+      "active": {
+        "name": "Summon Water Serpent",
+        "description": "From any water source at least as big as a puddle, raise a serpent-like water creature. It attacks a creature of your choice within 120 ft of it, dealing 3d8 + 3d8/level ice damage (+2×proficiency to hit).",
+        "apCost": 2,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Child of the Deep",
+        "description": "Swimming speed (old guide: 40 ft per 2 AP → 20 ft per AP); can breathe underwater."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Survival",
+        "description": "Proficiency in Survival."
+      }
+    },
+    {
+      "id": "naga",
+      "name": "Naga",
+      "description": "Created to guard gods; lifespan of about 2.5 millennia.",
+      "levelOneStats": ["const", "int", "wis", "will"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 60 },
+      "sizeRange": null,
+      "alignmentTendency": "almost always lawful — meant to guard their master/creator",
+      "active": {
+        "name": "Spirit Slash",
+        "description": "Ranged spell attack (range 60 ft, +proficiency + WILL modifier to hit) dealing 2d10 + 2d10/level true damage on a hit.",
+        "apCost": 2,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Guardian Spirit",
+        "description": "Advantage on WILL saving throws against any ability that would apply a negative effect (not only deal damage) to you."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Religion",
+        "description": "Proficiency in Religion."
+      }
+    },
+    {
+      "id": "centaur",
+      "name": "Centaur",
+      "description": "Freedom-loving; live a bit less than humans.",
+      "levelOneStats": ["str", "const", "wis", "will"],
+      "movementSpeed": 20,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "chaotic neutral — value freedom, take no sides",
+      "active": {
+        "name": "Stomp",
+        "description": "Force a creature you successfully attacked with your hooves to make a CONST saving throw (DC = 8 + 2×proficiency) or be knocked prone.",
+        "apCost": 0,
+        "cooldown": "twice per short rest"
+      },
+      "passive": {
+        "name": "Hooves",
+        "description": "Can be mounted. Moving at least your base MS straight toward an enemy lets you use a hooves attack for free. Hooves (natural weapon, 3 AP): [STR mod + 3/level + 1d10] crushing damage."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Nature",
+        "description": "Proficiency in Nature (old guide skill — no current skills.json equivalent, see OPEN-QUESTIONS)."
+      }
+    },
+    {
+      "id": "minotaur",
+      "name": "Minotaur",
+      "description": "Savage lineage; lifespan ranges from a century to a millennium depending on purity of breed.",
+      "levelOneStats": ["str", "const", "int", "will"],
+      "movementSpeed": 17.5,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "evil — savage nature",
+      "active": {
+        "name": "Charge",
+        "description": "Move 20 ft directly toward a target and attack with your horns for free; on a hit the target makes a CONST saving throw (DC = 8 + proficiency + CONST mod) or is knocked 10 ft away (no attacks of opportunity) and prone. If they hit something at least their size while knocked away, they are stunned for 1 round instead.",
+        "apCost": 2,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Labyrinthine Mind",
+        "description": "Advantage on saving throws against thought-probing or memory alteration; such attacks have disadvantage. Horns (natural weapon, 3 AP): [CONST mod + 3/level + 1d12] piercing damage."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Memory",
+        "description": "Proficiency in Memory (old guide skill — no current skills.json equivalent, see OPEN-QUESTIONS)."
+      }
+    },
+    {
+      "id": "vampire",
+      "name": "Vampire",
+      "description": "Pure-breed vampires are immortal but most are slain within their first millennium. Must consume blood: a person every couple of days; a week without feeding kills them. Only vampire lords can turn others.",
+      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 90 },
+      "sizeRange": null,
+      "alignmentTendency": "lawful evil",
+      "active": {
+        "name": "Shadow Fangs",
+        "description": "Bite a target (no attack roll required), dealing 2d6 + 2d6/level shadow damage and recovering HP equal to half the damage dealt. Secondary: after 1 minute of channeling, transform into a bat (flight speed; no attacks or spells); 1 minute of channeling to turn back.",
+        "apCost": 2,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Creature of the Night",
+        "description": "Resistance to shadow and poison; vulnerability to light."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Deception",
+        "description": "Proficiency in Deception."
+      }
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "description": "Savage warriors that lust for blood; live about a century, should they not die in war.",
+      "levelOneStats": ["str", "dex", "const", "will"],
+      "movementSpeed": 15,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "chaotic evil",
+      "active": {
+        "name": "Savagery",
+        "description": "For 1 hour you have 10% increased critical chance (crit at 18+ if you previously crit at 20).",
+        "apCost": 0,
+        "duration": "1 hour",
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Fearless",
+        "description": "Advantage on saving throws against being frightened."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Resolve",
+        "description": "Proficiency in Resolve (old guide skill — no current skills.json equivalent, see OPEN-QUESTIONS)."
+      }
+    },
+    {
+      "id": "dragonborn",
+      "name": "Dragonborn",
+      "description": "Live to about 8 centuries; their parent's greed for gold runs in their blood.",
+      "levelOneStats": ["str", "const", "int", "wis"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "any — each chooses their own path",
+      "active": {
+        "name": "Elemental Breath",
+        "description": "All creatures in a 15 ft cone make a DEX saving throw (DC = 8 + 2×proficiency), taking [10 + 3d10/level] damage of your parent's element on a fail, half on a success.",
+        "apCost": 5,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Draconic Heritage",
+        "description": "Resistance to one elemental damage type (depending on the parent)."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Intimidation",
+        "description": "Proficiency in Intimidation."
+      }
+    },
+    {
+      "id": "forest-folk",
+      "name": "Forest Folk",
+      "description": "Kind-hearted but uninvolved unless directly concerned; live a couple of centuries at most.",
+      "levelOneStats": ["str", "dex", "wis", "will"],
+      "movementSpeed": 15,
+      "senses": null,
+      "sizeRange": null,
+      "alignmentTendency": "neutral",
+      "active": {
+        "name": "Gift of the Forest",
+        "description": "Cast one druid spell of your choice at a level available to you with no AP and no mana cost. If you are already a druid, you can instead cast a spell one level higher than what is available to you.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Wildkin",
+        "description": "Advantage on saving throws against being transformed/polymorphed, and advantage on all Nature and Survival checks in forests."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Animal Handling",
+        "description": "Proficiency in Animal Handling."
+      }
+    },
+    {
+      "id": "oni",
+      "name": "Oni",
+      "description": "Monstrous hunters of humans since ancient times; live up to 10 millennia through their ritual: each year they see a person in a vision and must hunt, kill and consume them before the year ends, or be cast into oblivion.",
+      "levelOneStats": ["str", "dex", "const", "wis"],
+      "movementSpeed": 17.5,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "chaotic evil",
+      "active": {
+        "name": "Mark Prey",
+        "description": "Mark a target within melee range to follow the scent of blood: you know their direction (beyond 300 ft) or exact location (within 300 ft), and they have −10 MS for 1 hour. Choose one: advantage on your attacks against the target, or the target has disadvantage on saving throws against your effects.",
+        "apCost": 2,
+        "duration": "1 hour",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Demon Blood",
+        "description": "Resistance to shadow; immune to curses (lycanthropy, wendigo and the like)."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Perception",
+        "description": "Proficiency in Perception."
+      }
+    },
+    {
+      "id": "refur",
+      "name": "Refur",
+      "description": "Fox-spirits that grow a tail every century (born with none); on the day they would need a tenth tail, they vanish. Consuming souls prolongs their lifespan and empowers them. They keep a fixed humanoid disguise form (chosen once, same gender).",
+      "levelOneStats": ["str", "dex", "int", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "chaotic, many evil",
+      "active": {
+        "name": "Deadly Charm",
+        "description": "Target makes a CHA saving throw (DC = 8 + proficiency + your CHA mod) or falls madly in love with you (immune for 24h on a success): they obey your every word unless it directly harms them, repeating the save at the end of each of their turns and whenever they take damage. While charmed this way, you can absorb their spirit, dealing 2d10 + 2d10/level true damage.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Spirit Anchor",
+        "description": "Advantage on saving throws against being banished or teleported to other planes of existence."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Seduction",
+        "description": "Proficiency in Seduction."
+      }
+    },
+    {
+      "id": "tamari",
+      "name": "Tamari",
+      "description": "Memory-eaters; must feast on memories to survive (one minor absorption per week, one total absorption per month). Lifespan varies with memories consumed, seldom surpassing a millennium.",
+      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 90 },
+      "sizeRange": null,
+      "alignmentTendency": "evil — thirst for others' memories",
+      "active": {
+        "name": "Memory Absorption",
+        "description": "Melee spell attack (INT modifier) dealing [2d4 + 2d4/level] shadow + [2d4 + 2d4/level] psychic damage. On a hit, the target makes a WIS saving throw or has surface thoughts and recent memories absorbed by you. If the attack kills the target, you absorb all their thoughts and memories unless sealed away by magic.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Shadowmind",
+        "description": "Resistance to shadow and psychic; vulnerable to light."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Insight",
+        "description": "Proficiency in Insight."
+      }
+    },
+    {
+      "id": "neko",
+      "name": "Neko",
+      "description": "Cat-folk who live a bit less than humans — though some elders have lived centuries, and no one knows their secret.",
+      "levelOneStats": ["dex", "const", "int", "cha"],
+      "movementSpeed": 15,
+      "senses": { "darkvision": 30 },
+      "sizeRange": null,
+      "alignmentTendency": "chaotic neutral — freedom and carelessness",
+      "active": {
+        "name": "Ambush",
+        "description": "When attacking from hiding, against a surprised target, or against a target with higher initiative than you: your abilities automatically hit and critically hit for the rest of the round.",
+        "apCost": 2,
+        "duration": "rest of round",
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Cat's Grace",
+        "description": "Climbing speed equal to MS. Claws (natural weapon, 2 AP): +proficiency+DEX to hit, [DEX mod + 2/level + 1d6] slashing; attack with both claws for 3 AP (second claw adds no DEX mod to damage)."
+      },
+      "skillAbility": {
+        "type": "proficiency",
+        "name": "Reflex",
+        "description": "Proficiency in Reflex, plus one additional proficiency of your choice that uses DEX."
+      }
+    }
+  ]
+}

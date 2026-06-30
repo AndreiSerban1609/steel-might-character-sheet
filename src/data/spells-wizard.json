@@ -1,0 +1,4238 @@
+[
+  {
+    "id": "magic-bolt",
+    "name": "Magic bolt",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d10"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 9 + 2d10] pure damage."
+  },
+  {
+    "id": "nether-zone",
+    "name": "Nether zone",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 5,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 8,
+      "dice": "3d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 75,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "6d8"
+      }
+    },
+    "description": "You create a 15 ft radius zone of magic on the ground, centered on a point within range. All creatures that start their turn in the area must succeed on a Dex saving throw or take [spell modifier + 8 + 3d8] shadow damage that ignores armor. On a failed Dex save, the creature also has its MS reduced by [10]. The zone remains there as long as you are able to maintain concentration on the spell (up to the duration)."
+  },
+  {
+    "id": "magic-flame",
+    "name": "Magic flame",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 4,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 6,
+      "dice": "2d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 60,
+      "description": "+60 mana + [spell modifier + 15 + 2d6] initial damage + [spell \nmodifier + 9 + 2d6] explosion damage"
+    },
+    "description": "You throw a bolt at a creature within range. Make a ranged spell attack. On a hit, the target takes [spell modifier + 6 + 2d6] pure damage. The bolt explodes on contact, forcing all creatures (including the target) within 5 ft of the target to take [spell modifier + 3 + 2d6] fire damage (reduced by armor too). The explosion occurs even if the initial attack misses"
+  },
+  {
+    "id": "minor-burst",
+    "name": "Minor burst",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 5,
+    "range": "90 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 1,
+      "dice": "1d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d8"
+      }
+    },
+    "description": "Make a ranged spell attack against a target within range. On a hit the target takes [spell modifier + 1 + 1d8] pure damage. Repeatable on the same turn with no mana cast. If this spell crits or kills an opponent you gain 2 ap (which expire at the end of the turn and don’t transfer over) and 30 mana. You cannot gain more than 6 ap and 90 mana back with this ability in a round."
+  },
+  {
+    "id": "magic-bomb",
+    "name": "Magic bomb",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 16,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "4d12"
+      }
+    },
+    "description": "You place a magic bomb in a creature. The bomb detonates at the end of the target’s second turn after casting, dealing [spell modifier + 16 + 2d12] pure damage to all creatures (including the target) within 10 ft of the target (is considered direct damage and is reduced by armor)."
+  },
+  {
+    "id": "piercing-magic",
+    "name": "Piercing magic",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 2,
+    "range": "self",
+    "components": [],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 10,
+      "description": "+10 mana + [1 turn] duration"
+    },
+    "description": "Spells that require a ranged spell attack and target a single creature can now hit a second creature in a straight line behind it, if both are in range. In case of spells like magic flame the explosion (or any additional effect) procks on the second target. Additionally, spells can break fragile surfaces such as windows, rotten wood, etc. without having their trajectory altered."
+  },
+  {
+    "id": "create-minor-illusion",
+    "name": "Create minor illusion",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a small object (cube with 3 ft side at most). The object looks as you wish, but has no other capability than visual (it does not produce sounds, smell, and objects pass through it). An investigation check reveals it to be an illusion."
+  },
+  {
+    "id": "magic-lock",
+    "name": "Magic lock",
+    "classId": "sorcerer",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You lock a door for the duration. The lock cannot be bypassed with keys. It may be dispelled, lockpicked or broken physically as normal for the door’s material."
+  },
+  {
+    "id": "dual-arcana",
+    "name": "Dual arcana",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 30,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 40,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 26,
+        "dice": "1d10"
+      }
+    },
+    "description": "You throw a bolt in a direction. The first target in the path must roll a dex saving throw. On a fail, the target takes [2 x spell modifier + 30 + 3d10] pure damage. At the start of your next turn, another bolt is fired from your previous position in the same direction. It automatically hits the first creature in its path unless blocked by obstacles."
+  },
+  {
+    "id": "rooting-magic",
+    "name": "Rooting magic",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 30,
+    "range": "15 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You let out a wave of magic that freezes the limbs of all creatures. All creatures within range must succeed on a Const saving throw or be rooted until the end of your next turn."
+  },
+  {
+    "id": "veil-crevasse",
+    "name": "Veil crevasse",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 70,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 minute",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 32,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 45,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "3d8"
+      }
+    },
+    "description": "You create a [range] long 5 ft wide crevasse starting from you in a direction of your choice. The crevasse is filled with magic essence (is considered surface) and beams with a pale blue light that lasts for the duration or until your concentration breaks.. Not only is the area within 5 ft of the crevasse considered dim light, but ALL attacks against ALL creatures in this light have advantage. All creatures that were on the surface of the crevasse when created must roll a dex saving throw, taking [2 x spell modifier + 32 + 4d8] force damage on a fail."
+  },
+  {
+    "id": "sudden-explosion",
+    "name": "Sudden explosion",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 32,
+      "dice": "6d4"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "4d4"
+      }
+    },
+    "description": "You mark a creature that has been attacked by a ranged weapon attack, unbeknownst to any other creature. If they get attacked by another ranged weapon until the start of your turn, irregardless of whether it hits or misses, you can choose to explode the projectile. You choose the moment on the projectile’s trajectory that it explodes, but it must be after it has travelled at least 20 ft. All targets within 10 ft of the explosion must succeed on a dex saving throw or take [2 x spell modifier + 32 + 6d4] pure damage. (the attack is obviously nullified)",
+    "isReaction": true
+  },
+  {
+    "id": "winds-of-magic",
+    "name": "Winds of magic",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You enhance the next single-target spell that requires an attack roll you cast. It instead affects all creatures within 20 ft of the target/aimed point and all targets must succeed on a dex saving throw or get hit by the spell (instead of the attack roll)."
+  },
+  {
+    "id": "adapt-magic",
+    "name": "Adapt magic",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 30,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You learn how to defend against a spell that you have seen cast last turn. Choose one spell, everytime the spell is cast on you (or you would be affected by the aoe) you have advantage on the saving throw/the enemy has disadvantage on the attack roll against you. You cannot use this to defend against different spells, casting this spell again overwrites the effect with a new spell. Furthermore, if the spell would deal half damage when you save yourself, you take no damage instead."
+  },
+  {
+    "id": "mind-channel",
+    "name": "Mind channel",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "100 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You channel a beam of magic toward one creature within range, granting them enhanced mobility. The creature can walk on any surface—vertical, inverted, or uneven—and may also levitate slowly through the air at up to one-third of their MS. If the creature is unwilling, the spell has no effect. The creature may end the effect at any time; however, if they are suspended in midair or on a surface too steep to stand on, they immediately fall."
+  },
+  {
+    "id": "sense-magic",
+    "name": "Sense magic",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 30,
+    "range": "300 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You can sense all creatures and objects capable of casting spells or using magic abilities within range, even through solid obstacles - unless there is MATERIAL between you and the source. Additionally, you gain advantage on Arcana checks to identify magical objects, runes, or seals and to determine their properties."
+  },
+  {
+    "id": "lesser-arcane-seal",
+    "name": "Lesser arcane seal",
+    "classId": "sorcerer",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": null,
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": "force",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 33,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "After channeling for 1 minute, you place an arcane seal on a surface, door, or any object that isn’t currently held or used by anyone. The seal is visible to anyone who approaches. The seal remains in place until dispelled (requires an arcana check against 5 * your spell save DC). The seal will have a certain effect when touched (including any person attempting to interact with the object if applicable). You choose one of the following effects of your choice for each seal you place: -a phrase or drawing you make will appear -the interaction is stopped and object can no longer be interacted with for [1 day] -the person interacting with the seal must succeed on a const saving throw or be rooted for up to [1 hour]; they cannot repeat the saving throw, but the effect ends early if they take damage from other sources (other than themselves) -the person interacting with the seal takes [2 x spell modifier + 33 + 4d12] force damage and is pushed back [1d4 * 5] feet"
+  },
+  {
+    "id": "orb-of-zari",
+    "name": "Orb of Zari",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 120,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 32,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d10"
+      }
+    },
+    "description": "You create an orb of magic that you cast upon a creature. The target must succeed on a dex saving throw or take [3 x spell modifier + 32 + 4d10] pure damage. The target also takes double damage from the next spell you cast on them (of a level lower than the one you casted this with)."
+  },
+  {
+    "id": "magic-missiles",
+    "name": "Magic missiles",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 15,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d12"
+      }
+    },
+    "description": "You create 3 magic missiles that you throw at 3 foes (not necessarily different). Make a ranged spell attack for each missile. On a hit, a missile deals [spell modifier + 15 + 2d12] pure damage. If all 3 missiles hit, the ap cost is refunded. If all 3 of them miss, the mana is refunded. (the refunds cannot trigger more than once per turn)"
+  },
+  {
+    "id": "gate-of-the-sorcerer",
+    "name": "Gate of the sorcerer",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "You create a gate (a floating circle of magic, marked with glyphs), that stands vertically, being 6 ft in diameter. All spells you cast that travel through the gate gain the following benefits: -their range is increased by 30 ft; -their aoe range is increased by 10 ft (if they were aoe to begin with); -enemies subtract [spell modifier] from their saving throws; -you add [3 x spell modifier] damage to each spell;"
+  },
+  {
+    "id": "counterspell",
+    "name": "Counterspell",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 0,
+    "manaCost": 100,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You attempt to prevent the casting of a spell a foe is trying to cast. You contest your foe on a spell check ([1d20 + spell modifier + 5*spell level], spell level for you is the level of the counterspell spell, and for your foe the level of the spell they were casting). On a win or tie the spell fails (but the ap and mana are consumed from your opponent).",
+    "isReaction": true
+  },
+  {
+    "id": "wave-of-magic",
+    "name": "Wave of magic",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 140,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 44,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "2d12"
+      }
+    },
+    "description": "You cast forth (from you in a direction) a wave of magic energy. The wave is 20 ft wide and travels for 100 ft. All creatures in its path must succeed on a dex saving throw or take [3 x spell modifier + 44 + 6d12] pure damage."
+  },
+  {
+    "id": "swift-portal",
+    "name": "Swift portal",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a portal for a second, so you can pass through it and reach an unoccupied space within range."
+  },
+  {
+    "id": "hologram",
+    "name": "Hologram",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 min(10 years if stored)",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "7)Hologram Cost: 2 ap Range: 60 ft Requirements:V, S Duration:10 min(10 years if stored) Mana: 100 You can create a hologram (or store one, see below) originating from a point or object within range. The hologram looks like an object or being of your choice, that can fit in a 10 ft size cube. The hologram can make sounds. If the hologram is of a humanoid, it can speak what you telepathically commend it (whilst you are in range). You can store a hologram into an object, and name a trigger that will activate it (can be activated multiple times). The hologram can speak a predetermined speech. You can also train it to answer questions (by manually stating that to a certain question that you speak, the answer that should be given is one that you speak; the hologram can detect similar questions that have the same meaning)."
+  },
+  {
+    "id": "telekinesis",
+    "name": "Telekinesis",
+    "classId": "sorcerer",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You can move an object considering Int as your carrying stat, and you double your modifier for it. You don't have to physically move the object, you can move it with a translucent, but visible link from a point within range to another point within range."
+  },
+  {
+    "id": "magic-exposure",
+    "name": "Magic exposure",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 0,
+    "manaCost": 100,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "The next spell you cast will ignore resistance of the target (resistance, not immune etc.)."
+  },
+  {
+    "id": "portals-of-silence",
+    "name": "Portals of silence",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 21,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d8"
+      }
+    },
+    "description": "You open two portals (so that they are both in range and that they are 20 ft apart). A ray of magic is launched from one and into the other. All creatures hit by the ray must succeed roll a const saving throw. On a fail, a creature takes [4 x spell modifier + 21 + 4d8] pure damage and is silenced until the start of your next turn. On a success they only take half damage. The portals (and ray) remain there for the duration. All creatures that start their turn in the ray must repeat the saving throw or be silenced for 1 turn. While a creature stands in the ray they are silenced, but the silence ends when they exit the area if they succeeded the saving throw that turn."
+  },
+  {
+    "id": "obelisk-of-safety",
+    "name": "Obelisk of safety",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 6,
+    "manaCost": 150,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "After 1 hour of channeling you can mark a place or building as your obelisk. As long as you have an obelisk marked, after 1 hour of channeling you and up to [spell modifier] other willing creatures within 30 ft of you can be teleported to the currently marked obelisk."
+  },
+  {
+    "id": "ray-of-zari",
+    "name": "Ray of Zari",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 61,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d12"
+      }
+    },
+    "description": "You cast a ray of magic energy from the sky to hit a foe within range. The target must succeed on a [X] saving throw or take [4 x spell modifier + 61 + 4d12] pure damage. You can consume 1 more ap or 50 more mana to choose the type of saving throw required (standard is Dex)."
+  },
+  {
+    "id": "energy-blast",
+    "name": "Energy blast",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 160,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "force",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 22,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d10"
+      }
+    },
+    "description": "You unleash a wave of magical energy from you. All enemies within range must roll a Const saving throw, taking [4 x spell modifier + 22 + 4d10] force damage on a fail, or half as much on a success."
+  },
+  {
+    "id": "splitting-death",
+    "name": "Splitting death",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 165,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 46,
+      "dice": "8d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "2d10"
+      }
+    },
+    "description": "You cast a bolt on a target within range. The target must roll a Dex saving throw, taking [4 x spell modifier + 46 + 8d10] pure damage on a fail, or half as much on a success. The bolt then splits into 2, one going left, one right, making 90 degrees angles from the original (doar uitativa drq la vel’koz Q din lol). The 2 splitted bolts can travel at most 15 feet. If the bolt hits 3 targets roll 1d20. On a 11 and above the mana cost is refunded. If all 3 of the targets also fail the saving throw half the ap cost is refunded."
+  },
+  {
+    "id": "create-object",
+    "name": "Create object",
+    "classId": "sorcerer",
+    "level": 4,
+    "apCost": 6,
+    "manaCost": 160,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You can create an object that fits in a 5 ft-side cube. The object must be a general, common use (it cannot be magic, currency, chemical components etc). If you create a weapon with this spell it is always a level 1 weapon."
+  },
+  {
+    "id": "fathom-magic",
+    "name": "Fathom magic",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You learn the ins and outs of the last spell cast on you (or that you got damaged/affected by). This spell is added to your known and prepared spells for the duration (in place of Fathom magic). You can at any point give up the spell and have Fathom magic return to your spell pool. You can cast the spell with your spell modifier. The spell must be of a level of magic you have already unlocked, but you can cast it with any suitable spell slot (if you can cast spells of 6th level and below, and you steal a 4th level spell, you can cast it as a 4,5 or 6th level spell)."
+  },
+  {
+    "id": "identify",
+    "name": "Identify",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 200,
+    "range": "15 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You detect the origins and general knowledge about a magic object or spell that are not hidden by a spell of a higher level."
+  },
+  {
+    "id": "circle-of-focus",
+    "name": "Circle of focus",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 220,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a circle of magic power centered on you, having a 30 ft radius. All creatures (including enemies) standing in the area have their mana/energy/etc. resource costs reduced by half."
+  },
+  {
+    "id": "arcana-bolt",
+    "name": "Arcana bolt",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 275,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 98,
+      "dice": "5d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "1d12"
+      }
+    },
+    "description": "You throw a bolt of magic energy at a target within range. Make a ranged spell attack on a target within range. On a hit the target takes [5 x spell modifier + 98 + 5d12] pure damage. If your Int is higher than your foe’s the attack automatically hits and deals true damage."
+  },
+  {
+    "id": "arcana-blast",
+    "name": "Arcana blast",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 215,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 37,
+      "dice": "5d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d8"
+      }
+    },
+    "description": "You create a blast of magic centered on a point within range. All creatures within 20 ft must roll a dex saving throw, taking [5 x spell modifier + 37 + 5d8] pure damage on a fail, or half as much on a success. Targets with int lower then your have disadvantage on the saving throw, but those with higher int have advantage."
+  },
+  {
+    "id": "gate-of-teleportation",
+    "name": "Gate of teleportation",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 220,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "24 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "6)Gate of teleportation Cost: 1 ap Range: 30 ft Requirements:V, S Duration:24 hours Mana: 220 After 1 minute of channelling you create a gate that can teleport WILLING creatures to another plane (that you choose when you cast the spell) that borders the mortal plane. You and other creatures using this spell are only teleported to the other planes as spectres. You can move and talk,but are unable to deal damage, cast spells, and any damage taken will teleport you back to the original plane. If this happens to you the portal instantly closes, and all creatures still roaming there remain trapped as spectres (unless you cast the spell again, go to the plane, find them and bring them back). You must return by the end of the duration (alongside all other creatures) or be trapped in the plane. RETURNING: a “second” gate is created at your point of arrival on the other plane. You must pass through it to return to the original plane unharmed."
+  },
+  {
+    "id": "magic-seal",
+    "name": "Magic seal",
+    "classId": "sorcerer",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 220,
+    "range": "20 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You attempt to create or dispell a magic seal on an object, area, surface, etc. The area is protected/cannot be opened/is immune to harm etc. as you choose when creating the seal (if it makes sense). Only a spell of a bigger level can dispel this. If you want to dispel the seal this spell’s cast level must be higher than the seal’s level. You must succeed on an Int check against the seal spell DC. If you know the origins, caster, etc. (details) of the seal you automatically succeed. If this spell failed once on a seal, it cannot succeed on further attempts."
+  },
+  {
+    "id": "dome-of-heimdall",
+    "name": "Dome of Heimdall",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 6,
+    "manaCost": 250,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 8 hours",
+    "concentration": false,
+    "channeling": true,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 60,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "1d10"
+      }
+    },
+    "description": "You channel, creating a dome that protects against your foes. The dome can be as small as to only cover you, or as big as to cover a castle. You choose the dimensions, but the dome is always centered on you. Spells and projectiles cannot pass through the dome. Spells do damage the dome, but the dome takes 90% reduced damage from spells. Physical attacks do not damage the dome. All the damage taken by the dome is transferred to you as true damage. Creatures that want to pass through the dome: if they are not casters, they must roll a Will saving throw. On a fail they take [6 x spell modifier + 60 + 6d10] pure damage (reduced by armor) and are pushed back (but can retry to enter the dome). On a success they only take half damage and are able to pass through. Spellcasters are unable to pass through the dome in a physical manner. They can teleport inside by using spells of 7th level or higher. (The dome automatically disappears if you stop channelling or fall unconscious; you must roll to maintain channelling only if you have taken 25% of your max HP as damage since the end of your last turn). This spell cannot be cast again until a long rest is finished."
+  },
+  {
+    "id": "wings-of-magic",
+    "name": "Wings of magic",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 250,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "A pair of transparent wings grow on your back. You gain a flying speed of 50 for the duration."
+  },
+  {
+    "id": "sorcerers-wrath",
+    "name": "Sorcerer’s wrath",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 3,
+    "manaCost": 260,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 58,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack against a creature within range. On a hit they take [6 x spell modifier + 58+ 6d10] pure damage. Roll 1d4. Spells of the rolled dice level cast by you on the target for the duration have their ap cost halved (rounded down, but no less than 1). Casting this spell again will overwrite the initial effect, not stack it."
+  },
+  {
+    "id": "magic-of-transposition",
+    "name": "Magic of transposition",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 2,
+    "manaCost": 250,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "cha",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Until the end of your next turn, when you damage a creature with a spell they must succeed on a Cha saving throw or be teleported by you to a point within 30 ft (unoccupied and harmless) of where they are standing that you choose."
+  },
+  {
+    "id": "twin-gates",
+    "name": "Twin gates",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "10 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create 2 portals within range. Whenever one of your spells enters the portal (you cast it in the portal’s direction and it reaches the portal) the spell leaves through the other portal, travelling in the orientation of the portal and for [range - distance travelled to the first portal] ft."
+  },
+  {
+    "id": "arcana-barrage",
+    "name": "Arcana barrage",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 325,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 72,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d12"
+      }
+    },
+    "description": "You cast a barrage of magic forth. The barrage is 20 ft wide and travels 120 ft. All creatures in its path must roll a dex saving throw, taking [6 x spell modifier + 72 + 6d12] pure damage on a fail, or half as much on a success."
+  },
+  {
+    "id": "arcane-shield",
+    "name": "Arcane shield",
+    "classId": "sorcerer",
+    "level": 6,
+    "apCost": 0,
+    "manaCost": 200,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "As a reaction to an attack or ability that could affect you (BUT BEFORE YOU SEE THE ATTACK ROLL/SAVING THROW), you start channelling a magic shield that protects the space around your body. You become immune to all damage and cc. You can end the channel early, but only at the end of a turn.",
+    "isReaction": true
+  },
+  {
+    "id": "duel-of-spirits",
+    "name": "Duel of spirits",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a target to make a Will saving throw. On a fail, your base MA is reduced to 0, and the target’s MA is reduced by two times your base MA. You can end the effect early on your turn. A target’s MA cannot drop below 0."
+  },
+  {
+    "id": "wormhole",
+    "name": "Wormhole",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 310,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a hole in space. The portal lasts for the duration. Any creature that enters the portal is transported to one plane of existence that you choose when you cast the spell."
+  },
+  {
+    "id": "spell-overload",
+    "name": "Spell overload",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 0,
+    "manaCost": 300,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+ 50 mana; + [50] mana to cast spells;"
+    },
+    "description": "You can consume up to [250] mana casting as many spells of levels lower than the one you cast this spell with. The spells have no ap cost. The mana cost of this spell is still consumed besides the mana of the summed spells."
+  },
+  {
+    "id": "empower-arcana",
+    "name": "Empower arcana",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 0,
+    "manaCost": 160,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Until the end of your turn all your attack rolls have [spell modifier] added to the DICE VALUE of the attack roll (meaning they also count for critical)."
+  },
+  {
+    "id": "realm-transition",
+    "name": "Realm transition",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 300,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You attempt to render all creatures within range ethereal. All targets within range must succeed on a Wis saving throw or become ethereal until the end of your next turn. You can protect any number of creatures you want from the effect of this spell."
+  },
+  {
+    "id": "counter-magica",
+    "name": "Counter magica",
+    "classId": "sorcerer",
+    "level": 7,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You protect a creature within range against magic. For the duration the creature is immune to magic DAMAGE, but you are unable to cast harmful spells (that damage or cc). You can end the effect early on your turn."
+  },
+  {
+    "id": "zaris-wrath",
+    "name": "Zari‘s wrath",
+    "classId": "sorcerer",
+    "level": 8,
+    "apCost": 3,
+    "manaCost": 500,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 8,
+      "flat": 88,
+      "dice": "8d20"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "A veil of magical energy surrounds all areas within [range] of you. You can protect any number of creatures from this spell. All other creatures take [8 x spell modifier + 88 + 8d20] pure damage."
+  },
+  {
+    "id": "arcana-master",
+    "name": "Arcana master",
+    "classId": "sorcerer",
+    "level": 8,
+    "apCost": 4,
+    "manaCost": 400,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You gain Int equal to [Int -10] (thus doubling your int modifier; if you had int 13 you gain 3 int; if you had int 22 you gain 12 int)."
+  },
+  {
+    "id": "cosmic-oblivion",
+    "name": "Cosmic oblivion",
+    "classId": "sorcerer",
+    "level": 8,
+    "apCost": 4,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "pure",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 8,
+      "flat": 0,
+      "dice": "5d100"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "A ray of cosmic energy strikes a foe within range. The target takes [8 x spell modifier + 5d100] pure damage. You can at any time bind with a creature that becomes your nemesis (if you know this spell). When you cast this spell against your nemesis you can choose to reroll any of the 4 dice (or all) and must use the new dice. You cannot bind with a new creature until 24 hours after your nemesis dies."
+  },
+  {
+    "id": "immortal-power",
+    "name": "Immortal power",
+    "classId": "sorcerer",
+    "level": 8,
+    "apCost": 1,
+    "manaCost": 300,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "24 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "4)Immortal power Cost: 1 ap Range: / Requirements:V, S Duration: 24 hours Mana: 300 You become immune to ageing, need of sleep, food and water, exhaustion and have advantage on all saving throws against magic that would charm you or alter your mind for the duration."
+  },
+  {
+    "id": "time-freeze",
+    "name": "Time freeze",
+    "classId": "sorcerer",
+    "level": 8,
+    "apCost": 2,
+    "manaCost": 305,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You freeze the time for 1d4 turns in combat or 1d4 hours out of combat. You can move and cast spells during this time, but you cannot interact with other creatures (not even damage them with your spells)."
+  },
+  {
+    "id": "mind-bolt",
+    "name": "Mind bolt",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "1d8"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 11 + 2d8] psychic damage."
+  },
+  {
+    "id": "word-of-distraction",
+    "name": "Word of distraction",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": "1d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 20,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d6"
+      }
+    },
+    "description": "You force a target within range to make a Wis saving throw. On a fail the target takes [spell modifier + 7 + 1d6] psychic damage and has disadvantage on the next attack roll they make (next turn only)."
+  },
+  {
+    "id": "mind-safeguard",
+    "name": "Mind safeguard",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 20,
+      "description": "+20 mana + [1] creature"
+    },
+    "description": "You protect up to [1] creature(s) (you can protect yourself as well, but it does count towards the total) from having their minds altered. For the duration whenever a protege must roll a saving throw to avoid effects that affect the mind in any way (sleeping, stunned count) they can add [spell modifier] to the roll."
+  },
+  {
+    "id": "staggering-movement",
+    "name": "Staggering movement",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 12,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "description": "+30 mana + 1 creature you can target with the spell"
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target is affected by the spell for the duration. Whenever they try to move (this happens for every ap of movement) they must roll 1d10: -on 1-5: they move normally; -on 6-8: they do not move (but the ap is consumed); -on 9-10: they move the ap in the opposite direction of the intended one (they stop if they hit a wall/surface like a gap or similar impediments)."
+  },
+  {
+    "id": "involuntary-attack",
+    "name": "Involuntary attack",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Wis saving throw. On a fail, you get to immediately make one weapon attack in their place. (the creature cannot choose to fail the saving throw)."
+  },
+  {
+    "id": "spectral-bear",
+    "name": "Spectral bear",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 15,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "slashing",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "2d12"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target hallucinates, seeing a bear that attacks them, that damages them for [spell modifier + 11 + 2d12] ? damage. ? - slashing/psychic",
+    "damageTypes": [
+      "slashing",
+      "psychic"
+    ]
+  },
+  {
+    "id": "paranoia",
+    "name": "Paranoia",
+    "classId": "mindbender",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 15,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [1] affected creature"
+    },
+    "description": "You force up to [1] creature(s) to make a Wis saving throw. On a fail you can make them think they saw or heard something vague, like a rock being thrown, a shadow looming or a distant scream. No matter the result the creatures are unaware you tried to use magic on them (unless you casted the spell right in front of them)."
+  },
+  {
+    "id": "nerve-paralysis",
+    "name": "Nerve paralysis",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 55,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 8,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d8"
+      }
+    },
+    "description": "You force a creature within range to make a Const saving throw. On a fail, the creature is snared until the start of your next turn and takes [2 x spell modifier + 8 + 2d8] psychic damage."
+  },
+  {
+    "id": "psychic-blast",
+    "name": "Psychic blast",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": "10d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "4d6"
+      }
+    },
+    "description": "You cast a psychic blast in a 30 ft long cone in front of you. All enemy creatures within range must succeed on a Wis saving throw or take [2 x spell modifier + 10d6] psychic damage. Additionally, the first time an affected target would damage a creature, that creature becomes immune to all damage dealt by the target until the end of the turn."
+  },
+  {
+    "id": "circle-of-confusion",
+    "name": "Circle of confusion",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 2,
+    "manaCost": 55,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a circle centered on you (does not move with you) with 15 ft radius. All enemy creatures that start their turn within the circle must succeed on a Wis saving throw or attack a creature at random - within range, if they are ranged; within 30 ft of them (by moving to them) if they are melee - for the rest of the turn (mages are able to cast aoes if they are targeted/centered on the target). The target is chosen by rolling a 1d(nr_of_targets). Possible targets include all creatures in range except for the attacker himself."
+  },
+  {
+    "id": "spectral-wasp",
+    "name": "Spectral wasp",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "piercing",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 35,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "1d12"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target hallucinates, seeing a giant killer wasp that stings them, damaging them for [2 x spell modifier + 35 + 2d12] ? damage. ? - piercing/psychic",
+    "damageTypes": [
+      "piercing",
+      "psychic"
+    ]
+  },
+  {
+    "id": "blind-eyes",
+    "name": "Blind eyes",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "const",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force up to [spell modifier] creatures within range to make a Const saving throw. On a fail you become “invisible” to the affected creatures for the duration or until you attack them (the attack need not hit necessarily)."
+  },
+  {
+    "id": "imaginary-wall",
+    "name": "Imaginary wall",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 55,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a wall up to 300 ft long and 50 ft tall, but you choose the exact dimensions and the aspect (every detail of it). An investigation check against your spell DC reveals the wall to be an illusion and it is dispelled. For as long as a creature believes the wall to be true, the wall stands true to the creature, and it cannot pass through it. Any evidence that the wall is fake will automatically dispel the illusion for the creature (your spells passing through the wall, for example)."
+  },
+  {
+    "id": "borrow-senses",
+    "name": "Borrow senses",
+    "classId": "mindbender",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You try to use the senses of a creature within range. If the creature is unwilling it must succeed on a Will saving throw to avoid the effect. For the duration you can see and hear through the creature’s eyes and ears. You can toggle this effect on and off, switching back to your senses. The effect remains as long as the creature is within [300] ft of you, the range is only there for the casting moment."
+  },
+  {
+    "id": "phantasm",
+    "name": "Phantasm",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 105,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Wis saving throw. On a fail you create an object or surface that can fit in a 20 ft cube. Only the creature can perceive the object and is convinced of its existence (unless they succeed on an investigation check on it). The target can take damage from the object or surface if appropriate. The target rationalises all outcomes related to the object. If you created a bridge and the creature falls, they will think they slipped, if you created a fire surface and water does not extinguish it they will think it is cursed fire etc."
+  },
+  {
+    "id": "insight-bolt",
+    "name": "Insight bolt",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 42,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack against a creature. On a hit the target takes [3 x spell modifier + 42 + 3d10] psychic damage and you can inquire after a fact about the creature - basically the examine action(its Max HP, its current HP, its AC, a type of armor, a type of resistance, a type of sense, level of spellcasting available - you cannot inquire after abilities or similar features -;)."
+  },
+  {
+    "id": "silencing-shriek",
+    "name": "Silencing shriek",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 120,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 18,
+      "dice": "3d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d6"
+      }
+    },
+    "description": "You force a creature within range to make a Const saving throw. On a fail they take [3 x spell modifier + 18 + 3d6] psychic damage and are silenced for the duration. They can repeat the saving throw at the end of each turn."
+  },
+  {
+    "id": "spectral-stomp",
+    "name": "Spectral stomp",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 135,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "crushing",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 41,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "2d12"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target hallucinates, seeing an elephant that stomps them, damaging them for [3 x spell modifier + 41 + 6d12] ? damage forcing them to succeed on a const saving throw or be knocked prone. ? - crushing/psychic",
+    "damageTypes": [
+      "crushing",
+      "psychic"
+    ]
+  },
+  {
+    "id": "brain-assault",
+    "name": "Brain assault",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d10"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw, taking [3 x spell modifier + 4d10] psychic damage. Repeatable this turn ON THE SAME TARGET with no mana cost, and the saving throw cycles (Wis, Will, Int, Cha, Wis, etc.)."
+  },
+  {
+    "id": "search-thoughts",
+    "name": "Search thoughts",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 100,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Will saving throw. On a fail you can read the thoughts of the creature (the target is well aware you are casting magic on it). You can only read what the creature is thinking. If you ask the creature a question it can try to not think of the answer so as not to reveal it to you (requires a Will saving throw against your spell DC). If it saves itself from a question, it automatically dodges thinking about the answer of the same question, or any other question with similar meaning."
+  },
+  {
+    "id": "phantasmical-surroundings",
+    "name": "Phantasmical surroundings",
+    "classId": "mindbender",
+    "level": 3,
+    "apCost": 4,
+    "manaCost": 110,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force up to [X] (X being the spell level) creatures to make a Wis saving throw. On a fail, a creature sees the nearby surroundings as you shape them. If they take damage in any way they realise the environment is an illusion (if you put a sheath on top of a weapon and the target grabs it and cuts itself for example)."
+  },
+  {
+    "id": "no-escaping-destiny",
+    "name": "No escaping destiny",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 155,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Force a creature to make a Will saving throw. On a fail they will consume their turn in a way determined by rolling 1d10(they roll for an action to do until they are out of ap): -1: move north for 2 ap -2: move east for 2 ap -3: move south for 2 ap -4: move west for 2 ap -5: attack the nearest target -6: attack a random enemy (enemy of the target) -7: attack a random ally (ally of the target) -8: cast a random spell on the nearest target -9: cast a random spell on a random enemy -10: cast a random spell on a random ally (for non spellcaster 8 9 and 10 are rerolls)"
+  },
+  {
+    "id": "spectral-shadow",
+    "name": "Spectral shadow",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "shadow",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 46,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d8"
+      }
+    },
+    "description": "You force all enemy creatures within 15 ft of a point within range to make a Wis saving throw. On a fail, a target hallucinates, seeing a shadow creature that explodes, damaging them for [4 x spell modifier + 46 + 4d8] ? damage. ? - shadow/psychic",
+    "damageTypes": [
+      "shadow",
+      "psychic"
+    ]
+  },
+  {
+    "id": "punishing-pain",
+    "name": "Punishing pain",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 155,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "cha",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 37,
+      "dice": "4d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d10"
+      }
+    },
+    "description": "You force a creature within range to make a Cha saving throw. On a fail they take [4 x spell modifier + 37 + 4d10] psychic damage. The first time they damage a creature the affected creature takes the damage again, if it happens before the start of your next turn."
+  },
+  {
+    "id": "visage-of-death",
+    "name": "Visage of death",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 5,
+    "manaCost": 210,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force all enemy creatures looking at you (you must be within their line of sight) to make a Wis saving throw. On a fail a target sees you as death and becomes terrified for the duration. The effect ends if you lose concentration. Targets can repeat the saving throw at the end of each of their turns."
+  },
+  {
+    "id": "wits-exchange",
+    "name": "Wits exchange",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 1,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour (outside combat)/1",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "int",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make an Int saving throw. On a fail you choose a stat (between Wis, Int, Will and Cha). You and the creature swap the value for that stat for the duration. The creature can repeat the saving throw everytime it damages you. The effects end if you die."
+  },
+  {
+    "id": "mind-influence",
+    "name": "Mind influence",
+    "classId": "mindbender",
+    "level": 4,
+    "apCost": 11,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target does a task you ask of it (attempts to do the task to the best of its abilities until the task is done or the duration expires). The task cannot be directly harmful to the target. The target is unaware you used magic on them if the spell succeeds."
+  },
+  {
+    "id": "mindbenders-explosion",
+    "name": "Mindbender’s explosion",
+    "classId": "mindbender",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 255,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 97,
+      "dice": "5d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack against a creature. On a hit the target takes [5 x spell modifier + 97 + 5d10] psychic damage and casts seed explosion on the target but uses no seeds (does not add seeds)."
+  },
+  {
+    "id": "psychic-scream",
+    "name": "Psychic scream",
+    "classId": "mindbender",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 450,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 60,
+      "dice": "10d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d12"
+      }
+    },
+    "description": "You force a creature within range to make a Const saving throw. On a fail a target takes [5 x spell modifier + 60 + 10d12] psychic damage and rolls 1d6: -1-3: the target falls prone -4-5:the target is stunned for 1 turn -6: the target fights by your side for 1 turn (charmed effect)"
+  },
+  {
+    "id": "spectral-eel",
+    "name": "Spectral eel",
+    "classId": "mindbender",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 205,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 31,
+      "dice": "5d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d8"
+      }
+    },
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target hallucinates, seeing an eel that electrocutes them, damaging them for [5 x spell modifier + 31 + 5d8] ? damage. Additionally the target starts their next turn with 1d4 less ap. ? - lightning/psychic",
+    "damageTypes": [
+      "lightning",
+      "psychic"
+    ]
+  },
+  {
+    "id": "twin-innocence",
+    "name": "Twin innocence",
+    "classId": "mindbender",
+    "level": 5,
+    "apCost": 4,
+    "manaCost": 275,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "All creatures within range are paired at random (if the number is odd you are left out). The pairing prioritises putting together creatures hostile to each other. Two paired creatures cannot interact with each other in any way (damage, buff, heal etc.)"
+  },
+  {
+    "id": "intrude-mind",
+    "name": "Intrude mind",
+    "classId": "mindbender",
+    "level": 5,
+    "apCost": 11,
+    "manaCost": 205,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "true",
+    "attackType": null,
+    "saveStat": "int",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force yourself into the mind of a creature. The creature must fail an Int saving throw in order for you to be able to do this. You name one event or memory that you are searching for. If that event or memory exists within the creature’s brain (in the way that you phrased what you were looking for) it is revealed to you like a scene before your eyes. Otherwise you are forced out of the creature's mind, taking [50%] of your max HP as true damage and losing [1d6] INT until you finish a long rest. You cannot probe mind a creature more than once (no matter the duration between attempts). Should you try this (or be fooled by a disguised creature to do it again) You lose [1d12] INT permanently and the spell has no effect."
+  },
+  {
+    "id": "puppet-walking",
+    "name": "Puppet walking",
+    "classId": "mindbender",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 160,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force up to [spell modifier] creatures within range to make a Will saving throw (you cannot cast or use this spell on yourself). Willing creatures can choose to fail the saving throw. You can change the position of any or all creatures who failed the saving throw (you move creature 1 in the place of creature 2, creature 2 in the place of creature 4, etc.) by making them walk to said position. But in the end there must be a creature in every initial place. You cannot move a creature to a place where it cannot fit. No effects will be procked off of this (surfaces, attacks of opportunity etc) and no AP is consumed from the creatures."
+  },
+  {
+    "id": "weaken-mind",
+    "name": "Weaken mind",
+    "classId": "mindbender",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 135,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You weaken the mind of a creature. For the rest of the turn you double the amount of seeds you add to them."
+  },
+  {
+    "id": "explode-mind",
+    "name": "Explode mind",
+    "classId": "mindbender",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 350,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 101,
+      "dice": "6d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 13,
+        "dice": "1d10"
+      }
+    },
+    "description": "You force a creature to make a Will saving throw. On a fail the target takes [6 x spell modifier + 101 + 6d10] and has disadvantage on all saving throws against spells that have an effect affecting their mind until the end of your next turn."
+  },
+  {
+    "id": "spectral-frostwraith",
+    "name": "Spectral frostwraith",
+    "classId": "mindbender",
+    "level": 6,
+    "apCost": 3,
+    "manaCost": 255,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 71,
+      "dice": "6d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d8"
+      }
+    },
+    "description": "You force up to [spell modifier] creatures within range to make a Wis saving throw. On a fail, a target hallucinates, seeing a frostwraith that freezes their soul (no actual negative effect besides the damage), damaging them for [6 x spell modifier + 71+ 6d8] ? damage. ? - ice/spectral/psychic",
+    "damageTypes": [
+      "ice",
+      "spectral",
+      "psychic"
+    ]
+  },
+  {
+    "id": "spirit-departure",
+    "name": "Spirit departure",
+    "classId": "mindbender",
+    "level": 6,
+    "apCost": 3,
+    "manaCost": 250,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 day",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You make your spirit and mind leave your body. Your body enters a trance in the meantime, not aging, not requiring food, water or sleep. All current effects (like diseases) have no effect for the duration (your body is practically frozen in time). Your spirit can roam the earth for the duration, but no one sees you or hears you (unless they have certain abilities allowing them to do so). You can create small waves of power that are able to push small objects a small distance. Your body can still take damaged if attacked"
+  },
+  {
+    "id": "spectral-dragon",
+    "name": "Spectral dragon",
+    "classId": "mindbender",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 600,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 14,
+      "flat": 125,
+      "dice": "14d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 100,
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 14,
+        "dice": "2d12"
+      }
+    },
+    "description": "You force all enemy creatures within a 30 ft long cone starting on a point within range to make a Wis saving throw. On a fail, a target hallucinates, seeing a dragon that breathes fire over them, damaging them for [14 x spell modifier + 125 + 14d12] ? damage. ? - fire/psychic",
+    "damageTypes": [
+      "fire",
+      "psychic"
+    ]
+  },
+  {
+    "id": "night-terrors",
+    "name": "Night terrors",
+    "classId": "mindbender",
+    "level": 7,
+    "apCost": 5,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": null,
+    "saveStat": "int",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 0,
+      "dice": "7d4"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 15,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d4"
+      }
+    },
+    "description": "You force a creature within range to make an Int saving throw. On a fail they enter a hellish nightmare. They are stunned and take [7 x spell modifier + 7d4] psychic damage at the start of every turn. The target automatically fails the FIRST saving throw if they are asleep."
+  },
+  {
+    "id": "sign-of-eternal-disruption",
+    "name": "Sign of eternal disruption",
+    "classId": "mindbender",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 300,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature to make a Will saving throw. On a fail, whenever the target would cast a spell it must win on a Int contest with you or be unable to cast the spell (the ap is consumed, but not the mana). You cannot cast this spell on a creature more than once every long rest. The target cannot repeat the saving throw."
+  },
+  {
+    "id": "bolt-of-insanity",
+    "name": "Bolt of insanity",
+    "classId": "mindbender",
+    "level": 7,
+    "apCost": 3,
+    "manaCost": 315,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 84,
+      "dice": "7d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 9,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack against the target. On a hit the target takes [7 x spell modifier + 84 + 7d10] psychic damage and goes insane for the duration. An insane creature has their AC and their attack rolls reduced by [spell modifier]. Additionally when they roll a 1 they damage themselves instead. (wis saving throw to end the effect)"
+  },
+  {
+    "id": "mind-takeover",
+    "name": "Mind takeover",
+    "classId": "mindbender",
+    "level": 7,
+    "apCost": 11,
+    "manaCost": 315,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "8 hours",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a target to make a Will saving throw. On a fail the target becomes your “slave” for the duration. It sees you as a master and does as you tell it to. This effect instantly ends if combat ensues. This spell can affect targets whose might is not bigger than this spell’s level."
+  },
+  {
+    "id": "death-incarnate",
+    "name": "Death incarnate",
+    "classId": "mindbender",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 700,
+    "range": "120 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "wis",
+    "damage": {
+      "modMultiplier": 16,
+      "flat": 240,
+      "dice": "16d12"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target hallucinates, seeing a hooded figure with a scythe that strikes them down, damaging them for [16 x spell modifier + 240 + 16d12] ? damage. If the target dies from the strike their body and soul are destroyed completely (unless they have certain effects that prevent this from happening) and you heal for 20% of their max HP. ? - any type (except for true) damage.",
+    "damageTypeNote": "any type"
+  },
+  {
+    "id": "mind-control",
+    "name": "Mind control",
+    "classId": "mindbender",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 600,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "will",
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You force a creature within range to make a Will saving throw. On a fail, you take control of the creature. You control it on each of its turns for the duration. The target can repeat the saving throw at the end of each of its turns."
+  },
+  {
+    "id": "psychic-obliteration",
+    "name": "Psychic obliteration",
+    "classId": "mindbender",
+    "level": 8,
+    "apCost": 2,
+    "manaCost": 500,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "psychic",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 8,
+      "flat": 80,
+      "dice": "16d8"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "Make a ranged spell attack against a creature within range. On a hit it takes [8 x spell modifier + 80 + 16d8] psychic damage. Repeatable on the same turn with no ap cost. All repeats of the spell ignore magic armor."
+  },
+  {
+    "id": "bolt-of-the-elements",
+    "name": "Bolt of the elements",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 5,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 25,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d10"
+      }
+    },
+    "description": "When you choose to cast this spell roll 1d4. The type of damage of the bolt is decided by the die (1 - fire; 2 - ice; 3 - poison; 4 - lightning). Then choose a target and make a ranged spell attack against them. On a hit the bolt deals [spell modifier + 10 + 2d10] damage."
+  },
+  {
+    "id": "flame-bolt",
+    "name": "Flame bolt",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 4,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 11,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "description": "+70 mana + [spell modifier + 8 + 1d12] initial damage + [3d4] \nadditional fire damage"
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 11 + 2d12] fire damage. The target is set on fire. At the start of their turn they take [4d4] additional fire damage."
+  },
+  {
+    "id": "ice-bolt",
+    "name": "Ice bolt",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 10,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 6,
+      "dice": "2d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d6"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 6 + 2d6] ice damage and has their speed reduced by 10 (chilled effect)."
+  },
+  {
+    "id": "poison-bolt",
+    "name": "Poison bolt",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 12,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 8,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 8 + 2d10] poison damage. The target becomes covered in acid reducing their PA by [1d4] for the duration or until washed off. (this effect does not stack)."
+  },
+  {
+    "id": "electric-bolt",
+    "name": "Electric bolt",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 3,
+    "manaCost": 13,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "2d8"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 9 + 2d8] lightning damage and the target starts their next turn with 1 less ap (this effect does not stack)."
+  },
+  {
+    "id": "elemental-armor",
+    "name": "Elemental armor",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 2,
+    "manaCost": 15,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "You increase one type of armor (from fire, ice, poison and lightning) of up to [spell modifier] creatures within range by [spell modifier] (this effect does not stack)."
+  },
+  {
+    "id": "fire-spark",
+    "name": "Fire spark",
+    "classId": "elementalist",
+    "level": 1,
+    "apCost": 1,
+    "manaCost": 10,
+    "range": "60 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You instantly light or snuff a tiny flame/spark. Enough to light/snuff a candle, or a torch."
+  },
+  {
+    "id": "searing-daggers",
+    "name": "Searing daggers",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 7,
+      "dice": "2d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 2,
+        "dice": "1d8"
+      }
+    },
+    "description": "You create 3 daggers of fire that you throw at 3 targets (not necessarily different). Make 3 ranged spell attacks. On a hit a target takes [2 x spell modifier + 7 + 2d8] fire damage."
+  },
+  {
+    "id": "winter-blast",
+    "name": "Winter blast",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 55,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 26,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d10"
+      }
+    },
+    "description": "You force all enemy creatures within 5 ft of a point within range to make a dex saving throw. On a fail a target takes [2 x spell modifier + 26 + 2d10] ice damage."
+  },
+  {
+    "id": "poison-spray",
+    "name": "Poison spray",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 4,
+    "manaCost": 75,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 41,
+      "dice": "2d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "1d12"
+      }
+    },
+    "description": "You throw a wave of poison that strikes at a 15 ft long line centered on a point within range (the line is perpendicular on the trajectory - like you would face the wall created by it). All creatures in the line must succeed on a Const saving throw or take [2 x spell modifier + 41 + 2d12] poison damage."
+  },
+  {
+    "id": "lightning-fork",
+    "name": "Lightning fork",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 23,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "1d10"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [2 x spell modifier + 23 + 2d10] lightning damage and the attack forks to up to 2 enemies within 5 ft of the target (regardless of whether the attack hit or missed). Make a ranged spell attack for each target the spell forked to (the damage is the same)."
+  },
+  {
+    "id": "wave-of-frost",
+    "name": "Wave of frost",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 3,
+    "manaCost": 60,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 33,
+      "dice": "6d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d12"
+      }
+    },
+    "description": "You freeze all water surfaces within range. ALL creatures that were standing on such surfaces take [2 x spell modifier + 33 + 6d12] ice damage."
+  },
+  {
+    "id": "elemental-strike",
+    "name": "Elemental strike",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 0,
+    "manaCost": 30,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 10,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": null
+      }
+    },
+    "description": "You enhance a weapon attack of an ally (you can choose to enhance it after the attack roll). You add [2 x spell modifier] elemental damage (any of the 4 you choose) to the attack, and convert the damage of the attack to said type of damage.",
+    "isReaction": true
+  },
+  {
+    "id": "control-water",
+    "name": "Control water",
+    "classId": "elementalist",
+    "level": 2,
+    "apCost": 1,
+    "manaCost": 50,
+    "range": "90 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "description": "+[1] m3"
+    },
+    "description": "You channel on a body of water no bigger than [2] m3 and slowly manoeuvre it, moving it in any direction, and giving it shapes of your choice."
+  },
+  {
+    "id": "scorching-ray",
+    "name": "Scorching ray",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 45,
+      "dice": "3d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d12"
+      }
+    },
+    "description": "You create a line of fire that scorches all creatures in its path. The line is 100 ft long and 10 ft wide starting from you. All creatures in its path must succeed on a dex saving throw or take [3 x spell modifier + 45 + 3d12] fire damage."
+  },
+  {
+    "id": "ice-shards",
+    "name": "Ice shards",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 3,
+    "manaCost": 105,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": "rangedSpellAttack",
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 20,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 2 + 1d10] initial damage; + [spell \nmodifier + 1d10] aoe damage"
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [3 x spell modifier + 20 + 3d10] ice damage. The shard breaks, damaging all creatures within 5 ft of the target (regardless of whether the attack hit or missed). All creatures in that range (including the target) must succeed on a Dex saving throw or take [3 x spell modifier + 10 + 3d10] ice damage."
+  },
+  {
+    "id": "poison-explosion",
+    "name": "Poison explosion",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 70,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 24,
+      "dice": "3d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d8"
+      }
+    },
+    "description": "You create a pore of poison at a point within range. It has an hp of 1 and an ac of 0 but is immune to surfaces. On death it explodes, dealing [3 x spell modifier + 24 + 3d8] poison damage to all creatures within 15 ft of it that fail a Dex saving throw, or half as much to those who succeed."
+  },
+  {
+    "id": "electric-pulses",
+    "name": "Electric pulses",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 1,
+    "manaCost": 120,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": "rangedSpellAttack",
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 15,
+      "dice": "3d4"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d4"
+      }
+    },
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [3 x spell modifier + 15 + 3d4] lightning damage. Recastable on this turn with no mana cost."
+  },
+  {
+    "id": "sudden-combustion",
+    "name": "Sudden combustion",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 80,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 56,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 35,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "1d10"
+      }
+    },
+    "description": "If a target is burning from any sources you consume the burning (ends the effect) and deal [3 x spell modifier + 56 + 3d10] fire damage."
+  },
+  {
+    "id": "elemental-assistant",
+    "name": "Elemental assistant",
+    "classId": "elementalist",
+    "level": 3,
+    "apCost": 2,
+    "manaCost": 110,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [5] damage on the elemental bolt"
+    },
+    "description": "You create an orb that floats above you and assists you. Whenever you cast a spell targeted at a creature (even if the spell is aoe, if your target is on a creature the orb activates) the orb casts a bolt of the elements of an element you choose on the target."
+  },
+  {
+    "id": "fireball",
+    "name": "Fireball",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 215,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 39,
+      "dice": "4d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d12"
+      }
+    },
+    "description": "You create a giant ball of fire that you hurl at a point within range. The ball strikes all creatures within 30 ft of the hit point. All creatures must roll a dex saving throw, taking [4 x spell modifier + 39 + 4d12] fire damage on a fail or half as much on a success."
+  },
+  {
+    "id": "ice-fan",
+    "name": "Ice fan",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 4,
+    "manaCost": 200,
+    "range": "90 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 24,
+      "dice": "2d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 65,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d10"
+      }
+    },
+    "description": "You create 4 boulders of ice that you throw to 4 points within range (not necessarily different). A boulder explodes on contact damaging all creatures within 10 ft of it. A creature in its range must roll a const saving throw, taking [spell modifier + 24 + 2d10] and having their MS reduced by 10 on a fail. (this effect stacks)"
+  },
+  {
+    "id": "poison-stream",
+    "name": "Poison stream",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 26,
+      "dice": "4d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d8"
+      }
+    },
+    "description": "You shoot a stream of poison in a 80 ft long 20 ft wide line. All creatures within range must roll a const saving throw, taking [4 x spell modifier + 26 + 4d8] poison damage on a fail or half as much on a success. The area of the spell remains as a noxious cloud. If a creature starts their turn in the cloud their PA is corroded for [4 x spell modifier] for 1 turn (this effect does not stack)."
+  },
+  {
+    "id": "electricity-assault",
+    "name": "Electricity assault",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 165,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 21,
+      "dice": "2d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d6"
+      }
+    },
+    "description": "You mark a point within range. Four blasts of electricity hit a 15 ft radius area centered on the point. A target must succeed on a dex saving throw or take [spell modifier + 21 + 2d6] lightning damage. If a target is hit by at least 3 blasts they must succeed on a const saving throw or be stunned for 1 turn (increased to 3 turns if they got hit by all 4; const saving throw at the end of each turn to end the stun)."
+  },
+  {
+    "id": "elemental-immunity",
+    "name": "Elemental immunity",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 3,
+    "manaCost": 125,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You learn to absorb the elements around you. For the duration, while you are standing on an elemental surface (fire, water/ice, etc.) you are immune to that type of damage."
+  },
+  {
+    "id": "energy-overload",
+    "name": "Energy overload",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 50,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 turn",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You put a mark on a creature. Every spell you cast on the creature until the end of your next turn it applies a random effect from /*elemental path(1)*/ (roll 1d4 to determine which)."
+  },
+  {
+    "id": "water-shift",
+    "name": "Water shift",
+    "classId": "elementalist",
+    "level": 4,
+    "apCost": 2,
+    "manaCost": 150,
+    "range": "100 ft",
+    "components": [
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You can do one of the following: -You freeze all small water surfaces within range, or create a sheet of ice at the top of big bodies of water. -You melt all ice within range, turning it into water. -You evaporate all small water surfaces within range, destroying them, or a small portion of water at the surface of big bodies of water, creating hot steam, that obscures vision (does not completely block it)"
+  },
+  {
+    "id": "searing-lightning",
+    "name": "Searing lightning",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 210,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 20,
+      "dice": "5d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 1d10] initial damage + [1d10] fire \ndamage"
+    },
+    "description": "You conjure a fiery lightning to strike at a point within range. All creatures within 10 ft of it must roll a dex saving throw. On a fail they take [5 x spell modifier + 20 + 5d10] and are set on fire, taking [5d10] fire damage on the start of their next turn. On a success they take half the damage and are not set on fire."
+  },
+  {
+    "id": "electrified-rain",
+    "name": "Electrified rain",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 6,
+    "manaCost": 400,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 0,
+      "dice": "5d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 6 + 1d8] ice damage + [1d8] lightning \ndamage"
+    },
+    "description": "You cast a cloud that covers all the area within range of you. The cloud produces hail with electrified drops. All enemy creatures within range must roll a const saving throw. On a fail they take [5 x spell modifier + 5d8] ice damage and additionally [5d8] lightning damage and are stunned for 1 turn. On a success they only take half of the ice damage (only the ice damage gets reduced by armor)."
+  },
+  {
+    "id": "acidic-rain",
+    "name": "Acidic rain",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 2,
+    "manaCost": 135,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 16,
+      "dice": "5d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 30,
+      "description": "+30 mana + [spell modifier + 2 + 1d6] poison damage + [1d6] ice \ndamage"
+    },
+    "description": "You create acidic rain within range of you. All enemy creatures within range must roll a const saving throw. On a fail they take [5 x spell modifier + 16 + 5d6] poison damage, or half as much on a success. At the start of your next turn the poison freezes and explodes, creating water surfaces and damaging all creatures who were standing there for [5d6] ice damage (only the poison damage gets reduced by armor)."
+  },
+  {
+    "id": "pillar-of-green-fire",
+    "name": "Pillar of green fire",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 3,
+    "manaCost": 220,
+    "range": "30 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 13,
+      "dice": "5d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier +1d12] fire damage + [1d12] poison \ndamage"
+    },
+    "description": "You choose a 15 ft radius area centered on a point within range. Green fire bursts out from the ground up. All creatures in the area must roll a dex saving throw. On a fail, a target takes [5 x spell modifier + 13 + 5d12] fire damage and gets affected by poison, taking [5d12] poison at the start of every turn (they can repeat the saving throw to end the poison effect). On a success they only take half damage and do not become poisoned. (only the fire damage gets reduced by armor)"
+  },
+  {
+    "id": "suffocating-poison",
+    "name": "Suffocating poison",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 150,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "Make all poison surfaces within range emit toxic gas. All creatures standing on such surfaces become silenced for 1 turn (and whenever a creature would pass over such a surface too)."
+  },
+  {
+    "id": "air-bubbles",
+    "name": "Air bubbles",
+    "classId": "elementalist",
+    "level": 5,
+    "apCost": 1,
+    "manaCost": 200,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 hour",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You give up to [spell modifier] creatures including yourself air bubbles around the head for the duration. A creature with an air bubble breathes normally no matter the conditions outside the bubble (suffocation auras, water, etc.)"
+  },
+  {
+    "id": "wall-of-the-electric-fire",
+    "name": "Wall of the electric fire",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 3,
+    "manaCost": 255,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 25,
+      "dice": "3d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 1d10] fire and lightning damage (to \neach); + [1d10] fire damage when passing through wall;"
+    },
+    "description": "You create a 60 ft long 20 ft tall wall of electric fire centered on a point within range. The wall is oriented so that you are facing its long side at the moment of the cast. All creatures in the area of the wall when you create it must roll a dex saving throw. On a fail a creature takes [3 x spell modifier + 25 + 3d10] fire damage and [3 x spell modifier + 25 + 3d10] lightning damage. On a success they only take half as much. In either case creatures are pushed aside from the area of the wall. If a creature wants to pass through the wall they must succeed on a Const saving throw or take [6d10] fire damage and be stunned for 1 turn. (the damage from attempting to pass throw the wall PIERCES ARMOR)"
+  },
+  {
+    "id": "freezing-lightning",
+    "name": "Freezing lightning",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 5,
+    "manaCost": 430,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 39,
+      "dice": "3d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 2 + 1d6] ice and lightning damage"
+    },
+    "description": "You make a lightning cold as ice strike at a 10 ft radius area centered on a point within range. All creatures within the area must roll a const saving throw. On a fail they take [3 x spell modifier + 39 + 3d6] ice damage and [3 x spell modifier + 39 + 3d6] lightning damage and are frozen for the duration. On a success they take half damage and are only slowed by 10 ms for 1 turn."
+  },
+  {
+    "id": "poisonous-tsunami",
+    "name": "Poisonous tsunami",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 330,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 36,
+      "dice": "3d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 1 + 1d8] ice and poison damage"
+    },
+    "description": "You create a tsunami of poison (30 ft long 60 ft wide line) to strike in a direction. All creatures in its path must roll a const saving throw. On a fail they take [3 x spell modifier + 36 + 3d8] ice damage and [3 x spell modifier + 36 + 3d8] poison damage and are knocked prone. On a success they only take half damage."
+  },
+  {
+    "id": "acidic-combustion",
+    "name": "Acidic combustion",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 4,
+    "manaCost": 270,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 44,
+      "dice": "3d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "description": "+70 mana + [spell modifier + 2 + 1d12] fire and poison damage"
+    },
+    "description": "Choose up to [spell modifier] creatures within range. You throw poison at them and then set it on fire. The targets must roll a Const saving throw. On a fail, they take [3 x spell modifier + 44 + 3d12] poison damage and [3 x spell modifier + 44 + 3d12] fire damage, or half as much on a success."
+  },
+  {
+    "id": "circle-of-the-elements",
+    "name": "Circle of the elements",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 2,
+    "manaCost": 220,
+    "range": "self",
+    "components": [
+      "V"
+    ],
+    "duration": "1 min",
+    "concentration": true,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You create a 40 ft radius circle centered on you (that does not follow you). At the start of each of your turns (and on cast) roll 2d4. The first one determines an element that everyone in the circle becomes vulnerable to, the second one determines an element that everyone becomes resistant to (1 - fire, 2 - ice, 3 - poison, 4 - lightning). Creatures that are immune or absorb to a certain element are not affected (for that element). If both dice roll the same, reroll one of your choice."
+  },
+  {
+    "id": "elemental-walk",
+    "name": "Elemental walk",
+    "classId": "elementalist",
+    "level": 6,
+    "apCost": 1,
+    "manaCost": 150,
+    "range": "self",
+    "components": [],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration it does not cost ap to walk over elemental surfaces and you are immune to them."
+  },
+  {
+    "id": "electrical-wave-of-the-fiery-ice",
+    "name": "Electrical wave of the fiery ice",
+    "classId": "elementalist",
+    "level": 7,
+    "apCost": 4,
+    "manaCost": 420,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "lightning",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 41,
+      "dice": "7d8"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 70,
+      "description": "+70 mana + [spell modifier + 3 + 1d8] lightning damage; + [1d8] fire \nand ice damage;"
+    },
+    "description": "You send forth a wave of electricity. All creatures within range of you must roll a Const saving throw. On a success they only take [7 x spell modifier + 41 + 7d8] lightning damage. On a fail additionally are set on a purple fire that cannot be extinguished by water. At the start of their turns they take [7d8] fire damage for up to the duration. During your turn, you can, at any point, with no cost, you can make the fire freeze and shatter, damaging each target for [7d8] * (number of times they took the fire damage) ice dmg that pierces armor. (so if they spent 2 turns on fire, having taken the fire damage 2 times, they will take [14d8] ice damage)"
+  },
+  {
+    "id": "ray-of-the-noxious-purple-fire",
+    "name": "Ray of the noxious purple fire",
+    "classId": "elementalist",
+    "level": 7,
+    "apCost": 3,
+    "manaCost": 310,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "fire",
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 24,
+      "dice": "7d10"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 1d10] fire damage; + [1d10] poison \ndamage; + [2d10] ice damage and +[5] speed reduction;"
+    },
+    "description": "You cast a ray of fire in a 60 ft long 10 ft wide line. All creatures in the line take [7 x spell modifier + 24 + 7d10] fire damage. The fire leaves behind a trail of noxious gas. Any creature that starts its turn in the gas trail takes [7d10] poison damage and becomes poisoned for a round. You can, at any point during your turn, for no cost, freeze the noxious gas and all creatures in it. Any creature in the gas at the time takes [14d10] ice damage that pierces armor and is slowed by 30 speed (chilled) for 1 round."
+  },
+  {
+    "id": "breath-of-the-green-frost-storm",
+    "name": "Breath of the green frost storm",
+    "classId": "elementalist",
+    "level": 7,
+    "apCost": 6,
+    "manaCost": 600,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": "ice",
+    "attackType": null,
+    "saveStat": "const",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 40,
+      "dice": "7d12"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 100,
+      "description": "+100 mana + [spell modifier + 3 + 1d12] ice damage; + [1d12] \npoison and lightning damage;"
+    },
+    "description": "You breathe toxic frost air in a 40 ft long cone in front of you. All creatures within range must roll a const saving throw. On a success they only take [7 x spell modifier + 40 + 7d12] ice damage. If they fail they are also frozen for a turn. At the start of their next turn (for the frozen creatures) the green ice breaks, releasing a toxic air that infects the affected creatures, making the creatures suffer the POISON effect for 3 turns, damaging them for [7d12] poison damage at the start of each turn. A creature that takes the poison damage for all the 3 turns, suffers an electric impulse in their heart damaging them for [7d12] lightning damage and silencing them for a round."
+  },
+  {
+    "id": "hazardous-bulbs",
+    "name": "Hazardous bulbs",
+    "classId": "elementalist",
+    "level": 7,
+    "apCost": 3,
+    "manaCost": 320,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": "poison",
+    "attackType": null,
+    "saveStat": "dex",
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 24,
+      "dice": "7d6"
+    },
+    "healing": null,
+    "scaling": {
+      "manaCostIncrease": 50,
+      "description": "+50 mana + [spell modifier + 1d6] poison damage; + [1d6] fire and \nlightning damage;"
+    },
+    "description": "You create 3 bulbs, one green, one red and one blue on a point within range. Damaging that point with anything triggers the bulbs which explode. The green bulb creates a toxic gas within 20 ft of it in the area that damages creatures who start their turn in the area for [7 x spell modifier + 24 + 7d6] poison damage. The red explodes creating a fire surface within 10 ft of the bulb. All creatures in the area must succeed on a Dex saving throw or take [7d6] fire damage. The blue bulb explodes in a lightning blast that electrifies the toxic gas (all creatures that walk within an electrified gas must succeed on a const saving throw or be stunned until the start of their next turn) and damages all creatures within 10 ft that fail on a const saving throw for [7d6] lightning damage. (the fire and lightning damage normally ignore armor)"
+  },
+  {
+    "id": "elemental-shift",
+    "name": "Elemental shift",
+    "classId": "elementalist",
+    "level": 7,
+    "apCost": 2,
+    "manaCost": 315,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": null,
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "You instantly teleport to any elemental plane or to the mortal plane. If you channel for 1 minute you can also take [spell modifier] other creatures with you. If you are in the elemental plane you can channel for 1 day to teleport to an adjacent plane of existence if you know the name of the plane."
+  },
+  {
+    "id": "elemental-storm",
+    "name": "Elemental storm",
+    "classId": "elementalist",
+    "level": 8,
+    "apCost": 6,
+    "manaCost": 400,
+    "range": "60 ft",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "up to 1 min",
+    "concentration": false,
+    "channeling": true,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": {
+      "modMultiplier": 8,
+      "flat": 0,
+      "dice": "8d8"
+    },
+    "healing": null,
+    "scaling": null,
+    "description": "1)Elemental storm Cost: 6ap Range: 60 ft Requirements:V, S Duration:up to 1 min Mana: 400 Channel You start channelling. At the end of every turn of channelling you cast a number of elemental bolts equal to the AP consumed. Roll 1d4 to determine the element of a bolt. The bolt strikes at a point within range hitting all targets within 5 ft for [8 x spell modifier + 8d8] damage."
+  },
+  {
+    "id": "elemental-affinity",
+    "name": "Elemental affinity",
+    "classId": "elementalist",
+    "level": 8,
+    "apCost": 5,
+    "manaCost": 365,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "3 turns",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the duration while you are standing on an elemental surface casting a spell of that element costs 1 ap. Spells that have multiple elements are reduced by any of the surfaces of those elements."
+  },
+  {
+    "id": "elemental-absorption",
+    "name": "Elemental absorption",
+    "classId": "elementalist",
+    "level": 8,
+    "apCost": 3,
+    "manaCost": 360,
+    "range": "self",
+    "components": [
+      "V",
+      "S"
+    ],
+    "duration": "1 min",
+    "concentration": false,
+    "channeling": false,
+    "damageType": null,
+    "attackType": null,
+    "saveStat": null,
+    "damage": null,
+    "healing": null,
+    "scaling": null,
+    "description": "For the remainder of the duration you gain the Absorb resistance type to all elements (absorb, which comes after immunity, making you heal from that specific type of dmg)."
+  }
+]

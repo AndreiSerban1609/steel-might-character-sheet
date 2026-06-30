@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: steel-might-server
+
+  profiles:
+    active: dev
+
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+game:
+  data-path: ${GAME_DATA_PATH:../src/data}

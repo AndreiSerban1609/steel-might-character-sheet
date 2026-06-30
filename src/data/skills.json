@@ -1,0 +1,21 @@
+[
+  { "id": "lifting", "name": "Lifting", "ability": "str" },
+  { "id": "athletics", "name": "Athletics", "ability": "str" },
+  { "id": "thievery", "name": "Thievery", "ability": "dex" },
+  { "id": "reflex", "name": "Reflex", "ability": "dex" },
+  { "id": "stealth", "name": "Stealth", "ability": "dex" },
+  { "id": "knowledge", "name": "Knowledge", "ability": "int" },
+  { "id": "arcana", "name": "Arcana", "ability": "int" },
+  { "id": "investigation", "name": "Investigation", "ability": "int" },
+  { "id": "medicine", "name": "Medicine", "ability": "wis" },
+  { "id": "perception", "name": "Perception", "ability": "wis" },
+  { "id": "survival", "name": "Survival", "ability": "wis" },
+  { "id": "animal-handling", "name": "Animal Handling", "ability": "wis" },
+  { "id": "insight", "name": "Insight", "ability": "wis" },
+  { "id": "seduction", "name": "Seduction", "ability": "cha" },
+  { "id": "performance", "name": "Performance", "ability": "cha" },
+  { "id": "persuasion", "name": "Persuasion", "ability": "cha" },
+  { "id": "deception", "name": "Deception", "ability": "cha" },
+  { "id": "intimidation", "name": "Intimidation", "ability": "cha" },
+  { "id": "religion", "name": "Religion", "ability": "will" }
+]

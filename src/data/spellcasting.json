@@ -1,0 +1,27 @@
+{
+  "spellLevelAccess": {
+    "minor": [1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5],
+    "major": [1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 7, 8, 8, 9]
+  },
+  "spellsKnownProgression": {
+    "minor": {
+      "description": "Learn 1 spell at level 1, then 1 additional spell every 2 levels.",
+      "cumulative": [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10]
+    },
+    "major": {
+      "description": "Learn 1 spell at level 1, then 1 additional spell every level.",
+      "cumulative": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    }
+  },
+  "intModifierSpells": {
+    "description": "After each rest, choose additional known spells equal to INT modifier. Changeable each rest.",
+    "minorRestrictions": "Cannot learn 5th level spells from INT mod. Max 2 spells of same level (except 1st).",
+    "majorRestrictions": "Max 1 spell of each level from INT mod (except 1st)."
+  },
+  "spellComponents": ["V", "S", "W"],
+  "concentrationSaveDC": {
+    "description": "WILL saving throw. DC = 5 + attacker's might."
+  },
+  "proficiencyProgression": [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+  "proficiencyMilestones": [5, 9, 13, 17]
+}

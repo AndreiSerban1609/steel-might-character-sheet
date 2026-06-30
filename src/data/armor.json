@@ -1,0 +1,62 @@
+[
+  {
+    "id": "light-armor",
+    "name": "Light Armor",
+    "type": "light",
+    "ac": { "base": 11, "dexMod": true, "dexMultiplier": 1 },
+    "pa": 1,
+    "ma": 4,
+    "paScaling": 1,
+    "maScaling": 4,
+    "acBonusLevels": [5, 9, 13, 17],
+    "acBonusPerLevel": 1,
+    "properties": ["lightArmorSaveBonus"],
+    "proficientClasses": ["all"],
+    "priceTier": "one-handed-light"
+  },
+  {
+    "id": "medium-armor",
+    "name": "Medium Armor",
+    "type": "medium",
+    "ac": { "base": 12, "dexMod": true, "dexMultiplier": 2 },
+    "pa": 2,
+    "ma": 1,
+    "paScaling": 2,
+    "maScaling": 1,
+    "acBonusLevels": [9, 17],
+    "acBonusPerLevel": 1,
+    "properties": [],
+    "proficientClasses": ["bard", "minstrel", "paladin", "druid", "warrior", "rogue", "archer", "wraith-hunter", "battlemage"],
+    "priceTier": "one-handed"
+  },
+  {
+    "id": "heavy-armor",
+    "name": "Heavy Armor",
+    "type": "heavy",
+    "ac": { "base": 15, "dexMod": false },
+    "pa": 4,
+    "ma": 2,
+    "paScaling": 4,
+    "maScaling": 2,
+    "acBonusLevels": [5, 9, 13, 17],
+    "acBonusPerLevel": 2,
+    "properties": ["heavy"],
+    "proficientClasses": ["paladin", "warrior", "battlemage"],
+    "priceTier": "two-handed"
+  },
+  {
+    "id": "shield",
+    "name": "Shield",
+    "type": "shield",
+    "ac": { "base": 3, "dexMod": false, "isBonus": true },
+    "pa": 0,
+    "ma": 0,
+    "paScaling": 0,
+    "maScaling": 0,
+    "acBonusLevels": [9, 17],
+    "acBonusPerLevel": 1,
+    "properties": [],
+    "proficientClasses": ["paladin", "warrior", "battlemage"],
+    "priceTier": "one-handed-light"
+  }
+]

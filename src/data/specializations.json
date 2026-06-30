@@ -1,0 +1,3390 @@
+{
+  "bard": [
+    {
+      "name": "Singer of Heroism",
+      "lore": "Some bards choose to write about the grand battles and adventures that unfold in the world; they have no particular person in mind when writing these, but the grand feats that are performed by those most brave.",
+      "active": {
+        "name": "Inspire All",
+        "description": "You inspire all allies (including yourself) within range for 2 turns. An inspired character has advantage on all attack rolls, saving throws and ability checks. If you are fighting against a stronger enemy than your party (might higher than your average level) the duration is doubled.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Inspiring Songs",
+        "description": "At the start of each round your ally with the lowest HP is inspired by your songs; during this round they have advantage on one dice roll of their choice."
+      },
+      "modification": {
+        "name": "Inspire Modification",
+        "description": "Inspire is now cast on all allies (including you) within range.",
+        "modifies": "Inspire"
+      },
+      "startingTalent": "last-breath",
+      "additionalTalents": [
+        {
+          "name": "Dark Horse",
+          "description": "Your spell modifier is doubled while your entire party is injured; additionally, all damage and healing you do is doubled while your entire party is severely injured."
+        },
+        {
+          "name": "For Glory",
+          "description": "You have advantage on all CHA checks to convince someone to join your party for an epic fight, or go to an epic quest."
+        }
+      ]
+    },
+    {
+      "name": "Singer of Woe",
+      "lore": "Some bards consider sorrow and grief to be the most powerful of emotions, and the ones worthy of their songs; tragedy and death brings great power to their songs.",
+      "active": {
+        "name": "Song of Sorrow",
+        "description": "You choose an ally that is the subject of your next song; until that song is complete, all damage and healing you do is doubled while said ally is injured, and tripled while they are severely injured.",
+        "apCost": 0,
+        "cooldown": "cooldown until the song is finished"
+      },
+      "passive": {
+        "name": "Fatal Reaction",
+        "description": "Whenever an ally would receive fatal damage, you can use your reaction to cast a spell."
+      },
+      "modification": {
+        "name": "Inspire Enhancement",
+        "description": "Your value of your Inspire feat is increased by two times the base value for every fallen ally on the battlefield.",
+        "modifies": "Inspire"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Thy Destiny",
+          "description": "At the end of combat, if multiple allies are dead, including the one you have your active on, only that one gets a death stack."
+        },
+        {
+          "name": "Artist's Passion",
+          "description": "While the ally you have your active on is severely injured, you can keep casting in combat even after you run out of mana."
+        }
+      ]
+    },
+    {
+      "name": "Singer of Admiration",
+      "lore": "Some bards decide that there is one person worthy of their song, and they do their best to worship that person with their creations.",
+      "active": {
+        "name": "Epic Songs",
+        "description": "(1) You choose a creature that is the grand subject of your epic songs; all your additional abilities will be targeted at said creature. (2) You increase your chosen's AP recovery by 4 for 3 turns.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Chosen's Initiative",
+        "description": "Your chosen chooses every round when they want to have their turn, regardless of initiatives (first round they could go first, second one third and so on; they announce it at the end of any creature's turn, and don't have to announce it beforehand)."
+      },
+      "modification": {
+        "name": "Charming Enhancement",
+        "description": "You can use Charming to remove said value from any saving throw made by a creature against your chosen.",
+        "modifies": "Charming"
+      },
+      "startingTalent": "luck-crafter",
+      "additionalTalents": [
+        {
+          "name": "Legendary Ballad",
+          "description": "Whenever your chosen slays a creature, you are healed for 2d6*your level HP."
+        },
+        {
+          "name": "Bardic Speech",
+          "description": "Whenever you roll a CHA check to convince someone of anything related to your chosen, you add your proficiency to it (an additional time)."
+        }
+      ]
+    }
+  ],
+  "virtuoso": [
+    {
+      "name": "Dramatist",
+      "lore": "Some virtuosos have a knack for turning everything into one grand play of destiny and fate; they focus their magic to turn every quest and combat into the performance of their lives.",
+      "active": {
+        "name": "Dramatic Twist",
+        "description": "For the next 2 rounds, all d20 rolls that roll 10 or lower count as a 1, and all that roll 11 or higher count as a 20.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Personal Connection",
+        "description": "While fighting any enemy with whom any member of the party has a personal connection (backstory, main villains, etc.), said character has advantage on all attack rolls against the enemy; if multiple allies have a connection, you are affected if possible, otherwise randomly selected."
+      },
+      "modification": {
+        "name": "Powerful Song Enhancement",
+        "description": "The spell affected also ignores half of the target's MA.",
+        "modifies": "Powerful Song"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Protagonist",
+          "description": "Any CHA check that you have to roll can be considered a performance check."
+        },
+        {
+          "name": "Grand Finale",
+          "description": "If you are the last one alive of your party in combat (only counts if you are not alone in the party), your mana costs become 0, all damage you take is halved and all damage you deal is doubled."
+        }
+      ]
+    },
+    {
+      "name": "Fatalist",
+      "lore": "Some virtuosos focus on the sadness and hopelessness in the world and in each person.",
+      "active": {
+        "name": "Reveal Hopelessness",
+        "description": "You reveal the hopelessness in a creature; for the next 3 turns, that creature loses 1d6 AP at the start of each of their turns.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Despair Aura",
+        "description": "Injured creatures have disadvantage on saving throws against your abilities."
+      },
+      "modification": {
+        "name": "Fatalist Modification",
+        "description": "[Not specified in source document]",
+        "modifies": "unknown"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Grief",
+          "description": "Whenever an enemy dies, their allies have disadvantage on all rolls for 1 round."
+        },
+        {
+          "name": "Imminent Defeat",
+          "description": "If all remaining enemies are severely injured, you can roll a persuasion check against their resolve check to make them surrender, no matter the conditions."
+        }
+      ]
+    },
+    {
+      "name": "Lone Sonata",
+      "lore": "Some virtuosos decide that it is best if they brave the world alone.",
+      "active": {
+        "name": "Lone Strength",
+        "description": "You gain temporary HP equal to 50% of your max HP for each opponent within 60 ft; the temporary HP is lost at the end of combat.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Solo Performance",
+        "description": "While fighting alone, your maximum HP and mana are doubled, and your maximum AP becomes 15, and starting and recovery AP become 10."
+      },
+      "modification": {
+        "name": "Unexpected Symphony Enhancement",
+        "description": "Unexpected Symphony damage is tripled.",
+        "modifies": "Unexpected Symphony"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Double Trouble",
+          "description": "Your effects remain even while you have one ally fighting by your side."
+        },
+        {
+          "name": "Tireless Efforts",
+          "description": "You gain stacks of exhaustion twice as hard (2 sleepless nights, 2 days without eating, etc.)."
+        }
+      ]
+    }
+  ],
+  "minstrel": [
+    {
+      "name": "Titans' Minstrel",
+      "lore": "Minstrels are known to help parties of adventurers. Titans' minstrels specialize in helping tank-oriented parties.",
+      "active": {
+        "name": "Protective Aura",
+        "description": "You give all allies (except for you) within 30 ft temporary shield equal to 30% of your max HP.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Armored Buff",
+        "description": "Casting a buff on an ally increases their PA and MA by 2 for 1 turn."
+      },
+      "modification": {
+        "name": "Pleasant Melody Enhancement",
+        "description": "Its effect is doubled on injured creatures that have more max HP than you.",
+        "modifies": "Pleasant Melody"
+      },
+      "startingTalent": "living-armor",
+      "additionalTalents": [
+        {
+          "name": "Emergency Protection",
+          "description": "As a reaction, you can transfer all your PA and MA to an ally for 1 round (a full round from the moment of the cast)."
+        },
+        {
+          "name": "Titanic Might",
+          "description": "Casting a buff on a creature also gives them advantage on the first WILL or STR check they make."
+        }
+      ]
+    },
+    {
+      "name": "Assassins' Minstrel",
+      "lore": "Minstrels who specialize in helping damage-oriented parties.",
+      "active": {
+        "name": "Delayed Strike",
+        "description": "Choose an ally within 30 ft; their next turn, all the damage they deal is reduced to 0, but the next turn all their damage is doubled.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mantra Damage",
+        "description": "Allies under the effect of a mantra deal double dice damage when their attack roll exceeds the enemy's AC by MORE than 5."
+      },
+      "modification": {
+        "name": "Pleasant Melody Enhancement",
+        "description": "You can instead choose to add half of its value to the ally's next weapon damage.",
+        "modifies": "Pleasant Melody"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Power Surge",
+          "description": "As a reaction, you can cast a buff on an ally after they kill a creature."
+        },
+        {
+          "name": "Cunning Prowess",
+          "description": "Casting a buff on a creature also gives them advantage on the first DEX check they make."
+        }
+      ]
+    },
+    {
+      "name": "Arcanists' Minstrel",
+      "lore": "Minstrels who specialize in helping spellcaster-oriented parties.",
+      "active": {
+        "name": "Arcane Enhancement",
+        "description": "For 3 rounds, you make all your allies' (including you) damaging spells do half of the damage on a miss, if they previously did nothing, or full damage if they previously did half.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mana Efficiency",
+        "description": "Casting a buff on an ally halves their next mana/energy cost; this effect cannot save more mana than the buff costed."
+      },
+      "modification": {
+        "name": "Preferred Song Enhancement",
+        "description": "You can reduce the number of turns you have to channel for Preferred Song, but you reduce the effect with 5% of the total HP/mana for every turn reduced from the channel.",
+        "modifies": "Preferred Song"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Aimed Magic",
+          "description": "As a reaction you can protect a creature from the effects of a spell one of your allies casts."
+        },
+        {
+          "name": "Arcane Wits",
+          "description": "Casting a buff on a creature also gives them advantage on the first INT or WIS check they make."
+        }
+      ]
+    }
+  ],
+  "paladin": [
+    {
+      "name": "Oath of Justice",
+      "lore": "The most common oath amongst paladins is the oath of justice; they seek to repay good deeds and punish evil ones, in proportion to the deed.",
+      "active": {
+        "name": "Righteous Smite",
+        "description": "You apply 5 times the damage of smite to an attack (after the attack roll).",
+        "apCost": 1,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Evil Immunity",
+        "description": "You are immune to the first shadow/poison kind spell/damage/effect every combat."
+      },
+      "modification": {
+        "name": "Divine Smite Enhancement",
+        "description": "Divine Smite deals double damage to evil aligned creatures, and half damage to good aligned creatures.",
+        "modifies": "Divine Smite"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    },
+    {
+      "name": "Oath of Kindness",
+      "lore": "Some paladins preach that the most important quality is kindness, and seek to help others regardless of the price they pay.",
+      "active": {
+        "name": "Full Heal",
+        "description": "You heal a creature to full HP; you are unable to receive any healing or temporary HP/shield for the next 3 turns.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Protective Kindness",
+        "description": "Whenever a creature within 15 ft gets affected by a negative effect, you can choose to be affected instead (just the effect, not the damage of the spell)."
+      },
+      "modification": {
+        "name": "Healing Light Enhancement",
+        "description": "Now has 30 ft range, and you can consume HP to increase the pool's current value.",
+        "modifies": "Healing Light"
+      },
+      "startingTalent": "universal-mastery",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    },
+    {
+      "name": "Oath of Life",
+      "lore": "Some paladins decide that the spark of life is all that matters, and do everything in their power to preserve it.",
+      "active": {
+        "name": "Convince to Surrender",
+        "description": "You try to convince all severely injured enemies to back down from a fight; if you succeed on a persuasion check (against their resolve check if needed) they will surrender and stop being hostile; succeeding on any enemy resets the cooldown.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Peaceful Persuasion",
+        "description": "Whenever you try to convince a creature to turn to the light or back down from a fight, you add your proficiency to the roll."
+      },
+      "modification": {
+        "name": "Divine Sight Enhancement",
+        "description": "Looking at a severely injured creature with Divine Sight allows you to see their mistakes, dreams and intentions.",
+        "modifies": "Divine Sight"
+      },
+      "startingTalent": "luck-crafter",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    },
+    {
+      "name": "Oath of Glory",
+      "lore": "Some paladins consider that glory is the only thing worth fighting for, and that they should fight the strongest of foes.",
+      "active": {
+        "name": "Glorious Assault",
+        "description": "For the next 3 turns, your actions against creatures with more max HP than you cost 1 less AP.",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Spell Save Advantage",
+        "description": "Whenever you successfully save yourself from a spell, you gain advantage on your next attack roll."
+      },
+      "modification": {
+        "name": "Heroic Aura Enhancement",
+        "description": "The value is also added to weapon damage.",
+        "modifies": "Heroic Aura"
+      },
+      "startingTalent": "blood-rush",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    },
+    {
+      "name": "Oath of Loyalty",
+      "lore": "Some paladins decide that loyalty is the most important virtue of all, and never betray anyone they call friend or ally.",
+      "active": {
+        "name": "Allied Focus",
+        "description": "Select a target; all allies (except for you) have halved AP costs against it for a turn.",
+        "apCost": "1 per ally affected",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Unwavering Loyalty",
+        "description": "You are immune to all effects that would turn you against your party - possession, charm, mad, mind control, etc."
+      },
+      "modification": {
+        "name": "Healing Light Enhancement",
+        "description": "You consume half the amount of points you heal on injured targets (until they stop being injured) and no points on severely injured targets.",
+        "modifies": "Healing Light"
+      },
+      "startingTalent": "escapist",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    },
+    {
+      "name": "Oath of Destruction",
+      "lore": "Some paladins (mostly those following dark gods) consider that light serves no purpose, and that destruction is their only meaning in life.",
+      "active": {
+        "name": "Destructive Aura",
+        "description": "For 3 turns, all your attacks and spells that target a creature hit all creatures within 10 ft of it (except for you).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Killing Power",
+        "description": "Killing a creature makes your next ability have doubled effect."
+      },
+      "modification": {
+        "name": "Shadow Conversion",
+        "description": "All your abilities and spells that do light damage now deal shadow damage instead.",
+        "modifies": "Light damage spells"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Godly Rejuvenation",
+          "description": "Roll 1d10 at the start of each of your turns; on a 10 you recover 25% of your maximum mana."
+        },
+        {
+          "name": "Divine Protection",
+          "description": "You are hasted while defending churches or towns protected by your god."
+        }
+      ]
+    }
+  ],
+  "cleric": [
+    {
+      "name": "Servant of Life",
+      "lore": "Available while serving a good god. Focused on preserving life.",
+      "active": {
+        "name": "Life Shield",
+        "description": "Until the end of your next turn, none of your allies within 150 ft can drop below 1 HP.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Emergency Healing",
+        "description": "Casting healing or buffing abilities on a severely injured target costs no mana and no AP."
+      },
+      "modification": {
+        "name": "Mend Enhancement",
+        "description": "Mend can be used as a reaction, after an ally gets damaged.",
+        "modifies": "Mend"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Spark of Life",
+          "description": "The first time a negative ability hits you, it is nullified; once per long rest; you can pray for one hour to get this feat back."
+        },
+        {
+          "name": "Lifekeeper",
+          "description": "You have advantage and are considered proficient on all medicine and religion checks."
+        }
+      ]
+    },
+    {
+      "name": "Servant of Death",
+      "lore": "Available while serving an evil god. Focused on dealing death.",
+      "active": {
+        "name": "Death's Advantage",
+        "description": "For the next round, you and your allies within 150 ft have advantage on attack rolls against injured targets, and deal double damage to severely injured targets.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Efficient Destruction",
+        "description": "Casting abilities on severely injured opponents costs no mana and 1 AP."
+      },
+      "modification": {
+        "name": "Mend/Spells Enhancement",
+        "description": "(1) Mend can be used on an opponent, causing them to take damage from your healing spells for 1 turn. (2) All spells have their variant (mainly doing shadow damage instead of light damage).",
+        "modifies": "Mend / Spells"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Spark of Death",
+          "description": "The first time a negative ability you cast is resisted by an enemy (they succeed the saving throw or you miss the attack), it takes its full effect instead; once per long rest; you can pray for one hour to get this feat back."
+        },
+        {
+          "name": "Deathkeeper",
+          "description": "You are immune from disease, but know how to extract and use/spread diseases from creatures; you also have advantage and are considered proficient on all religion checks."
+        }
+      ]
+    },
+    {
+      "name": "Servant of Essence",
+      "lore": "Available while serving a neutral god. Focused on balance and essence.",
+      "active": {
+        "name": "Essence Shield",
+        "description": "You double the PA and MA for all allies (including you) for 2 rounds.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Balanced Power",
+        "description": "While you have full HP, your attack roll and critical chance are increased by your proficiency; while you are severely injured, your mana costs are reduced to 0, and you double all healing you cast."
+      },
+      "modification": {
+        "name": "Godly Aid Enhancement",
+        "description": "You have increased chances of succeeding when asking for information/favours related to your god's domain.",
+        "modifies": "Godly Aid"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Essence Transfer",
+          "description": "Whenever you are damaged, the nearest ally gets healed for half the damage received."
+        },
+        {
+          "name": "Fresh Start",
+          "description": "The first time after a long rest that you roll an ability check you succeed it."
+        }
+      ]
+    }
+  ],
+  "exorcist": [
+    {
+      "name": "Evocator",
+      "lore": "The exorcists who know that the answer to demonic problems are even more demons; they are very curious by nature and care more about understanding the demons than necessarily vanquishing them.",
+      "active": {
+        "name": "Summon Demon",
+        "description": "You can summon demons (or their avatars) to interact with; they will chat with you, drink with you, play chess with you etc.; they will 99% of the time remain non hostile while you are, and will vanish when you become hostile; you can gather intel from them about other demons and keep tabs on the shadow realm; these meetings can grant you benefits (gaining knowledge, receiving an item as a gift, or even stat increases) but can also take their toll and give you penalties; for the most part you do not choose what demons you summon.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Demonic Affinity",
+        "description": "You have advantage on saving throws that prevent unholy beings from toying with your mind and have advantage on rituals to summon creatures."
+      },
+      "modification": {
+        "name": "Exorcism Enhancement",
+        "description": "You can use exorcism on a demon who is not inside someone to have advantage on all skill checks you do against them and give them disadvantage on all skill checks; you can use this on demons that you summon with your active without enraging them, but they will know you used it.",
+        "modifies": "Exorcism"
+      },
+      "startingTalent": "escapist",
+      "additionalTalents": [
+        {
+          "name": "Demonic Insight",
+          "description": "You automatically know when a creature is possessed; furthermore you know when the demon inside lies and when it speaks the truth."
+        },
+        {
+          "name": "Demonic Resurrection",
+          "description": "If you die by a demon's hand, you can perform a ritual on it (which would kill it if it isn't already dead) to remove the death stack gained."
+        }
+      ]
+    },
+    {
+      "name": "Banisher",
+      "lore": "Exorcists who specialize in removing possessing entities from their hosts.",
+      "active": {
+        "name": "Enter Mind",
+        "description": "You can enter a possessed creature's mind, in a similar fashion to the way demons do, in order to face the creature possessing someone directly and allowing you to try to free the victim from the inside; can also gain you knowledge about the person.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Anti-Possession Aura",
+        "description": "Creatures within 100 ft of you (including you) have advantage on saving throws against being possessed or when trying to get rid of possession."
+      },
+      "modification": {
+        "name": "Banish Curse + Exorcism Combo",
+        "description": "Once per day when you cast Banish Curse you can also cast Exorcism on the target, and the other way around.",
+        "modifies": "Banish Curse / Exorcism"
+      },
+      "startingTalent": "refresher",
+      "additionalTalents": [
+        {
+          "name": "Darkness' Demise",
+          "description": "After removing an unholy being from a creature, you become enraged, dealing double damage to the creature for the next 3 turns."
+        },
+        {
+          "name": "Back to the Light",
+          "description": "If you kill a possessed creature and manage to kill the possessor within a minute you can bring the creature back to life."
+        }
+      ]
+    },
+    {
+      "name": "Scorcher",
+      "lore": "Exorcists who wield fire and light as weapons against evil.",
+      "active": {
+        "name": "Spawn Weapons",
+        "description": "You spawn a shortsword made of light in one hand and a fire whip in the other (they have the stats of their respective weapons of your level and you are proficient with them).",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Elemental Exploit",
+        "description": "After dealing light damage to a creature, you halve its fire armor for the next ability you cast on it; after you deal fire damage you halve its light armor."
+      },
+      "modification": {
+        "name": "Damage Type Choice",
+        "description": "Your spells can do fire or light damage as you choose.",
+        "modifies": "Spells"
+      },
+      "startingTalent": "universal-mastery",
+      "additionalTalents": [
+        {
+          "name": "Divine Protection",
+          "description": "A creature that you damage with your light sword deals only half physical damage to you while in melee range; a creature that you damage with your fire whip only deals half magical damage to you while at range; these effects last for 1 turn after the attack (and do not stack)."
+        },
+        {
+          "name": "Fiery Destiny",
+          "description": "After a hostile creature dies near you you gain the absorb status to fire for 1 turn."
+        }
+      ]
+    }
+  ],
+  "druid": [
+    {
+      "name": "Druid of War",
+      "lore": "Druids who focus on combat prowess alongside their natural magic.",
+      "active": {
+        "name": "Elemental Resistance",
+        "description": "For 3 turns (including casting turn) you become resistant (until the duration expires) to any type of damage that you deal (except for true).",
+        "apCost": 1,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Weapon Proficiency",
+        "description": "You become proficient with shields, shortswords, daggers, maul, greataxes, handaxes, shortbows and longbows."
+      },
+      "modification": {
+        "name": "Spiked Weapon Enhancement",
+        "description": "After casting a spell, a 'Spiked Weapon' spell of the same level affects your weapon for the rest of the turn; while Cycle of Life is active you have a Spiked Weapon spell of your maximum available level affecting all your weapons and all allies' weapons within 30 ft, and the damage is any type of damage (except true).",
+        "modifies": "Cycle of Life / Spiked Weapon"
+      },
+      "startingTalent": "all-brawn",
+      "additionalTalents": [
+        {
+          "name": "Rage of War",
+          "description": "If you spend your entire turn only doing weapon attacks (and you started your turn with your AP recovery AP or more) you can cast one spell with no AP cost."
+        },
+        {
+          "name": "Mana Drain",
+          "description": "20% of the damage you deal with weapons is also gained as mana."
+        }
+      ]
+    },
+    {
+      "name": "Druid of Life",
+      "lore": "Druids who focus on healing and preserving life through nature's power.",
+      "active": {
+        "name": "Free Healing Spell",
+        "description": "You can cast one healing spell from any class of a spell level that you would have available free of mana and with halved AP cost.",
+        "apCost": "halved",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Efficient Healer",
+        "description": "The first time you heal a creature in a turn you get halved AP cost (rounded down) on your next ability that turn."
+      },
+      "modification": {
+        "name": "Nature's Embrace Enhancement",
+        "description": "Nature's Embrace healing is increased to 40% of the target's maximum HP; Nature's Regeneration healing is doubled.",
+        "modifies": "Nature's Embrace / Nature's Regeneration"
+      },
+      "startingTalent": "stand-fast",
+      "additionalTalents": [
+        {
+          "name": "Urgent Sacrifice",
+          "description": "When you heal a creature you can choose to transfer any amount of HP and/or MANA from you to that creature."
+        },
+        {
+          "name": "Eternal Life",
+          "description": "You can heal unconscious creatures back to life (you heal as if the creature wasn't dead); but the death stack is still applied to them and they will fight death (if appropriate) at the end of combat."
+        }
+      ]
+    },
+    {
+      "name": "Druid of Ambush",
+      "lore": "Sometimes druids are prepared to ambush their targets and take them out quickly in their forests.",
+      "active": {
+        "name": "Forest Invisibility",
+        "description": "You go invisible if you are near a tree (10 ft away); you can freely move and stay invisible while you are at most 10 ft away from a tree; while combat abilities remove your invisibility, successfully hiding while within the duration will return you to this state. Lasts for 3 turns (ends at the start of your 4th turn).",
+        "apCost": 2,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Ambush Advantage",
+        "description": "While in stealth/invisible your attacks and spells have advantage, and your opponents have disadvantage on saving throws against them; furthermore you also have 20% increased crit chance (you crit at 15 or above if you previously critted at 20)."
+      },
+      "modification": {
+        "name": "Wildwalker Enhancement",
+        "description": "You also add your proficiency to stealth checks made in the wilderness.",
+        "modifies": "Wildwalker"
+      },
+      "startingTalent": "guerilla",
+      "additionalTalents": [
+        {
+          "name": "Patient Assault",
+          "description": "While hiding your maximum AP becomes 15, and your AP recovery is increased by 1."
+        },
+        {
+          "name": "Nature's Resilience",
+          "description": "While hidden you are immune to all damage and CC."
+        }
+      ]
+    }
+  ],
+  "shapeshifter": [
+    {
+      "name": "Forest Shapeshifter",
+      "lore": "Shapeshifters adapted to forest environments.",
+      "active": {
+        "name": "Forest Transformation",
+        "description": "You turn into a forest animal that you have seen of might equal to your level or lower for up to 3 turns (respecting the other shapeshifting rules, HP and such).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Poison Resistance",
+        "description": "While you are in humanoid form, or transformed into any forest animal, you are resistant to poison."
+      },
+      "modification": {
+        "name": "Shapeshifting Enhancement",
+        "description": "It costs 0 AP to turn into any forest animal.",
+        "modifies": "Shapeshifting"
+      },
+      "startingTalent": "escapist",
+      "additionalTalents": [
+        {
+          "name": "True Shapeshift",
+          "description": "Your talents are applied to your shapeshifting forms as well."
+        },
+        {
+          "name": "Forest Dweller",
+          "description": "You have advantage on survival, stealth and perception checks made in the forest."
+        }
+      ]
+    },
+    {
+      "name": "Desert Shapeshifter",
+      "lore": "Shapeshifters adapted to desert environments.",
+      "active": {
+        "name": "Desert Transformation",
+        "description": "You turn into a desert animal that you have seen of might equal to your level or lower for up to 3 turns (respecting the other shapeshifting rules, HP and such).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Heat Resistance",
+        "description": "While you are in humanoid form, or transformed into any desert animal, you are resistant to fire damage, and immune to downsides of exposure to high temperatures."
+      },
+      "modification": {
+        "name": "Shapeshifting Enhancement",
+        "description": "It costs 0 AP to turn into any desert animal.",
+        "modifies": "Shapeshifting"
+      },
+      "startingTalent": "predator",
+      "additionalTalents": [
+        {
+          "name": "True Shapeshift",
+          "description": "Your talents are applied to your shapeshifting forms as well."
+        },
+        {
+          "name": "Desert Dweller",
+          "description": "You have advantage on survival, stealth and perception checks made in the desert."
+        }
+      ]
+    },
+    {
+      "name": "Arctic Shapeshifter",
+      "lore": "Shapeshifters adapted to arctic environments.",
+      "active": {
+        "name": "Arctic Transformation",
+        "description": "You turn into an arctic animal that you have seen of might equal to your level or lower for up to 3 turns (respecting the other shapeshifting rules, HP and such).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Cold Resistance",
+        "description": "While you are in humanoid form, or transformed into any arctic animal, you are resistant to ice damage, and immune to downsides of exposure to low temperatures."
+      },
+      "modification": {
+        "name": "Shapeshifting Enhancement",
+        "description": "It costs 0 AP to turn into any arctic animal.",
+        "modifies": "Shapeshifting"
+      },
+      "startingTalent": "living-armor",
+      "additionalTalents": [
+        {
+          "name": "True Shapeshift",
+          "description": "Your talents are applied to your shapeshifting forms as well."
+        },
+        {
+          "name": "Arctic Dweller",
+          "description": "You have advantage on survival, stealth and perception checks made in the arctic."
+        }
+      ]
+    },
+    {
+      "name": "Underground Shapeshifter",
+      "lore": "Shapeshifters adapted to underground environments.",
+      "active": {
+        "name": "Underground Transformation",
+        "description": "You turn into an underground animal that you have seen of might equal to your level or lower for up to 3 turns (respecting the other shapeshifting rules, HP and such).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Shadow Resistance",
+        "description": "While you are in humanoid form, or transformed into any underground animal, you are resistant to shadow damage."
+      },
+      "modification": {
+        "name": "Shapeshifting Enhancement",
+        "description": "It costs 0 AP to turn into any underground animal.",
+        "modifies": "Shapeshifting"
+      },
+      "startingTalent": "eyes-of-the-keeper",
+      "additionalTalents": [
+        {
+          "name": "True Shapeshift",
+          "description": "Your talents are applied to your shapeshifting forms as well."
+        },
+        {
+          "name": "Underground Dweller",
+          "description": "You have advantage on survival, stealth and perception checks made in the underground."
+        }
+      ]
+    }
+  ],
+  "stormbringer": [
+    {
+      "name": "Earthshaker",
+      "lore": "Stormbringers who master the destructive force of earthquakes alongside their storms.",
+      "active": {
+        "name": "Earthquake",
+        "description": "You create a huge earthquake that lasts for 1 minute; for the duration, all creatures within 200 ft of you must succeed a CON saving throw at the start AND end of each of their turns or fall prone; allied creatures have advantage on the roll; you are immune to the effect.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Quake Immunity",
+        "description": "You are immune to being knocked prone and to fall damage."
+      },
+      "modification": {
+        "name": "Earthshake (Stormbring Alternative)",
+        "description": "Stormbring alternative effect: you channel an earthquake of apocalyptic force. The earthquake has a radius of 4000 feet and can be centered at any point you see or saw before and can recall. For 1 hour all creatures must succeed on CON saving throws at the start AND end of each turn or fall prone; buildings are destroyed, giant cracks form [1d6 * 100] ft deep; creatures hit by falling buildings take damage equivalent to an 8th level lightning bolt, but crushing.",
+        "modifies": "Stormbring"
+      },
+      "startingTalent": "predator",
+      "additionalTalents": [
+        {
+          "name": "Opportunist",
+          "description": "You can take a reaction to use a spell (up to 3 AP in cost) on an enemy when they fall prone, similar to an attack of opportunity."
+        },
+        {
+          "name": "Unfortunate Fall",
+          "description": "Whenever a creature rolls a 5 or less and falls prone because of you, they also drop whatever they are holding 15 ft away in a random direction."
+        }
+      ]
+    },
+    {
+      "name": "Tidecaller",
+      "lore": "Stormbringers who master the power of freezing tides.",
+      "active": {
+        "name": "Freezing Tide",
+        "description": "You create a freezing tide to strike in a direction of your choice; the tide is 50 ft high, 80 ft wide and travels for 300 ft; all creatures in its path must succeed on a CON saving throw or become frozen for 3 turns (CON saving throw at the end of each turn to end the effect); allies have advantage on the saving throw.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Frost Pierce",
+        "description": "You deal normal damage to frozen targets (not halved)."
+      },
+      "modification": {
+        "name": "Tidecall (Stormbring Alternative)",
+        "description": "Stormbring alternative: you channel a wave of apocalyptic force; width 4000 ft, height 1000 ft, travels 1000 ft per round, destroying everything in its path; CON saving throw; fail = carried with wave taking crushing damage equivalent to 8th level lightning bolt each turn; success = half damage, not carried.",
+        "modifies": "Stormbring"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Relentless Storm",
+          "description": "After a creature succeeds on a saving throw against a CC ability from you, they have disadvantage on the next ability you cast on them with the same CC (does not stack)."
+        },
+        {
+          "name": "First Striker",
+          "description": "If the first thing you do in a turn is cast a combat ability, it costs 1 less AP, but you have halved speed for the rest of the turn."
+        }
+      ]
+    },
+    {
+      "name": "Lavariser",
+      "lore": "Stormbringers who master the destructive force of fire and lava.",
+      "active": {
+        "name": "Fire Storm",
+        "description": "You start a fire storm that rages in a 60 ft radius around you for 1 minute; all creatures that start their turn within range must roll a CON saving throw; on a fail they take fire damage equal to a lightning bolt of the highest level you can currently cast, and are set burning, taking the same amount of damage at the start of their next turn; on a success they only take half damage and are not set burning; allies have advantage on the saving throw.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Efficient Burning",
+        "description": "Your targeted abilities cast on burning targets have halved mana cost."
+      },
+      "modification": {
+        "name": "Volcanic Eruption (Stormbring Alternative)",
+        "description": "Stormbring alternative: you channel your inner blaze and create a dooming inferno; affects everything within 4000 ft; all creatures must roll CON saving throw at end of each turn; on fail set on fire, take fire damage equal to 2 8th level lightning bolts at the start of their turn.",
+        "modifies": "Stormbring"
+      },
+      "startingTalent": "torturer",
+      "additionalTalents": [
+        {
+          "name": "Burning Will",
+          "description": "Whenever you set a creature on fire you heal for 5% of your total HP."
+        },
+        {
+          "name": "Fiery Spirit",
+          "description": "You can add your spell modifier to all intimidation checks you make."
+        }
+      ]
+    },
+    {
+      "name": "Lone Storm",
+      "lore": "Some stormbringers decide they alone can do what must be done.",
+      "active": {
+        "name": "Lone Strength",
+        "description": "You gain temporary HP equal to 50% of your max HP for each opponent within 60 ft; the temporary HP is lost at the end of combat.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Solo Storm",
+        "description": "While fighting alone, your maximum HP and mana are doubled, and your maximum AP becomes 15, and starting and recovery AP become 10."
+      },
+      "modification": {
+        "name": "Lightning Enhancement",
+        "description": "You deal double damage with lightning force, and all electrify effects that deal damage do double the amount.",
+        "modifies": "Lightning / Electrify"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Double Trouble",
+          "description": "Your effects remain even while you have one ally fighting by your side."
+        },
+        {
+          "name": "Tireless Efforts",
+          "description": "You gain stacks of exhaustion twice as hard (2 sleepless nights, 2 days without eating, etc.)."
+        }
+      ]
+    }
+  ],
+  "barbarian": [
+    {
+      "name": "Berserker",
+      "lore": "Barbarians who push themselves to the absolute limit in combat.",
+      "active": {
+        "name": "Convert HP",
+        "description": "You convert your current HP - 1 to temporary hit points; (you remain with 1 HP and you convert the rest to temporary HP). YOUR CURRENT HP + YOUR TEMPORARY HP CAN NO LONGER EXCEED YOUR MAXIMUM HP. HAS NO COOLDOWN.",
+        "apCost": 1,
+        "cooldown": "no cooldown"
+      },
+      "passive": {
+        "name": "Missing HP Damage",
+        "description": "You deal bonus damage with weapon attacks based on how injured you are; you deal 3 bonus damage for every 100 missing HP."
+      },
+      "modification": {
+        "name": "Armor Enhancement",
+        "description": "All armor (PA and MA) gained through your own abilities (through Tough or Rage modification for example) is increased an additional time the base value for every 25% of your total HP missing (at 1 HP it is increased 4 times the base value).",
+        "modifies": "Rage / Tough"
+      },
+      "startingTalent": "blood-rush",
+      "additionalTalents": [
+        {
+          "name": "Unbreakable",
+          "description": "All healing you receive is received in the form of temporary HP."
+        },
+        {
+          "name": "Fierce Manners",
+          "description": "When rolling intimidation or resolve checks, you can use your strength as the skill stat."
+        }
+      ]
+    },
+    {
+      "name": "Shaman",
+      "lore": "Barbarians who channel the power of totems in combat.",
+      "active": {
+        "name": "Summon Totem",
+        "description": "Summon a totem of your choice at a point within 30 ft. You can use this a number of times equal to your WILL modifier. Each totem stores a spell; you can use a totem to cast its ability (paying the AP cost); your WILL is considered as your spellcasting stat.",
+        "apCost": 1,
+        "cooldown": "WILL modifier uses"
+      },
+      "passive": {
+        "name": "Reactive Totem",
+        "description": "Whenever a hostile creature casts a spell on you, you can summon a totem of your choice at a point of your choice within 15 ft."
+      },
+      "modification": {
+        "name": "Rage Totem",
+        "description": "Whenever you use your rage or one of your raging attacks you summon a random totem at a point of your choice within 15 ft.",
+        "modifies": "Rage"
+      },
+      "startingTalent": "refresher",
+      "additionalTalents": [
+        {
+          "name": "Totemic Wrath",
+          "description": "Whenever you score a critical hit you can also instantly and free of costs use all totems of a type (storing the same spell)."
+        },
+        {
+          "name": "Shamanic Restoration",
+          "description": "Whenever one of your totems is destroyed within 60 ft of you, you heal for 20% of your max HP."
+        }
+      ]
+    },
+    {
+      "name": "Raider",
+      "lore": "Some barbarians focus on enduring as much damage as possible before truly going down in combat.",
+      "active": {
+        "name": "Defensive Stance",
+        "description": "You halve your MS and double the AP cost of your attacks, but reduce all damage you take (after all other reductions and increases) in half; additionally, any ability that would damage you for at least 50% of your max HP is ignored altogether; lasts for 2 rounds. You can cancel the ability early.",
+        "apCost": 0,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Raging Armor",
+        "description": "Whenever you get hit while raging your PA and MA increase by Y (from rage table) until the start of your next turn."
+      },
+      "modification": {
+        "name": "Rage - Death Defiance",
+        "description": "After you die (and all Last Breath-like effects have finished triggering), you can consume a number of rage uses equal to your amount of death stacks (if available) to bring yourself back to life at initiative count 0 with 20% of your max HP; you still get a death stack, but skip the fight with death.",
+        "modifies": "Rage"
+      },
+      "startingTalent": "last-breath",
+      "additionalTalents": [
+        {
+          "name": "Consistent Defense",
+          "description": "No attack or ability can crit or automatically hit (due to a natural 20) on you."
+        },
+        {
+          "name": "Full Awakening",
+          "description": "After you are brought back from death/unconscious state you do so with full AP (max AP)."
+        }
+      ]
+    }
+  ],
+  "guardian": [
+    {
+      "name": "Battleforger",
+      "lore": "Some guardians decide to hone their skills in crafting and perfecting items, in order to further aid the people they fight alongside with.",
+      "active": {
+        "name": "Enhance Item",
+        "description": "You magically enhance an item - 1 hour channel; you can have at most [WIS modifier] items enhanced at a time. (1) weapon - increase base damage by [2 * proficiency]; (2) armor - increase PA and MA by [proficiency]; (3) shield - increase AC improvement by [2]; (4) food/water - make it last 20 times longer.",
+        "apCost": "1 hour channel",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Gear Protection",
+        "description": "Your party's gear is immune to any damage and tear, be it from bad accommodating conditions, hitting a rough object, an ooze's attack, etc."
+      },
+      "modification": {
+        "name": "Embedded Weapon Enhancement",
+        "description": "Your weapon counts as magical for the purpose of overcoming resistances.",
+        "modifies": "Embedded Weapon"
+      },
+      "startingTalent": "forger",
+      "additionalTalents": [
+        {
+          "name": "Blacksmith",
+          "description": "You can perform yourself armor and weapon upgrades (and won't require the smith fee to upgrade them, just the material cost)."
+        },
+        {
+          "name": "Smith's Knowledge",
+          "description": "You have advantage on all checks to identify weapons and armors."
+        }
+      ]
+    },
+    {
+      "name": "Royal Advisor",
+      "lore": "Some guardians, especially those who are a king's personal guard, focus on their minds and the world around, in order to help their king make the best decisions.",
+      "active": {
+        "name": "Magic Foresight",
+        "description": "You use your magic foresight to try and assess (roll 1d10 - DM roll, secret). (1) a person - 1: know opposite alignment; 2-3: nothing; 4-6: general alignment/behaviour; 7-10: intentions and general plan. (2) a course of action - 1: opposite result; 2-3: nothing; 4-6: general outcome; 7-10: precise and detailed outcome.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Enhanced Investigation",
+        "description": "You also add your proficiency to investigation, insight and perception checks."
+      },
+      "modification": {
+        "name": "Get Down Enhancement",
+        "description": "Can be used for any sort of attack or projectile spell.",
+        "modifies": "Get Down"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Final Sacrifice",
+          "description": "If you are the last one alive from your party, you can die and revive any dead person in the process, but you take the death stack of anyone you revive."
+        },
+        {
+          "name": "Critical Thinking",
+          "description": "You have advantage on INT and WIS ability checks while in a time constraining situation (room filling with water for example)."
+        }
+      ]
+    },
+    {
+      "name": "Soldier Protector",
+      "lore": "Some guardians, especially those in the ranks of the army, learn to perfect their skills of helping multiple allies at once.",
+      "active": {
+        "name": "Damage Transfer Aura",
+        "description": "For 1 minute, you create a 15 ft radius aura around you (that follows you); any ally that takes damage transfers half of the damage dealt (after resistance and armor reduction) to you, and you reduce it by your armor and resistances too.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Double Cast",
+        "description": "If you cast a spell on an ally, you can double the mana cost to cast it on an additional ally."
+      },
+      "modification": {
+        "name": "Reflective Barrier Enhancement",
+        "description": "Can be cast on any number of creatures besides you, but the duration becomes [1 minute / number of creatures affected] (rounded up).",
+        "modifies": "Reflective Barrier"
+      },
+      "startingTalent": "living-armor",
+      "additionalTalents": [
+        {
+          "name": "Adrenaline Rush",
+          "description": "While injured, you have advantage on STR and DEX ability checks."
+        },
+        {
+          "name": "Wisdom of the Fallen",
+          "description": "Your WIS modifier is increased by its base value for every severely injured or dead ally on the battlefield (up to a maximum of 10)."
+        }
+      ]
+    }
+  ],
+  "conqueror": [
+    {
+      "name": "Knight",
+      "lore": "Knights are common folk who decide that honor, justice or other virtues are the things worth fighting for in this life; a knight takes a vow consisting generally of 3 promises to uphold 3 virtues, and they draw strength from it.",
+      "active": {
+        "name": "Life Steal",
+        "description": "You heal for all the damage you deal for 3 turns.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Proximity Armor",
+        "description": "Your PA and MA are increased by [your level] for every enemy creature within 10 ft of you."
+      },
+      "modification": {
+        "name": "Defensive Move Enhancement",
+        "description": "After using 3 defensive moves consecutively (without using any offensive move in between), your next defensive move doesn't cost energy.",
+        "modifies": "Defensive Move"
+      },
+      "startingTalent": "living-armor",
+      "additionalTalents": [
+        {
+          "name": "Shield of Honor",
+          "description": "Whenever you block an attack with your shield (the attack misses due to the AC gained by the shield), you can counterattack (doesn't count as offensive move)."
+        },
+        {
+          "name": "Protector of the Meek",
+          "description": "Whenever an ally becomes severely injured in battle, you start your next turn with full AP and doubled MS."
+        }
+      ]
+    },
+    {
+      "name": "Weapon Master",
+      "lore": "Some fighters become conquerors due to their love of every weapon; they adore having the whole arsenal and using every single tool in their kit.",
+      "active": {
+        "name": "All-Out Attack",
+        "description": "Can only be used at start of turn - you reduce your AC, PA, MA and SPEED to 0 until the start of your next turn, but you gain +15 to attack rolls and your attacks ignore half your enemy's PA.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Weapon Streak",
+        "description": "Every consecutive attack (after the first) with a different weapon uses the modifier (STR/DEX) an additional time; this streak continues as long as you attack with a DIFFERENT weapon every time."
+      },
+      "modification": {
+        "name": "Adrenaline Enhancement",
+        "description": "The rest of the turn after using Adrenaline, whenever an attack uses a different weapon (same rule as passive) you regain 1 AP.",
+        "modifies": "Adrenaline"
+      },
+      "startingTalent": "all-brawn",
+      "additionalTalents": [
+        {
+          "name": "True Brawn",
+          "description": "Affects All Brawn; you can carry up to 10 DIFFERENT weapons and have them weigh only one."
+        },
+        {
+          "name": "Loyal Customer",
+          "description": "When upgrading weapons at a blacksmith, you can upgrade up to 10 for the price of 1."
+        }
+      ]
+    },
+    {
+      "name": "Legend Slayer",
+      "lore": "Some fighters specialize on fighting the most giant and spectacular of foes, either for the challenge or for glory.",
+      "active": {
+        "name": "Legend's Bane",
+        "description": "You choose a creature that is at least large in size, or at least 1 level of might higher than your level; you halve all damage you take from that creature for a number of turns equal to [number of levels of size beyond medium + number of levels of might beyond your level].",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Giant Slayer Damage",
+        "description": "You deal extra damage with each weapon attack (half for light weapons), depending on the fierceness of your enemy; [your proficiency] extra damage for each size bigger than medium, and an extra [your proficiency] for each might point bigger than your level."
+      },
+      "modification": {
+        "name": "Restore Enhancement",
+        "description": "You increase Restore's healing by 1d10/level and the energy recovery by 10 for every level of size beyond medium and every level of might beyond your level that the strongest foe you are fighting has.",
+        "modifies": "Restore"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Underdog Resilience",
+          "description": "You have advantage on STR and CON saving throws against abilities used by creatures larger than you or with might higher than your level."
+        },
+        {
+          "name": "To the Death",
+          "description": "While fighting a creature larger than you, or with might higher than you, you ignore all exhaustion stacks you have, and are immune to all exhaustion/fatigue type effects."
+        }
+      ]
+    },
+    {
+      "name": "Intangible Combatant",
+      "lore": "Some conquerors spend their life perfecting the art of combat and dueling; they learn how to dodge and parry every blow.",
+      "active": {
+        "name": "Unlimited Reactions",
+        "description": "For the next minute, you can take as many reactions per turn as you want, but only once per action (you can't use both dodge and parry on the same attack, or use attack of opportunity multiple times on the same target).",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Intangibility Points",
+        "description": "At the start of each of your turns, if you haven't been damaged, you gain an intangibility point (up to 10). You lose all points when damaged by an attack requiring an attack roll or saving throw. Add intangibility points to AC, saving throws, and attack rolls. Deal increased melee weapon damage equal to [intangibility points * your proficiency]."
+      },
+      "modification": {
+        "name": "Defensive Move Enhancement",
+        "description": "(1) Parry - on a successful parry, you can choose to make a weapon attack on the foe instead of doubling their AP cost. (2) Dodge - you can change the AC increase to 10, but you also double the energy cost.",
+        "modifies": "Defensive Move (Parry/Dodge)"
+      },
+      "startingTalent": "protection",
+      "additionalTalents": [
+        {
+          "name": "Destiny Denial",
+          "description": "Effects that would automatically make an attack hit you, or make your saving throw fail cannot work on you."
+        },
+        {
+          "name": "Amidst the Fray",
+          "description": "You are immune to the flanking effect."
+        }
+      ]
+    },
+    {
+      "name": "One Man Army",
+      "lore": "Some conquerors choose to perfect their skills of fighting the odds alone.",
+      "active": {
+        "name": "Lone Strength",
+        "description": "You gain temporary HP equal to 50% of your max HP for each opponent within 60 ft; the temporary HP is lost at the end of combat.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Solo Fighter",
+        "description": "While fighting alone, your maximum HP and energy are doubled, and your maximum AP becomes 15, and starting and recovery AP become 10."
+      },
+      "modification": {
+        "name": "Adrenaline/Restore Enhancement",
+        "description": "(1) Adrenaline - you gain (and lose) 5 AP instead of 3. (2) Restore - the healing is doubled.",
+        "modifies": "Adrenaline / Restore"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Double Trouble",
+          "description": "Your effects remain even while you have one ally fighting by your side."
+        },
+        {
+          "name": "Tireless Efforts",
+          "description": "You gain stacks of exhaustion twice as hard (2 sleepless nights, 2 days without eating, etc.)."
+        }
+      ]
+    }
+  ],
+  "shaolin": [
+    {
+      "name": "Monastery of Prosperity",
+      "lore": "The monastery of prosperity promotes calm, endurance, calculated and prolonged effort, both in life and in combat.",
+      "active": {
+        "name": "AP Doubling",
+        "description": "For the next minute, all AP that you do not consume and is transferred over is doubled for the next turn; your maximum AP is increased by 5 during this time.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Chakra Regeneration",
+        "description": "At the end of every other turn (second, fourth, etc) you regain 1 chakra point."
+      },
+      "modification": {
+        "name": "Palm of Tranquility Enhancement",
+        "description": "Also reduces all damage the target deals by half (before resistances and armor reduction).",
+        "modifies": "Palm of Tranquility"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Regenerating Body",
+          "description": "Every 10 minutes out of combat will cause you to regenerate 5% of your max HP; you can meditate for 4 hours instead of sleep, and this meditation also makes you not age or require food or water for the next day."
+        },
+        {
+          "name": "Tranquil Regeneration",
+          "description": "At the start of your turn, if you have taken no damage for 2 rounds you heal for 20% of your max HP."
+        }
+      ]
+    },
+    {
+      "name": "Monastery of Arcana",
+      "lore": "The monastery of arcana claims that the root of existence and purpose resides in the arcana, promoting the connection with magic.",
+      "active": {
+        "name": "Arcane Concentration",
+        "description": "You concentrate the essence of the arcana inside of you for 3 turns; your spell modifier increases by 10 (just for the damage part of spells), your MA is increased by [4 * your level], and you are immune to all negative effects caused by magic.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Spell Learning",
+        "description": "You learn one spell at each of levels 1, 5, 9, 13, 17 from Druid, Guardian, or Sorcerer; casting uses chakra points instead of mana, and WILL as spell modifier."
+      },
+      "modification": {
+        "name": "Spell Absorption Enhancement",
+        "description": "Whenever you absorb a spell, you will know how to cast it for the rest of the combat.",
+        "modifies": "Spell Absorption"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Sign Magic",
+          "description": "You no longer need V(erbal) component to cast any spells."
+        },
+        {
+          "name": "Soul Energy",
+          "description": "You can lose 25% of your max HP (take 25% as true damage, then reduce max HP by 25%), and regain all your chakra points; can only happen once per long rest, no cost."
+        }
+      ]
+    },
+    {
+      "name": "Monastery of Power",
+      "lore": "The monastery of power recognizes the power of shaolins and decided it can be enhanced; daily physical rituals and weekly meditation meant to keep minds clear in combat.",
+      "active": {
+        "name": "Power Surge",
+        "description": "For the rest of your turn, you have +10 to attack rolls and each of your fist attacks cause you to regain 1 AP.",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Armor Shredder",
+        "description": "Every fist attack you land on a target reduces their PA by [your proficiency] until the start of your next turn."
+      },
+      "modification": {
+        "name": "Martial Master Enhancement",
+        "description": "You can also strike 3 times with your fists for 4 AP.",
+        "modifies": "Martial Master"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Chakra Drain",
+          "description": "Killing a creature restores 50% of your total chakra points; having a hostile creature die within 30 ft of you will cause the effect to trigger, but only for 25% of your total chakra points."
+        },
+        {
+          "name": "Mind Resilience",
+          "description": "You become immune to charmed and maddened effects."
+        }
+      ]
+    }
+  ],
+  "martyr": [
+    {
+      "name": "Master Lao",
+      "lore": "Master Lao was very agile and was focused on the ferocities of his attacks to take down his foes swiftly.",
+      "active": {
+        "name": "Hyperactivate Focus",
+        "description": "You hyperactivate your focus with the amount you currently have stored (be it X); for the next 2 rounds you regain X focus at the start of each turn, up to a maximum of X; you can no longer gain focus from any sources until you complete a long rest.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Focus Burst",
+        "description": "The first time you damage an enemy you instantly gain 30 additional focus."
+      },
+      "modification": {
+        "name": "Focused Might Enhancement",
+        "description": "On attacks that use a focus maneuver, Focused Might's damage is doubled (being 1/5 of the focus instead of 1/10).",
+        "modifies": "Focused Might"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Focused Kill",
+          "description": "Whenever you kill a target, you gain focus equal to [enemy's max HP / 3]."
+        },
+        {
+          "name": "Reckless Rampage",
+          "description": "After killing a target, you automatically nullify the next negative ability that hits you."
+        }
+      ]
+    },
+    {
+      "name": "Master Zago",
+      "lore": "Master Zago learnt to control his focus to aid his ability to withstand attacks and deal with multiple foes trying to take him down.",
+      "active": {
+        "name": "Defensive Spin",
+        "description": "You start spinning your weapon to deflect all incoming attacks; until the start of your next turn your AC is increased by [5]; any ability attack targeted at you that missed restores 20 focus to you (increased by Focus Deity).",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Focus Armor",
+        "description": "While you are not unconscious your PA and MA are increased by [your current focus / 10] (rounded up)."
+      },
+      "modification": {
+        "name": "Natural Defence Enhancement",
+        "description": "Increased by an additional [1] for every enemy within melee range of you.",
+        "modifies": "Natural Defence"
+      },
+      "startingTalent": "escapist",
+      "additionalTalents": [
+        {
+          "name": "Keep Your Distance",
+          "description": "If you are using a weapon with reach, you can use your reaction to attack a creature that comes closer to you than your weapon's range."
+        },
+        {
+          "name": "Calm Restoration",
+          "description": "You restore [25%] of your max HP for every 4th consecutive attack that misses you."
+        }
+      ]
+    },
+    {
+      "name": "Master Tawaj",
+      "lore": "Master Tawaj did not become the leader of the martyrs' group through his sheer fighting abilities, but due to his wit and wisdom.",
+      "active": {
+        "name": "Tactical Assessment",
+        "description": "You quickly assess the enemy's strength and weakness, as well as your surroundings; until the end of your next turn you have advantage on attack rolls and saving throws, and attack rolls against you have disadvantage.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mental Acuity",
+        "description": "Your INT and WIS are increased by [2] and you become proficient with one skill of your choice using INT and one using WIS."
+      },
+      "modification": {
+        "name": "Blind Eyes Enhancement",
+        "description": "You can perceive things even beyond walls and other similar surfaces within your range; you gain advantage on all checks based on hearing.",
+        "modifies": "Blind Eyes"
+      },
+      "startingTalent": "unconventional-charisma",
+      "additionalTalents": [
+        {
+          "name": "Educated Insight",
+          "description": "When rolling insight to figure out something about an enemy (resistances, etc.), you have advantage and can inquire after 2 things."
+        },
+        {
+          "name": "Limitless Mind",
+          "description": "Your proficiency can increase your INT and WIS indefinitely, acting just like the stat modifier increase."
+        }
+      ]
+    }
+  ],
+  "hierophant": [
+    {
+      "name": "[NOT IN PDF]",
+      "lore": "Hierophant specializations are not present in the source PDF.",
+      "_note": "MISSING FROM SOURCE DOCUMENT",
+      "active": {
+        "name": "Unknown",
+        "description": "Not specified in source document",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Unknown",
+        "description": "Not specified in source document"
+      },
+      "modification": {
+        "name": "Unknown",
+        "description": "Not specified in source document",
+        "modifies": "unknown"
+      },
+      "startingTalent": "unknown",
+      "additionalTalents": []
+    }
+  ],
+  "marksman": [
+    {
+      "name": "Ambusher",
+      "lore": "Marksmen who specialize in stealth attacks.",
+      "active": {
+        "name": "Shadow Step",
+        "description": "While hidden, you can 'teleport' to a point within 90 ft, remaining hidden in the process.",
+        "apCost": 1,
+        "cooldown": "3 times per long rest"
+      },
+      "passive": {
+        "name": "Armor Pierce",
+        "description": "Attacking a target while hidden (in such a manner that no enemy is aware of your position even remotely), your attacks ignore that target's PA."
+      },
+      "modification": {
+        "name": "Archery Training Enhancement",
+        "description": "When attacking while hidden (no enemy aware of your position), the effects/damage of Archery Training, High Ground and Power Shot are tripled.",
+        "modifies": "Archery Training / High Ground / Power Shot"
+      },
+      "startingTalent": "guerilla",
+      "additionalTalents": [
+        {
+          "name": "Silent Trot",
+          "description": "While hiding, both in and out of combat, you can move as quickly without making any more noise."
+        },
+        {
+          "name": "Deathstalker",
+          "description": "After killing a creature, you automatically use your active (without using a charge) and become hidden."
+        }
+      ]
+    },
+    {
+      "name": "Combat Marksman",
+      "lore": "Marksmen who excel in close-quarters combat with ranged weapons.",
+      "active": {
+        "name": "Life Drain Shots",
+        "description": "For 3 turns, you regain 50% of all damage you deal as HP.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Melee Ranged",
+        "description": "When you attack a creature within 5 ft of you, you can choose to attack all creatures within 10 ft of you."
+      },
+      "modification": {
+        "name": "High Ground/Ballistic Enhancement",
+        "description": "(1) High Ground also applies when in melee range of a creature. (2) Ballistic Shots - when shooting from melee range, you are considered to be 100 ft for Ballistic Shots.",
+        "modifies": "High Ground / Ballistic Shots"
+      },
+      "startingTalent": "quick-draw",
+      "additionalTalents": [
+        {
+          "name": "Quick Duck",
+          "description": "You are immune to attacks of opportunity."
+        },
+        {
+          "name": "Opportunist",
+          "description": "You can shoot your bow as an attack of opportunity when someone leaves melee range of you."
+        }
+      ]
+    },
+    {
+      "name": "Heavy Hitter",
+      "lore": "Marksmen who focus on raw power in their shots.",
+      "active": {
+        "name": "Forceful Shots",
+        "description": "For 1 minute, you can make any attack force a creature to succeed a DC [8 + 2*proficiency] STR saving throw or be pushed back [1d4 * 5] ft; if you haven't moved in the last turn, you also have advantage on the attacks.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Stationary Damage",
+        "description": "You deal double modifier damage with your weapons; if you move, you deal no more modifier damage at all until the end of your turn."
+      },
+      "modification": {
+        "name": "Power Shot Enhancement",
+        "description": "Instead of removing 5 from your attack, it instead removes 15 from your MS.",
+        "modifies": "Power Shot"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Recovery Time",
+          "description": "If at the end of the turn you have not moved at all, you recover all the AP you spent reloading back."
+        },
+        {
+          "name": "Perfect Aim",
+          "description": "You don't attack with disadvantage creatures that are half-covered."
+        }
+      ]
+    }
+  ],
+  "arcane-ranger": [
+    {
+      "name": "Explorer Guild",
+      "lore": "Some arcane rangers specialize on exploring dungeons and caves, hidden ruins, spotting and disarming traps, and surviving in the hostile dark.",
+      "active": {
+        "name": "Protective Dome",
+        "description": "You create a protective dome that holds you and your party safe; it lasts 8 hours and no creature can enter it without succeeding a DC 28 CHA saving throw (can only be attempted once), and no damage can come from outside the dome; but no damage can be dealt from inside the dome to creatures outside either; the dome is 15 ft in radius; this ability cannot be cast in combat.",
+        "apCost": 0,
+        "cooldown": "must complete 3 long rests AFTER using"
+      },
+      "passive": {
+        "name": "Dungeon Expert",
+        "description": "You add your proficiency as flat value to all perception checks made to detect enemies, traps, and hidden doors and treasures; you also add your proficiency to all thievery, sleight of hand and arcana checks made to open chests and treasures, and to disarm traps."
+      },
+      "modification": {
+        "name": "Craft Arrow Enhancement",
+        "description": "You can consume 2c more when crafting an arrow to add a glowing tip; the arrow will create a 15 ft radius sphere that lights the area and lasts 1 minute; you can add 20c more to enhance it to reveal all invisible creatures and traps.",
+        "modifies": "Craft X Arrows"
+      },
+      "startingTalent": "eyes-of-the-keeper",
+      "additionalTalents": [
+        {
+          "name": "Agile Dodger",
+          "description": "When a trap triggers and would damage you and your allies, you can roll a d20; if you roll [14 + number of creatures affected by the trap] or more, you and the allies affected dodge the trap entirely."
+        },
+        {
+          "name": "Darkness Harvest",
+          "description": "The first time you run out of mana (current mana < 10% of maximum), if you are in darkness you regain 30% of your maximum mana."
+        }
+      ]
+    },
+    {
+      "name": "Watchers Guild",
+      "lore": "Whether it is defending castles, Arcane sites or whatever other important targets, the Watchers Guild specializes on stationary defensive combat.",
+      "active": {
+        "name": "Root and Dominate",
+        "description": "You root yourself, but you halve all damage you take, make all attacks with advantage and all enemies have disadvantage on saving throws against your spells; lasts for 3 turns.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Stationary Control",
+        "description": "If you haven't moved since your last turn: physical damage abilities halve the enemy's speed (does not stack), and magic damage abilities halve the enemy's current range (stacks up to 2 times -> 25% of initial value)."
+      },
+      "modification": {
+        "name": "Surface Damage Enhancement",
+        "description": "If you have not moved for a round, you apply surface damage even if enemies aren't standing on a surface (of the same damage type), or double surface damage if the enemy is standing on a surface.",
+        "modifies": "Surface Damage"
+      },
+      "startingTalent": "quick-shot",
+      "additionalTalents": [
+        {
+          "name": "Watcher's Seal",
+          "description": "Once a day, protect a door, lock, or similar object; doubles the object's HP and increases any saving throws needed to open/unlock/force it by [your proficiency]."
+        },
+        {
+          "name": "Steady Rush",
+          "description": "Your AP recovery is increased by 1 if you have not moved the last round."
+        }
+      ]
+    },
+    {
+      "name": "Orion Guild",
+      "lore": "All archers have some hunting roots. This guild focuses on hunting large, mythical monsters and taking down big, menacing targets.",
+      "active": {
+        "name": "Ability Block",
+        "description": "Choose one attack or ability of your enemy (that you are aware it has); it becomes blocked; the enemy can roll a 1d10 at the start of each turn; on a 10 the ability becomes unlocked.",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Giant Slayer Saves",
+        "description": "You have advantage on all saving throws against targets that are giant or gargantuan."
+      },
+      "modification": {
+        "name": "Arcane Explosion Enhancement",
+        "description": "When Arcane Explosion would hit a single target that is larger than you and has no other enemies within 10 ft, it instead exposes them; for 1 round all attacks on the creature deal [your level] extra damage.",
+        "modifies": "Arcane Explosion"
+      },
+      "startingTalent": "second-chance",
+      "additionalTalents": [
+        {
+          "name": "Resist Fate",
+          "description": "You are immune to enemies' effects that would make you automatically fail a die."
+        },
+        {
+          "name": "Survival of Onslaught",
+          "description": "If an attack would kill you while you are over 50% of your HP (not injured), you instead remain at 1 HP."
+        }
+      ]
+    }
+  ],
+  "hunter": [
+    {
+      "name": "Elusive (Wings)",
+      "lore": "Elusive hunters avoid direct contact; they specialize in traps to keep enemies at bay and maintain unreachable high ground. They strongly prefer sky watchers as animal companions.",
+      "active": {
+        "name": "Elevated Dash",
+        "description": "You dash to a point within 60 ft that is at least 10 ft higher than your current position, and do not trigger any attacks of opportunity in doing so.",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "High Ground Advantage",
+        "description": "When attacking from high ground (10 ft above enemy's level) you attack with advantage."
+      },
+      "modification": {
+        "name": "Trap Enhancement",
+        "description": "Bear trap now applies snared alongside rooted. Freeze trap: when triggered the trap affects all creatures within 10 ft of it.",
+        "modifies": "Bear Trap / Freeze Trap"
+      },
+      "startingTalent": "erratic-presence",
+      "additionalTalents": [
+        {
+          "name": "Swift Withdraw",
+          "description": "Attacks of opportunity against you have disadvantage."
+        },
+        {
+          "name": "Still Target",
+          "description": "If you attack an enemy with any heavy CC (other than slow) affecting them, you attack with advantage."
+        }
+      ]
+    },
+    {
+      "name": "Charging (Claws)",
+      "lore": "Charging hunters get in their enemy's face with their animal companion; they forgo bows for melee weapons and use traps offensively. They strongly prefer colossus companions.",
+      "active": {
+        "name": "Rapid Trap Deploy",
+        "description": "In a flash, you throw 5 traps of your choice at UNOCCUPIED points within 30 ft of you; roll a stealth check for the throw; enemies must roll a perception check against your stealth for each trap.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Shove Master",
+        "description": "You have advantage on all attempts to shove enemies; additionally, if you successfully shove an enemy that is in melee range of your animal companion, it can use its reaction to attack the enemy."
+      },
+      "modification": {
+        "name": "Trap Enhancement",
+        "description": "Explosive trap does not affect you or your animal companion. Bait trap: your animal companion's attack doubles all the damage (not just the dice), if you are within 15 ft of the enemy.",
+        "modifies": "Explosive Trap / Bait Trap"
+      },
+      "startingTalent": "blood-rush",
+      "additionalTalents": [
+        {
+          "name": "Back to Back",
+          "description": "Your AC is increased by [your proficiency] while your animal companion is within 5 ft of you."
+        },
+        {
+          "name": "Swift Adjustment",
+          "description": "If you move within 5 ft of an active trap, you can swiftly change its position up to 10 ft to an UNOCCUPIED SPACE without anyone noticing; one per round."
+        }
+      ]
+    },
+    {
+      "name": "Shadow (Fangs)",
+      "lore": "Shadow hunters repeatedly strike and hide, preferring prowlers for tracking foes and attacking from stealth.",
+      "active": {
+        "name": "Shadow Shroud",
+        "description": "You shroud yourself and your animal companion; become INVISIBLE for up to 1 minute; attacking or using any offensive ability interrupts invisibility for 1 round; your attacks do not break the companion's invisibility, nor do its attacks break yours.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Stealth Pierce",
+        "description": "When attacking from stealth, your attacks have advantage and PIERCE the enemy's armor."
+      },
+      "modification": {
+        "name": "Trap Enhancement",
+        "description": "Blinding trap: if you are in no unblinded creature's area of sight when it triggers, you can use reaction to move 10 ft and hide (also applies to companion). Blink trap: invisible to enemies; if you enter in stealth, stealth carries over after teleportation.",
+        "modifies": "Blinding Trap / Blink Trap"
+      },
+      "startingTalent": "guerilla",
+      "additionalTalents": [
+        {
+          "name": "Forest's Shadow",
+          "description": "You become proficient with stealth (if already proficient, add another proficiency); the proficiency can now increase your skill check indefinitely, acting just like the DEX modifier."
+        },
+        {
+          "name": "Silent Strike",
+          "description": "If you attack an enemy from stealth or invisibility, and the attack misses, your stealth is not broken."
+        }
+      ]
+    }
+  ],
+  "assassin": [
+    {
+      "name": "Master of Stealth",
+      "lore": "Assassins who perfect the art of staying hidden.",
+      "active": {
+        "name": "Self Buff",
+        "description": "You cast a minstrel buff of a level you would have access to on yourself; can only trigger while invisible.",
+        "apCost": "spell AP cost",
+        "cooldown": "proficiency uses per short rest"
+      },
+      "passive": {
+        "name": "Kill Vanish",
+        "description": "After killing a target, you become invisible for 1 minute; taking any combat action ends the effect early."
+      },
+      "modification": {
+        "name": "Sneak Attack Enhancement",
+        "description": "When triggering sneak attack while invisible or hidden without any help from Swift Presence, your attack ignores an amount of PA up to [sneak attack] value.",
+        "modifies": "Sneak Attack"
+      },
+      "startingTalent": "guerilla",
+      "additionalTalents": [
+        {
+          "name": "Untouchable",
+          "description": "After spending at least 3 turns in stealth/hiding, the round when you exit this state your AC is doubled."
+        },
+        {
+          "name": "Close Call",
+          "description": "Every time a creature actively looks for you (perception check to find you) and fails, the stealth value of your current hiding increases by 2."
+        }
+      ]
+    },
+    {
+      "name": "Master of Daggers",
+      "lore": "Assassins who perfect the art of dagger combat.",
+      "active": {
+        "name": "Fan of Knives",
+        "description": "You throw one dagger at all targets in range (must have a dagger for each); the attack automatically hits with normal damage; if sneak attack applies, completely ignores PA; if unseen blade applies, automatically critical hits (but does not lower initiative).",
+        "apCost": 4,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Minimum Dagger Damage",
+        "description": "Your daggers cannot be reduced to deal less than their dice damage (including backstab and unseen blade) by PA; (half of that if the target is resistant)."
+      },
+      "modification": {
+        "name": "Unseen Blade Enhancement",
+        "description": "When hitting an opponent with both daggers, if you can use Unseen Blade on the first attack, you can use it on both and only lower your initiative once.",
+        "modifies": "Unseen Blade"
+      },
+      "startingTalent": "all-brawn",
+      "additionalTalents": [
+        {
+          "name": "Hidden Stash",
+          "description": "As long as you have any piece of clothing on, you are considered proficient and have advantage on all stealth checks to hide your weapons."
+        },
+        {
+          "name": "Perfect Throw",
+          "description": "If the first thing you do in a turn is throw a dagger, you do not have disadvantage on the attack within the extended range."
+        }
+      ]
+    },
+    {
+      "name": "Master of Poison",
+      "lore": "Assassins who master the use of poisons.",
+      "active": {
+        "name": "Poison",
+        "description": "(1) Poisoning a creature - DC [8 + 2*proficiency] CON saving throw; on fail, poison effect for a minute dealing [weapon damage] poison damage, or half on success. (2) Poisoning food/drink - affected by poison for 1 hour, taking [10%] max HP every 5 minutes, all healing reduced by 90%.",
+        "apCost": 6,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Poison Advantage",
+        "description": "You attack targets that are under the poison effect with advantage."
+      },
+      "modification": {
+        "name": "Sneak Attack/Unseen Blade/Cut Tongue Enhancement",
+        "description": "(1) Sneak attack damage can be applied as poison effect for 2 turns. (2) Unseen blade damage can be applied as poison effect for 2 turns. (3) Cut tongue - the duration of applied poison is extended to 4 turns.",
+        "modifies": "Sneak Attack / Unseen Blade / Cut Tongue"
+      },
+      "startingTalent": "torturer",
+      "additionalTalents": [
+        {
+          "name": "Upper Hand",
+          "description": "You have advantage on DEX and CON saving throws against creatures poisoned by you."
+        },
+        {
+          "name": "Toxicologist",
+          "description": "You know how to craft the antidote for any poison (granted that you know what poison was used)."
+        }
+      ]
+    }
+  ],
+  "burglar": [
+    {
+      "name": "Detective",
+      "lore": "Some burglars decide to make the best of their intellect and social skills.",
+      "active": {
+        "name": "Reliable Talent",
+        "description": "You treat an ability check roll of your choice as a 10 (die value). At level 20, after you unlock Reliable Talent, the value of 10 is changed to 15.",
+        "apCost": 0,
+        "cooldown": "proficiency uses per long rest"
+      },
+      "passive": {
+        "name": "Inspiration from Success",
+        "description": "Successful interactions (convincing, lying, intimidating, figuring out puzzles, finding secret doors) give you a use of inspiration (advantage on one roll of your choice)."
+      },
+      "modification": {
+        "name": "Shrewd Eyes/Cunning Tongue Enhancement",
+        "description": "Shrewd Eyes applies to insight and survival checks as well; Cunning Tongue applies to investigation checks as well.",
+        "modifies": "Shrewd Eyes / Cunning Tongue"
+      },
+      "startingTalent": "unconventional-charisma",
+      "additionalTalents": [
+        {
+          "name": "Unrelenting Investigation",
+          "description": "While trying to solve a puzzle or crime, you no longer get stacks of exhaustion from lack of food or sleep for up to 3 days; resets after a long rest with no exhaustion stacks."
+        },
+        {
+          "name": "Wits Showdown",
+          "description": "While fighting the main person behind an enigma that you solved, you have advantage on all INT, WIS and WILL saving throws."
+        }
+      ]
+    },
+    {
+      "name": "Trapper",
+      "lore": "Some burglars spend their life crawling through dungeons and mazes, helping parties traverse trap-ridden nightmares.",
+      "active": {
+        "name": "Trap Mastery",
+        "description": "Choose to: (1) see all traps within 30 ft, (2) figure out the disarm mechanism of a complex trap, or (3) instantly succeed with no AP cost on the disarming process of a trap that you know how to disarm.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Trap Save Share",
+        "description": "After rolling a saving throw to avoid a trap, you can choose to use the value for all allies within 5 ft of you too."
+      },
+      "modification": {
+        "name": "Sabotage Enhancement",
+        "description": "You can sabotage a trap, to make it trigger automatically after a set amount of time.",
+        "modifies": "Sabotage"
+      },
+      "startingTalent": "alert",
+      "additionalTalents": [
+        {
+          "name": "Long Haul",
+          "description": "You double the amount of health you can recover with short rests between long rests."
+        },
+        {
+          "name": "Silent Thief",
+          "description": "You are considered proficient in stealth while trying to sneak in order to reach or steal treasure."
+        }
+      ]
+    },
+    {
+      "name": "Liquidator",
+      "lore": "Some burglars are well aware that combat is inevitable and focus on killing high priority foes.",
+      "active": {
+        "name": "Liquidation Strike",
+        "description": "You do a strong attack on a target that you are in a position to backstab; roll the attack with advantage; deals 2x weapon damage or 4x main weapon (if dual wielding) and applies backstab 5 times; target must succeed CON saving throw [8+2*proficiency] or be silenced for 1 minute (repeats at end of each turn).",
+        "apCost": 6,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Prey on the Weak",
+        "description": "While damaging a target with less max HP than you, you deal double backstab damage."
+      },
+      "modification": {
+        "name": "Backstab Enhancement",
+        "description": "It can proc on both weapons on an attack.",
+        "modifies": "Backstab"
+      },
+      "startingTalent": "first-move",
+      "additionalTalents": [
+        {
+          "name": "No Escape",
+          "description": "Your successful attacks of opportunity stop the target from moving with the AP (consumes 1 AP of movement)."
+        },
+        {
+          "name": "Agile Repositioning",
+          "description": "If you move around a creature (without leaving its space), you do not take attacks of opportunity from any creatures."
+        }
+      ]
+    }
+  ],
+  "shadow-trickster": [
+    {
+      "name": "Nightcrawler",
+      "lore": "Some shadow tricksters have spent their lives fighting for survival in the streets at night, learning to endure hits while in the dark.",
+      "active": {
+        "name": "Shadow Healing",
+        "description": "For the next minute, whenever you proc a mark on a creature while either one of you is in darkness, heals you for 30% of your max HP.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Glancing Blow",
+        "description": "All attacks that hit you, but aren't at least [your proficiency] over your AC have their damage halved (before applying resistances and armors); while in darkness the threshold becomes [2 * your proficiency]."
+      },
+      "modification": {
+        "name": "Shadow Strikes Enhancement",
+        "description": "Damage you deal with Shadow Strikes also increases your PA and MA for the same amount until the start of your next turn (stacks).",
+        "modifies": "Shadow Strikes"
+      },
+      "startingTalent": "alert",
+      "additionalTalents": [
+        {
+          "name": "Shadow Sight",
+          "description": "Your darkvision is turned into truesight (only while it is applied, so only in darkness)."
+        },
+        {
+          "name": "Sneaky Shadows",
+          "description": "Attacking a creature without darkvision, truesight or blindsight while you are both in darkness deals double damage with Shadow Strikes."
+        }
+      ]
+    },
+    {
+      "name": "Engulfer",
+      "lore": "Some shadow tricksters master the shadows to such an extent that they slowly suffocate and suck the life out of their foes.",
+      "active": {
+        "name": "Mass Shadow Application",
+        "description": "For the next 3 turns, whenever you apply a mark you can apply it to any number of creatures within range, and when you throw a shuriken you can throw it at as many creatures within range.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Shadow Decay",
+        "description": "Whenever you attack a creature while you are both in darkness, apply a stacking effect for [proficiency] turns: (1) damages creature for [proficiency * spell modifier] at start of turn, (2) lowers saving throws by [1], (3) lowers darkvision by [5 ft]; stacks up to 5 times."
+      },
+      "modification": {
+        "name": "Twofold Assault + Shadow Strikes Enhancement",
+        "description": "When attacking a creature, if both effects proc, you reset the duration of all debuffs that are not hard CC on the creature.",
+        "modifies": "Twofold Assault / Shadow Strikes"
+      },
+      "startingTalent": "torturer",
+      "additionalTalents": [
+        {
+          "name": "Tranquil Aim",
+          "description": "While you are full HP and in darkness, your attack modifier is doubled."
+        },
+        {
+          "name": "Night Contracts",
+          "description": "While you are in darkness, you are considered proficient in all INT, WIS and CHA checks."
+        }
+      ]
+    },
+    {
+      "name": "Shadow Assassin",
+      "lore": "Some shadow tricksters perfect themselves to become the ultimate assassins in the shadows.",
+      "active": {
+        "name": "Death Mark",
+        "description": "You mark a creature for 2 rounds; all damage you deal to the creature in that time is monitored; at the end, if that amount dealt as true damage would kill the creature, the damage is dealt as true damage.",
+        "apCost": 3,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Weak Spot",
+        "description": "When your attack hits with [5] or more over the needed amount, you deal double dice damage."
+      },
+      "modification": {
+        "name": "Twofold Assault Enhancement",
+        "description": "Converts the damage of itself and both yours and your shadow's attacks that triggered it to true damage.",
+        "modifies": "Twofold Assault"
+      },
+      "startingTalent": "overpower",
+      "additionalTalents": [
+        {
+          "name": "Clean Escape",
+          "description": "After killing a creature, you become invisible for up to 10 minutes (as long as you cast no ability that would expose you)."
+        },
+        {
+          "name": "Imminent Death",
+          "description": "If there are any enemies severely injured that you have damaged in the past round, you are immune to all negative effects."
+        }
+      ]
+    }
+  ],
+  "spirit-master": [
+    {
+      "name": "Dark Arcanist",
+      "lore": "Some people study the dark arts, the occult magic, and learn to wield the necessary magic to become a spirit master.",
+      "active": {
+        "name": "Efficient Casting",
+        "description": "For the rest of your turn, all spirit unlocks spells cost halved AP (rounded down, can be 0) and half the mana cost.",
+        "apCost": 0,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Spell Variety Bonus",
+        "description": "After casting 5 different spells in succession (if you repeat any spell, the count resets) you regain 25% of your max mana."
+      },
+      "modification": {
+        "name": "Summon Spirit Enhancement",
+        "description": "For 2 AP you can change the type of your spirit (e.g. fire to earth); they keep their proportional HP and all buffs/debuffs.",
+        "modifies": "Summon Spirit"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Careful Study",
+          "description": "Spells that you have learnt through your INT cannot critical fail, and automatically deal half damage even on fails (if they require a saving throw)."
+        },
+        {
+          "name": "Spirit Essence",
+          "description": "After your spirit dies, you instantly heal for 30% of its max HP; any excess HP is gained as temporary HP that lasts until the end of combat."
+        }
+      ]
+    },
+    {
+      "name": "Heart of Darkness",
+      "lore": "Some people are born with an innate power and knack for the darker arts, able to cast magic and summon spirits without any study.",
+      "active": {
+        "name": "Enrage Spirit",
+        "description": "You enrage your spirit for 2 rounds; while enraged, your spirit has doubled SPEED, attack roll bonus, deals maximum damage with all dice damage, but also has AC, PA, and MA reduced to 0.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Spirit AP Boost",
+        "description": "If you damage an injured target directly (not through energies or spirit), your spirit gains 1 bonus AP."
+      },
+      "modification": {
+        "name": "Spirit Exposure Enhancement",
+        "description": "When a spirit's attack procs Spirit Exposure, if damage dealt is equal or greater than the target's MA/PA (the one needed), the attack ignores it altogether.",
+        "modifies": "Spirit Exposure"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Dangerous Power",
+          "description": "When you crit with a spell, the spell automatically takes the effect as if it were one level higher."
+        },
+        {
+          "name": "Eager Spirit",
+          "description": "While your spirit is at full HP, it crits at 16 or higher."
+        }
+      ]
+    },
+    {
+      "name": "Hunter of Spirits",
+      "lore": "Some people defeat single-handedly a free-willed spirit from the veil, and learn to master their power.",
+      "active": {
+        "name": "Spirit Enhancement",
+        "description": "You enhance your spirit, making its next targeted ability deal bonus damage equal to its missing HP.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Spirit Damage AP",
+        "description": "Whenever your spirit takes damage, you gain 1 bonus AP."
+      },
+      "modification": {
+        "name": "Health Transfer Enhancement",
+        "description": "You heal the full amount of damage your spirit takes (instead of half); additionally you can choose to gain mana instead of HP.",
+        "modifies": "Health Transfer"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Obedient Beast",
+          "description": "You can control your spirit during your turn ignoring all CC affecting it (but it is still affected on its turn)."
+        },
+        {
+          "name": "Emergency Barrier",
+          "description": "When your spirit would receive a fatal blow, you can consume mana equal to the damage to deny it (the damage, not any additional effects); usable any number of times."
+        }
+      ]
+    }
+  ],
+  "necromancer": [
+    {
+      "name": "Dead Slaver",
+      "lore": "The necromancers who focus on rising the dead, using them as means to an end.",
+      "active": {
+        "name": "Mass Revival / Undead Servant",
+        "description": "CHOOSE ONE: (1) Revive all dead creatures within 60 ft for 2 rounds to fight for your side with full HP; they drop dead after 2 rounds. 4 AP, once per long rest. (2) Revive a single creature indefinitely as an undead (INT and CHA set to 1, WIS halved, uses your WILL stat, no language/spells, resistant to magic damage). 2 AP, once per long rest.",
+        "apCost": "2 or 4",
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Greater Skeleton",
+        "description": "Whenever a creature dies within 30 ft, use reaction to summon a greater skeleton (double damage and HP) from their corpse (costs 10% max mana; free if you killed them). Alternatively, using Mark of the Necromancer on a creature who died last round triggers the same effect without reaction or mana."
+      },
+      "modification": {
+        "name": "Raise Skeleton/Reveal Dead Enhancement",
+        "description": "(1) Raise Skeleton - skeletons have 6 AP recovery, and only lose 15% of their max HP each turn. (2) Reveal Dead - no longer costs AP.",
+        "modifies": "Raise Skeleton / Reveal Dead"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Cycle of Death",
+          "description": "Whenever a creature is risen/revived or killed within 30 ft of you, you heal for 10% of your max HP (applies on the death of risen creatures too)."
+        },
+        {
+          "name": "Undead Resilience",
+          "description": "While you have any creatures summoned, you can contest any damage that would kill you with a WILL saving throw against DC [10 + attacker's might/level]; on success remain at 1 HP but one summoned creature dies."
+        }
+      ]
+    },
+    {
+      "name": "Demon Spawn",
+      "lore": "Some necromancers gain even more power from demonic forms, either due to demonic intervention, pacts, or demonic heritage.",
+      "active": {
+        "name": "Demonic Recovery",
+        "description": "For the next minute, while in demon form you recover half the damage you deal; any excess is added as temporary HP (that expires when you exit demon form).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Kill Extension",
+        "description": "Whenever you kill a creature while in demon form, you extend the duration by 1 minute and activate Demonic Departure (without changing back into human form)."
+      },
+      "modification": {
+        "name": "Demon Form Enhancement",
+        "description": "If you choose to return to human form with remaining duration, you can still go into demon form (it is not once per long rest, but rather you have a limited duration).",
+        "modifies": "Demon Form"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Demonic Favor",
+          "description": "While in demon form, you can use your reaction to make a willing creature's attack roll, saving throw or ability check succeed, but they take 10% of their max HP as true damage."
+        },
+        {
+          "name": "Demonic Vengeance",
+          "description": "If you get killed while in demon form, you deal [your max HP] as shadow damage to the killer."
+        }
+      ]
+    },
+    {
+      "name": "Shadow Mage",
+      "lore": "Some necromancers focus on the sheer destruction brought on by their spells alone.",
+      "active": {
+        "name": "Power Turn",
+        "description": "Your NEXT turn you will have 18 AP; but for the rest of the combat your AP recovery is reduced to 2, and cannot be increased through any means.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Spell-Only Mana Recovery",
+        "description": "At the end of each turn where you consumed all your AP and only cast spells/abilities with it (no movement, interactions, etc.) you recover mana equivalent to the cost of the highest level spell you have access to."
+      },
+      "modification": {
+        "name": "Demon Form Enhancement",
+        "description": "The change to the spell modifier is also applied for attack rolls and spell save DC.",
+        "modifies": "Demon Form"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Sleep of the Dead",
+          "description": "You regain 25% of your max mana on short rests; cannot occur more than twice between long rests."
+        },
+        {
+          "name": "All Out",
+          "description": "For as long in combat as you only cast spells of (or at) the highest level you have access to, your spells have 10% increased crit chance (crit at 18 and above)."
+        }
+      ]
+    }
+  ],
+  "warlock": [
+    {
+      "name": "The Leviathan",
+      "lore": "Warlocks who gain power from a leviathan overlord, commanding dark waters.",
+      "active": {
+        "name": "Deathly Waters",
+        "description": "You create a cube with edge up to 100 ft, completely filled with dark waters that partially obscure vision (ranged attacks with disadvantage, stealth checks with advantage); you see through the water perfectly; creatures that cannot breathe underwater suffer suffocation.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Aquatic Adaptation",
+        "description": "You can breathe underwater as you do on land, you gain a swimming speed equal to your movement speed."
+      },
+      "modification": {
+        "name": "Dark Reserves Enhancement",
+        "description": "Whenever you cast an empowered spell, enemies affected also suffer from the suffocation condition for a number of turns equal to the empowered spell's level.",
+        "modifies": "Dark Reserves"
+      },
+      "startingTalent": "eyes-of-the-keeper",
+      "additionalTalents": [
+        {
+          "name": "Cold of the Deep",
+          "description": "When dealing damage while you or your enemy are at least partially underwater, you can turn the ability's damage to ice damage."
+        },
+        {
+          "name": "Water Submersion",
+          "description": "You can completely submerge yourself underwater in any surface at least as big as a puddle."
+        }
+      ]
+    },
+    {
+      "name": "The Inferno",
+      "lore": "Warlocks who gain power from an infernal overlord, commanding fire.",
+      "active": {
+        "name": "Borrowed Fire Spell",
+        "description": "You use one spell that deals fire damage of a level you would have access to from any class and no mana cost.",
+        "apCost": "spell's AP cost",
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Fire Resistance Stacking",
+        "description": "Every time you use an ability that deals fire damage, your fire resistance increases by 1 level for 1 round."
+      },
+      "modification": {
+        "name": "Hellish Pain Enhancement",
+        "description": "If the procing spell of Hellish Pain deals fire damage, the target is also affected by burning for 2 rounds, with a value of the Hellish Pain's rolled value.",
+        "modifies": "Hellish Pain"
+      },
+      "startingTalent": "refresher",
+      "additionalTalents": [
+        {
+          "name": "Infernal Agony",
+          "description": "Burning targets have disadvantage on saving throws against your spells."
+        },
+        {
+          "name": "Spreading Inferno",
+          "description": "When an enemy dies within 30 ft of you, all enemies within 10 ft of them are affected by burning of [your proficiency] for 3 rounds."
+        }
+      ]
+    },
+    {
+      "name": "The Shroud",
+      "lore": "Warlocks who gain power from a shroud overlord, commanding darkness and fear.",
+      "active": {
+        "name": "Darkness Cube",
+        "description": "You cover a 50 ft edge cube in darkness; no creature can see anything; no ranged attacks through it; all melee attacks in it have disadvantage; ALL creatures except you that start their turn in it must succeed WILL saving throw or become frightened for a round.",
+        "apCost": 3,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Fear Mana Recovery",
+        "description": "When you use a spell whose target(s) are all affected by frightened, the spell's mana cost is reduced by 50 (can go below 0, restoring mana)."
+      },
+      "modification": {
+        "name": "Dark Reserves Enhancement",
+        "description": "When using an empowered spell, you can instead force hit target(s) to make a WILL saving throw, becoming frightened for 1 round on a fail.",
+        "modifies": "Dark Reserves"
+      },
+      "startingTalent": "eyes-of-the-keeper",
+      "additionalTalents": [
+        {
+          "name": "Darkened Charisma",
+          "description": "You are considered proficient in all CHA checks made while in darkness, and have advantage on intimidation checks made in darkness."
+        },
+        {
+          "name": "The Final Dark",
+          "description": "The first time you enter darkness in a day, your first spell cast has no cost (in or out of combat)."
+        }
+      ]
+    },
+    {
+      "name": "The Unknown",
+      "lore": "Warlocks who gain power from an unknown, incomprehensible overlord.",
+      "active": {
+        "name": "Mind-Boggling Truth",
+        "description": "You unleash the truth of the unknown; 100 ft radius sphere centered on you (follows you); ALL creatures that start their turn in it must succeed INT saving throw or skip their turn entirely (stunned effect); creatures with INT 4 or lower are immune; constructs are immune; creatures with INT 20+ have disadvantage on the saving throw.",
+        "apCost": 6,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Unknown Enemy Advantage",
+        "description": "If you are fighting an enemy you have never encountered before, you have advantage on all saving throws against that enemy."
+      },
+      "modification": {
+        "name": "Faith of the Cursed Enhancement",
+        "description": "You can roll for lore, arcana, nature and medicine checks about things you would have no way of knowing, and Faith of the Cursed is applied for the rolls.",
+        "modifies": "Faith of the Cursed"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Unknown Fate",
+          "description": "You can decide to change the result of a dice (announce before roll); successful becomes failed and vice versa; only attack rolls and saving throws; [proficiency] uses per long rest."
+        },
+        {
+          "name": "Embracing the Unknown",
+          "description": "You can willingly drop to 0 HP and be knocked unconscious without gaining a death stack; you wake when an ally revitalizes you, or after [1d8] hours on your own."
+        }
+      ]
+    },
+    {
+      "name": "The Tear",
+      "lore": "Warlocks who gain power from the Tear overlord, inflicting guilt and sorrow.",
+      "active": {
+        "name": "Guilt Stacking",
+        "description": "All spells cast on the enemy add a stack of guilt for 1 round; a creature affected by guilt starts their turn with [1] less AP for each stack (minimum 0).",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "AP Drain",
+        "description": "Whenever you add a negative effect on a target, that creature will start their turn with [1] less AP."
+      },
+      "modification": {
+        "name": "Hellish Pain Enhancement",
+        "description": "A target damaged by Hellish Pain will have disadvantage on the next saving throw against your spells.",
+        "modifies": "Hellish Pain"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "The Grief Will Last",
+          "description": "After failing a saving throw, you have advantage on your next attack roll."
+        },
+        {
+          "name": "The Tear's Protection",
+          "description": "If you are severely injured and would get hit by a damaging ability, a magic tear covers you for a minute; you are crystallized for this period; once per combat."
+        }
+      ]
+    }
+  ],
+  "sorcerer": [
+    {
+      "name": "Study",
+      "lore": "Many ambitious people decide to study magic in order to gain some power of their own.",
+      "active": {
+        "name": "Craft Spell",
+        "description": "You craft a spell by combining 2 or more spells; the resulting spell has combined AP and mana cost, combined damage (choose damage type), highest range and AoE, and all their effects; usable up to [INT modifier] times, then you lose the ability.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Unrestricted Learning",
+        "description": "You can use your INT modifier to learn spells of any level you desire (no more restrictions on the spells you learn with INT modifier)."
+      },
+      "modification": {
+        "name": "Sense the Arcana Enhancement",
+        "description": "You can sometimes sense sources of magic powers that you can absorb to learn a new spell they provide (not necessarily a sorcerer spell).",
+        "modifies": "Sense the Arcana"
+      },
+      "startingTalent": "luck-crafter",
+      "additionalTalents": [
+        {
+          "name": "Studied Magic",
+          "description": "After a long rest, you can choose to change any number of learnt spells."
+        },
+        {
+          "name": "Arcane Knowledge",
+          "description": "When a spell is cast, you have advantage on arcana checks to find out its exact effects."
+        }
+      ]
+    },
+    {
+      "name": "Birthright",
+      "lore": "Some creatures are born with a very strong inclination to magic, perhaps through sheer luck, chosen by a god, or through the mysterious ways of the veil.",
+      "active": {
+        "name": "Arcane Shield",
+        "description": "You shield yourself against all damage and negative effects for 2 turns; all your mana costs are doubled during this time, and you cannot concentrate or channel any other spells.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Advanced Spell Access",
+        "description": "You have access to spells of a higher level than you normally would (e.g. at level 3, you have access to 3rd level spells instead of 2nd)."
+      },
+      "modification": {
+        "name": "Mana Burst Enhancement",
+        "description": "Is applied to all instances of damage of a spell (magic missiles would have all 3 missiles increased).",
+        "modifies": "Mana Burst"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Magic Takedown",
+          "description": "Killing a creature restores mana equal to three times the amount consumed on the ability that killed it."
+        },
+        {
+          "name": "Arcane Defense",
+          "description": "The first time you take physical damage in a combat, you can use your MA instead."
+        }
+      ]
+    },
+    {
+      "name": "Heritage",
+      "lore": "When a child is born of two parents that wield magic powers, they inherit some power for themselves.",
+      "active": {
+        "name": "Summon Ancestor",
+        "description": "You summon an arcane ancestor at a point you can see; for 1 minute, whenever you cast a spell you can choose to make the ancestor cast it as well (same target), for double the mana cost; you can use AP to move the ancestor.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Efficient Upcast",
+        "description": "Increasing the spell of a level only costs half of the mana (the increase itself, not the spell's base cost)."
+      },
+      "modification": {
+        "name": "Mana Burst Enhancement",
+        "description": "Halves the mana cost (deals the damage of the specified mana, but only consumes half).",
+        "modifies": "Mana Burst"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Family Spell",
+          "description": "You can choose one spell; the first time you cast it after a short/long rest it has halved mana cost."
+        },
+        {
+          "name": "Emergency Resources",
+          "description": "The first time you would remain with 0 or less HP after taking damage, you can convert up to 25% of your current mana into HP."
+        }
+      ]
+    },
+    {
+      "name": "Absorption",
+      "lore": "Sometimes, when slaying a very powerful magic being, a creature can absorb some of their magic for themselves.",
+      "active": {
+        "name": "Double Power",
+        "description": "For 1 combat, you can choose to double the AP cost of any spell, and double its range, effect, damage and AoE.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Absorbed Protection",
+        "description": "You gain some of the protection the creature had; your AC is increased by your proficiency."
+      },
+      "modification": {
+        "name": "Empower Magic Enhancement",
+        "description": "You can empower any number of spells in a turn.",
+        "modifies": "Empower Magic"
+      },
+      "startingTalent": "predator",
+      "additionalTalents": [
+        {
+          "name": "Adaptable Armor",
+          "description": "After a long rest, you can distribute the total amount of armor you have however you want between your PA and MA."
+        },
+        {
+          "name": "Cornered Beast",
+          "description": "You can use any spell as a reaction to someone damaging you; the spell's mana cost is multiplied by the amount of AP it costs to cast."
+        }
+      ]
+    },
+    {
+      "name": "Treasure",
+      "lore": "Some people manage to find objects of great power that allow them to use magic. MANDATORY: you gain a magic item as your power source; initial stats are 0; you cannot cast magic without holding it; you can't have any other magic item (considered two-handed).",
+      "active": {
+        "name": "Elemental Freedom",
+        "description": "For 3 turns, your spells can do any type of magic damage.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Channel for Power",
+        "description": "You can choose to channel any spell for 1 turn (the initial AP cost, but you channel until the start of your next turn) in order to double its range, AoE, or attack modifier."
+      },
+      "modification": {
+        "name": "Sense the Arcana Enhancement",
+        "description": "You can sense sources of power that can enhance your weapon, giving it permanently increased stats (spell modifier, mana cost reduction, etc.).",
+        "modifies": "Sense the Arcana"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Arcane Senses",
+          "description": "You always know where your weapon is, and while you have it on you, you are immune to being surprised."
+        },
+        {
+          "name": "Spirit Drain",
+          "description": "After finishing combat, you regain 10% of your max mana for each defeated opponent (regardless of who delivered the killing blows)."
+        }
+      ]
+    }
+  ],
+  "mindbender": [
+    {
+      "name": "Mind Explorer",
+      "lore": "Some mindbenders are just very curious beings; they find the mind fascinating and want to explore its abilities and limits.",
+      "active": {
+        "name": "Ability Lock",
+        "description": "When an enemy uses an ability, as a reaction you can interfere with their mind; the ability gains [LOCK 11]; the creature rolls 1d6 at the start of each turn to decrease the lock's value; when 0 they can use it again.",
+        "apCost": "reaction",
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Mind Mastery",
+        "description": "After spending a minute fighting a creature, you get clear grasp on their mind; they automatically fail all saving throws against your spells (but immunities still apply)."
+      },
+      "modification": {
+        "name": "Mind Seeds Enhancement",
+        "description": "After you get 10 seeds into a creature's mind, you add [your proficiency] seeds instead of 1; additionally, Mind Seeds procs whenever you succeed on an insight check.",
+        "modifies": "Mind Seeds"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Mind Navigation",
+          "description": "When you succeed on an insight check on an enemy, you can inquire on up to 3 things instead of 1."
+        },
+        {
+          "name": "Sense Minds",
+          "description": "You gain blindsight of 20 ft, but that only works on conscious creatures with INT 8 or higher."
+        }
+      ]
+    },
+    {
+      "name": "Mind Enslaver",
+      "lore": "Some mindbenders desire to make their targets their puppets.",
+      "active": {
+        "name": "Mass Mind Control",
+        "description": "ALL CREATURES within 100 ft ARE FORCED TO (allies cannot willingly fail) make a WIS saving throw; this round you control all creatures who failed (counts as charm effect).",
+        "apCost": 6,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Enhanced Save DC",
+        "description": "You can also add your CHA modifier to your spells and abilities save DC on spells that don't deal damage."
+      },
+      "modification": {
+        "name": "Mind Seeds Enhancement",
+        "description": "When planting a seed, you can spend up to [number of seeds on target after adding] AP as the creature to move or do non-combat actions (talk, dance, interact); creatures under this effect don't trigger attacks of opportunity and can't be walked into dangerous spaces.",
+        "modifies": "Mind Seeds"
+      },
+      "startingTalent": "one-trick",
+      "additionalTalents": [
+        {
+          "name": "Educated Seduction",
+          "description": "If you succeed on an insight check on a creature, you have advantage on the next CHA based skill check on the target."
+        },
+        {
+          "name": "Puppeteer",
+          "description": "Your AP recovery increases by 1 for every creature under your control."
+        }
+      ]
+    },
+    {
+      "name": "Mind Tormentor",
+      "lore": "Some mindbenders want to make minds unravel, and like to pick them apart thought by thought.",
+      "active": {
+        "name": "Unravel Mind",
+        "description": "For the next minute, they must roll INT saving throw at the start of each turn. On fail, roll d6: 1) nothing, 2) attack with disadvantage, 3) poisoned, 4) rooted, 5) paralyzed, 6) stunned.",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Mental Distress",
+        "description": "Whenever you add a negative effect on a target, add a stack of 'mental distress' causing [your level] psychic damage at start of turn for up to 3 rounds; stacks up to 10 times, any new stack resets duration for all previous ones."
+      },
+      "modification": {
+        "name": "Seed Explosion Enhancement",
+        "description": "You can choose to turn the damage into 'mental distress' damage (does not count towards stack amount).",
+        "modifies": "Seed Explosion"
+      },
+      "startingTalent": "torturer",
+      "additionalTalents": [
+        {
+          "name": "Arcane Unravel",
+          "description": "When a creature you have any seeds on dies, you regain mana as if you were to cast Mana Sap on the target."
+        },
+        {
+          "name": "Torturing Insight",
+          "description": "After you succeed on an insight on a creature you add twice the amount of seeds the next time you deal psychic damage to them."
+        }
+      ]
+    },
+    {
+      "name": "Mind Therapist",
+      "lore": "Some mindbenders decide they want to understand the mind in order to help people heal, let go and be better.",
+      "active": {
+        "name": "Mind Healing",
+        "description": "You open a creature's mind for 1 minute. Must succeed insight, then persuasion, then medicine check (DC same as examining creature). Each costs 1 AP, 1 check per turn. Must not damage the creature, and it must stay within 60 ft. If you succeed, the creature stops being hostile and agrees to a peaceful solution.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Pacifist Advantage",
+        "description": "Enemies you have not damaged for 1 round have disadvantage on saving throws against spells and abilities from you that don't deal damage."
+      },
+      "modification": {
+        "name": "Mind Probe Enhancement",
+        "description": "After succeeding on an insight check on a creature, you can also add your proficiency value to your next skill check made against the creature.",
+        "modifies": "Mind Probe"
+      },
+      "startingTalent": "refresher",
+      "additionalTalents": [
+        {
+          "name": "Mediator",
+          "description": "You have advantage on all skill checks to calm creatures down and mediate conflict."
+        },
+        {
+          "name": "One Last Grasp",
+          "description": "If you get killed by a creature you have not damaged for a round, you instead return to 1 HP. Cannot proc more than once per long rest."
+        }
+      ]
+    }
+  ],
+  "elementalist": [
+    {
+      "name": "Pyromancer",
+      "lore": "Elementalists who focus on fire magic.",
+      "active": {
+        "name": "Reduce Fire Resistance",
+        "description": "You make a creature that has immune or absorb to fire become resistant instead, or a creature that is resistant become normal; lasts 1 minute.",
+        "apCost": "unknown",
+        "cooldown": "proficiency uses per long rest"
+      },
+      "passive": {
+        "name": "Fire Spell Access",
+        "description": "You can learn any spell from any class, as long as it deals fire damage."
+      },
+      "modification": {
+        "name": "Elemental Cycle/Sovereign Enhancement",
+        "description": "(1) Elemental Cycle also triggers after dealing fire damage 4 times to a target, but only for half damage. (2) Sovereign of the Elements becomes Sovereign of Fire - triple all damage dealt through burning; elemental cycle from fire damage deals full damage.",
+        "modifies": "Elemental Cycle / Sovereign of the Elements"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Eternal Fire",
+          "description": "Your burning effect can no longer be put out through normal means, and it resists the first magical attempt to dispel it."
+        },
+        {
+          "name": "Burning Desire",
+          "description": "You can choose to burn your life for energy or vice versa; at end of each turn lose 20% max HP and gain 20% max mana (or reverse); stops when you run out. Once per long rest."
+        }
+      ]
+    },
+    {
+      "name": "Venomancer",
+      "lore": "Elementalists who focus on poison magic.",
+      "active": {
+        "name": "Reduce Poison Resistance",
+        "description": "You make a creature that has immune or absorb to poison become resistant instead, or resistant become normal; lasts 1 minute.",
+        "apCost": "unknown",
+        "cooldown": "proficiency uses per long rest"
+      },
+      "passive": {
+        "name": "Poison Spell Access",
+        "description": "You can learn any spell from any class, as long as it deals poison damage."
+      },
+      "modification": {
+        "name": "Elemental Cycle/Sovereign Enhancement",
+        "description": "(1) Elemental Cycle also triggers after dealing poison damage 4 times to a target, but only for half damage. (2) Sovereign of the Elements becomes Sovereign of Poison - double dice damage to poison/poisoned targets; elemental cycle from poison deals full damage.",
+        "modifies": "Elemental Cycle / Sovereign of the Elements"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Eternal Poison",
+          "description": "Your poison and poisoned effects can no longer be put out through normal means, and resist the first magical attempt to dispel."
+        },
+        {
+          "name": "Poisoned Desire",
+          "description": "At the start of each round choose: poison your health (no HP/temp HP/shields, but halved mana costs); poison your mind (disadvantage on spell attacks, creatures have advantage on saves, but halve all damage received); or neither."
+        }
+      ]
+    },
+    {
+      "name": "Hydromancer",
+      "lore": "Elementalists who focus on ice magic.",
+      "active": {
+        "name": "Reduce Ice Resistance",
+        "description": "You make a creature that has immune or absorb to ice become resistant instead, or resistant become normal; lasts 1 minute.",
+        "apCost": "unknown",
+        "cooldown": "proficiency uses per long rest"
+      },
+      "passive": {
+        "name": "Ice Spell Access",
+        "description": "You can learn any spell from any class, as long as it deals ice damage."
+      },
+      "modification": {
+        "name": "Elemental Cycle/Sovereign Enhancement",
+        "description": "(1) Elemental Cycle also triggers after dealing ice damage 4 times, but only half damage. (2) Sovereign of Ice - triple all damage dealt when creature reaches 0 MS; elemental cycle from ice deals full damage.",
+        "modifies": "Elemental Cycle / Sovereign of the Elements"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Eternal Chill",
+          "description": "Your chilling effect can no longer be put out through normal means, and resists the first magical attempt to dispel."
+        },
+        {
+          "name": "Icy Desire",
+          "description": "You can freeze your life for energy or vice versa; while active you cannot use mana, but you cannot take damage either; can only start and end at the start of a turn."
+        }
+      ]
+    },
+    {
+      "name": "Electromancer",
+      "lore": "Elementalists who focus on lightning magic.",
+      "active": {
+        "name": "Reduce Lightning Resistance",
+        "description": "You make a creature that has immune or absorb to lightning become resistant instead, or resistant become normal; lasts 1 minute.",
+        "apCost": "unknown",
+        "cooldown": "proficiency uses per long rest"
+      },
+      "passive": {
+        "name": "Lightning Spell Access",
+        "description": "You can learn any spell from any class, as long as it deals lightning damage."
+      },
+      "modification": {
+        "name": "Elemental Cycle/Sovereign Enhancement",
+        "description": "(1) Elemental Cycle also triggers after dealing lightning damage 4 times, but only half damage. (2) Sovereign of Lightning - triple all damage through lightning damage increase (from path); elemental cycle from lightning deals full damage.",
+        "modifies": "Elemental Cycle / Sovereign of the Elements"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Eternal Lightning",
+          "description": "Your stunned, shocked and AP reduction effects can no longer be put out through normal means, and resist the first magical attempt to dispel."
+        },
+        {
+          "name": "Electric Desire",
+          "description": "Overload mana: gain mana equal to 3x missing HP, but excess mana consumed over amount gained also dealt as true damage. OR Overload HP: gain temp HP equal to 25% missing mana, but actual HP damage drains 4x that amount of mana."
+        }
+      ]
+    },
+    {
+      "name": "Master of the Elements",
+      "lore": "Elementalists who choose to master all elements rather than specialize.",
+      "active": {
+        "name": "Shred Magic Armor",
+        "description": "You decrease a creature's magic armor by [your proficiency * your INT modifier]; lasts 1 minute.",
+        "apCost": "unknown",
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Elemental Rotation",
+        "description": "Whenever you cast an elemental spell, roll 1d4 for a random element; if your next spell matches the previous spell's element, it costs 1 more AP; if it matches the die roll, it costs 1 less AP."
+      },
+      "modification": {
+        "name": "Elemental Path Enhancement",
+        "description": "You have all elemental paths available.",
+        "modifies": "Elemental Path (all)"
+      },
+      "startingTalent": "arcane-reprise",
+      "additionalTalents": [
+        {
+          "name": "Eternal Power",
+          "description": "You can consume 1 AP and 5% of your max mana to remove 1 negative effect from you (even while under hard CC), and you are immune to the first negative effect (resets at long rest)."
+        },
+        {
+          "name": "Masterful Desire",
+          "description": "After Elemental Cycle activates, choose for 1 round: spells cost HP instead of mana (cost reduced to 25%); OR damage is dealt directly to mana pool but is doubled."
+        }
+      ]
+    }
+  ],
+  "runekeeper": [
+    {
+      "name": "Keeper of the Elements",
+      "lore": "Runekeepers who channel elemental magic through their runes.",
+      "active": {
+        "name": "Elemental Spell Cast",
+        "description": "You can cast an elementalist spell of a level you would have access to; this resets whenever you refresh the use of one of your runes; WIS is your spell modifier.",
+        "apCost": "spell's AP cost",
+        "cooldown": "resets on rune refresh"
+      },
+      "passive": {
+        "name": "Elemental Damage Choice",
+        "description": "After using one of your runes, all your abilities deal any type of elemental damage (fire, ice, lightning, poison) of your choice until the end of your next turn."
+      },
+      "modification": {
+        "name": "Rune Damage Enhancement",
+        "description": "Your poison oil and fire rune can deal any type of magic damage.",
+        "modifies": "Poison Oil / Fire Rune"
+      },
+      "startingTalent": "refresher",
+      "additionalTalents": [
+        {
+          "name": "Elemental Armor",
+          "description": "After dealing elemental damage with an ability, you add your base PA to your MA and your base MA to your PA for the next attack (stacks)."
+        },
+        {
+          "name": "Elemental Overload",
+          "description": "After dealing damage of each elemental type your next ability costs 0 AP (if you choose to move you can move for 3 AP)."
+        }
+      ]
+    },
+    {
+      "name": "Keeper of Nature",
+      "lore": "Runekeepers who draw power from nature for healing and protection.",
+      "active": {
+        "name": "Nature's Cleansing",
+        "description": "You remove ALL negative effects from a living creature (including yourself); you can cast this even while under CC.",
+        "apCost": 1,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Potion Mastery",
+        "description": "Potions and medicine have double effect on you and you become resistant to poison and disease."
+      },
+      "modification": {
+        "name": "Oil/Restoration Enhancement",
+        "description": "When crafting an oil that deals damage you can choose any type of damage; your restoration mutation takes place whenever a hostile creature dies around you (60 ft); this cannot occur more than 3 times per day.",
+        "modifies": "Oil Crafting / Restoration"
+      },
+      "startingTalent": "living-armor",
+      "additionalTalents": [
+        {
+          "name": "Gatherer",
+          "description": "You can find resources that no one else can find; you can find more ingredients faster."
+        },
+        {
+          "name": "Nature's Protegee",
+          "description": "After your restoration activates, you use Nature's Cleansing, or you take poison damage from a hostile creature directly, you become resistant to damage until the end of your next turn."
+        }
+      ]
+    },
+    {
+      "name": "Keeper of Steel",
+      "lore": "Runekeepers who focus on physical combat enhancement through runes.",
+      "active": {
+        "name": "Obliterate",
+        "description": "Apply it to an attack that hits; target becomes normal to physical damage and has its PA reduced to 0 for a turn.",
+        "apCost": 3,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Power Rune Pierce",
+        "description": "After using power rune (directly or through modifications) your next attack ignores resistances to physical/silver."
+      },
+      "modification": {
+        "name": "Rune + Power Rune Combo",
+        "description": "After using a rune on a target, your next attack on said target will automatically have the power rune's damage active (without increase in attack roll or conversion to true damage).",
+        "modifies": "Runes / Power Rune"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Deflection",
+          "description": "When attacked by a steel weapon/object (includes steel-headed arrows) you can roll a DEX saving throw contesting the attack roll; if you roll higher you deflect the attack, taking no damage."
+        },
+        {
+          "name": "Steel Crafter",
+          "description": "You can create/upgrade steel weapons for half the cost (the cost that you would sell them for)."
+        }
+      ]
+    }
+  ],
+  "tormentor": [
+    {
+      "name": "Soul Keeper",
+      "lore": "Tormentors who can interact with the spectral realm through their weapons.",
+      "active": {
+        "name": "Spectral Weapons",
+        "description": "Your weapons partially enter the spectral realm for 1 turn/spirit you see; while active, weapons can deal spectral damage. If you kill a creature with a spirit while dealing spectral damage, choose the spirit's fate: absorb it (+1 permanent essence drain damage), release it (cleanse one negative effect + heal 50% max HP), or let it roam (restore 2 curse uses).",
+        "apCost": 0,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Spirit Sight",
+        "description": "Your eyes turn bright green; you can see spirits for as much as you have darkvision; when rolling any check to interact with spirits you are considered proficient and use WIS modifier."
+      },
+      "modification": {
+        "name": "Curse + Spectral Explosion",
+        "description": "Whenever you cast a curse, you jump in and out of the spectral plane and cast a spectral explosion; all creatures within 10 ft must roll DEX saving throw; fail: [2*WIS + 35 + 2d12] spectral damage; success: half. Damage increases at levels 9, 13, 19.",
+        "modifies": "Curse"
+      },
+      "startingTalent": "eyes-of-the-keeper",
+      "additionalTalents": [
+        {
+          "name": "Spectral Flow",
+          "description": "After you cast a curse you can dash (while in spectral realm, being immune to damage) for 30 ft in a direction."
+        },
+        {
+          "name": "Spirit Meditation",
+          "description": "If a spirit willingly accepts to meditate with you, you can enter a deep meditative state for one hour and be granted the effect of a long rest (once per long rest)."
+        }
+      ]
+    },
+    {
+      "name": "Arcane Tormentor",
+      "lore": "Tormentors who enhance their hunting with arcane ranger abilities.",
+      "active": {
+        "name": "Maximum Potential",
+        "description": "For 1 minute your MS is doubled while moving towards unholy creatures; after attacking with ranged weapon you can automatically dash 15 ft (immune to damage while dashing); your normal bolts are automatically considered silver.",
+        "apCost": 1,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Magical Bolts",
+        "description": "When you shoot a bolt you can choose to make it magical, converting all its damage to your essence drain's type damage."
+      },
+      "modification": {
+        "name": "Curse Slot Spell Cast",
+        "description": "You can use a curse slot to cast an arcane ranger spell of a level that you would have access to.",
+        "modifies": "Curse Slots"
+      },
+      "startingTalent": "quick-draw",
+      "additionalTalents": [
+        {
+          "name": "Quick Reflexes",
+          "description": "You can use your reaction to make an 'attack of opportunity' with your ranged weapon on any creature that moves in or out of your normal range."
+        },
+        {
+          "name": "Powershot",
+          "description": "When attacking an unholy creature that is within melee range with your ranged weapon, force the creature to make a STR saving throw or be pushed back 1d4 * 10 feet."
+        }
+      ]
+    },
+    {
+      "name": "Blood Hunter",
+      "lore": "Tormentors who feed on the blood of their enemies to gain power.",
+      "active": {
+        "name": "Blood Advantage",
+        "description": "For 1 minute, you attack targets that you made bleed (damaged with physical weapons) with advantage.",
+        "apCost": 3,
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Blood Absorption",
+        "description": "Whenever you damage a non-construct creature with blood using physical weapons, you absorb some blood; after absorbing blood 10 times you become enraged, dealing double damage the upcoming turns."
+      },
+      "modification": {
+        "name": "Power Absorption Enhancement",
+        "description": "While you have any power absorption feat active, you can choose to absorb blood to heal instead (10% of max HP); no longer applies to the passive.",
+        "modifies": "Power Absorption"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Blood Sucker",
+          "description": "You can absorb unholy creatures multiple times; every time (out of combat only) you heal for 50% of your max HP."
+        },
+        {
+          "name": "Blood March",
+          "description": "You have doubled MS while moving straight towards creatures that you caused to bleed."
+        }
+      ]
+    }
+  ],
+  "phantom": [
+    {
+      "name": "Deathchaser",
+      "lore": "Phantoms who defy death itself.",
+      "active": {
+        "name": "Soul Transfer",
+        "description": "You can revive a being who recently died and fight death in its stead (if you do this after they lost the death fight you automatically get a death stack).",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Death Defiance",
+        "description": "When you would die/fall unconscious, you instead return to full life (takes place after Last Breath) but take 25% of your max HP as true damage at the end of each turn and suffer from the decaying status until you or an ally kills a hostile creature or combat ends."
+      },
+      "modification": {
+        "name": "Spectral Plane Enhancement",
+        "description": "While in spectral plane you become the death of your foes; you gain specific abilities that death has based on your death stacks (the more times you have died and defeated death the more abilities you gain).",
+        "modifies": "Spectral Plane"
+      },
+      "startingTalent": "last-breath",
+      "additionalTalents": [
+        {
+          "name": "Spectral Menace",
+          "description": "While in the spectral realm you are immune to almost all negative effects."
+        },
+        {
+          "name": "Death Harvest",
+          "description": "After a creature dies near you (30 ft), you automatically hit (attack roll) your next ability."
+        }
+      ]
+    },
+    {
+      "name": "Explorer",
+      "lore": "Phantoms who explore the boundary between the mortal and spectral realms.",
+      "active": {
+        "name": "Foresight",
+        "description": "You can try to glimpse into an event in the future; you might get an idea, a few images or a voice that will warn you about the event/its outcome; attempting to use foresight more than once on the same event will cause unknown effects.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Spectral Regeneration",
+        "description": "Every hour spent in spectral form will regenerate 20% of your total HP and energy; you can also find special items there; you might encounter dormant creatures that will attack you."
+      },
+      "modification": {
+        "name": "Spectral Senses",
+        "description": "While you are in spectral form you can see and sense things beyond the mortals' eyes and senses.",
+        "modifies": "Spectral Form"
+      },
+      "startingTalent": "luck-crafter",
+      "additionalTalents": [
+        {
+          "name": "Inconspicuous Trespasser",
+          "description": "For every hour spent in the mortal plane, you can spend the same amount in spectral form without changing the aspect of your body to others."
+        },
+        {
+          "name": "Hunter's Instinct",
+          "description": "When your character would roll a secret WIS check (insight or other WIS check the DM rolls), your character will get a hunch of how on point their instinct was."
+        }
+      ]
+    },
+    {
+      "name": "Chronomaster",
+      "lore": "Phantoms who master time through the spectral realm.",
+      "active": {
+        "name": "Time Travel",
+        "description": "You go to a point in time (past or future); you cannot interact with anything, only observe; you are automatically teleported to the same spatial point; the future is based on current actions; you can remain for 1 minute at most; you cannot teleport to the same year more than once.",
+        "apCost": "unknown",
+        "cooldown": "unknown"
+      },
+      "passive": {
+        "name": "Ageless",
+        "description": "You become immune to aging and age altering effects; you can also appear as young or old as you desire (changeable after one hour ritual)."
+      },
+      "modification": {
+        "name": "Stance Enhancement",
+        "description": "Your stances now have undetermined duration (you can end them early or switch to another stance with no penalty, and remain in a stance for as long as you want).",
+        "modifies": "Stances"
+      },
+      "startingTalent": "change-fate",
+      "additionalTalents": [
+        {
+          "name": "Time Blink",
+          "description": "Whenever you enter spectral form you can choose to go back in time a turn, returning to the position where you were at the end of your last turn."
+        },
+        {
+          "name": "Time Skip",
+          "description": "Whenever you would gain exhaustion, you can ignore it for 24 hours, after which you gain 2 stacks instead; whenever you would gain a negative effect, you can delay it for a turn but can no longer roll to end it at end of each turn."
+        }
+      ]
+    }
+  ],
+  "striker": [
+    {
+      "name": "Order of Knowledge",
+      "lore": "This order believes that knowledge is the ultimate goal, and seeks to uncover and preserve as much as possible; they use magic wells to seal away information and knowledge.",
+      "active": {
+        "name": "Perfect Recall",
+        "description": "You instantly remember one information even if sealed by magic; you can also try to find information you don't possess - if it is found in the world, you know the location of the nearest knowledge well possessing that information.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Knowledge Shield",
+        "description": "You have advantage and are proficient in all saving throws that would alter your memory; additionally you instantly uncover 3 random abilities or stats of every known/studied opponent."
+      },
+      "modification": {
+        "name": "Mana Barrier Enhancement",
+        "description": "While Mana Barrier is active you have advantage on saving throws against spells, but that drains 50 mana (you can choose whether to activate this additional feat).",
+        "modifies": "Mana Barrier"
+      },
+      "startingTalent": "universal-mastery",
+      "additionalTalents": [
+        {
+          "name": "Rejuvenation of the Wise",
+          "description": "When drinking from a well of knowledge you regain 50% HP, 100% mana and all cooldowns; all negative effects lesser than a cut limb, terminal disease or major curse are removed."
+        },
+        {
+          "name": "Knowledge from Beyond",
+          "description": "You are able to access the memories of the dead to seek and preserve knowledge; only knowledge that they didn't wish hidden can be accessed."
+        }
+      ]
+    },
+    {
+      "name": "Order of the Seekers",
+      "lore": "This order knows of secret locuses of magic scattered throughout the universe from the very beginning.",
+      "active": {
+        "name": "Locus Power",
+        "description": "For 3 turns your INT modifier is increased by the number of magic locuses you've uncovered.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Locus Sensing",
+        "description": "You can sense locuses of magic within 300 ft; after interacting with one, you learn one spell from any battlemage subclass, and permanently increase mana by 30."
+      },
+      "modification": {
+        "name": "Mana Rush Enhancement",
+        "description": "You can also expend 15 * spell level mana to halve the AP cost (rounded up) of any kind of spell you cast.",
+        "modifies": "Mana Rush"
+      },
+      "startingTalent": "luck-crafter",
+      "additionalTalents": [
+        {
+          "name": "Rebirth of the Seeker",
+          "description": "When you die you can choose to lose 2 stat points in a random stat (chosen by rolling 1d7 AFTER choosing to use this feat)."
+        },
+        {
+          "name": "Persuasive",
+          "description": "You can use the number of locuses of magic uncovered instead of your CHA modifier for any persuasion check."
+        }
+      ]
+    },
+    {
+      "name": "Order of the Blade",
+      "lore": "This order believes in the power of a weapon and a warrior's connection to it; they see magic as a way to enhance this connection.",
+      "active": {
+        "name": "Soulbound Weapon",
+        "description": "You soulbound with a weapon; it cannot be wielded by anyone else; you cannot be disarmed; choose 2 spells that permanently affect the weapon (summed spell level cannot exceed 4); you can soulbound 2 light weapons instead and split the levels. Roll 1d20 daily; on 20 regain this active.",
+        "apCost": "unknown",
+        "cooldown": "1d20 daily (20 to reset)"
+      },
+      "passive": {
+        "name": "Magic Weapon",
+        "description": "Soulbound weapons are considered magic for the purpose of overcoming resistances."
+      },
+      "modification": {
+        "name": "Relentless Assault - Steel Variant",
+        "description": "You can choose to convert all damage you deal to physical for the 3 attacks, but they all do full weapon damage (all effects converted to physical damage too).",
+        "modifies": "Relentless Assault"
+      },
+      "startingTalent": "fury",
+      "additionalTalents": [
+        {
+          "name": "Once for All",
+          "description": "You increase your STR and CON by 2; using your active on a new weapon removes this buff."
+        },
+        {
+          "name": "Power Transfer",
+          "description": "You can transfer one particularity of a weapon to another one (the bonus to attack, the damage, the unique effect, etc.); a weapon can only have one unique effect; does not apply to spellcaster weapons."
+        }
+      ]
+    }
+  ],
+  "battlecaster": [
+    {
+      "name": "Angel of Pain",
+      "lore": "Battlecasters who draw power from self-inflicted damage.",
+      "active": {
+        "name": "Death Brace",
+        "description": "If you die before your next turn, spend one round dead then respawn with 50% HP and 50% mana (keeping all stored energy); if you survive until your next turn, you fall dead and fight death (bypassing similar effects).",
+        "apCost": 2,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Energy Storage",
+        "description": "Whenever you deal damage to yourself with a spell you store that amount as energy; while you have at least 50% max HP stored energy, spells that would damage you heal you instead (but still store); arcane veins heals an additional time; energy isn't stored while arcane veins is active."
+      },
+      "modification": {
+        "name": "Self-Target + Energy Spend",
+        "description": "You can make any spell you cast have you as an eligible target; additionally, expend any amount of stored energy to deal bonus damage with any spell that damages you too.",
+        "modifies": "Spells / Energy"
+      },
+      "startingTalent": "last-breath",
+      "additionalTalents": [
+        {
+          "name": "True Magic",
+          "description": "If a spell would deal three times an enemy's MA (before damage reduction) it ignores their MA entirely."
+        },
+        {
+          "name": "Cut Down",
+          "description": "You roll max damage dice values for any attack and spell if your HP is lower than your opponent's current HP."
+        }
+      ]
+    },
+    {
+      "name": "Energy Demon",
+      "lore": "Battlecasters who push AP to extreme limits.",
+      "active": {
+        "name": "AP Charge",
+        "description": "You become stunned for up to 3 turns (you decide duration at cast); at the end of each turn of this effect, your maximum AP is increased by 5 for the rest of combat.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "AP to Defense",
+        "description": "Any AP that you do not spend by the end of the turn will increase your AC and saving throws by +1 (for each AP saved) for the upcoming round."
+      },
+      "modification": {
+        "name": "Mass Destruction Enhancement",
+        "description": "Mass Destruction damage is quadrupled if triggered while you are at full AP.",
+        "modifies": "Mass Destruction"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Hostile Overload",
+          "description": "Your AP recovery is increased by 1 for every enemy beyond the first (at least 2 opponents) within 10 ft of you."
+        },
+        {
+          "name": "Patient Resilience",
+          "description": "If you end your turn with 6 or more AP, you become resistant to all types of damage (except true) for one round."
+        }
+      ]
+    },
+    {
+      "name": "Stone Titan",
+      "lore": "Battlecasters who focus on tanking and drawing enemy attention.",
+      "active": {
+        "name": "Taunt",
+        "description": "You taunt all enemy creatures within 15 ft of you; at the end of each of their turns, affected creatures must succeed on a WIS saving throw to end the effect.",
+        "apCost": 2,
+        "cooldown": "once per short rest"
+      },
+      "passive": {
+        "name": "Proximity Armor",
+        "description": "Your PA and MA are increased by your level for each opponent beyond the first (at least 2) within 10 ft of you."
+      },
+      "modification": {
+        "name": "Comeback of the Arcanist Enhancement",
+        "description": "You are immune for one round after using it.",
+        "modifies": "Comeback of the Arcanist"
+      },
+      "startingTalent": "protection",
+      "additionalTalents": [
+        {
+          "name": "Fair Fight",
+          "description": "You are immune from the effects of flanking."
+        },
+        {
+          "name": "Walk It Off",
+          "description": "Your AC is increased by 2 for every negative effect affecting you."
+        }
+      ]
+    }
+  ],
+  "inquisitor": [
+    {
+      "name": "Guard Chief",
+      "lore": "Inquisitors who serve as leaders of military forces.",
+      "active": {
+        "name": "Mass Root",
+        "description": "You root all opponents within 60 ft for 3 turns; CON saving throw AT THE END of each turn to end it.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Underdog Power",
+        "description": "When fighting an opponent stronger than you (your party is expected to lose based on avg level vs enemy might) you double your PA, MA and STR modifier."
+      },
+      "modification": {
+        "name": "Keen's Mind Enhancement",
+        "description": "Also applied to intimidation and insight checks while interrogating a target.",
+        "modifies": "Keen's Mind"
+      },
+      "startingTalent": "alert",
+      "additionalTalents": [
+        {
+          "name": "Forced Surrender",
+          "description": "Once per long rest you can have a successful die fail instead (not the other way around, cannot make a failed attack succeed)."
+        },
+        {
+          "name": "Hostage Protection",
+          "description": "Innocent creatures (not taking part in combat and haven't been) are immune while within 100 ft of you."
+        }
+      ]
+    },
+    {
+      "name": "Executioner",
+      "lore": "Inquisitors who specialize in eliminating targets, especially wounded ones.",
+      "active": {
+        "name": "Finishing Blow",
+        "description": "You make your next attack deal 1 bonus damage for every 20 HP missing from the target.",
+        "apCost": 0,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Advantage on Wounded",
+        "description": "You reroll any natural failures (1 on attack rolls) against injured targets; furthermore, you attack with advantage on severely injured targets."
+      },
+      "modification": {
+        "name": "Lasting Punishment Enhancement",
+        "description": "You add twice the amount of stacks on injured targets, and 4 times the normal amount on severely injured targets.",
+        "modifies": "Lasting Punishment"
+      },
+      "startingTalent": "overpower",
+      "additionalTalents": [
+        {
+          "name": "Death of the Weak",
+          "description": "When both you and a target are severely injured, you can use this talent to do a resolve contest; the loser dies instantly; once per long rest."
+        },
+        {
+          "name": "Scent of Death",
+          "description": "After you kill a creature, you restore 50% of your max HP."
+        }
+      ]
+    },
+    {
+      "name": "Lone Destroyer",
+      "lore": "Some inquisitors go on long and vicious missions by themselves; they toughen up but are not particularly good at fighting alongside others.",
+      "active": {
+        "name": "Lone Strength",
+        "description": "You gain temporary HP equal to 50% of your max HP for each opponent within 60 ft; the temporary HP is lost at the end of combat.",
+        "apCost": 1,
+        "cooldown": "once per long rest"
+      },
+      "passive": {
+        "name": "Solo Fighter",
+        "description": "While fighting alone, your maximum HP and mana are doubled, and your maximum AP becomes 15, and starting and recovery AP become 10."
+      },
+      "modification": {
+        "name": "Lasting Punishment/Reflective Shield Enhancement",
+        "description": "While fighting alone, you put double the amount of Lasting Punishment stacks, and you do double damage with Reflective Shield.",
+        "modifies": "Lasting Punishment / Reflective Shield"
+      },
+      "startingTalent": "executioner",
+      "additionalTalents": [
+        {
+          "name": "Double Trouble",
+          "description": "Your effects remain even while you have one ally fighting by your side."
+        },
+        {
+          "name": "Tireless Efforts",
+          "description": "You gain stacks of exhaustion twice as hard (2 sleepless nights, 2 days without eating, etc.)."
+        }
+      ]
+    }
+  ]
+}
