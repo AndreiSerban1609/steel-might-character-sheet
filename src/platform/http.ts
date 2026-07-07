@@ -1,9 +1,11 @@
 import type {
   AbilityScore,
+  ActionResponse,
   BioPatch,
   BioSnapshot,
   CharacterCreatedResponse,
   CombatSnapshot,
+  DamageTypeId,
   DeckTemplate,
   InventoryItemInput,
   InventorySnapshot,
@@ -11,6 +13,7 @@ import type {
   PlayerDeckView,
   RosterEntry,
   SkillCheckResult,
+  SpellbookSnapshot,
 } from './types';
 
 // API base resolution, in priority order:
@@ -83,10 +86,19 @@ export interface CreateCharacterBody {
   roomName: string;
   email: string;
   name: string;
+  raceId: string;
   pathId: string;
   classId: string;
+  specializationId?: string;
   level: number;
+  /** exactly a permutation of the standard array (M6-A) */
   stats: Record<AbilityScore, number>;
+  /** +5 across any stats, max 2 each (N17) */
+  bonusAllocation: Partial<Record<AbilityScore, number>>;
+  /** exactly 3 distinct skill ids */
+  skillProficiencies: string[];
+  /** casters: exactly 1 level-1 spell; others: empty */
+  knownSpells: string[];
 }
 
 async function errText(res: Response, path: string): Promise<string> {
@@ -165,8 +177,181 @@ export function skillCheck(playerId: string, skillId: string): Promise<SkillChec
   });
 }
 
+// ── Combat actions (all resolve through the server's rule pipelines) ──
+
+type CombatAction = ActionResponse<CombatSnapshot>;
+
+function combatAction(playerId: string, action: string, body: unknown): Promise<CombatAction> {
+  return sendJson<CombatAction>(
+    'POST',
+    `/characters/${encodeURIComponent(playerId)}/actions/${action}`,
+    body,
+  );
+}
+
+export function sendDamage(
+  playerId: string,
+  value: number,
+  damageType: DamageTypeId,
+  tags?: string[],
+  attackerMight?: number,
+): Promise<CombatAction> {
+  // attackerMight (N2): feeds the concentration-break WILL save (DC 5 + might);
+  // omitted → the server emits a resolve-manually step instead of rolling.
+  return combatAction(playerId, 'damage', { value, damageType, tags, attackerMight });
+}
+
+export function sendHeal(playerId: string, value: number): Promise<CombatAction> {
+  return combatAction(playerId, 'heal', { value });
+}
+
+export function turnStart(playerId: string): Promise<CombatAction> {
+  return combatAction(playerId, 'turn-start', {});
+}
+
+export function turnEnd(playerId: string): Promise<CombatAction> {
+  return combatAction(playerId, 'turn-end', {});
+}
+
+export interface ApplyEffectBody {
+  effectId: string;
+  stacks?: number;
+  value?: number;
+  duration?: number;
+  source?: string;
+  duringOwnTurn?: boolean;
+}
+
+export function applyEffect(playerId: string, body: ApplyEffectBody): Promise<CombatAction> {
+  return combatAction(playerId, 'apply-effect', body);
+}
+
+export interface ReviveBody {
+  hpRestored?: number;
+  deathStackGained?: boolean;
+  criticalFail?: boolean;
+}
+
+export function revive(playerId: string, body: ReviveBody): Promise<CombatAction> {
+  return combatAction(playerId, 'revive', body);
+}
+
+export function combatStart(playerId: string): Promise<CombatAction> {
+  return combatAction(playerId, 'combat-start', {});
+}
+
+/** Single tiered rest (Q20): tier 25 | 50 | 75 | 100. */
+export function rest(playerId: string, tier: number): Promise<CombatAction> {
+  return combatAction(playerId, 'rest', { tier });
+}
+
+export async function removeEffect(playerId: string, effectId: string): Promise<CombatAction> {
+  const res = await fetch(
+    `${API_BASE}/characters/${encodeURIComponent(playerId)}/actions/remove-effect?effectId=${encodeURIComponent(effectId)}`,
+    { method: 'POST' },
+  );
+  if (!res.ok) throw new Error(await errText(res, 'remove-effect'));
+  return (await res.json()) as CombatAction;
+}
+
+// ── Spellcasting (M4) ──
+
+export function fetchSpellbook(playerId: string): Promise<SpellbookSnapshot> {
+  return getJson<SpellbookSnapshot>(`/characters/${encodeURIComponent(playerId)}/spells`);
+}
+
+export interface CastBody {
+  spellId: string;
+  castAtLevel?: number;
+  applyEffectsToSelf?: boolean;
+  targetPlayerId?: string;
+  componentsAvailable?: string[];
+}
+
+export function castSpell(playerId: string, body: CastBody): Promise<CombatAction> {
+  return combatAction(playerId, 'cast', body);
+}
+
+export function prepareSpells(playerId: string, spellIds: string[]): Promise<CombatAction> {
+  return combatAction(playerId, 'prepare-spells', { spellIds });
+}
+
 export function fetchInventory(playerId: string): Promise<InventorySnapshot> {
   return getJson<InventorySnapshot>(`/characters/${encodeURIComponent(playerId)}/inventory`);
+}
+
+// ── Shop / equipment / progression actions (M5, M6) ──
+
+type InventoryAction = ActionResponse<InventorySnapshot>;
+
+function inventoryAction(playerId: string, action: string, body: unknown): Promise<InventoryAction> {
+  return sendJson<InventoryAction>(
+    'POST',
+    `/characters/${encodeURIComponent(playerId)}/actions/${action}`,
+    body,
+  );
+}
+
+export function purchaseItem(
+  playerId: string,
+  body: { itemId: string; quantity?: number; tier?: number; silvered?: boolean; spellId?: string },
+): Promise<InventoryAction> {
+  return inventoryAction(playerId, 'purchase', body);
+}
+
+export function sellItem(
+  playerId: string,
+  body: { itemId: string; quantity?: number; tier?: number; spellId?: string },
+): Promise<InventoryAction> {
+  return inventoryAction(playerId, 'sell', body);
+}
+
+export function upgradeItem(
+  playerId: string,
+  body: { itemId: string; tier?: number; mode: 'kit' | 'blacksmith' },
+): Promise<InventoryAction> {
+  return inventoryAction(playerId, 'upgrade', body);
+}
+
+export function equipItem(
+  playerId: string,
+  body: { itemId: string; tier?: number },
+): Promise<CombatAction> {
+  return combatAction(playerId, 'equip', body);
+}
+
+export function unequipItem(
+  playerId: string,
+  body: { itemId: string; tier?: number },
+): Promise<CombatAction> {
+  return combatAction(playerId, 'unequip', body);
+}
+
+export function useConsumable(
+  playerId: string,
+  body: { itemId: string; tier?: number },
+): Promise<CombatAction> {
+  return combatAction(playerId, 'use-consumable', body);
+}
+
+/** The cast spell is the one written on the scroll; spellId only disambiguates
+ *  when several scrolls of the same kind carry different spells. */
+export function castScroll(
+  playerId: string,
+  body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean },
+): Promise<CombatAction> {
+  return combatAction(playerId, 'cast-scroll', body);
+}
+
+export interface LevelUpChoices {
+  statIncreases?: Partial<Record<AbilityScore, number>>;
+  newSpells?: string[];
+  talentId?: string;
+  featId?: string;
+}
+
+export function levelUp(playerId: string, choices: LevelUpChoices): Promise<CombatAction> {
+  return combatAction(playerId, 'level-up', { choices });
 }
 
 export function updateInventory(

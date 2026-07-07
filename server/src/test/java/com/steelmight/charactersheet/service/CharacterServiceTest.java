@@ -132,36 +132,49 @@ class CharacterServiceTest {
         assertThat(roster).extracting(RosterEntry::playerId).containsExactlyInAnyOrder("p1", "p2");
     }
 
+    /** Full M6-A payload: level-1 human bard with a valid array/bonus/skills/spell. */
+    private static CreateCharacterRequest bardRequest(String room, String email, String name) {
+        return new CreateCharacterRequest(room, email, name,
+                "human", "musician", "bard", "singer-of-heroism", 1,
+                stats(9, 12, 13, 11, 10, 15, 8),
+                Map.of(AbilityScore.CHA, 2, AbilityScore.DEX, 2, AbilityScore.CON, 1),
+                List.of("persuasion", "performance", "deception"),
+                List.of("dissonating-song"));
+    }
+
     @Test
     void createsCharacterWithRoomEmailId() {
-        var req = new CreateCharacterRequest("Dragon's Lair", "Andrei@Example.com", "Kael",
-                "musician", "bard", 1, null);
-        var created = service.createCharacter(req);
+        var created = service.createCharacter(bardRequest("Dragon's Lair", "Andrei@Example.com", "Kael"));
 
         assertThat(created.playerId()).isEqualTo("dragon-s-lair-andrei@example.com");
         assertThat(created.snapshot().name()).isEqualTo("Kael");
         assertThat(created.snapshot().level()).isEqualTo(1);
-        // bard hpPerLevel 25, default stats CON 12 (+1) -> (25 + 3) * 1 = 28
-        assertThat(created.snapshot().hp().max()).isEqualTo(28);
+        // bard hpPerLevel 25, CON 13 + 1 bonus = 14 (+2) -> (25 + 6) * 1 = 31
+        assertThat(created.snapshot().hp().max()).isEqualTo(31);
         assertThat(repo.existsById("dragon-s-lair-andrei@example.com")).isTrue();
     }
 
     @Test
     void rejectsDuplicateCharacter() {
-        var req = new CreateCharacterRequest("room", "a@b.com", "X", "musician", "bard", 1, null);
-        service.createCharacter(req);
-        assertThatThrownBy(() -> service.createCharacter(req)).isInstanceOf(ResponseStatusException.class);
+        service.createCharacter(bardRequest("room", "a@b.com", "X"));
+        assertThatThrownBy(() -> service.createCharacter(bardRequest("room", "a@b.com", "X")))
+                .isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
     void rejectsClassNotInPath() {
-        var req = new CreateCharacterRequest("room", "c@d.com", "X", "musician", "barbarian", 1, null);
+        var req = new CreateCharacterRequest("room", "c@d.com", "X",
+                "human", "musician", "barbarian", "berserker", 1,
+                stats(15, 12, 13, 11, 10, 9, 8),
+                Map.of(AbilityScore.STR, 2, AbilityScore.DEX, 2, AbilityScore.CON, 1),
+                List.of("athletics", "intimidation", "survival"),
+                List.of());
         assertThatThrownBy(() -> service.createCharacter(req)).isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
     void findByRoomEmailReturnsCreatedThen404() {
-        service.createCharacter(new CreateCharacterRequest("room", "e@f.com", "Finder", "musician", "bard", 1, null));
+        service.createCharacter(bardRequest("room", "e@f.com", "Finder"));
         assertThat(service.findByRoomEmail("room", "e@f.com").snapshot().name()).isEqualTo("Finder");
         assertThatThrownBy(() -> service.findByRoomEmail("room", "missing@x.com"))
                 .isInstanceOf(ResponseStatusException.class);
@@ -169,8 +182,8 @@ class CharacterServiceTest {
 
     @Test
     void rosterFiltersByRoom() {
-        service.createCharacter(new CreateCharacterRequest("alpha", "1@x.com", "A1", "musician", "bard", 1, null));
-        service.createCharacter(new CreateCharacterRequest("beta", "2@x.com", "B1", "musician", "bard", 1, null));
+        service.createCharacter(bardRequest("alpha", "1@x.com", "A1"));
+        service.createCharacter(bardRequest("beta", "2@x.com", "B1"));
         var alpha = service.getRoster("alpha");
         assertThat(alpha).hasSize(1);
         assertThat(alpha.get(0).name()).isEqualTo("A1");

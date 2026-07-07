@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.AbilityScore;
 import com.steelmight.charactersheet.model.ActiveEffect;
+import com.steelmight.charactersheet.model.CasterType;
 import com.steelmight.charactersheet.model.GameCharacter;
 import org.springframework.stereotype.Component;
 
@@ -48,25 +49,59 @@ public class StatDerivationEngine {
 
     private record StatModEntry(EffectMechanic mechanic, ActiveEffect effect) {}
 
+    /** Placeholder row for talent-sourced mechanics — talents have no stacks/value. */
+    private static final ActiveEffect TALENT_SOURCE = new ActiveEffect("talent", "talent", 1, null, null, 0);
+
     private List<StatModEntry> collectStatModifiers(GameCharacter character, ModifiableStat stat) {
+        // ActiveMechanics handles dormancy (M0-A), application tiers (M2-B), and
+        // composite expansion (M2-C) — a stunned character gets exposed/poisoned
+        // mechanics without those rows existing.
         var result = new ArrayList<StatModEntry>();
-        for (var active : character.getActiveEffects()) {
-            var def = gameData.getEffect(active.getEffectId());
-            if (def == null) continue;
-            for (var mech : def.mechanicsOfType(MechanicType.STAT_MODIFIER)) {
-                if (mech.stat() == stat) {
-                    result.add(new StatModEntry(mech, active));
+        int threshold = computeStackThreshold(character);
+        for (var hit : ActiveMechanics.collect(character, gameData, threshold, MechanicType.STAT_MODIFIER)) {
+            if (hit.mechanic().stat() == stat) {
+                result.add(new StatModEntry(hit.mechanic(), hit.effect()));
+            }
+        }
+        // Mechanical talents (glass-cannon's crit/armor rules) are permanent
+        // stat-modifier sources — talents.json carries their mechanics arrays.
+        for (var talentId : character.getTalents()) {
+            for (var mechanic : gameData.getTalentMechanics(talentId)) {
+                if (mechanic.type() == MechanicType.STAT_MODIFIER && mechanic.stat() == stat) {
+                    result.add(new StatModEntry(mechanic, TALENT_SOURCE));
                 }
             }
         }
         return result;
     }
 
+    // ---- Threshold system ----
+
+    private static final String EXPECTED_THRESHOLD_FORMULA = "ceil(level / 2)";
+
+    /** Stack threshold for negative effects: character-creation.json → stackThreshold.player = ceil(level/2). */
+    public int computeStackThreshold(GameCharacter character) {
+        String formula = gameData.getCharacterCreation()
+                .path("stackThreshold").path("player").asText(EXPECTED_THRESHOLD_FORMULA);
+        if (!EXPECTED_THRESHOLD_FORMULA.equals(formula)) {
+            // The data carries the formula as a string; we implement the known one and refuse to guess.
+            throw new IllegalStateException("Unsupported stackThreshold formula in character-creation.json: "
+                    + formula + " — engine implements only '" + EXPECTED_THRESHOLD_FORMULA + "'");
+        }
+        return (character.getLevel() + 1) / 2; // integer ceil(level/2)
+    }
+
     private int effectiveValue(EffectMechanic mechanic, ActiveEffect effect) {
         int raw;
         if (mechanic.valueFromStacks()) {
-            int perStack = mechanic.value() != null ? mechanic.value() : 1;
-            raw = perStack * effect.getStacks();
+            if (effect.getValue() != null) {
+                // hasValue effects (mana-cost-reduction) carry their magnitude in value,
+                // not stacks — same convention as EffectMechanic.resolveValue.
+                raw = effect.getValue();
+            } else {
+                int perStack = mechanic.value() != null ? mechanic.value() : 1;
+                raw = perStack * effect.getStacks();
+            }
         } else {
             raw = mechanic.value() != null ? mechanic.value() : 0;
         }
@@ -129,6 +164,58 @@ public class StatDerivationEngine {
     public String findEquippedArmorId(GameCharacter character) {
         var armor = findEquippedBodyArmor(character);
         return armor != null ? armor.path("id").asText(null) : null;
+    }
+
+    /** The equipped caster weapon (spellbook/orb/wand/staff), or null (M4-D). */
+    public com.steelmight.charactersheet.gamedata.CasterWeaponDefinition findEquippedCasterWeapon(
+            GameCharacter character) {
+        for (var item : character.getInventory()) {
+            if (!item.isEquipped()) continue;
+            var def = gameData.getCasterWeapon(item.getItemId());
+            if (def != null) return def;
+        }
+        return null;
+    }
+
+    /**
+     * Q30 (M5-B): item proficiency. proficientClasses mixes class AND path ids in the
+     * data ("warrior"/"archer" are paths, "bard"/"paladin" are classes) — accept either;
+     * armor additionally honors the path's armorProficiencies list in classes.json.
+     * Items without proficiency data (caster weapons, consumables) count as proficient.
+     */
+    public boolean isProficientWith(GameCharacter character,
+                                    com.steelmight.charactersheet.gamedata.ResolvedItem item) {
+        var profs = item.node().path("proficientClasses");
+        if (!profs.isArray()) return true;
+        for (var p : profs) {
+            String id = p.asText();
+            if ("all".equals(id) || id.equals(character.getClassId()) || id.equals(character.getPathId())) {
+                return true;
+            }
+        }
+        if (item.kind() == com.steelmight.charactersheet.gamedata.ItemKind.ARMOR) {
+            var paths = gameData.getClasses();
+            if (paths != null && paths.isArray()) {
+                for (var path : paths) {
+                    if (!path.path("id").asText().equals(character.getPathId())) continue;
+                    for (var armorId : path.path("armorProficiencies")) {
+                        if (armorId.asText().equals(item.id())) return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /** True when any equipped armor/shield lacks proficiency — blocks casting (Q30, M5-B). */
+    public boolean hasNonProficientArmorEquipped(GameCharacter character) {
+        for (var entry : character.getInventory()) {
+            if (!entry.isEquipped()) continue;
+            var item = gameData.findItem(entry.getItemId());
+            if (item == null || item.kind() != com.steelmight.charactersheet.gamedata.ItemKind.ARMOR) continue;
+            if (!isProficientWith(character, item)) return true;
+        }
+        return false;
     }
 
     public String findEquippedWeaponId(GameCharacter character) {
@@ -247,6 +334,20 @@ public class StatDerivationEngine {
 
     // ---- Spellcasting ----
 
+    /** class-abilities.json → casterType (major | minor | none); NONE when absent. */
+    public CasterType getCasterType(GameCharacter character) {
+        var classData = getClassData(character);
+        if (classData == null) return CasterType.NONE;
+        String type = classData.path("casterType").asText(null);
+        if (type == null) return CasterType.NONE;
+        try {
+            return CasterType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Unknown casterType '" + type
+                    + "' for class '" + character.getClassId() + "'");
+        }
+    }
+
     public AbilityScore getSpellcastingAttribute(GameCharacter character) {
         var classData = getClassData(character);
         if (classData == null) return null;
@@ -269,6 +370,65 @@ public class StatDerivationEngine {
         if (attr == null) return 0;
         int base = computeProficiencyBonus(character) + character.getStats().modifier(attr);
         return resolveModifiedStat(character, ModifiableStat.ATTACK_BONUS, base);
+    }
+
+    // ---- Class resources (M3 Part A) ----
+
+    /** Sentinel: the resource is a combat-scoped builder with no maximum (martyr focus). */
+    public static final int UNBOUNDED_RESOURCE = Integer.MAX_VALUE;
+
+    /** The class's non-mana resource type id (rages, chakra, focus…); null for mana casters and resourceless classes. */
+    public String getClassResourceType(GameCharacter character) {
+        var classData = getClassData(character);
+        if (classData == null) return null;
+        String type = classData.path("resourceType").asText(null);
+        return (type == null || "mana".equals(type)) ? null : type;
+    }
+
+    /**
+     * Derived class-resource maximum (N8: tables are authoritative over prose):
+     * - resourcePerLevel / sacredEnergyPerLevel tables → value at [level-1]
+     * - focus (martyr) → {@link #UNBOUNDED_RESOURCE} (combat-scoped builder, no max)
+     * - shapeshiftHp → floor(maxHP/2), ×2 at level 20 (Metamorph)
+     * - mana casters / no resource → null (mana derives via computeMaxMana)
+     */
+    public Integer computeClassResourceMax(GameCharacter character) {
+        String type = getClassResourceType(character);
+        if (type == null) return null;
+        var classData = getClassData(character);
+        int level = Math.max(1, character.getLevel());
+
+        if ("focus".equals(type)) return UNBOUNDED_RESOURCE;
+        if ("shapeshiftHp".equals(type)) {
+            int pool = computeMaxHP(character) / 2;
+            return character.getLevel() >= 20 ? pool * 2 : pool;
+        }
+
+        var table = classData.path("resourcePerLevel");
+        if (!table.isArray()) table = classData.path("sacredEnergyPerLevel");
+        if (table.isArray() && table.size() >= level) {
+            return table.get(level - 1).asInt();
+        }
+        // Data gap — the type exists but no progression table; treat as underived.
+        return null;
+    }
+
+    /** Builders accumulate in play and reset to 0 on rest (focus; sorcerer empowerment is play-state). */
+    public boolean isBuilderResource(String resourceType) {
+        return "focus".equals(resourceType) || "empowerment".equals(resourceType);
+    }
+
+    /** Charge-style counts (rages, curses) restore with floor + probability at partial rest tiers (Q19). */
+    public boolean isChargeStyleResource(String resourceType) {
+        return "rages".equals(resourceType) || "curses".equals(resourceType);
+    }
+
+    // ---- Death & dying (M2-D) ----
+
+    /** Medicine-check revive DC (N11b): 3 + ceil(level/2), +2 per additional down this combat. */
+    public int computeReviveDC(GameCharacter character) {
+        int escalation = Math.max(0, character.getDownsThisCombat() - 1);
+        return 3 + (character.getLevel() + 1) / 2 + 2 * escalation;
     }
 
     // ---- Inventory ----

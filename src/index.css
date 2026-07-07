@@ -1221,6 +1221,563 @@ body {
   width: 100%;
 }
 
+/* ── Combat panel ── */
+
+.life-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+}
+
+.life-banner--downed {
+  background: #4a2410aa;
+  border: 1px solid #b96a2a;
+  box-shadow: inset 0 0 24px #d4622a22;
+}
+
+.life-banner--dead {
+  background: #3a0f0faa;
+  border: 1px solid #a03030;
+  box-shadow: inset 0 0 24px #c4303022;
+}
+
+.life-banner-text strong {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.08em;
+}
+
+.life-banner--downed .life-banner-text strong {
+  color: #f0a060;
+}
+
+.life-banner--dead .life-banner-text strong {
+  color: var(--negative);
+}
+
+.life-banner-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.life-danger {
+  color: var(--negative);
+}
+
+.combat-hp {
+  margin-bottom: 18px;
+}
+
+.combat-hp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+}
+
+.combat-hp-head > span:first-child {
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.combat-hp-val {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.combat-temp {
+  color: #7fd0e8;
+  font-size: 0.85em;
+}
+
+.combat-conditions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.combat-condition {
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--negative);
+  border: 1px solid #7a3b32;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.combat-death-stacks {
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #b8a0d8;
+  border: 1px solid #5a4878;
+  border-radius: 999px;
+  padding: 2px 9px;
+  cursor: help;
+}
+
+.combat-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.combat-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.combat-form-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  min-width: 58px;
+}
+
+.combat-num {
+  width: 80px;
+}
+
+.combat-num,
+.combat-form select {
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 9px;
+  font-size: 0.9rem;
+}
+
+.combat-form--effect select {
+  max-width: 220px;
+}
+
+.combat-section-title {
+  margin: 0 0 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.combat-effects {
+  margin-bottom: 18px;
+}
+
+.combat-effect-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.combat-effect {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 999px;
+  padding: 4px 6px 4px 12px;
+  font-size: 0.84rem;
+}
+
+.combat-effect-name {
+  font-weight: 600;
+}
+
+.combat-effect-meta {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+.combat-effect-remove {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.combat-effect-remove:hover {
+  color: var(--negative);
+  border-color: #7a3b32;
+}
+
+.combat-log {
+  border: 1px solid var(--border-bright);
+  border-radius: 10px;
+  background: var(--bg-card);
+  padding: 12px 14px;
+  box-shadow: inset 0 0 22px #d4af3712;
+}
+
+.combat-log-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.combat-log-head .combat-section-title {
+  margin: 0;
+}
+
+.combat-steps {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.combat-step {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.combat-step-rule {
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+
+.combat-step-note {
+  flex: 1;
+  min-width: 120px;
+}
+
+.combat-step-delta {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.combat-triggered {
+  margin: 8px 0 0;
+  color: var(--negative);
+  font-size: 0.85rem;
+}
+
+.create-section {
+  margin-bottom: 18px;
+}
+
+/* ── Shop & item actions (M5) ── */
+
+.shop {
+  margin-top: 18px;
+}
+
+.shop-form {
+  flex-wrap: wrap;
+}
+
+.inv-actions {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.inv-act {
+  padding: 3px 10px;
+  font-size: 0.72rem;
+}
+
+.scroll-reader {
+  border: 1px solid var(--border);
+  border-radius: 0 0 10px 10px;
+  border-top: none;
+  padding: 8px 12px;
+  margin: -6px 0 6px;
+  background: var(--bg-card);
+}
+
+.scroll-reader .spell-meta {
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* ── Level-up (M6) ── */
+
+.levelup {
+  margin-top: 20px;
+}
+
+.levelup--open {
+  border: 1px solid var(--border-bright);
+  border-radius: 10px;
+  background: var(--bg-card);
+  padding: 14px;
+}
+
+.levelup-spell {
+  display: block;
+  margin-bottom: 8px;
+  min-width: 260px;
+}
+
+.create-skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px 14px;
+}
+
+.inv-copper-total {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.inv-gold-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Spellbook (M4) ── */
+
+.spellbook-head {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.spell-stat-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.spell-stat-chip strong {
+  color: var(--gold);
+}
+
+.spell-stat-chip--live {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+  box-shadow: inset 0 0 12px #d4af3720;
+}
+
+.spell-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spell-row {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+
+.spell-row--open {
+  border-color: var(--border-bright);
+}
+
+.spell-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.spell-name {
+  font-weight: 600;
+}
+
+.spell-meta {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  flex: 1;
+}
+
+.spell-badge {
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.spell-details {
+  padding: 0 12px 10px;
+  border-top: 1px solid var(--border);
+}
+
+.spell-desc {
+  margin: 8px 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.spell-facts {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.spell-self {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.spell-prep-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.spell-prep-count {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.spell-list--picker {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.spell-pick {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.cast-results {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.cast-roll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.cast-roll-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.cast-roll-dice {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cast-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  border: 1px solid var(--border-bright);
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cast-roll-part {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.cast-roll-total {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--gold);
+}
+
+.cast-numbers {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.cast-numbers strong {
+  color: var(--gold);
+}
+
+.cast-warn {
+  color: var(--negative);
+}
+
+.cast-roll--crit {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 14px #d4af3730;
+}
+
+.cast-roll--fumble {
+  border-color: #7a3b32;
+}
+
+.cast-crit {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
 /* ── Entry: server connection ── */
 
 .conn {

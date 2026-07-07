@@ -11,7 +11,10 @@ public enum AdvantageTarget {
     SAVING_THROWS("savingThrows"),
     SAVING_THROW("savingThrow"),
     SKILL_CHECKS("skillChecks"),
-    RANGED_ATTACKS_THROUGH("rangedAttacksThrough");
+    RANGED_ATTACKS_THROUGH("rangedAttacksThrough"),
+    // Exhaustion ladder tiers 1 and 3 (M2-B / Q15)
+    ABILITY_CHECKS("abilityChecks"),
+    ALL_ROLLS("allRolls");
 
     private final String key;
 

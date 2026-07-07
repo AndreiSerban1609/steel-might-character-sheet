@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import { ABILITY_ORDER, ABILITY_LABELS, formatModifier, titleCase } from '../domain/stats';
 import type { AbilityScore } from '../platform/types';
+import { LevelUpSection } from './LevelUpSection';
 
 interface SheetDraft {
   name: string;
@@ -145,6 +146,7 @@ export function StatsPanel() {
         />
         <Vital label="AC" view={`${snapshot.ac}`} />
         <Vital label="Speed" view={`${snapshot.speed} ft`} />
+        {snapshot.deathStacks > 0 && <Vital label="Death Stacks" view={`☠ ${snapshot.deathStacks}`} />}
       </div>
 
       <div className="section-bar">
@@ -182,6 +184,8 @@ export function StatsPanel() {
           </div>
         ))}
       </div>
+
+      {!editing && <LevelUpSection />}
     </>
   );
 }

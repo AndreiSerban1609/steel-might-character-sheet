@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import { StatsPanel } from './StatsPanel';
+import { CombatPanel } from './CombatPanel';
 import { SkillsPanel } from './SkillsPanel';
 import { PlayerDeckPanel } from './PlayerDeckPanel';
 import { InventoryPanel } from './InventoryPanel';
 import { BioPanel } from './BioPanel';
+import { SpellbookPanel } from './SpellbookPanel';
 
-type Tab = 'stats' | 'skills' | 'inventory' | 'bio' | 'deck';
+type Tab = 'stats' | 'combat' | 'spells' | 'skills' | 'inventory' | 'bio' | 'deck';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'stats', label: 'Stats' },
+  { id: 'combat', label: 'Combat' },
+  { id: 'spells', label: 'Spells' },
   { id: 'skills', label: 'Skills' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'bio', label: 'Bio' },
@@ -42,6 +46,8 @@ export function Sheet() {
       </div>
 
       {tab === 'stats' && <StatsPanel />}
+      {tab === 'combat' && <CombatPanel />}
+      {tab === 'spells' && <SpellbookPanel />}
       {tab === 'skills' && <SkillsPanel />}
       {tab === 'inventory' && <InventoryPanel />}
       {tab === 'bio' && <BioPanel />}

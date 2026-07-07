@@ -175,14 +175,22 @@ class StatDerivationEngineTest {
 
         @Test
         void dazedHalves() {
-            character.addEffect(new ActiveEffect("dazed", "attack", 1, null, 1, 0));
+            // Threshold system (M0-A): stack-based negatives need stacks >= ceil(level/2) = 3 to fire.
+            character.addEffect(new ActiveEffect("dazed", "attack", 3, null, 1, 0));
             // dazed: { stat: "apRecovery", multiplier: 0.5 }
             assertThat(engine.computeAPRecovery(character)).isEqualTo(3);
         }
 
         @Test
+        void dazedBelowThresholdIsDormant() {
+            character.addEffect(new ActiveEffect("dazed", "attack", 2, null, null, 0));
+            // 2 stacks < threshold 3 → inert (M0-A R3b)
+            assertThat(engine.computeAPRecovery(character)).isEqualTo(6);
+        }
+
+        @Test
         void stunnedOverridesToZero() {
-            character.addEffect(new ActiveEffect("stunned", "attack", 1, null, 1, 0));
+            character.addEffect(new ActiveEffect("stunned", "attack", 3, null, 1, 0));
             // stunned: { stat: "apRecovery", value: 0, override: true }
             assertThat(engine.computeAPRecovery(character)).isEqualTo(0);
         }
@@ -190,7 +198,7 @@ class StatDerivationEngineTest {
         @Test
         void stunnedOverridesEvenWithHaste() {
             character.addEffect(new ActiveEffect("haste", "spell", 1, null, 3, 0));
-            character.addEffect(new ActiveEffect("stunned", "attack", 1, null, 1, 0));
+            character.addEffect(new ActiveEffect("stunned", "attack", 3, null, 1, 0));
             assertThat(engine.computeAPRecovery(character)).isEqualTo(0);
         }
     }
@@ -251,6 +259,30 @@ class StatDerivationEngineTest {
             // shortbow: apCost=2, reduce by 5 stacks → -5, 2+(-5)=-3 → clamped to 1
             character.addEffect(new ActiveEffect("reduced-weapon-ap-cost", "buff", 5, null, 3, 0));
             assertThat(engine.computeWeaponApCost(character)).isEqualTo(1);
+        }
+    }
+
+    @Nested
+    class CorrodedLadder {
+        // medium armor at level 5: AC 12 + DEXmod(2)×2 = 16, PA 2+2×4 = 10, MA 1+1×4 = 5.
+        @Test
+        void threeTiersLowerAcHalvePaHalveMa() {
+            character.addItem(new InventoryEntry("medium-armor", 1, 0, true));
+            character.addEffect(new ActiveEffect("corroded", "acid", 3, null, 1, 0));
+
+            assertThat(engine.computeAC(character)).isEqualTo(11); // tier 1: −5
+            assertThat(engine.computePA(character)).isEqualTo(5);  // tier 2: ×0.5
+            assertThat(engine.computeMA(character)).isEqualTo(2);  // tier 3: ×0.5 (floored)
+        }
+
+        @Test
+        void twoTiersLeaveMaUntouched() {
+            character.addItem(new InventoryEntry("medium-armor", 1, 0, true));
+            character.addEffect(new ActiveEffect("corroded", "acid", 2, null, 1, 0));
+
+            assertThat(engine.computeAC(character)).isEqualTo(11);
+            assertThat(engine.computePA(character)).isEqualTo(5);
+            assertThat(engine.computeMA(character)).isEqualTo(5); // tier 3 not acquired
         }
     }
 

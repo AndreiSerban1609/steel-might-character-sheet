@@ -90,16 +90,114 @@ export interface PlayerDeckView {
   deckSize: number;
 }
 
+/** One pipeline rule's contribution to an action's resolution (server: engine.ResolutionStep). */
+export interface ResolutionStep {
+  rule: string;
+  note: string;
+  valueBefore: number;
+  valueAfter: number;
+}
+
+/** Dice breakdown inside a cast payload (M4-B/D). */
+export interface RollBreakdown {
+  rolls: number[];
+  flat: number;
+  modifier: number;
+  weaponDamage?: number;
+  /** present (= 2) when a critical hit doubled the damage */
+  critMultiplier?: number;
+  total: number;
+}
+
+/** The cast's d20 spell-attack roll (attack-type spells only). */
+export interface AttackRollView {
+  roll: number;
+  bonus: number;
+  total: number;
+  critical?: boolean;
+  criticalFailure?: boolean;
+}
+
+/** An effect the spell applies on hit, with its converted duration. */
+export interface EffectOnHitView {
+  id: string;
+  name: string;
+  rounds?: number;
+  durationType?: string;
+}
+
+/** Action-specific extras (cast: saveDC/attackRoll/damage/…; level-up: newAbilities). */
+export interface ResolutionPayload {
+  saveDC?: number;
+  attackBonus?: number;
+  attackRoll?: AttackRollView;
+  damageType?: string;
+  damage?: RollBreakdown;
+  healing?: RollBreakdown;
+  concentrationDropped?: boolean;
+  effectsOnHit?: EffectOnHitView[];
+  effectsAppliedTo?: string;
+  newLevel?: number;
+  newAbilities?: string[];
+}
+
+export interface ResolutionResult {
+  steps: ResolutionStep[];
+  effectsTriggered: string[];
+  payload?: ResolutionPayload;
+}
+
+/** Every combat action returns the step-by-step resolution plus the updated snapshot. */
+export interface ActionResponse<T> {
+  resolution: ResolutionResult;
+  snapshot: T;
+}
+
+export type DamageTypeId =
+  | 'SLASHING'
+  | 'PIERCING'
+  | 'CRUSHING'
+  | 'SHADOW'
+  | 'LIGHT'
+  | 'FIRE'
+  | 'ICE'
+  | 'LIGHTNING'
+  | 'POISON'
+  | 'THUNDER'
+  | 'PSYCHIC'
+  | 'SPECTRAL'
+  | 'PURE'
+  | 'FORCE'
+  | 'TRUE';
+
+/** Mirrors the server's SpellbookSnapshot DTO. */
+export interface SpellbookSnapshot {
+  knownSpells: string[];
+  preparedSpells: string[];
+  currentMana: number;
+  maxMana: number;
+  concentrating: boolean;
+  spellcastingAttribute: AbilityScore | null;
+  spellSaveDC: number;
+  spellAttackBonus: number;
+}
+
 export interface InventoryItemView {
   itemId: string;
   quantity: number;
   upgradeTier: number;
   equipped: boolean;
+  silvered: boolean;
   space: number;
+  /** remaining uses for charge items; null/absent = not charge-based */
+  chargesRemaining?: number | null;
+  /** scrolls: the spell written on this scroll ("Scroll of Magic Bolt") */
+  spellId?: string | null;
 }
 
 export interface InventorySnapshot {
   items: InventoryItemView[];
+  /** ONE generic gold currency — all shop prices are in it (no denominations) */
   gold: number;
   carriedSpace: number;
   carryCapacity: number;
@@ -111,6 +209,8 @@ export interface InventoryItemInput {
   quantity: number;
   upgradeTier: number;
   equipped: boolean;
+  /** scrolls: the spell written on the scroll (DM grant path) */
+  spellId?: string;
 }
 
 export interface AppearanceView {
@@ -169,6 +269,7 @@ export interface CombatSnapshot {
   level: number;
   pathId: string;
   classId: string;
+  specializationId: string | null;
   stats: Record<AbilityScore, number>;
   modifiers: Record<AbilityScore, number>;
   hp: HpView;
@@ -180,10 +281,21 @@ export interface CombatSnapshot {
   speed: number;
   bonusInitiative: number;
   deathStacks: number;
+  /** ALIVE | DOWNED | DEAD (M2-D); downedRoundsRemaining/reviveDC present only while DOWNED. */
+  status: 'ALIVE' | 'DOWNED' | 'DEAD';
+  downedRoundsRemaining?: number | null;
+  reviveDC?: number | null;
+  pendingDeathFight: boolean;
+  downsThisCombat: number;
   savingThrowProficiencies: AbilityScore[];
   proficiencies: string[];
   activeEffects: EffectView[];
   equippedWeapon: string | null;
   equippedArmor: string | null;
   conditions: string[];
+  /** Q30 (M5-B): equipped gear without proficiency + the consequences (DM display data). */
+  proficiencyPenalties: { itemId: string; penalty: string }[];
+  /** M6-C progression state — drives the level-up UI's choice pools. */
+  talents: string[];
+  specFeats: string[];
 }

@@ -18,7 +18,10 @@ public enum MechanicType {
     REMOVE_ON_EVENT("removeOnEvent"),
     FORCED_BEHAVIOR("forcedBehavior"),
     STAND_UP_COST("standUpCost"),
-    GRANT_ABILITY("grantAbility");
+    GRANT_ABILITY("grantAbility"),
+    // Exhaustion ladder tiers 4 and 6 (M2-B / Q15)
+    AUTO_HIT_AGAINST("autoHitAgainst"),
+    DEATH("death");
 
     private final String jsonKey;
 

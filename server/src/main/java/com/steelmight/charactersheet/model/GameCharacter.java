@@ -45,10 +45,24 @@ public class GameCharacter {
     })
     private ClassResource resource;
 
-    private int gold;
+    /** Money — ONE generic currency (Game Owner 2026-07-06: the copper/silver/gold
+     *  tier concept is gone); all shop prices are in this unit. Wrapper so legacy
+     *  rows (null column) load as 0. */
+    @Column(name = "gold")
+    private Integer gold;
+
     private int speed;
     private int bonusInitiative;
     private int deathStacks;
+
+    // --- Death & dying (M2-D) — wrappers so pre-existing rows load as sane defaults ---
+
+    @Enumerated(EnumType.STRING)
+    private LifeStatus lifeStatus;
+
+    private Integer downedRoundsRemaining;
+    private Boolean pendingDeathFight;
+    private Integer downsThisCombat;
 
     // --- Bio / Narrative ---
 
@@ -122,6 +136,12 @@ public class GameCharacter {
     @CollectionTable(name = "character_talents", joinColumns = @JoinColumn(name = "player_id"))
     @Column(name = "talent_id")
     private List<String> talents = new ArrayList<>();
+
+    /** Specialization feat picks at 5/9/13 (M6-C): "active" | "passive" | "modification". */
+    @ElementCollection
+    @CollectionTable(name = "character_spec_feats", joinColumns = @JoinColumn(name = "player_id"))
+    @Column(name = "feat_slot")
+    private List<String> specFeats = new ArrayList<>();
 
     protected GameCharacter() {}
 
@@ -231,7 +251,7 @@ public class GameCharacter {
     public ClassResource getResource() { return resource; }
     public void setResource(ClassResource resource) { this.resource = resource; }
 
-    public int getGold() { return gold; }
+    public int getGold() { return gold != null ? gold : 0; }
     public void setGold(int gold) { this.gold = gold; }
 
     public int getSpeed() { return speed; }
@@ -243,6 +263,18 @@ public class GameCharacter {
     public int getDeathStacks() { return deathStacks; }
     public void setDeathStacks(int deathStacks) { this.deathStacks = deathStacks; }
 
+    public LifeStatus getLifeStatus() { return lifeStatus != null ? lifeStatus : LifeStatus.ALIVE; }
+    public void setLifeStatus(LifeStatus lifeStatus) { this.lifeStatus = lifeStatus; }
+
+    public Integer getDownedRoundsRemaining() { return downedRoundsRemaining; }
+    public void setDownedRoundsRemaining(Integer downedRoundsRemaining) { this.downedRoundsRemaining = downedRoundsRemaining; }
+
+    public boolean isPendingDeathFight() { return Boolean.TRUE.equals(pendingDeathFight); }
+    public void setPendingDeathFight(boolean pendingDeathFight) { this.pendingDeathFight = pendingDeathFight; }
+
+    public int getDownsThisCombat() { return downsThisCombat != null ? downsThisCombat : 0; }
+    public void setDownsThisCombat(int downsThisCombat) { this.downsThisCombat = downsThisCombat; }
+
     public List<AbilityScore> getSavingThrowProficiencies() { return savingThrowProficiencies; }
     public List<ActiveEffect> getActiveEffects() { return activeEffects; }
     public List<InventoryEntry> getInventory() { return inventory; }
@@ -250,4 +282,5 @@ public class GameCharacter {
     public List<String> getPreparedSpells() { return preparedSpells; }
     public List<String> getProficiencies() { return proficiencies; }
     public List<String> getTalents() { return talents; }
+    public List<String> getSpecFeats() { return specFeats; }
 }

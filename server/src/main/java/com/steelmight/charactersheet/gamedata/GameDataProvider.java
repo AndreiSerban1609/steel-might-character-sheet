@@ -3,7 +3,11 @@ package com.steelmight.charactersheet.gamedata;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.steelmight.charactersheet.engine.DamageCategory;
 import com.steelmight.charactersheet.engine.EffectDefinition;
+import com.steelmight.charactersheet.engine.EffectMechanic;
+import com.steelmight.charactersheet.engine.EffectPolarity;
+import com.steelmight.charactersheet.model.DamageType;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Component
 public class GameDataProvider {
@@ -37,9 +43,34 @@ public class GameDataProvider {
     private JsonNode spellcasting;
     private JsonNode pricing;
     private JsonNode skills;
+    private JsonNode mounts;
+    private JsonNode itemProperties;
+    private JsonNode talents;
+    private JsonNode specializations;
 
     /** itemId → inventorySpace, flattened across every purchasable-item source. */
     private Map<String, Double> itemSpaceById;
+
+    /** itemId → resolved catalog entry (M5: findItem across all catalogs). */
+    private Map<String, ResolvedItem> itemsById;
+
+    /** DamageType → category (physical/magical/true), from damage-types.json. */
+    private Map<DamageType, DamageCategory> damageCategoryByType;
+
+    /** raceId → damage-taken multipliers (races.json damageTaken; 0.5 res / 2.0 vuln). */
+    private Map<String, Map<DamageType, Double>> raceDamageTakenById;
+
+    /** effects.json → conditionTerms (injured / severelyInjured thresholds). */
+    private JsonNode conditionTerms;
+
+    /** spellId → definition, from all ten spells-*.json files (M4-A). */
+    private Map<String, SpellDefinition> spellsById;
+
+    /** talentId → parsed mechanics for the (few) mechanical talents; most are free text. */
+    private Map<String, List<EffectMechanic>> talentMechanicsById;
+
+    /** casterWeaponId → typed definition (M4-A; the raw JsonNode stays for the item index). */
+    private Map<String, CasterWeaponDefinition> casterWeaponsById;
 
     public GameDataProvider(ObjectMapper objectMapper,
                             @Value("${game.data-path}") String dataPath) {
@@ -63,11 +94,81 @@ public class GameDataProvider {
         spellcasting = loadFile("spellcasting.json");
         pricing = loadFile("pricing.json");
         skills = loadFile("skills.json");
+        mounts = loadFile("mounts.json");
+        itemProperties = loadFile("item-properties.json");
+        talents = loadFile("talents.json");
+        specializations = loadFile("specializations.json");
 
         buildItemIndex();
+        buildResolvedItemIndex();
+        loadDamageCategories();
+        buildRaceDamageIndex();
+        loadSpells();
+        loadCasterWeaponDefinitions();
+        parseTalentMechanics();
 
-        log.info("Game data loaded: {} effects, classes, weapons, armor, races, {} items",
-                effectsById.size(), itemSpaceById.size());
+        log.info("Game data loaded: {} effects, classes, weapons, armor, races, {} items, {} damage types, "
+                        + "{} spells, {} caster weapons",
+                effectsById.size(), itemSpaceById.size(), damageCategoryByType.size(),
+                spellsById.size(), casterWeaponsById.size());
+    }
+
+    private static final List<String> SPELL_FILES = List.of(
+            "spells-archer.json", "spells-battlemage.json", "spells-corruptor.json",
+            "spells-disciple.json", "spells-musician.json", "spells-rogue.json",
+            "spells-warrior.json", "spells-wildborn.json", "spells-wizard.json",
+            "spells-wraith-hunter.json");
+
+    private void loadSpells() throws IOException {
+        spellsById = new LinkedHashMap<>();
+        var countByClassId = new TreeMap<String, Integer>();
+        for (String filename : SPELL_FILES) {
+            JsonNode root = loadFile(filename);
+            if (!root.isArray()) {
+                log.warn("{} is not a JSON array — skipping", filename);
+                continue;
+            }
+            List<SpellDefinition> spells = objectMapper.convertValue(root, new TypeReference<>() {});
+            for (var spell : spells) {
+                var previous = spellsById.put(spell.id(), spell);
+                if (previous != null) {
+                    throw new IllegalStateException("Duplicate spell id '" + spell.id()
+                            + "' in " + filename);
+                }
+                countByClassId.merge(spell.classId(), 1, Integer::sum);
+            }
+        }
+        // Spell classId values are class ids (renamed "class" = old subclass, e.g. "sorcerer").
+        log.info("Loaded {} spells across {} classes: {}", spellsById.size(),
+                countByClassId.size(), countByClassId);
+    }
+
+    private void loadCasterWeaponDefinitions() {
+        casterWeaponsById = new LinkedHashMap<>();
+        if (casterWeapons == null || !casterWeapons.isArray()) return;
+        List<CasterWeaponDefinition> defs = objectMapper.convertValue(
+                casterWeapons, new TypeReference<>() {});
+        for (var def : defs) {
+            var previous = casterWeaponsById.put(def.id(), def);
+            if (previous != null) {
+                throw new IllegalStateException("Duplicate caster weapon id '" + def.id() + "'");
+            }
+        }
+    }
+
+    private void loadDamageCategories() throws IOException {
+        damageCategoryByType = new HashMap<>();
+        JsonNode root = loadFile("damage-types.json");
+        root.fields().forEachRemaining(entry -> {
+            DamageCategory category = DamageCategory.valueOf(entry.getKey().toUpperCase());
+            for (var typeNode : entry.getValue()) {
+                try {
+                    damageCategoryByType.put(DamageType.valueOf(typeNode.asText().toUpperCase()), category);
+                } catch (IllegalArgumentException e) {
+                    log.warn("damage-types.json lists unknown damage type '{}'", typeNode.asText());
+                }
+            }
+        });
     }
 
     /** Flatten every purchasable-item source into an itemId → inventorySpace index. */
@@ -76,11 +177,48 @@ public class GameDataProvider {
         indexItems(weapons);
         indexItems(armor);
         indexItems(casterWeapons);
+        indexItems(mounts);
         if (consumables != null) {
             indexItems(consumables.path("healingPotions").path("sizes"));
             indexItems(consumables.path("magicShopItems"));
             indexItems(consumables.path("scrolls"));
             indexItems(consumables.path("generalShop"));
+        }
+    }
+
+    /** itemId → catalog entry across every source (M5 shared: findItem). */
+    private void buildResolvedItemIndex() {
+        itemsById = new LinkedHashMap<>();
+        indexResolved(weapons, ItemKind.WEAPON);
+        indexResolved(armor, ItemKind.ARMOR);
+        indexResolved(casterWeapons, ItemKind.CASTER_WEAPON);
+        indexResolved(mounts, ItemKind.MOUNT);
+        if (consumables != null) {
+            indexResolved(consumables.path("healingPotions").path("sizes"), ItemKind.POTION);
+            indexResolved(consumables.path("magicShopItems"), ItemKind.MAGIC_SHOP);
+            indexResolved(consumables.path("scrolls"), ItemKind.SCROLL);
+            indexResolved(consumables.path("generalShop"), ItemKind.GENERAL);
+        }
+    }
+
+    private void indexResolved(JsonNode array, ItemKind kind) {
+        if (array == null || !array.isArray()) return;
+        for (var node : array) {
+            String id = node.path("id").asText(null);
+            if (id == null || id.isBlank()) continue;
+            var item = new ResolvedItem(
+                    id,
+                    node.path("name").asText(id),
+                    kind,
+                    node.hasNonNull("priceTier") ? node.path("priceTier").asText() : null,
+                    node.hasNonNull("itemLevel") ? node.path("itemLevel").asInt() : null,
+                    node.hasNonNull("price") ? node.path("price").asInt() : null,
+                    node);
+            var previous = itemsById.put(id, item);
+            if (previous != null) {
+                throw new IllegalStateException("Duplicate item id '" + id + "' ("
+                        + previous.kind() + " vs " + kind + ")");
+            }
         }
     }
 
@@ -104,8 +242,10 @@ public class GameDataProvider {
         List<EffectDefinition> positive = objectMapper.convertValue(
                 root.get("positive"), new TypeReference<>() {});
 
-        for (var e : negative) effectsById.put(e.id(), e);
-        for (var e : positive) effectsById.put(e.id(), e);
+        for (var e : negative) effectsById.put(e.id(), e.withPolarity(EffectPolarity.NEGATIVE));
+        for (var e : positive) effectsById.put(e.id(), e.withPolarity(EffectPolarity.POSITIVE));
+
+        conditionTerms = root.path("conditionTerms");
 
         log.info("Loaded {} negative + {} positive effects", negative.size(), positive.size());
     }
@@ -123,6 +263,18 @@ public class GameDataProvider {
         return effectsById.get(effectId);
     }
 
+    public SpellDefinition getSpell(String spellId) {
+        return spellsById.get(spellId);
+    }
+
+    public Map<String, SpellDefinition> getAllSpells() {
+        return spellsById;
+    }
+
+    public CasterWeaponDefinition getCasterWeapon(String casterWeaponId) {
+        return casterWeaponsById.get(casterWeaponId);
+    }
+
     public Map<String, EffectDefinition> getAllEffects() {
         return effectsById;
     }
@@ -138,6 +290,66 @@ public class GameDataProvider {
     public JsonNode getSpellcasting() { return spellcasting; }
     public JsonNode getPricing() { return pricing; }
     public JsonNode getSkills() { return skills; }
+    public JsonNode getMounts() { return mounts; }
+    public JsonNode getItemProperties() { return itemProperties; }
+    public JsonNode getTalents() { return talents; }
+    public JsonNode getSpecializations() { return specializations; }
+
+    /** talents.json entry by id; null when unknown. */
+    public JsonNode getTalent(String talentId) {
+        if (talents == null || !talents.isArray()) return null;
+        for (var t : talents) {
+            if (t.path("id").asText().equals(talentId)) return t;
+        }
+        return null;
+    }
+
+    /** Mechanical talents carry a mechanics array like effects do (glass-cannon's
+     *  crit range / armor overrides); parsed once so the stat engine can read them. */
+    private void parseTalentMechanics() {
+        talentMechanicsById = new HashMap<>();
+        if (talents == null || !talents.isArray()) return;
+        for (var t : talents) {
+            var mechanics = t.path("mechanics");
+            if (!mechanics.isArray() || mechanics.isEmpty()) continue;
+            List<EffectMechanic> parsed = objectMapper.convertValue(mechanics, new TypeReference<>() {});
+            talentMechanicsById.put(t.path("id").asText(), parsed);
+        }
+        if (!talentMechanicsById.isEmpty()) {
+            log.info("Parsed mechanics for {} talents: {}", talentMechanicsById.size(),
+                    talentMechanicsById.keySet());
+        }
+    }
+
+    /** Parsed mechanics for a talent id; empty for free-text talents. */
+    public List<EffectMechanic> getTalentMechanics(String talentId) {
+        var mechanics = talentMechanicsById.get(talentId);
+        return mechanics != null ? mechanics : List.of();
+    }
+
+    /** kebab-case identifier for named-but-id-less data (specializations, spec talents/feats). */
+    public static String slug(String name) {
+        return name == null ? "" : name.trim().toLowerCase()
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("(^-|-$)", "");
+    }
+
+    /** A class's specialization matched by slug(name); null when unknown. */
+    public JsonNode findSpecialization(String classId, String specializationId) {
+        if (specializations == null || specializationId == null) return null;
+        var list = specializations.path(classId);
+        if (!list.isArray()) return null;
+        String wanted = slug(specializationId);
+        for (var spec : list) {
+            if (slug(spec.path("name").asText()).equals(wanted)) return spec;
+        }
+        return null;
+    }
+
+    /** Catalog entry for an item id across all sources; null when unknown. */
+    public ResolvedItem findItem(String itemId) {
+        return itemId != null ? itemsById.get(itemId) : null;
+    }
 
     /** inventorySpace for an item id; unknown items count as 1 slot. */
     public double getItemSpace(String itemId) {
@@ -147,5 +359,42 @@ public class GameDataProvider {
 
     public boolean isKnownItem(String itemId) {
         return itemSpaceById.containsKey(itemId);
+    }
+
+    /** Racial damage-taken multipliers (races.json damageTaken); Dragonborn's parent
+     *  element is a per-character choice and intentionally not in the data yet. */
+    private void buildRaceDamageIndex() {
+        raceDamageTakenById = new HashMap<>();
+        // races.json root is { _note, races: [...] }.
+        var list = races != null ? races.path("races") : null;
+        if (list == null || !list.isArray()) return;
+        for (var race : list) {
+            var node = race.path("damageTaken");
+            if (!node.isObject()) continue;
+            var map = new HashMap<DamageType, Double>();
+            node.fields().forEachRemaining(entry -> {
+                try {
+                    map.put(DamageType.valueOf(entry.getKey().toUpperCase()), entry.getValue().asDouble());
+                } catch (IllegalArgumentException e) {
+                    log.warn("races.json damageTaken lists unknown damage type '{}'", entry.getKey());
+                }
+            });
+            raceDamageTakenById.put(race.path("id").asText(), map);
+        }
+    }
+
+    /** Category per damage-types.json; null if the type is missing from the file. */
+    public DamageCategory getDamageCategory(DamageType type) {
+        return damageCategoryByType.get(type);
+    }
+
+    /** Racial damage-taken multipliers for a race id; empty map when none. */
+    public Map<DamageType, Double> getRaceDamageTaken(String raceId) {
+        var map = raceId != null ? raceDamageTakenById.get(raceId) : null;
+        return map != null ? map : Map.of();
+    }
+
+    public JsonNode getConditionTerms() {
+        return conditionTerms;
     }
 }

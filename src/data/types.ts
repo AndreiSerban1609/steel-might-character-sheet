@@ -129,9 +129,10 @@ export interface UpgradeKitRules {
   inventorySpace: number;
 }
 
+// Money is ONE generic gold currency (Game Owner 2026-07-06) — every price below
+// and in the item catalogs is already in it; there are no denominations.
 export interface PricingData {
   tiers: Record<string, PricingTier>;
-  currency: { copperPerSilver: number; copperPerGold: number };
   upgradeKit: UpgradeKitRules;
   blacksmithUpgrade: { description: string; surchargePercent: number };
   silveringMultiplier: number;

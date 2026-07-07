@@ -1,7 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import type { InventoryItemInput } from '../platform/types';
-import { ITEM_CATALOG, KIND_LABEL, itemById, itemName } from '../domain/itemCatalog';
+import type { InventoryItemInput, InventoryItemView } from '../platform/types';
+import {
+  ITEM_CATALOG,
+  KIND_LABEL,
+  canUpgrade,
+  displayPrice,
+  displaySellback,
+  isEquippable,
+  isUsable,
+  itemById,
+  itemName,
+  usesTierPricing,
+  type CatalogItem,
+  type ItemKind,
+} from '../domain/itemCatalog';
+import { spellName, spellsForScroll } from '../domain/spellCatalog';
+import { ResolutionLog } from './ResolutionLog';
+
+/** Scrolls carry a specific spell — show them as "Scroll of X". */
+function displayName(itemId: string, spellId?: string | null): string {
+  return spellId ? `Scroll of ${spellName(spellId)}` : itemName(itemId);
+}
 
 function spaceOf(itemId: string): number {
   return itemById(itemId)?.space ?? 1;
@@ -14,12 +34,23 @@ function round1(n: number): number {
 export function InventoryPanel() {
   const inventory = useCharacterStore((s) => s.inventory);
   const saving = useCharacterStore((s) => s.saving);
+  const acting = useCharacterStore((s) => s.acting);
   const error = useCharacterStore((s) => s.error);
+  const lastResolution = useCharacterStore((s) => s.lastResolution);
   const loadInventory = useCharacterStore((s) => s.loadInventory);
   const saveInventory = useCharacterStore((s) => s.saveInventory);
+  const doPurchase = useCharacterStore((s) => s.doPurchase);
+  const doSell = useCharacterStore((s) => s.doSell);
+  const doUpgrade = useCharacterStore((s) => s.doUpgrade);
+  const doEquip = useCharacterStore((s) => s.doEquip);
+  const doUnequip = useCharacterStore((s) => s.doUnequip);
+  const doUseConsumable = useCharacterStore((s) => s.doUseConsumable);
+  const clearResolution = useCharacterStore((s) => s.clearResolution);
 
   const [draft, setDraft] = useState<{ items: InventoryItemInput[]; gold: number } | null>(null);
   const [pick, setPick] = useState('');
+  const [readingScroll, setReadingScroll] = useState<string | null>(null);
+  const doCastScroll = useCharacterStore((s) => s.doCastScroll);
 
   useEffect(() => {
     void loadInventory();
@@ -46,6 +77,7 @@ export function InventoryPanel() {
         quantity: i.quantity,
         upgradeTier: i.upgradeTier,
         equipped: i.equipped,
+        spellId: i.spellId ?? undefined,
       })),
       gold: inventory!.gold,
     });
@@ -79,6 +111,88 @@ export function InventoryPanel() {
     if (!useCharacterStore.getState().error) setDraft(null);
   }
 
+  function itemActions(it: InventoryItemView) {
+    const cat = itemById(it.itemId);
+    if (!cat) return null;
+    const tier = it.upgradeTier > 0 ? it.upgradeTier : undefined;
+    const spellId = it.spellId ?? undefined;
+    const sellback = displaySellback(cat, Math.max(1, it.upgradeTier), it.silvered);
+    return (
+      <span className="inv-actions">
+        {isEquippable(cat.kind) &&
+          (it.equipped ? (
+            <button
+              className="btn btn--ghost inv-act"
+              onClick={() => void doUnequip({ itemId: it.itemId, tier })}
+              disabled={acting}
+            >
+              Unequip
+            </button>
+          ) : (
+            <button
+              className="btn btn--ghost inv-act"
+              onClick={() => void doEquip({ itemId: it.itemId, tier })}
+              disabled={acting}
+            >
+              Equip
+            </button>
+          ))}
+        {isUsable(cat.kind) && (
+          <button
+            className="btn btn--ghost inv-act"
+            title={cat.kind === 'potion' ? 'Drink — heals by the potion’s own level' : 'Use'}
+            onClick={() => void doUseConsumable({ itemId: it.itemId, tier })}
+            disabled={acting}
+          >
+            Use
+          </button>
+        )}
+        {cat.kind === 'scroll' && (
+          <button
+            className="btn btn--ghost inv-act"
+            title="Anyone can cast the scroll's spell — no caster requirement, no mana"
+            onClick={() =>
+              setReadingScroll((cur) =>
+                cur === `${it.itemId}:${spellId ?? ''}` ? null : `${it.itemId}:${spellId ?? ''}`,
+              )
+            }
+            disabled={acting || !spellId}
+          >
+            {spellId ? 'Read…' : 'blank scroll'}
+          </button>
+        )}
+        {canUpgrade(cat.kind) && it.upgradeTier < 20 && (
+          <>
+            <button
+              className="btn btn--ghost inv-act"
+              title="Upgrade kit: cheaper, but a failed d20 roll (DC 5 + level) wastes the cost"
+              onClick={() => void doUpgrade({ itemId: it.itemId, tier, mode: 'kit' })}
+              disabled={acting}
+            >
+              Kit ⚒
+            </button>
+            <button
+              className="btn btn--ghost inv-act"
+              title="Blacksmith: price difference + 5%, guaranteed"
+              onClick={() => void doUpgrade({ itemId: it.itemId, tier, mode: 'blacksmith' })}
+              disabled={acting}
+            >
+              Smith ⚒
+            </button>
+          </>
+        )}
+        <button
+          className="btn btn--ghost inv-act"
+          title={sellback != null ? `Sell for ${sellback} g (half price)` : 'Sell for half price'}
+          onClick={() => void doSell({ itemId: it.itemId, tier, spellId })}
+          disabled={acting || it.equipped}
+        >
+          Sell
+        </button>
+      </span>
+    );
+  }
+
   return (
     <>
       <div className="sheet-actionbar">
@@ -92,7 +206,7 @@ export function InventoryPanel() {
             </button>
           </div>
         ) : (
-          <button className="btn btn--ghost" onClick={startEdit}>
+          <button className="btn btn--ghost" title="DM edit: full inventory/gold override" onClick={startEdit}>
             Edit
           </button>
         )}
@@ -120,11 +234,14 @@ export function InventoryPanel() {
             className="inv-gold-input"
             type="number"
             min={0}
+            title="One generic currency — all shop prices are in it"
             value={draft!.gold}
-            onChange={(e) => setDraft({ ...draft!, gold: Math.max(0, Number.parseInt(e.target.value, 10) || 0) })}
+            onChange={(e) =>
+              setDraft({ ...draft!, gold: Math.max(0, Number.parseInt(e.target.value, 10) || 0) })
+            }
           />
         ) : (
-          <span className="inv-gold-val">{inventory.gold} cp</span>
+          <span className="inv-gold-val">{inventory.gold} g</span>
         )}
       </div>
 
@@ -180,18 +297,229 @@ export function InventoryPanel() {
           : inventory.items.map((it, i) => {
               const cat = itemById(it.itemId);
               return (
-                <div className="inv-row" key={`${it.itemId}-${i}`}>
-                  <div className="inv-name">
-                    <span>{itemName(it.itemId)}</span>
-                    {cat && <span className="inv-kind">{KIND_LABEL[cat.kind]}</span>}
-                    {it.equipped && <span className="inv-equipped">equipped</span>}
+                <div key={`${it.itemId}-${it.upgradeTier}-${it.spellId ?? ''}-${i}`}>
+                  <div className="inv-row">
+                    <div className="inv-name">
+                      <span title={it.spellId ? itemName(it.itemId) : undefined}>
+                        {displayName(it.itemId, it.spellId)}
+                      </span>
+                      {it.upgradeTier > 0 && <span className="inv-kind">L{it.upgradeTier}</span>}
+                      {cat && <span className="inv-kind">{KIND_LABEL[cat.kind]}</span>}
+                      {it.silvered && <span className="inv-kind">silvered</span>}
+                      {it.chargesRemaining != null && (
+                        <span className="inv-kind" title="Charges restore on rest">
+                          ⚡ {it.chargesRemaining}
+                        </span>
+                      )}
+                      {it.equipped && <span className="inv-equipped">equipped</span>}
+                    </div>
+                    <span className="inv-qty-view">×{it.quantity}</span>
+                    <span className="inv-space">{round1(it.space * it.quantity)} sl</span>
+                    {itemActions(it)}
                   </div>
-                  <span className="inv-qty-view">×{it.quantity}</span>
-                  <span className="inv-space">{round1(it.space * it.quantity)} sl</span>
+                  {cat?.kind === 'scroll' &&
+                    it.spellId &&
+                    readingScroll === `${it.itemId}:${it.spellId}` && (
+                      <ScrollReader
+                        cat={cat}
+                        tier={it.upgradeTier > 0 ? it.upgradeTier : undefined}
+                        spellId={it.spellId}
+                        acting={acting}
+                        onCast={(body) => {
+                          setReadingScroll(null);
+                          void doCastScroll(body);
+                        }}
+                      />
+                    )}
                 </div>
               );
             })}
       </div>
+
+      {!editing && <Shop gold={inventory.gold} acting={acting} onBuy={doPurchase} />}
+
+      {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
     </>
+  );
+}
+
+/** Cast the spell written on the scroll (bound at purchase). */
+function ScrollReader({
+  cat,
+  tier,
+  spellId,
+  acting,
+  onCast,
+}: {
+  cat: CatalogItem;
+  tier?: number;
+  spellId: string;
+  acting: boolean;
+  onCast: (body: { itemId: string; tier?: number; spellId: string; applyEffectsToSelf?: boolean }) => void;
+}) {
+  const [selfApply, setSelfApply] = useState(false);
+  const spell = useMemo(
+    () =>
+      spellsForScroll(cat.spellLevel ?? 1, (cat.casterType as 'minor' | 'major') ?? 'major').find(
+        (s) => s.id === spellId,
+      ),
+    [cat, spellId],
+  );
+  return (
+    <div className="scroll-reader">
+      <span className="spell-meta">
+        Casts <strong>{spellName(spellId)}</strong> (level-{cat.spellLevel} {cat.casterType}-caster
+        spell) — no mana, anyone can read it
+        {cat.minCharLevel != null && cat.minCharLevel > 1 ? ` · requires level ${cat.minCharLevel}` : ''}
+      </span>
+      <div className="combat-form">
+        {spell?.effects && spell.effects.length > 0 && (
+          <label className="spell-self">
+            <input type="checkbox" checked={selfApply} onChange={(e) => setSelfApply(e.target.checked)} />
+            apply effects to self
+          </label>
+        )}
+        <button
+          className="btn btn--gold"
+          onClick={() =>
+            onCast({ itemId: cat.id, tier, spellId, applyEffectsToSelf: selfApply || undefined })
+          }
+          disabled={acting}
+        >
+          Cast {spellName(spellId)}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Shop({
+  gold,
+  acting,
+  onBuy,
+}: {
+  gold: number;
+  acting: boolean;
+  onBuy: (body: {
+    itemId: string;
+    quantity?: number;
+    tier?: number;
+    silvered?: boolean;
+    spellId?: string;
+  }) => Promise<void>;
+}) {
+  const [kind, setKind] = useState<ItemKind>('weapon');
+  const [itemId, setItemId] = useState('');
+  const [tier, setTier] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const [silvered, setSilvered] = useState(false);
+  const [scrollSpell, setScrollSpell] = useState('');
+
+  const options = useMemo(() => ITEM_CATALOG.filter((it) => it.kind === kind), [kind]);
+  const item = itemId ? itemById(itemId) : undefined;
+  const tiered = item ? usesTierPricing(item.kind) : false;
+  const unit = item ? displayPrice(item, tier, silvered && item.kind === 'weapon') : null;
+  const total = unit != null ? unit * quantity : null;
+  // scrolls are bought FOR a specific spell ("Scroll of Magic Bolt")
+  const scrollSpells = useMemo(
+    () =>
+      item?.kind === 'scroll'
+        ? spellsForScroll(item.spellLevel ?? 1, (item.casterType as 'minor' | 'major') ?? 'major')
+        : [],
+    [item],
+  );
+  const needsSpell = item?.kind === 'scroll';
+
+  function pickKind(k: ItemKind) {
+    setKind(k);
+    setItemId('');
+    setTier(1);
+    setSilvered(false);
+    setScrollSpell('');
+  }
+
+  return (
+    <div className="combat-effects shop">
+      <h3 className="combat-section-title">Shop</h3>
+      <div className="combat-form shop-form">
+        <select value={kind} onChange={(e) => pickKind(e.target.value as ItemKind)}>
+          {(Object.keys(KIND_LABEL) as ItemKind[]).map((k) => (
+            <option key={k} value={k}>
+              {KIND_LABEL[k]}
+            </option>
+          ))}
+        </select>
+        <select
+          value={itemId}
+          onChange={(e) => {
+            setItemId(e.target.value);
+            setScrollSpell('');
+          }}
+        >
+          <option value="">Choose an item…</option>
+          {options.map((it) => (
+            <option key={it.id} value={it.id}>
+              {it.name}
+              {it.kind === 'caster' || it.kind === 'magic' || it.kind === 'scroll' || it.kind === 'general'
+                ? ` · ${displayPrice(it, 1) ?? '?'} g`
+                : ''}
+            </option>
+          ))}
+        </select>
+        {needsSpell && (
+          <select value={scrollSpell} onChange={(e) => setScrollSpell(e.target.value)}>
+            <option value="">Spell on the scroll…</option>
+            {scrollSpells.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        )}
+        {tiered && (
+          <input
+            className="combat-num"
+            type="number"
+            min={1}
+            max={20}
+            title="Item level (1–20)"
+            value={tier}
+            onChange={(e) => setTier(Math.max(1, Math.min(20, Number.parseInt(e.target.value, 10) || 1)))}
+          />
+        )}
+        <input
+          className="combat-num"
+          type="number"
+          min={1}
+          title="Quantity"
+          value={quantity}
+          onChange={(e) => setQuantity(Math.max(1, Number.parseInt(e.target.value, 10) || 1))}
+        />
+        {item?.kind === 'weapon' && (
+          <label className="spell-self" title="×5 price — bypasses silver-vulnerable defenses">
+            <input type="checkbox" checked={silvered} onChange={(e) => setSilvered(e.target.checked)} />
+            silvered
+          </label>
+        )}
+        <button
+          className="btn btn--gold"
+          onClick={() =>
+            void onBuy({
+              itemId,
+              quantity,
+              tier: tiered ? tier : undefined,
+              silvered: silvered && item?.kind === 'weapon' ? true : undefined,
+              spellId: needsSpell ? scrollSpell : undefined,
+            })
+          }
+          disabled={acting || !itemId || (needsSpell && !scrollSpell) || (total != null && total > gold)}
+        >
+          Buy{total != null ? ` · ${total} g` : ''}
+        </button>
+      </div>
+      {total != null && total > gold && (
+        <p className="spell-prep-count">Not enough gold ({gold} g on hand).</p>
+      )}
+    </div>
   );
 }

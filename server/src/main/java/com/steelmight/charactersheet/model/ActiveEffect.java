@@ -22,6 +22,10 @@ public class ActiveEffect {
     private Integer remainingRounds;
     private int appliedAt;
 
+    // M3 Part B — nullable so pre-existing rows migrate via the derived default in the getter.
+    @Enumerated(EnumType.STRING)
+    private DurationType durationType;
+
     protected ActiveEffect() {}
 
     public ActiveEffect(String effectId, String source, int stacks, Integer value,
@@ -56,4 +60,13 @@ public class ActiveEffect {
 
     public int getAppliedAt() { return appliedAt; }
     public void setAppliedAt(int appliedAt) { this.appliedAt = appliedAt; }
+
+    /** Migration default (M3 criterion 9): rows without an explicit type derive
+     *  ROUNDS when they carry a duration, UNTIL_DISPELLED otherwise. */
+    public DurationType getDurationType() {
+        if (durationType != null) return durationType;
+        return remainingRounds != null ? DurationType.ROUNDS : DurationType.UNTIL_DISPELLED;
+    }
+
+    public void setDurationType(DurationType durationType) { this.durationType = durationType; }
 }

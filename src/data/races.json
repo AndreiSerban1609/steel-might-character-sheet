@@ -6,10 +6,30 @@
       "name": "Dyionies",
       "description": "Elevated race from the technological plane, extremely organized and obedient of rules.",
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": {
-        "male": { "heightCm": [160, 200], "weightKg": [50, 100] },
-        "female": { "heightCm": [150, 210], "weightKg": [40, 80] }
+        "male": {
+          "heightCm": [
+            160,
+            200
+          ],
+          "weightKg": [
+            50,
+            100
+          ]
+        },
+        "female": {
+          "heightCm": [
+            150,
+            210
+          ],
+          "weightKg": [
+            40,
+            80
+          ]
+        }
       },
       "alignmentTendency": "lawful",
       "active": {
@@ -34,10 +54,30 @@
       "name": "Jarghas",
       "description": "Highly intelligent race from the technological plane. Individualistic with a natural repulsion to rules.",
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": {
-        "male": { "heightCm": [185, 260], "weightKg": [80, 150] },
-        "female": { "heightCm": [180, 230], "weightKg": [60, 110] }
+        "male": {
+          "heightCm": [
+            185,
+            260
+          ],
+          "weightKg": [
+            80,
+            150
+          ]
+        },
+        "female": {
+          "heightCm": [
+            180,
+            230
+          ],
+          "weightKg": [
+            60,
+            110
+          ]
+        }
       },
       "alignmentTendency": "chaotic",
       "active": {
@@ -64,8 +104,20 @@
       "movementSpeed": 15,
       "senses": null,
       "sizeRange": {
-        "average": { "heightCm": [200, 250], "weightKg": [150, 200] },
-        "unstableThreshold": { "heightCm": 300, "weightKg": 300 }
+        "average": {
+          "heightCm": [
+            200,
+            250
+          ],
+          "weightKg": [
+            150,
+            200
+          ]
+        },
+        "unstableThreshold": {
+          "heightCm": 300,
+          "weightKg": 300
+        }
       },
       "alignmentTendency": null,
       "active": {
@@ -89,7 +141,12 @@
       "id": "human",
       "name": "Human",
       "description": "Humans live less than a century; their short lives drive them to act decisively.",
-      "levelOneStats": ["str", "dex", "will", "cha"],
+      "levelOneStats": [
+        "str",
+        "dex",
+        "will",
+        "cha"
+      ],
       "movementSpeed": 15,
       "senses": null,
       "sizeRange": null,
@@ -115,9 +172,16 @@
       "id": "elf",
       "name": "Elf",
       "description": "The longest-lived race in the realm; few die of old age — elder elves transcend, leaving their bodies for their spirits to roam the planes.",
-      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "good — find conflict and wars puerile",
       "active": {
@@ -140,7 +204,12 @@
       "id": "dwarf",
       "name": "Dwarf",
       "description": "Dwarves live up to half a millennium; greedy and stubborn but good folk, organized in kingdoms and clans.",
-      "levelOneStats": ["str", "const", "wis", "will"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 12.5,
       "senses": null,
       "sizeRange": null,
@@ -166,9 +235,16 @@
       "id": "gnome",
       "name": "Gnome",
       "description": "Gnomes live for a millennium, with endless curiosity for how everything works.",
-      "levelOneStats": ["dex", "int", "wis", "will"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 12.5,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "good or neutral, chaotic",
       "active": {
@@ -193,9 +269,16 @@
       "name": "Nyxari",
       "replaces": "tiefling",
       "description": "Live about 3 centuries thanks to their demonic parentage; inherit their mortal parent's way of behaving, with no innate inclination to evil.",
-      "levelOneStats": ["dex", "int", "will", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "will",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "any — shaped by upbringing",
       "active": {
@@ -208,6 +291,9 @@
         "name": "Infernal Blood",
         "description": "Fire resistance."
       },
+      "damageTaken": {
+        "fire": 0.5
+      },
       "skillAbility": {
         "type": "proficiency",
         "name": "Thievery",
@@ -219,7 +305,12 @@
       "name": "Stoneborn",
       "replaces": "goliath",
       "description": "Large horned humanoids with arcane tattoo marks that increase resilience; live almost a millennium, slowly eroding like mountains. Mechanics extracted from the old guide's Goliath entry.",
-      "levelOneStats": ["str", "const", "wis", "will"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 17.5,
       "senses": null,
       "sizeRange": null,
@@ -245,9 +336,16 @@
       "id": "daeva",
       "name": "Dae'va",
       "description": "Celestial beings sent for a purpose; they live until it is accomplished, then return to nothingness.",
-      "levelOneStats": ["int", "wis", "will", "cha"],
+      "levelOneStats": [
+        "int",
+        "wis",
+        "will",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 90 },
+      "senses": {
+        "darkvision": 90
+      },
       "sizeRange": null,
       "alignmentTendency": "almost always good",
       "active": {
@@ -260,6 +358,9 @@
         "name": "Celestial Light",
         "description": "Resistance to light."
       },
+      "damageTaken": {
+        "light": 0.5
+      },
       "skillAbility": {
         "type": "proficiency",
         "name": "Medicine",
@@ -271,7 +372,12 @@
       "name": "Dwurgo",
       "replaces": "goblin",
       "description": "Slightly larger goblinoids with thick colored fur and small snouts; war leaders of the goblinoid families, living up to 2.5 centuries. Mechanics extracted from the old guide's Goblin entry.",
-      "levelOneStats": ["str", "const", "int", "will"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "int",
+        "will"
+      ],
       "movementSpeed": 12.5,
       "senses": null,
       "sizeRange": null,
@@ -297,7 +403,12 @@
       "id": "kraka",
       "name": "Kraka",
       "description": "Bird-like petty thieves; few surpass half a century.",
-      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "cha"
+      ],
       "movementSpeed": 12.5,
       "senses": null,
       "sizeRange": null,
@@ -323,9 +434,16 @@
       "id": "triton",
       "name": "Triton",
       "description": "Protectors of the deep, kind-hearted and honest; live up to 7 centuries.",
-      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "cha"
+      ],
       "movementSpeed": 12.5,
-      "senses": { "darkvision": 120 },
+      "senses": {
+        "darkvision": 120
+      },
       "sizeRange": null,
       "alignmentTendency": "good",
       "active": {
@@ -348,9 +466,16 @@
       "id": "naga",
       "name": "Naga",
       "description": "Created to guard gods; lifespan of about 2.5 millennia.",
-      "levelOneStats": ["const", "int", "wis", "will"],
+      "levelOneStats": [
+        "const",
+        "int",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 60 },
+      "senses": {
+        "darkvision": 60
+      },
       "sizeRange": null,
       "alignmentTendency": "almost always lawful — meant to guard their master/creator",
       "active": {
@@ -373,7 +498,12 @@
       "id": "centaur",
       "name": "Centaur",
       "description": "Freedom-loving; live a bit less than humans.",
-      "levelOneStats": ["str", "const", "wis", "will"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 20,
       "senses": null,
       "sizeRange": null,
@@ -398,7 +528,12 @@
       "id": "minotaur",
       "name": "Minotaur",
       "description": "Savage lineage; lifespan ranges from a century to a millennium depending on purity of breed.",
-      "levelOneStats": ["str", "const", "int", "will"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "int",
+        "will"
+      ],
       "movementSpeed": 17.5,
       "senses": null,
       "sizeRange": null,
@@ -423,9 +558,16 @@
       "id": "vampire",
       "name": "Vampire",
       "description": "Pure-breed vampires are immortal but most are slain within their first millennium. Must consume blood: a person every couple of days; a week without feeding kills them. Only vampire lords can turn others.",
-      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 90 },
+      "senses": {
+        "darkvision": 90
+      },
       "sizeRange": null,
       "alignmentTendency": "lawful evil",
       "active": {
@@ -438,6 +580,11 @@
         "name": "Creature of the Night",
         "description": "Resistance to shadow and poison; vulnerability to light."
       },
+      "damageTaken": {
+        "shadow": 0.5,
+        "poison": 0.5,
+        "light": 2.0
+      },
       "skillAbility": {
         "type": "proficiency",
         "name": "Deception",
@@ -448,7 +595,12 @@
       "id": "orc",
       "name": "Orc",
       "description": "Savage warriors that lust for blood; live about a century, should they not die in war.",
-      "levelOneStats": ["str", "dex", "const", "will"],
+      "levelOneStats": [
+        "str",
+        "dex",
+        "const",
+        "will"
+      ],
       "movementSpeed": 15,
       "senses": null,
       "sizeRange": null,
@@ -474,9 +626,16 @@
       "id": "dragonborn",
       "name": "Dragonborn",
       "description": "Live to about 8 centuries; their parent's greed for gold runs in their blood.",
-      "levelOneStats": ["str", "const", "int", "wis"],
+      "levelOneStats": [
+        "str",
+        "const",
+        "int",
+        "wis"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "any — each chooses their own path",
       "active": {
@@ -499,7 +658,12 @@
       "id": "forest-folk",
       "name": "Forest Folk",
       "description": "Kind-hearted but uninvolved unless directly concerned; live a couple of centuries at most.",
-      "levelOneStats": ["str", "dex", "wis", "will"],
+      "levelOneStats": [
+        "str",
+        "dex",
+        "wis",
+        "will"
+      ],
       "movementSpeed": 15,
       "senses": null,
       "sizeRange": null,
@@ -524,9 +688,16 @@
       "id": "oni",
       "name": "Oni",
       "description": "Monstrous hunters of humans since ancient times; live up to 10 millennia through their ritual: each year they see a person in a vision and must hunt, kill and consume them before the year ends, or be cast into oblivion.",
-      "levelOneStats": ["str", "dex", "const", "wis"],
+      "levelOneStats": [
+        "str",
+        "dex",
+        "const",
+        "wis"
+      ],
       "movementSpeed": 17.5,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "chaotic evil",
       "active": {
@@ -540,6 +711,9 @@
         "name": "Demon Blood",
         "description": "Resistance to shadow; immune to curses (lycanthropy, wendigo and the like)."
       },
+      "damageTaken": {
+        "shadow": 0.5
+      },
       "skillAbility": {
         "type": "proficiency",
         "name": "Perception",
@@ -550,9 +724,16 @@
       "id": "refur",
       "name": "Refur",
       "description": "Fox-spirits that grow a tail every century (born with none); on the day they would need a tenth tail, they vanish. Consuming souls prolongs their lifespan and empowers them. They keep a fixed humanoid disguise form (chosen once, same gender).",
-      "levelOneStats": ["str", "dex", "int", "cha"],
+      "levelOneStats": [
+        "str",
+        "dex",
+        "int",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "chaotic, many evil",
       "active": {
@@ -575,9 +756,16 @@
       "id": "tamari",
       "name": "Tamari",
       "description": "Memory-eaters; must feast on memories to survive (one minor absorption per week, one total absorption per month). Lifespan varies with memories consumed, seldom surpassing a millennium.",
-      "levelOneStats": ["dex", "int", "wis", "cha"],
+      "levelOneStats": [
+        "dex",
+        "int",
+        "wis",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 90 },
+      "senses": {
+        "darkvision": 90
+      },
       "sizeRange": null,
       "alignmentTendency": "evil — thirst for others' memories",
       "active": {
@@ -590,6 +778,11 @@
         "name": "Shadowmind",
         "description": "Resistance to shadow and psychic; vulnerable to light."
       },
+      "damageTaken": {
+        "shadow": 0.5,
+        "psychic": 0.5,
+        "light": 2.0
+      },
       "skillAbility": {
         "type": "proficiency",
         "name": "Insight",
@@ -600,9 +793,16 @@
       "id": "neko",
       "name": "Neko",
       "description": "Cat-folk who live a bit less than humans — though some elders have lived centuries, and no one knows their secret.",
-      "levelOneStats": ["dex", "const", "int", "cha"],
+      "levelOneStats": [
+        "dex",
+        "const",
+        "int",
+        "cha"
+      ],
       "movementSpeed": 15,
-      "senses": { "darkvision": 30 },
+      "senses": {
+        "darkvision": 30
+      },
       "sizeRange": null,
       "alignmentTendency": "chaotic neutral — freedom and carelessness",
       "active": {

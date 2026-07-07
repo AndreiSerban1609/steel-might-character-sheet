@@ -92,6 +92,12 @@
   {
     "id": "glass-cannon",
     "name": "Glass Cannon",
+    "mechanics": [
+      { "type": "statModifier", "stat": "ac", "value": 0, "override": true },
+      { "type": "statModifier", "stat": "pa", "value": 0, "override": true },
+      { "type": "statModifier", "stat": "ma", "value": 0, "override": true },
+      { "type": "statModifier", "stat": "critRange", "value": 20 }
+    ],
     "description": "AC, PA, and MA become 0 and cannot be modified by any source. Critical chance on all abilities increased by 4 (e.g., crit on 16-20 instead of 20)."
   },
   {

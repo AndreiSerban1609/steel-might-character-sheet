@@ -1,7 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
-const DATA_DIR = path.resolve(__dirname, '..', 'src', 'data');
+// ESM-safe __dirname (tsx runs this as an ES module)
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const DATA_DIR = path.resolve(SCRIPT_DIR, '..', 'src', 'data');
 
 let errors: string[] = [];
 let warnings: string[] = [];

@@ -26,3 +26,8 @@ export function titleCase(id: string): string {
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
 }
+
+/** camelCase ids -> spaced words: "severelyInjured" -> "severely injured". */
+export function camelToWords(id: string): string {
+  return id.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase();
+}

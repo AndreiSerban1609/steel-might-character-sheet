@@ -13,10 +13,6 @@
       "prices": [10, 16, 24, 34, 50, 75, 115, 170, 260, 380, 580, 860, 1300, 1950, 2900, 4400, 6600, 9800, 15000, 22000]
     }
   },
-  "currency": {
-    "copperPerSilver": 10,
-    "copperPerGold": 100
-  },
   "upgradeKit": {
     "description": "Cost = one-handed tier price at target level / 3. Roll 1d20 + smith tools proficiency >= 5 + item current level to succeed. Multi-level upgrades require succeeding on each level. Consumed on use.",
     "costTier": "one-handed",

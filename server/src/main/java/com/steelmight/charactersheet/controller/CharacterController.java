@@ -3,6 +3,9 @@ package com.steelmight.charactersheet.controller;
 import com.steelmight.charactersheet.dto.*;
 import com.steelmight.charactersheet.service.CharacterService;
 import com.steelmight.charactersheet.service.DeckTemplateService;
+import com.steelmight.charactersheet.service.EquipmentService;
+import com.steelmight.charactersheet.service.ProgressionService;
+import com.steelmight.charactersheet.service.ShopService;
 import com.steelmight.charactersheet.service.SkillCheckService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,12 +21,19 @@ public class CharacterController {
     private final CharacterService service;
     private final SkillCheckService skillCheckService;
     private final DeckTemplateService deckService;
+    private final ShopService shopService;
+    private final EquipmentService equipmentService;
+    private final ProgressionService progressionService;
 
     public CharacterController(CharacterService service, SkillCheckService skillCheckService,
-                              DeckTemplateService deckService) {
+                              DeckTemplateService deckService, ShopService shopService,
+                              EquipmentService equipmentService, ProgressionService progressionService) {
         this.service = service;
         this.skillCheckService = skillCheckService;
         this.deckService = deckService;
+        this.shopService = shopService;
+        this.equipmentService = equipmentService;
+        this.progressionService = progressionService;
     }
 
     // --- Queries ---
@@ -96,10 +106,76 @@ public class CharacterController {
         return service.removeEffect(playerId, effectId);
     }
 
+    @PostMapping("/{playerId}/actions/cast")
+    public ActionResponse<CombatSnapshot> cast(@PathVariable String playerId,
+                                               @Valid @RequestBody CastRequest req) {
+        return service.cast(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/level-up")
+    public ActionResponse<CombatSnapshot> levelUp(@PathVariable String playerId,
+                                                  @RequestBody(required = false) LevelUpRequest req) {
+        return progressionService.levelUp(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/equip")
+    public ActionResponse<CombatSnapshot> equip(@PathVariable String playerId,
+                                                @RequestBody EquipRequest req) {
+        return equipmentService.equip(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/unequip")
+    public ActionResponse<CombatSnapshot> unequip(@PathVariable String playerId,
+                                                  @RequestBody EquipRequest req) {
+        return equipmentService.unequip(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/purchase")
+    public ActionResponse<InventorySnapshot> purchase(@PathVariable String playerId,
+                                                      @RequestBody PurchaseRequest req) {
+        return shopService.purchase(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/sell")
+    public ActionResponse<InventorySnapshot> sell(@PathVariable String playerId,
+                                                  @RequestBody SellRequest req) {
+        return shopService.sell(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/upgrade")
+    public ActionResponse<InventorySnapshot> upgrade(@PathVariable String playerId,
+                                                     @RequestBody UpgradeRequest req) {
+        return shopService.upgrade(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/cast-scroll")
+    public ActionResponse<CombatSnapshot> castScroll(@PathVariable String playerId,
+                                                     @RequestBody CastScrollRequest req) {
+        return shopService.castScroll(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/use-consumable")
+    public ActionResponse<CombatSnapshot> useConsumable(@PathVariable String playerId,
+                                                        @RequestBody UseConsumableRequest req) {
+        return shopService.useConsumable(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/prepare-spells")
+    public ActionResponse<CombatSnapshot> prepareSpells(@PathVariable String playerId,
+                                                        @RequestBody PrepareSpellsRequest req) {
+        return service.prepareSpells(playerId, req);
+    }
+
     @PostMapping("/{playerId}/actions/spend-resource")
     public ActionResponse<CombatSnapshot> spendResource(@PathVariable String playerId,
                                                          @Valid @RequestBody SpendResourceRequest req) {
         return service.spendResource(playerId, req);
+    }
+
+    @PostMapping("/{playerId}/actions/gain-resource")
+    public ActionResponse<CombatSnapshot> gainResource(@PathVariable String playerId,
+                                                        @Valid @RequestBody GainResourceRequest req) {
+        return service.gainResource(playerId, req);
     }
 
     @PostMapping("/{playerId}/actions/turn-start")
@@ -112,14 +188,22 @@ public class CharacterController {
         return service.turnEnd(playerId);
     }
 
-    @PostMapping("/{playerId}/actions/long-rest")
-    public ActionResponse<CombatSnapshot> longRest(@PathVariable String playerId) {
-        return service.longRest(playerId);
+    @PostMapping("/{playerId}/actions/revive")
+    public ActionResponse<CombatSnapshot> revive(@PathVariable String playerId,
+                                                  @RequestBody ReviveRequest req) {
+        return service.revive(playerId, req);
     }
 
-    @PostMapping("/{playerId}/actions/short-rest")
-    public ActionResponse<CombatSnapshot> shortRest(@PathVariable String playerId) {
-        return service.shortRest(playerId);
+    @PostMapping("/{playerId}/actions/combat-start")
+    public ActionResponse<CombatSnapshot> combatStart(@PathVariable String playerId) {
+        return service.combatStart(playerId);
+    }
+
+    /** Single tiered rest (Q20) — replaces the former short-rest/long-rest pair. */
+    @PostMapping("/{playerId}/actions/rest")
+    public ActionResponse<CombatSnapshot> rest(@PathVariable String playerId,
+                                               @RequestBody(required = false) RestRequest req) {
+        return service.rest(playerId, req);
     }
 
     // --- Profile ---
