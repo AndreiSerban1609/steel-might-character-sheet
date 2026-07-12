@@ -74,9 +74,46 @@ public class DeckTemplateService {
         pd.setStatAdjust(config.statAdjust());
         pd.getExtraCards().clear();
         for (var c : nullToEmpty(config.extraCards())) {
-            pd.getExtraCards().add(new TemplateCard(c.name(), c.modifier(), c.description()));
+            pd.getExtraCards().add(new TemplateCard(c.name(), c.modifier(), c.description(),
+                    blank(c.checkType()) ? null : c.checkType(), c.redrawModifier(),
+                    blank(c.removal()) ? null : c.removal(), c.consumed()));
         }
         return toConfig(playerRepo.save(pd));
+    }
+
+    /**
+     * Apply the accepted final card's removal mechanic: "consume" marks it out until rest,
+     * "burn" deletes it permanently. Returns the removal applied, or null if none.
+     */
+    public String applyRemoval(String playerId, int classCardIndex) {
+        var pd = playerRepo.findById(playerId).orElse(null);
+        if (pd == null || classCardIndex < 0 || classCardIndex >= pd.getExtraCards().size()) return null;
+        var card = pd.getExtraCards().get(classCardIndex);
+        String removal = card.getRemoval();
+        if ("burn".equals(removal)) {
+            pd.getExtraCards().remove(classCardIndex);
+        } else if ("consume".equals(removal)) {
+            card.setConsumed(true);
+        } else {
+            return null;
+        }
+        playerRepo.save(pd);
+        return removal;
+    }
+
+    /** Any rest returns consumed cards to the deck (impl default; burn is forever). */
+    public int restoreConsumedCards(String playerId) {
+        var pd = playerRepo.findById(playerId).orElse(null);
+        if (pd == null) return 0;
+        int restored = 0;
+        for (var card : pd.getExtraCards()) {
+            if (card.isConsumed()) {
+                card.setConsumed(false);
+                restored++;
+            }
+        }
+        if (restored > 0) playerRepo.save(pd);
+        return restored;
     }
 
     public PlayerDeckView getPlayerDeckView(String playerId) {
@@ -118,8 +155,13 @@ public class DeckTemplateService {
             cards.add(new Card(CardType.ENCOUNTER, blank(e.name()) ? "Encounter" : e.name(), e.modifier(), e.description()));
         }
         if (player != null) {
-            for (var x : nullToEmpty(player.extraCards())) {
-                cards.add(new Card(CardType.CLASS, blank(x.name()) ? "Card" : x.name(), x.modifier(), x.description()));
+            var extras = nullToEmpty(player.extraCards());
+            for (int i = 0; i < extras.size(); i++) {
+                var x = extras.get(i);
+                if (Boolean.TRUE.equals(x.consumed())) continue; // spent until rest
+                cards.add(new Card(CardType.CLASS, blank(x.name()) ? "Card" : x.name(), x.modifier(),
+                        x.description(), blank(x.checkType()) ? null : x.checkType(), x.redrawModifier(), i,
+                        blank(x.removal()) ? null : x.removal()));
             }
         }
         return cards;
@@ -136,6 +178,14 @@ public class DeckTemplateService {
     private void validatePlayerConfig(PlayerDeckConfig config) {
         if (config.statAdjust() < -20 || config.statAdjust() > 20) throw badRequest("statAdjust out of range (-20..20)");
         checkCards(config.extraCards(), "extra", 20);
+        for (var c : nullToEmpty(config.extraCards())) {
+            if (!blank(c.removal()) && !"consume".equals(c.removal()) && !"burn".equals(c.removal())) {
+                throw badRequest("removal must be \"consume\" or \"burn\"");
+            }
+            if (c.redrawModifier() != null && (c.redrawModifier() < -20 || c.redrawModifier() > 20)) {
+                throw badRequest("redrawModifier out of range (-20..20)");
+            }
+        }
     }
 
     private void checkCards(List<DeckCard> cards, String label, int max) {
@@ -185,6 +235,9 @@ public class DeckTemplateService {
     static PlayerDeckConfig toConfig(PlayerDeck d) {
         return new PlayerDeckConfig(d.getStatAdjust(),
                 d.getExtraCards().stream()
-                        .map(c -> new DeckCard(c.getName(), c.getModifier(), c.getDescription())).toList());
+                        .map(c -> new DeckCard(c.getName(), c.getModifier(), c.getDescription(),
+                                c.getCheckType(), c.getRedrawModifier(), c.getRemoval(),
+                                c.isConsumed() ? Boolean.TRUE : null))
+                        .toList());
     }
 }

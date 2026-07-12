@@ -7,6 +7,8 @@ export function EntryView() {
   const email = useCharacterStore((s) => s.email);
   const loading = useCharacterStore((s) => s.loading);
   const error = useCharacterStore((s) => s.error);
+  const obrMode = useCharacterStore((s) => s.obrMode);
+  const role = useCharacterStore((s) => s.role);
   const setRoom = useCharacterStore((s) => s.setRoom);
   const setEmail = useCharacterStore((s) => s.setEmail);
   const enterAsPlayer = useCharacterStore((s) => s.enterAsPlayer);
@@ -19,6 +21,57 @@ export function EntryView() {
     setApiBase(apiInput);
     setApiInput(getApiBase());
     setApiSaved(true);
+  }
+
+  const connBox = (
+    <details className="conn">
+      <summary>Server connection</summary>
+      <p className="conn-hint">
+        Running inside Owlbear or against a hosted backend? Paste the backend URL (e.g. your Cloudflare
+        Tunnel URL). Leave as <code>/api</code> for local development.
+      </p>
+      <div className="conn-row">
+        <input
+          value={apiInput}
+          onChange={(e) => {
+            setApiInput(e.target.value);
+            setApiSaved(false);
+          }}
+          placeholder="https://xxxx.trycloudflare.com"
+        />
+        <button className="btn btn--ghost" onClick={applyApi}>
+          {apiSaved ? 'Saved' : 'Apply'}
+        </button>
+      </div>
+    </details>
+  );
+
+  // Inside Owlbear identity comes from the SDK — no form, just the handshake
+  // (and a retry + server field in case the backend is unreachable).
+  if (obrMode) {
+    return (
+      <section className="form-view entry">
+        <header className="form-header">
+          <h1 className="form-title">Steel &amp; Might</h1>
+          <p className="form-sub">{error ? 'Connection problem' : 'Connecting to your table…'}</p>
+        </header>
+
+        {error && <p className="inline-error">{error}</p>}
+        {error && (
+          <div className="form-actions">
+            <button
+              className="btn btn--gold"
+              onClick={() => void (role === 'gm' ? enterAsGm() : enterAsPlayer())}
+              disabled={loading}
+            >
+              {loading ? 'Retrying…' : 'Retry'}
+            </button>
+          </div>
+        )}
+
+        {connBox}
+      </section>
+    );
   }
 
   return (
@@ -58,26 +111,7 @@ export function EntryView() {
         everyone at the table.
       </p>
 
-      <details className="conn">
-        <summary>Server connection</summary>
-        <p className="conn-hint">
-          Running inside Owlbear or against a hosted backend? Paste the backend URL (e.g. your Cloudflare
-          Tunnel URL). Leave as <code>/api</code> for local development.
-        </p>
-        <div className="conn-row">
-          <input
-            value={apiInput}
-            onChange={(e) => {
-              setApiInput(e.target.value);
-              setApiSaved(false);
-            }}
-            placeholder="https://xxxx.trycloudflare.com"
-          />
-          <button className="btn btn--ghost" onClick={applyApi}>
-            {apiSaved ? 'Saved' : 'Apply'}
-          </button>
-        </div>
-      </details>
+      {connBox}
     </section>
   );
 }

@@ -1,0 +1,16 @@
+{
+  "name": "Steel & Might Character Sheet (dev)",
+  "version": "0.1.0",
+  "manifest_version": 1,
+  "author": "Andrei Serban",
+  "description": "Local dev build — Vite on 5173, API proxied to the local Spring Boot on 8080.",
+  "homepage_url": "http://localhost:5173/",
+  "icon": "http://localhost:5173/icon.svg",
+  "action": {
+    "title": "Steel & Might (dev)",
+    "icon": "http://localhost:5173/icon.svg",
+    "popover": "http://localhost:5173/index.html",
+    "height": 850,
+    "width": 900
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "_note": "Round-1 draft (2026-07-12): Wildborn path — Shapeshifter only for now. Schema mirrors abilities-warrior.json (Conqueror exemplar). Source: C&S PDF, Wildborn section pp.20-23. Shapeshifter is a non-caster; its class resource is shapeshiftHp (a separate HP pool = half total HP used while transformed — NOT spent by abilities, it absorbs damage in animal form; excess damage on reaching 0 transfers to normal HP and forces revert). Adaptation save DC = 8 + 2 x proficiency (p.21). Choice-group pick counts: minor-adaptation = choose 2 at level 2, advanced-adaptation = choose 2 at level 10, greater-adaptation = choose 1 at level 16; Metamorph (level 20) grants one EXTRA pick in each of the three groups and doubles the shapeshift HP pool. Animal forms are NOT enumerable choice entries: they are freeform learned animals (4 known at L1, +4 at L8, +4 at L14), gated by the class table's 'Shapeshift Max Offensive Might' column (extraction garbled — see S1); the known-animals list is character data. 'recharge N' on adaptations is copied verbatim from the PDF; its mechanic is unconfirmed (see S4), so those abilities carry an ad-hoc integer field 'recharge' and resolve manually. Pure always-on passives skipped per extraction rules: Natural Defence (AC = 10 + CON + DEX, PA/MA 0), Primal Regeneration (L4), Increased Damage Roll (L5/9/13/17), Predatory Assault (L13). Open questions S1-S8 listed for the game designer.",
+  "pools": {
+    "shapeshifter": [
+      {
+        "id": "shapeshift-hp",
+        "name": "Shapeshift HP",
+        "unlockLevel": 1,
+        "initial": null,
+        "max": null,
+        "maxFormula": "floor(totalHp / 2), doubled at level 20 (Metamorph)",
+        "restore": "on-rest",
+        "_question": "S7 — pool max is derived (half total HP; doubled by Metamorph). The PDF never states how/when the pool refills: full on any rest, tiered by rest quality (25/50/75/100%), or only on reverting? Also confirm Metamorph doubles the MAX (not a one-time refill). (pp.21, 23)"
+      }
+    ]
+  },
+  "abilities": [
+    {
+      "id": "shapeshift",
+      "name": "Shapeshift",
+      "classId": "shapeshifter",
+      "minLevel": 1,
+      "group": null,
+      "kind": "active",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "S2 — no AP cost is given for transforming in or out of animal form; also the animal stat blocks (what you can do while transformed) are not in this section. S1 — the class table's 'Shapeshift Max Offensive Might' column is garbled in extraction (level 1 reads '20', every later level reads '1/4'); need the real per-level cap values. S3 — duration budget says 'cumulated hour between LONG rests' and rest types were unified round-4. (pp.20-21)",
+      "description": "Shift into or out of one of your learned animal forms. While transformed you use a separate shapeshift HP pool equal to half your total HP; if that pool reaches 0 you instantly revert to your normal self and all excess damage is transferred to your normal HP. You can only transform into animals whose Offensive Might is at or below your Shapeshift Max Offensive Might for your current level (class table). You learn an animal by observing it for an hour or fighting one for at least 1 minute; you can know up to 4 animals (8 from level 8, 12 from level 14) and may forget one animal to attempt to learn a new one at any time. You can stay transformed for up to 1 cumulated hour between rests (4 hours from level 8 — Advanced Shapeshift; no time limit from level 14 — Greater Shapeshift)."
+    },
+
+    {
+      "id": "adaptation-horns",
+      "name": "Adaptation: Horns",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "S6 — confirm '+4/level' means 4 x your level flat damage (same reading applied to all '/level' terms in adaptations). (p.22)",
+      "description": "Attack with your horns for [STR modifier + 4 x your level + 1d10] piercing damage (3 AP). If you move 2 AP worth of movement in a straight line towards an enemy, you can make this attack for free."
+    },
+    {
+      "id": "adaptation-claws",
+      "name": "Adaptation: Claws",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "resolution": "manual",
+      "description": "Attack with your claws — considered dual wielding, 3 AP for both claws — for [DEX modifier + 2 x your level + 1d6] slashing damage. You also gain a 20 ft climbing speed."
+    },
+    {
+      "id": "adaptation-scales",
+      "name": "Adaptation: Scales",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "passive",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "description": "Your PA is increased by [5 + 2 x your level]."
+    },
+    {
+      "id": "adaptation-tail",
+      "name": "Adaptation: Tail",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "resolution": "manual",
+      "description": "Attack with your tail (10 ft range, 3 AP) for [STR modifier + 3 x your level + 1d8] crushing damage. You can also swing your tail to attack all enemies in a 180-degree cone behind you."
+    },
+    {
+      "id": "adaptation-quills",
+      "name": "Adaptation: Quills",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "passive",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "description": "Whenever you take damage from a melee attacker, you deal 2d6 piercing damage in return (ignores armor). The retaliation increases by 2d6 at levels 5, 9, 13 and 17."
+    },
+    {
+      "id": "adaptation-feline-reflexes",
+      "name": "Adaptation: Feline Reflexes",
+      "classId": "shapeshifter",
+      "minLevel": 2,
+      "group": "minor-adaptation",
+      "kind": "passive",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "S5 — the prose pick-list reads 'horns, claws, scales, tail, quills, feline shit' (typo for feline reflexes) and the class table row says 'minor animalistic adaptation(2/5)' — confirm it is choose 2 of these SIX options. (pp.20-21)",
+      "description": "Your AC becomes equal to that of a medium armor of your level: 10 + 2 x DEX modifier, increased by 1 at levels 5, 9, 13 and 17."
+    },
+
+    {
+      "id": "adaptation-gills",
+      "name": "Adaptation: Gills",
+      "classId": "shapeshifter",
+      "minLevel": 10,
+      "group": "advanced-adaptation",
+      "kind": "active",
+      "apCost": 1,
+      "costs": [],
+      "recharge": 5,
+      "resolution": "manual",
+      "_question": "S4 — 'recharge 5/6' mechanic is never defined: D&D-style recharge roll at the start of your turn, or an N-round cooldown? (pp.22-23)",
+      "description": "You can breathe underwater, have a swimming speed equal to your MS, and are immune to the Suffocating condition. While in water, you can release ink in a 10 ft radius sphere that obscures vision (1 AP, recharge 5)."
+    },
+    {
+      "id": "adaptation-spider-legs",
+      "name": "Adaptation: Spider Legs",
+      "classId": "shapeshifter",
+      "minLevel": 10,
+      "group": "advanced-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "recharge": 6,
+      "resolution": "manual",
+      "_question": "S8 — save-or-condition adaptations give durations, not stacks: web says 'rooted for the rest of the turn'. Under the stack-threshold system, how many rooted stacks does this apply? Same question for digging claw (prone), medusa eyes (petrified 'for a round') and tentacle (stunned 'for a turn'). (pp.22-23)",
+      "description": "You grow spider legs and can climb any surface, even sheer ones and ceilings. You can throw a web at a location within 30 ft (10 ft radius, 3 AP, recharge 6): the surface becomes covered in web, and any creature initially there or passing through must make a DEX saving throw (DC 8 + 2 x proficiency) or become rooted for the rest of the turn. The web can be set on fire and is destroyed after burning for 1 round."
+    },
+    {
+      "id": "adaptation-goat-legs",
+      "name": "Adaptation: Goat Legs",
+      "classId": "shapeshifter",
+      "minLevel": 10,
+      "group": "advanced-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "recharge": 5,
+      "resolution": "manual",
+      "description": "Your jump distance is tripled. You can jump to a point within 30 ft: all creatures within 10 ft of the impact point must make a DEX saving throw (DC 8 + 2 x proficiency), taking [STR modifier + 3 x your level + 1d8] force damage on a fail or half as much on a success (3 AP, recharge 5)."
+    },
+    {
+      "id": "adaptation-dragon-wings",
+      "name": "Adaptation: Dragon Wings",
+      "classId": "shapeshifter",
+      "minLevel": 10,
+      "group": "advanced-adaptation",
+      "kind": "active",
+      "apCost": 2,
+      "costs": [],
+      "recharge": 6,
+      "resolution": "manual",
+      "description": "You gain fly speed. You can beat your wings to create a small tornado, spreading away clouds, fog, etc. and dealing [CON modifier + 2 x your level + 1d6] force damage in a 30 ft line (DEX saving throw, DC 8 + 2 x proficiency, to halve the damage; 2 AP, recharge 6)."
+    },
+    {
+      "id": "adaptation-digging-claw",
+      "name": "Adaptation: Digging Claw",
+      "classId": "shapeshifter",
+      "minLevel": 10,
+      "group": "advanced-adaptation",
+      "kind": "active",
+      "apCost": 2,
+      "costs": [],
+      "recharge": 6,
+      "resolution": "manual",
+      "description": "You gain a burrowing speed (half your MS). If you are at least 20 ft burrowed below ground, you can emerge with force: all creatures within 10 ft must succeed on a CON saving throw (DC 8 + 2 x proficiency) or fall prone (2 AP in addition to the movement; recharge 6)."
+    },
+
+    {
+      "id": "adaptation-dragon-head",
+      "name": "Adaptation: Dragon Head",
+      "classId": "shapeshifter",
+      "minLevel": 16,
+      "group": "greater-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "recharge": 6,
+      "resolution": "manual",
+      "description": "Attack with a dragon's breath, dealing [2d12 x your level] fire damage in a 15 ft long cone (DEX saving throw, DC 8 + 2 x proficiency, to halve the damage; 3 AP, recharge 6)."
+    },
+    {
+      "id": "adaptation-medusa-eyes",
+      "name": "Adaptation: Medusa Eyes",
+      "classId": "shapeshifter",
+      "minLevel": 16,
+      "group": "greater-adaptation",
+      "kind": "active",
+      "apCost": 1,
+      "costs": [],
+      "recharge": 5,
+      "resolution": "manual",
+      "description": "For 1 AP, send forth a petrifying wave with your gaze: all enemies in a 60 ft, 90-degree cone in front of you that are looking in your general direction must succeed on a CON saving throw (DC 8 + 2 x proficiency) or be petrified for a round (recharge 5)."
+    },
+    {
+      "id": "adaptation-tentacle",
+      "name": "Adaptation: Tentacle",
+      "classId": "shapeshifter",
+      "minLevel": 16,
+      "group": "greater-adaptation",
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "recharge": 5,
+      "resolution": "manual",
+      "_question": "S6 — tentacle damage is flat with no level scaling ([5 x STR mod + 40 + 5d8] crushing + [16d8] lightning) unlike every other adaptation; confirm intended. (p.23)",
+      "description": "Attack at range with your tentacle, dealing [5 x STR modifier + 40 + 5d8] crushing damage and [16d8] lightning damage on a hit. The target must make a CON saving throw (DC 8 + 2 x proficiency) or be stunned for a turn (3 AP, recharge 5)."
+    },
+    {
+      "id": "adaptation-reflective-hide",
+      "name": "Adaptation: Reflective Hide",
+      "classId": "shapeshifter",
+      "minLevel": 16,
+      "group": "greater-adaptation",
+      "kind": "passive",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "description": "When you would get hit by a projectile spell, roll 1d6; on a 6 the spell does nothing."
+    },
+    {
+      "id": "adaptation-elephant-trunk",
+      "name": "Adaptation: Elephant Trunk",
+      "classId": "shapeshifter",
+      "minLevel": 16,
+      "group": "greater-adaptation",
+      "kind": "attack-enhancer",
+      "apCost": 1,
+      "costs": [],
+      "resolution": "manual",
+      "description": "You grow a trunk as big as you, serving as an oversized, overpowered third arm. When you attack, you can spend 1 more AP to attempt a grapple with the trunk. You can also use it to carry items, interact with objects, etc."
+    },
+
+    {
+      "id": "metamorph",
+      "name": "Metamorph",
+      "classId": "shapeshifter",
+      "minLevel": 20,
+      "group": null,
+      "kind": "passive",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "S7 — grants one extra pick in each adaptation group (structural: pick counts per group are not part of the ability schema) and doubles the shapeshift HP pool. (p.23)",
+      "description": "Choose one more minor adaptation, one more advanced adaptation and one more greater adaptation. Your shapeshifting HP pool is doubled."
+    }
+  ]
+}

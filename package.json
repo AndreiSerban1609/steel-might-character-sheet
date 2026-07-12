@@ -10,6 +10,7 @@
     "validate-data": "tsx scripts/validate-data.ts"
   },
   "dependencies": {
+    "@owlbear-rodeo/sdk": "^3.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^4.5.5"

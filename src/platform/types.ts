@@ -15,6 +15,13 @@ export interface ApView {
   max: number;
 }
 
+/** max === null → unbounded (builder resources like focus). */
+export interface ResourceView {
+  type: string;
+  current: number;
+  max: number | null;
+}
+
 export interface ManaView {
   current: number;
   max: number;
@@ -54,6 +61,25 @@ export interface Card {
   name: string;
   modifier: number | null;
   description: string;
+  /** CLASS cards: skill restriction — auto-passes on any other check. */
+  checkType?: string | null;
+  /** CLASS cards: passed on draw, this bonus accumulates for the whole check. */
+  redrawModifier?: number | null;
+  /** CLASS cards: position in the player's extraCards (drives consume/burn on accept). */
+  classCardIndex?: number | null;
+  /** CLASS cards: "consume" | "burn" — applied when this card is accepted as final. */
+  removal?: 'consume' | 'burn' | null;
+}
+
+/** A card auto-passed during a draw. */
+export interface PassedCard {
+  card: Card;
+  reason: 'wrong-check' | 'redraw-bonus';
+}
+
+export interface RedrawBonus {
+  name: string;
+  modifier: number;
 }
 
 export interface SkillCheckResult {
@@ -65,12 +91,34 @@ export interface SkillCheckResult {
   total: number | null;
   critical: boolean;
   proficient: boolean;
+  /** DoF gamble: proficiency-bonus-many redraws per check; the d10 stays fixed. */
+  redrawsUsed: number;
+  redrawsRemaining: number;
+  /** Cards auto-passed on THIS draw/redraw (wrong-check skips, redraw-bonus cards). */
+  passedCards: PassedCard[];
+  /** Bonuses accumulated across the whole check; their sum is included in total. */
+  redrawBonuses: RedrawBonus[];
+  bonusTotal: number;
+}
+
+/** Outcome of accepting a check: whether the final card was consumed/burned. */
+export interface SkillCheckAccepted {
+  cardRemoved: boolean;
+  removal: 'consume' | 'burn' | null;
 }
 
 export interface DeckCard {
   name: string;
   modifier: number;
   description: string;
+  /** CLASS-card extras only: restrict to one skill check (auto-passes elsewhere). */
+  checkType?: string | null;
+  /** CLASS-card extras only: pass + accumulate this bonus instead of resolving. */
+  redrawModifier?: number | null;
+  /** CLASS-card extras only: "consume" (out until rest) | "burn" (gone forever). */
+  removal?: 'consume' | 'burn' | null;
+  /** True while a consume card is spent (restored by any rest). */
+  consumed?: boolean | null;
 }
 
 export interface DeckTemplate {
@@ -88,6 +136,22 @@ export interface PlayerDeckView {
   room: DeckTemplate;
   config: PlayerDeckConfig;
   deckSize: number;
+}
+
+export interface EncounterEntryView {
+  playerId: string;
+  name: string;
+  initiative: number;
+  status: 'ALIVE' | 'DOWNED' | 'DEAD' | null;
+}
+
+/** A room's turn order. active=false → no encounter running. */
+export interface EncounterView {
+  active: boolean;
+  round: number;
+  currentPlayerId: string | null;
+  turnStarted: boolean;
+  entries: EncounterEntryView[];
 }
 
 /** One pipeline rule's contribution to an action's resolution (server: engine.ResolutionStep). */
@@ -109,11 +173,17 @@ export interface RollBreakdown {
   total: number;
 }
 
-/** The cast's d20 spell-attack roll (attack-type spells only). */
+/** A d20 attack roll (spell casts and weapon attacks). */
 export interface AttackRollView {
-  roll: number;
-  bonus: number;
-  total: number;
+  roll?: number;
+  /** both dice when rolled with advantage/disadvantage */
+  rolls?: number[];
+  advantage?: boolean;
+  disadvantage?: boolean;
+  /** stacked disadvantage (Guide 4.3) — no roll happens */
+  autoMiss?: boolean;
+  bonus?: number;
+  total?: number;
   critical?: boolean;
   criticalFailure?: boolean;
 }
@@ -139,6 +209,10 @@ export interface ResolutionPayload {
   effectsAppliedTo?: string;
   newLevel?: number;
   newAbilities?: string[];
+  /** weapon attacks */
+  weapon?: { id: string; name: string };
+  silvered?: boolean;
+  properties?: string[];
 }
 
 export interface ResolutionResult {
@@ -278,6 +352,8 @@ export interface CombatSnapshot {
   ma: number;
   ap: ApView;
   mana: ManaView;
+  /** Class resource (chakra/rages/energy/focus/…) — null when the class has none. */
+  resource: ResourceView | null;
   speed: number;
   bonusInitiative: number;
   deathStacks: number;
@@ -291,6 +367,8 @@ export interface CombatSnapshot {
   proficiencies: string[];
   activeEffects: EffectView[];
   equippedWeapon: string | null;
+  /** every equipped weapon (two when dual-wielding) — drives the attack picker */
+  equippedWeapons: string[];
   equippedArmor: string | null;
   conditions: string[];
   /** Q30 (M5-B): equipped gear without proficiency + the consequences (DM display data). */

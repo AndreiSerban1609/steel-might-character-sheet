@@ -42,6 +42,7 @@ public class DevDataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         migrateLegacyMoneyColumns();
+        migrateLegacyClassResources();
         seed("aria@steelandmight.test", "Aria Stormvoice", "human", "musician", "bard", 5,
                 new Stats(10, 14, 12, 13, 8, 11, 16), 0.8, List.of("persuasion", "performance", "deception"),
                 List.of("dissonating-song", "hasting-trill", "sad-story", "increasing-pitch", "stunning-echoes"));
@@ -51,6 +52,23 @@ public class DevDataSeeder implements CommandLineRunner {
         seed("saulus@steelandmight.test", "Brother Saulus", "human", "disciple", "cleric", 5,
                 new Stats(10, 10, 13, 11, 15, 16, 12), 1.0, List.of("medicine", "religion", "insight"),
                 List.of("sacred-bolt", "healing-word", "healing-touch-withering-touch"));
+    }
+
+    /** Characters created before M3 predate class resources — initialize them the way
+     *  creation does (M3 Part A: builders start at 0, allotments full). Fresh DBs: no-op. */
+    private void migrateLegacyClassResources() {
+        for (var c : repo.findAll()) {
+            if (c.getResource() != null && c.getResource().getType() != null) continue;
+            String type = statEngine.getClassResourceType(c);
+            if (type == null) continue;
+            Integer derived = statEngine.computeClassResourceMax(c);
+            int max = derived == null ? 0
+                    : derived == StatDerivationEngine.UNBOUNDED_RESOURCE ? 0 : derived;
+            int current = statEngine.isBuilderResource(type) ? 0 : max;
+            c.setResource(new com.steelmight.charactersheet.model.ClassResource(type, current, max));
+            repo.save(c);
+            log.info("Initialized legacy class resource for {}: {} {}/{}", c.getPlayerId(), type, current, max);
+        }
     }
 
     /** One-time dev-DB migration: money went gold → copper (M5-A) → back to a single

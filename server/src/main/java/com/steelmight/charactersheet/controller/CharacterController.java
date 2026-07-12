@@ -106,6 +106,12 @@ public class CharacterController {
         return service.removeEffect(playerId, effectId);
     }
 
+    @PostMapping("/{playerId}/actions/weapon-attack")
+    public ActionResponse<CombatSnapshot> weaponAttack(@PathVariable String playerId,
+                                                       @RequestBody(required = false) WeaponAttackRequest req) {
+        return service.weaponAttack(playerId, req);
+    }
+
     @PostMapping("/{playerId}/actions/cast")
     public ActionResponse<CombatSnapshot> cast(@PathVariable String playerId,
                                                @Valid @RequestBody CastRequest req) {
@@ -248,6 +254,18 @@ public class CharacterController {
     public SkillCheckResult skillCheck(@PathVariable String playerId,
                                        @RequestBody SkillCheckRequest req) {
         return skillCheckService.draw(playerId, req.skillId());
+    }
+
+    /** Proficiency gamble: forfeit the current card, draw the next; the d10 stays. */
+    @PostMapping("/{playerId}/skill-check/redraw")
+    public SkillCheckResult skillCheckRedraw(@PathVariable String playerId) {
+        return skillCheckService.redraw(playerId);
+    }
+
+    /** Accept the final card — applies consume/burn removal and closes the check. */
+    @PostMapping("/{playerId}/skill-check/accept")
+    public SkillCheckAccepted skillCheckAccept(@PathVariable String playerId) {
+        return skillCheckService.accept(playerId);
     }
 
     @GetMapping("/{playerId}/deck")

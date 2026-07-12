@@ -141,6 +141,7 @@
       "id": "human",
       "name": "Human",
       "description": "Humans live less than a century; their short lives drive them to act decisively.",
+      "initiativeBonus": 5,
       "levelOneStats": [
         "str",
         "dex",

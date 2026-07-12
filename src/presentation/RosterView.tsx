@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import { titleCase } from '../domain/stats';
+import { EncounterTracker } from './EncounterTracker';
 
 export function RosterView() {
   const roster = useCharacterStore((s) => s.roster);
@@ -33,6 +34,8 @@ export function RosterView() {
           GM view · {roster.length} character{roster.length === 1 ? '' : 's'}
         </p>
       </header>
+
+      <EncounterTracker />
 
       {loading && roster.length === 0 && <div className="panel-msg">Gathering the party…</div>}
       {error && <div className="panel-msg panel-msg--error">{error}</div>}

@@ -6,6 +6,7 @@ import com.steelmight.charactersheet.model.*;
 import com.steelmight.charactersheet.gamedata.Dice;
 import com.steelmight.charactersheet.gamedata.DiceFormula;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
+import com.steelmight.charactersheet.gamedata.ItemKind;
 import com.steelmight.charactersheet.repository.CharacterRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class CharacterService {
     private final TurnTickService turnTickService;
     private final GameDataProvider gameData;
     private final RandomSource randomSource;
+    private final DeckTemplateService deckTemplates;
+    private final EncounterService encounters;
 
     public CharacterService(CharacterRepository repo,
                             DamageResolutionPipeline damagePipeline,
@@ -37,7 +40,9 @@ public class CharacterService {
                             EffectApplicationEngine effectEngine,
                             TurnTickService turnTickService,
                             GameDataProvider gameData,
-                            RandomSource randomSource) {
+                            RandomSource randomSource,
+                            DeckTemplateService deckTemplates,
+                            EncounterService encounters) {
         this.repo = repo;
         this.damagePipeline = damagePipeline;
         this.healingPipeline = healingPipeline;
@@ -46,6 +51,8 @@ public class CharacterService {
         this.turnTickService = turnTickService;
         this.gameData = gameData;
         this.randomSource = randomSource;
+        this.deckTemplates = deckTemplates;
+        this.encounters = encounters;
     }
 
     /** Deterministic, human-readable id: slug(roomName) + "-" + lowercase(email). */
@@ -178,6 +185,10 @@ public class CharacterService {
 
         // races.json → movementSpeed (ft per AP; halves stored as-is pending N13).
         c.setSpeed(race.path("movementSpeed").asInt(30));
+
+        // races.json → initiativeBonus (structured field; human +5). Feeds the
+        // encounter initiative roll: d20 + DEX mod + bonusInitiative.
+        c.setBonusInitiative(race.path("initiativeBonus").asInt(0));
 
         // N16: saving throws belong to the CLASS; the values still live on the path in
         // classes.json pending the data migration (OPEN-QUESTIONS work item A).
@@ -957,6 +968,181 @@ public class CharacterService {
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
+    /**
+     * Self-describing weapon attack (Guide 4.2): proficient attackers roll
+     * d20 + proficiency + the weapon's best stat modifier and add the modifier
+     * to damage; non-proficient attackers roll a bare d20, add nothing, and
+     * cannot use the weapon's properties. Damage = weapon dice + flat +
+     * per-level scaling; crits double it (Game Owner 2026-07-07).
+     * Advantage/disadvantage from active effects and non-proficient armor
+     * resolve server-side — stacked disadvantage is an automatic miss
+     * (Guide 4.3). The DM compares the total to the target's AC until the
+     * encounter round lands.
+     */
+    public ActionResponse<CombatSnapshot> weaponAttack(String playerId, WeaponAttackRequest req) {
+        var c = getCharacter(playerId);
+
+        var equippedWeapons = c.getInventory().stream()
+                .filter(InventoryEntry::isEquipped)
+                .filter(e -> {
+                    var it = gameData.findItem(e.getItemId());
+                    return it != null && it.kind() == ItemKind.WEAPON;
+                })
+                .toList();
+        if (equippedWeapons.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no weapon equipped");
+        }
+        InventoryEntry entry;
+        if (req != null && req.itemId() != null && !req.itemId().isBlank()) {
+            entry = equippedWeapons.stream()
+                    .filter(e -> e.getItemId().equals(req.itemId()))
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            req.itemId() + " is not an equipped weapon"));
+        } else if (equippedWeapons.size() == 1) {
+            entry = equippedWeapons.get(0);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "dual-wielding — specify which weapon attacks (itemId)");
+        }
+        var item = gameData.findItem(entry.getItemId());
+        var node = item.node();
+
+        int threshold = statEngine.computeStackThreshold(c);
+        for (var hit : ActiveMechanics.collect(c, gameData, threshold, MechanicType.PREVENT_ACTION)) {
+            var action = hit.mechanic().action();
+            if (action == PreventableAction.ALL || action == PreventableAction.WEAPON_ATTACK) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "cannot attack while " + hit.def().name().toLowerCase());
+            }
+        }
+
+        int apCost = Math.max(1, statEngine.resolveModifiedStat(c, ModifiableStat.WEAPON_AP_COST,
+                node.path("apCost").asInt(3)));
+        requireSufficient("ap", c.getAp().getCurrent(), apCost);
+
+        boolean proficient = statEngine.isProficientWith(c, item);
+        // finesse weapons list several stats — the best modifier applies
+        int statMod = 0;
+        boolean first = true;
+        for (var s : node.path("stat")) {
+            int mod = c.getStats().modifier(parseAbility(s.asText()));
+            if (first || mod > statMod) statMod = mod;
+            first = false;
+        }
+
+        // Advantage/disadvantage on own attacks: active effects (unconditional
+        // ones — "while flanking" etc. stay DM calls) plus non-proficient armor
+        // (Q30); one advantage cancels one disadvantage.
+        int advantage = 0;
+        int disadvantage = 0;
+        var chargedToConsume = new java.util.ArrayList<String>();
+        for (var type : List.of(MechanicType.ADVANTAGE, MechanicType.DISADVANTAGE)) {
+            for (var hit : ActiveMechanics.collect(c, gameData, threshold, type)) {
+                var on = hit.mechanic().on();
+                if (on != AdvantageTarget.OWN_ATTACKS && on != AdvantageTarget.ALL_ROLLS) continue;
+                if (hit.mechanic().condition() != null) continue;
+                if (type == MechanicType.ADVANTAGE) advantage++; else disadvantage++;
+                if (hit.mechanic().charges() != null) chargedToConsume.add(hit.def().id());
+            }
+        }
+        boolean armorDisadvantage = statEngine.hasNonProficientArmorEquipped(c);
+        if (armorDisadvantage) disadvantage++;
+        int cancelled = Math.min(advantage, disadvantage);
+        advantage -= cancelled;
+        disadvantage -= cancelled;
+
+        var result = new ResolutionResult();
+        int apBefore = c.getAp().getCurrent();
+        c.getAp().setCurrent(apBefore - apCost);
+        result.addStep("spend-ap", "Spent " + apCost + " AP attacking with " + item.name(),
+                apBefore, apBefore - apCost);
+
+        var weaponInfo = new java.util.LinkedHashMap<String, Object>();
+        weaponInfo.put("id", item.id());
+        weaponInfo.put("name", item.name());
+        result.putPayload("weapon", weaponInfo);
+        if (node.hasNonNull("damageType")) result.putPayload("damageType", node.path("damageType").asText());
+        if (entry.isSilvered()) result.putPayload("silvered", true);
+        if (proficient && node.path("properties").isArray() && !node.path("properties").isEmpty()) {
+            var properties = new java.util.ArrayList<String>();
+            node.path("properties").forEach(p -> properties.add(p.asText()));
+            result.putPayload("properties", properties);
+        }
+
+        var attackRoll = new java.util.LinkedHashMap<String, Object>();
+        int attackBonus = proficient ? statEngine.computeProficiencyBonus(c) + statMod : 0;
+        boolean critical = false;
+
+        if (disadvantage >= 2) {
+            // Guide 4.3: an attack that already has disadvantage while wearing
+            // non-proficient armor misses automatically.
+            attackRoll.put("autoMiss", true);
+            result.putPayload("attackRoll", attackRoll);
+            result.addStep("attack-roll", "Stacked disadvantage — automatic miss", 0, 0);
+        } else {
+            var rolls = new java.util.ArrayList<Integer>();
+            rolls.add(1 + randomSource.nextInt(20));
+            int natural = rolls.get(0);
+            if (advantage > 0 || disadvantage > 0) {
+                rolls.add(1 + randomSource.nextInt(20));
+                natural = advantage > 0 ? Math.max(rolls.get(0), rolls.get(1))
+                        : Math.min(rolls.get(0), rolls.get(1));
+            }
+            int critPercent = statEngine.resolveModifiedStat(c, ModifiableStat.CRIT_RANGE, 5);
+            int critFrom = Math.max(2, 21 - Math.max(1, critPercent / 5));
+            critical = natural >= critFrom;
+            boolean fumble = natural == 1;
+
+            attackRoll.put("roll", natural);
+            if (rolls.size() > 1) attackRoll.put("rolls", rolls);
+            if (advantage > 0) attackRoll.put("advantage", true);
+            if (disadvantage > 0) attackRoll.put("disadvantage", true);
+            attackRoll.put("bonus", attackBonus);
+            attackRoll.put("total", natural + attackBonus);
+            if (critical) attackRoll.put("critical", true);
+            if (fumble) attackRoll.put("criticalFailure", true);
+            result.putPayload("attackRoll", attackRoll);
+            result.addStep("attack-roll",
+                    "Weapon attack: d20 " + natural
+                            + (rolls.size() > 1 ? " (rolled " + rolls + (advantage > 0 ? ", advantage" : ", disadvantage") + ")" : "")
+                            + " + " + attackBonus + " = " + (natural + attackBonus)
+                            + (critical ? " — CRITICAL" : "")
+                            + (fumble ? " — natural 1, automatic miss" : "")
+                            + " (vs target AC)",
+                    natural, natural + attackBonus);
+
+            // damage: dice + flat + per-level scaling (+ stat mod when proficient)
+            int weaponLevel = Math.max(1, entry.getUpgradeTier());
+            var damageNode = node.path("damage");
+            var formula = new DiceFormula(
+                    damageNode.path("modMultiplier").asDouble(1),
+                    damageNode.path("flat").asInt(0)
+                            + node.path("scaling").asInt(0) * (weaponLevel - 1),
+                    Dice.from(damageNode.path("dice")));
+            result.putPayload("damage", rollFormula(formula, null, 0,
+                    proficient ? statMod : 0, 0, critical, result, "damage"));
+        }
+
+        if (!proficient) {
+            result.addStep("proficiency", "Not proficient with " + item.name()
+                    + " — bare d20, no stat modifier, weapon properties unavailable", 0, 0);
+        }
+        if (armorDisadvantage) {
+            result.addStep("proficiency",
+                    "Non-proficient armor imposes disadvantage on weapon attacks", 0, 0);
+        }
+
+        // single-use riders (disadvantage-next-attack) are spent by this attack
+        for (var effectId : chargedToConsume.stream().distinct().toList()) {
+            mergeSteps(result, "attack", effectEngine.remove(c, effectId));
+            result.addTriggeredEffect("consumed:" + effectId);
+        }
+
+        repo.save(c);
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
+    }
+
     private int spellLevelAccess(CasterType casterType, int characterLevel) {
         var access = gameData.getSpellcasting().path("spellLevelAccess")
                 .path(casterType.name().toLowerCase());
@@ -1011,6 +1197,9 @@ public class CharacterService {
 
     public ActionResponse<CombatSnapshot> turnStart(String playerId) {
         var c = getCharacter(playerId);
+        // Turn gating: within a running encounter, only the current character may start,
+        // and only once (strict start → end alternation). Free ticking outside encounters.
+        encounters.validateAndMarkTurnStart(c);
         // M2-B: DoT ticks (Q13: before AP recovery) → AP recovery → startOfTurn triggers.
         var result = turnTickService.turnStart(c);
         repo.save(c);
@@ -1019,10 +1208,15 @@ public class CharacterService {
 
     public ActionResponse<CombatSnapshot> turnEnd(String playerId) {
         var c = getCharacter(playerId);
+        encounters.validateTurnEnd(c);
         // M2-B: HoT ticks → endOfTurn triggers (suffocating→exhaustion) → duration
         // expiry / threshold stack consumption (M0-A/N9).
         var result = turnTickService.turnEnd(c);
         repo.save(c);
+        String next = encounters.completeTurn(c);
+        if (next != null) {
+            result.addStep("turn-order", "Turn passes to " + next, 0, 0);
+        }
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1168,7 +1362,13 @@ public class CharacterService {
             c.getPreparedSpells().clear();
         }
 
-        // 7. M5-C: usesPerLongRest item charges restore with the same floor+probability
+        // 7. Deck of Fates consume cards return on any rest (burned cards are gone forever).
+        int cardsRestored = deckTemplates.restoreConsumedCards(playerId);
+        if (cardsRestored > 0) {
+            result.addStep("rest-deck", "Consumed deck cards restored", 0, cardsRestored);
+        }
+
+        // 8. M5-C: usesPerLongRest item charges restore with the same floor+probability
         //    treatment as charge-style class resources at partial tiers.
         for (var entry : c.getInventory()) {
             var item = gameData.findItem(entry.getItemId());
@@ -1480,6 +1680,22 @@ public class CharacterService {
 
         List<String> conditions = deriveConditions(c);
 
+        CombatSnapshot.ResourceView resourceView = null;
+        if (c.getResource() != null && c.getResource().getType() != null) {
+            Integer derived = statEngine.computeClassResourceMax(c);
+            // if/else, not a ternary: a mixed int/Integer conditional unboxes the null branch
+            Integer max;
+            if (derived == null) {
+                max = c.getResource().getMax();
+            } else if (derived == StatDerivationEngine.UNBOUNDED_RESOURCE) {
+                max = null; // builder resources (focus) have no cap
+            } else {
+                max = derived;
+            }
+            resourceView = new CombatSnapshot.ResourceView(
+                    c.getResource().getType(), c.getResource().getCurrent(), max);
+        }
+
         boolean downed = c.getLifeStatus() == LifeStatus.DOWNED;
         return new CombatSnapshot(
                 c.getName(), c.getLevel(), c.getPathId(), c.getClassId(), c.getSpecializationId(),
@@ -1490,6 +1706,7 @@ public class CharacterService {
                 statEngine.computeMA(c),
                 new CombatSnapshot.ApView(c.getAp().getCurrent(), statEngine.computeAPRecovery(c), c.getAp().getMax()),
                 new CombatSnapshot.ManaView(c.getMana().getCurrent(), statEngine.computeMaxMana(c)),
+                resourceView,
                 statEngine.computeSpeed(c), c.getBonusInitiative(), c.getDeathStacks(),
                 c.getLifeStatus().name(),
                 downed ? c.getDownedRoundsRemaining() : null,
@@ -1500,6 +1717,14 @@ public class CharacterService {
                 List.copyOf(c.getProficiencies()),
                 effectViews,
                 statEngine.findEquippedWeaponId(c),
+                c.getInventory().stream()
+                        .filter(InventoryEntry::isEquipped)
+                        .filter(e -> {
+                            var it = gameData.findItem(e.getItemId());
+                            return it != null && it.kind() == ItemKind.WEAPON;
+                        })
+                        .map(InventoryEntry::getItemId)
+                        .toList(),
                 statEngine.findEquippedArmorId(c),
                 conditions,
                 deriveProficiencyPenalties(c),

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import type { Viewport } from '../platform/metadataGateway';
+import { casterTypeOf } from '../domain/spellCatalog';
 import { StatsPanel } from './StatsPanel';
 import { CombatPanel } from './CombatPanel';
 import { SkillsPanel } from './SkillsPanel';
@@ -20,10 +22,33 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'deck', label: 'Deck' },
 ];
 
+/** Which snapshot slice each tab mirrors to OBR metadata. */
+const VIEWPORT_BY_TAB: Record<Tab, Viewport> = {
+  stats: 'combat',
+  combat: 'combat',
+  spells: 'spellbook',
+  skills: 'combat',
+  inventory: 'inventory',
+  bio: 'bio',
+  deck: 'combat',
+};
+
 export function Sheet() {
   const back = useCharacterStore((s) => s.back);
   const role = useCharacterStore((s) => s.role);
-  const [tab, setTab] = useState<Tab>('stats');
+  const classId = useCharacterStore((s) => s.snapshot?.classId);
+  const setActiveViewport = useCharacterStore((s) => s.setActiveViewport);
+  const [rawTab, setTab] = useState<Tab>('stats');
+
+  // Non-casters have no spellbook — hide the tab (their abilities arrive with
+  // the use-ability round; resource spend/gain lives in the Combat tab).
+  const tabs = TABS.filter((t) => t.id !== 'spells' || !classId || casterTypeOf(classId) !== 'none');
+  const tab: Tab = tabs.some((t) => t.id === rawTab) ? rawTab : 'stats';
+
+  function selectTab(t: Tab) {
+    setTab(t);
+    setActiveViewport(VIEWPORT_BY_TAB[t]);
+  }
 
   return (
     <section className="sheet">
@@ -32,11 +57,11 @@ export function Sheet() {
           {role === 'gm' ? '← Roster' : '← Exit'}
         </button>
         <div className="tabs">
-          {TABS.map((t) => (
+          {tabs.map((t) => (
             <button
               key={t.id}
               className={tab === t.id ? 'tab tab--active' : 'tab'}
-              onClick={() => setTab(t.id)}
+              onClick={() => selectTab(t.id)}
             >
               {t.label}
             </button>

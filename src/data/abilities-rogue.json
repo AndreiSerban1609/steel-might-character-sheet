@@ -1,0 +1,218 @@
+{
+  "_note": "Round-2 extraction (2026-07-12): non-caster active abilities for the Rogue path — Assassin + Burglar only (Shadow Trickster is a minor caster, covered by spell files) — DRAFT for Game Owner review. Schema mirrors abilities-warrior.json (Conqueror exemplar). Neither class has a resource (resourceType null), so costs are empty everywhere. Sneak Attack and Backstab are per-attack riders modeled as attack-enhancers with resolution 'manual' (conditions are situational: surprise/stealth/adjacency/positioning); their damage scaling is ceil(level/2)d4 and ceil(level/2)d8 respectively, straight from the class tables. All Unseen Blade effects are 'manual' because they require the target to have LOWER INITIATIVE than the assassin and they permanently reduce the assassin's initiative for the combat — neither is tracked server-side until the encounter model lands. Pure always-on passives (Silent Steps, Quick On Thy Feet, Assassin's Cloak, Trained Agility, Stealth, Cut Tongue; Experienced Thief, Shrewd Eyes, Cunning Tongue, Danger Sense, Elusive, Expert Eyes, Reliable Talent) are intentionally omitted. Sources: C&S PDF pp.63-66 (Assassin), pp.67-68 (Burglar). Open questions R1-R12 listed in the extraction report.",
+  "pools": {
+    "assassin": [
+      {
+        "id": "fatal-fixation",
+        "name": "Fatal Fixation charges",
+        "unlockLevel": 4,
+        "initial": 2,
+        "max": 2,
+        "restore": "on-rest",
+        "_question": "R2 — 'You regain charges when resting, using recharge points' (p.65): how do recharge points map to the quality-tiered rest? Pool applies only if the standard (1d5) variant is chosen; the Fixed Focus variant is once per rest instead."
+      }
+    ],
+    "burglar": []
+  },
+  "abilities": [
+    {
+      "id": "sneak-attack",
+      "name": "Sneak Attack",
+      "classId": "assassin",
+      "minLevel": 1,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R4 — wiring into the weapon-attack pipeline: server adds ceil(level/2)d4 of the attack's damage type when the player toggles the rider; tripling when the trigger is stealth/unawareness (anything other than ally-adjacency) needs a player-declared trigger flag.",
+      "description": "Once per round, the first time you deal damage to a foe that is surprised, unaware of your position, or adjacent to one of your allies, deal extra damage of the attack's type: [ceil(your level / 2)]d4 (1d4 at level 1 up to 10d4 at level 19-20, per the class table). A foe is unaware of your position if you are stealthed or invisible; other position-concealing effects may qualify at the GM's discretion. If triggered by any condition OTHER than adjacency to an ally, the bonus damage is TRIPLED."
+    },
+    {
+      "id": "unseen-blade-slice",
+      "name": "Unseen Blade – Slice",
+      "classId": "assassin",
+      "minLevel": 2,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R1 — class table lists 'Unseen blade (9d10)' at level 12, '(12d10)' at 16, '(16d10)' at 20 (pp.63-64), conflicting with the prose formula [((level - 2) × 2 + 1)d6] (21d6 at level 12). Tables beat prose — do the d10 values replace the d6 formula at those breakpoints, do they apply only to Slice or also to Noxious Cut, and is the value flat between breakpoints?",
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Slice: deal additional damage equal to [((your level − 2) × 2 + 1)]d6 of the attack's damage type (1d6 at level 2, +2d6 per level). Applying Slice reduces your initiative by 2 for the remainder of the combat. Class table upgrades: 9d10 at level 12, 12d10 at level 16, 16d10 at level 20 (see R1). Unseen Blade effects may be applied during surprise attacks/rounds regardless of initiative order, with no initiative reduction."
+    },
+    {
+      "id": "unseen-blade-noxious-cut",
+      "name": "Unseen Blade – Noxious Cut",
+      "classId": "assassin",
+      "minLevel": 2,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "targetEffect": { "effectId": "envenomed", "durationRounds": 6 },
+      "_question": "R12 — the envenomed 'value' is a dice roll [((level − 2) × 2 + 1)]d4 (p.64), not a flat stack count: confirm the roll result equals the envenomed stacks/value applied, and that 'lasting 1 minute' = 6 rounds.",
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Noxious Cut: apply an envenomed effect lasting 1 minute (6 rounds) with value [((your level − 2) × 2 + 1)]d4 (1d4 at level 2, +2d4 per level). Applying Noxious Cut reduces your initiative by 3 for the remainder of the combat. Free during surprise attacks/rounds."
+    },
+    {
+      "id": "unseen-blade-scar",
+      "name": "Unseen Blade – Scar",
+      "classId": "assassin",
+      "minLevel": 2,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "targetEffect": { "effectId": "maimed", "stacks": { "levelDivisor": 2, "round": "up" } },
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Scar: the target gains [your level / 2, rounded up] maimed stacks. Applying Scar reduces your initiative by 1 for the remainder of the combat. Free during surprise attacks/rounds."
+    },
+    {
+      "id": "fatal-fixation",
+      "name": "Fatal Fixation",
+      "classId": "assassin",
+      "minLevel": 4,
+      "group": "fatal-fixation",
+      "kind": "active",
+      "apCost": 0,
+      "costs": [{ "resource": "fatal-fixation", "amount": 1 }],
+      "resolution": "manual",
+      "_question": "R3 — 'roll 1d5' (p.65): confirm how a d5 is rolled in the card/d10 system (ceil(d10/2)?). R9 — 'Revealed' (cannot enter stealth or become invisible) has no effect id in the catalog; Exposed here is described as 'all attacks against you have advantage' — confirm it maps to the existing 'exposed' effect.",
+      "description": "Mark a creature during your turn at no cost; the mark becomes active at the start of your next turn. The next time you deal damage to the marked target, the mark triggers automatically: roll 1d5 and multiply that damage instance by the rolled value. If the target dies before the mark triggers, the mark ends harmlessly (charge consumed). If you damage any OTHER creature while the mark is active before it triggers, the mark expires (charge consumed) and you suffer Revealed (cannot enter stealth or become invisible) and Exposed (all attacks against you have advantage) for 3 rounds. Only one mark may be active at a time. 2 charges, regained on rest via recharge points."
+    },
+    {
+      "id": "fatal-fixation-fixed-focus",
+      "name": "Fatal Fixation (Fixed Focus Variant)",
+      "classId": "assassin",
+      "minLevel": 4,
+      "group": "fatal-fixation",
+      "kind": "active",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "usesPerRest": { "amount": 1 },
+      "_question": "R9 — see fatal-fixation (Revealed has no effect id; confirm 'exposed' mapping).",
+      "description": "Consistency variant (for groups preferring less randomness — table pick, chosen instead of the 1d5 version). Mark a creature during your turn at no cost; the mark becomes active at the start of your next turn. The next time you deal damage to the marked target, multiply that damage instance by 5. If the target dies first, the mark ends harmlessly. If you damage any other creature while the mark is active before it triggers, the mark expires and you suffer Revealed and Exposed (all attacks against you have advantage) for 6 rounds. Only one mark at a time. Once per rest (regained with a recharge point)."
+    },
+    {
+      "id": "swift-presence",
+      "name": "Swift Presence",
+      "classId": "assassin",
+      "minLevel": 4,
+      "group": null,
+      "kind": "active",
+      "apCost": 2,
+      "costs": [],
+      "resolution": "manual",
+      "usesPerTurn": 1,
+      "description": "Once per round, after performing an attack, spend 2 AP to attempt to hide. As part of this action you may first dash a distance equal to 1 AP of movement (no attacks of opportunity), then immediately perform the hide action. At level 17 the cost becomes 1 AP. (Passive rider, always on: you may attempt to hide while in half cover, and even in plain sight if outside every enemy's line of sight; entering an enemy's line of sight while hidden ends the effect.)"
+    },
+    {
+      "id": "unseen-blade-poisonous-blade",
+      "name": "Unseen Blade – Poisonous Blade",
+      "classId": "assassin",
+      "minLevel": 8,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "targetEffect": { "effectId": "poisoned", "stacks": { "levelDivisor": 2, "round": "up" } },
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Poisonous Blade: the target gains [your level / 2, rounded up] poisoned stacks. Applying Poisonous Blade reduces your initiative by 2 for the remainder of the combat. Free during surprise attacks/rounds."
+    },
+    {
+      "id": "unseen-blade-tongue-slit",
+      "name": "Unseen Blade – Tongue Slit",
+      "classId": "assassin",
+      "minLevel": 8,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "targetEffect": { "effectId": "silenced", "stacks": { "levelDivisor": 2, "round": "up" } },
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Tongue Slit: the target gains [your level / 2, rounded up] silenced stacks. Applying Tongue Slit reduces your initiative by 4 for the remainder of the combat. Free during surprise attacks/rounds."
+    },
+    {
+      "id": "unseen-blade-wrist-cut",
+      "name": "Unseen Blade – Wrist Cut",
+      "classId": "assassin",
+      "minLevel": 8,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "targetEffect": { "effectId": "disarmed", "stacks": { "levelDivisor": 2, "round": "up" } },
+      "description": "When you hit with a weapon attack against a target with lower initiative than you, you may apply Wrist Cut: the target gains [your level / 2, rounded up] disarmed stacks. Applying Wrist Cut reduces your initiative by 4 for the remainder of the combat. Free during surprise attacks/rounds."
+    },
+    {
+      "id": "cutthroat",
+      "name": "Cutthroat",
+      "classId": "assassin",
+      "minLevel": 20,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R10 — depends on Cut Tongue (level 10 passive: targets damaged by both Sneak Attack and Unseen Blade are silenced 3 turns, CON save DC 8 + 2×prof at end of their turns to end early). The level-10 table cell reads 'Swift Presence Cut tongue' (p.63) while the prose lists 'Quick on thy feet' (p.66) which is absent from the table — confirm level 10 grants Quick On Thy Feet + Cut Tongue.",
+      "description": "The first time you damage a creature, if Cut Tongue would activate (target damaged by both Sneak Attack and an Unseen Blade effect), you may instead deal an additional 100 true damage."
+    },
+
+    {
+      "id": "backstab",
+      "name": "Backstab",
+      "classId": "burglar",
+      "minLevel": 1,
+      "group": null,
+      "kind": "attack-enhancer",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R4 — wiring into the weapon-attack pipeline: server adds ceil(level/2)d8 when the player toggles the rider (positioning is table-validated). R5 — 'can only trigger once per attack (even if attacking with 2 weapons)' (p.68): once per attack ACTION / per turn? Sneak Attack is explicitly once per round; clarify Backstab's frequency. At level 20 (Reliable Talent) backstab attacks deal TRUE damage.",
+      "description": "Damaging a target from behind deals extra damage: [ceil(your level / 2)]d8 (1d8 at level 1 up to 10d8 at level 19-20, per the class table). Can only trigger once per attack, even if attacking with 2 weapons. At level 20, Reliable Talent makes attacks that apply Backstab deal true damage."
+    },
+    {
+      "id": "evasion",
+      "name": "Evasion",
+      "classId": "burglar",
+      "minLevel": 4,
+      "group": null,
+      "kind": "reaction",
+      "apCost": 0,
+      "costs": [],
+      "resolution": "manual",
+      "usesPerRest": { "stat": "DEX", "min": 1 },
+      "_question": "R6 — text says 'per short rest' (p.68) but short rests were removed (round-4 Q20): confirm DEX-modifier uses per (quality-tiered) rest, and whether a minimum of 1 applies when DEX mod is 0. Also, the bracketed line '[your ac is increased by your proficiency as well.]' — does Evasion additionally grant a permanent passive AC increase equal to proficiency, or is that an editing leftover?",
+      "description": "Reaction, only while wearing medium or no armor: increase your AC by your proficiency against 1 attack. Usable a number of times equal to your DEX modifier per rest."
+    },
+    {
+      "id": "sabotage",
+      "name": "Sabotage",
+      "classId": "burglar",
+      "minLevel": 13,
+      "group": null,
+      "kind": "active",
+      "apCost": 3,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R7 — 'sleight of hand check' (p.68) is not in the S&M skill list; confirm it means Thievery. R8 — 'can be used a number of times equal to your dex modifier on any given target': per combat, per day, or ever?",
+      "description": "Attempt to sabotage a target (3 AP). Requires a position from which you could Backstab. Succeed on a sleight of hand (Thievery?) check contested by the target's passive perception. The next time the sabotaged creature attacks or casts a spell, roll 1d10: 1-4 — the AP and mana/energy are consumed but nothing happens; 5-7 — the attack/spell targets a random ally of the target in range (or nothing if none), effect still goes off; 8-9 — it backfires, damaging/affecting the target itself; 10 — it goes off normally. Usable DEX-modifier times on any given target."
+    },
+    {
+      "id": "break-magic",
+      "name": "Break Magic",
+      "classId": "burglar",
+      "minLevel": 16,
+      "group": null,
+      "kind": "active",
+      "apCost": null,
+      "costs": [],
+      "resolution": "manual",
+      "_question": "R11 — no AP cost specified (p.68); out-of-combat utility, but confirm cost if used in combat.",
+      "description": "Undo a magic seal/glyph/protection on an object/door/treasure/etc. by succeeding on a thievery check (DC depends on the spell level, the caster, etc.). Only one attempt per object; on a failure, the caster knows someone attempted to break the spell."
+    }
+  ]
+}

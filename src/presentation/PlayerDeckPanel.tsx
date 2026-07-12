@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import type { DeckCard, PlayerDeckConfig } from '../platform/types';
+import skillsRaw from '../data/skills.json';
+
+const SKILLS = skillsRaw as unknown as { id: string; name: string }[];
 
 function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v));
@@ -27,7 +30,8 @@ export function PlayerDeckPanel() {
   const room = playerDeck.room;
   const baseStat = room.statCount;
   const effStat = Math.max(0, baseStat + draft.statAdjust);
-  const deckSize = 2 + room.neutralCards.length + effStat + room.encounterCards.length + draft.extraCards.length;
+  const liveExtras = draft.extraCards.filter((c) => !c.consumed).length;
+  const deckSize = 2 + room.neutralCards.length + effStat + room.encounterCards.length + liveExtras;
 
   function setExtra(i: number, patch: Partial<DeckCard>) {
     if (!draft) return;
@@ -94,24 +98,76 @@ export function PlayerDeckPanel() {
         </div>
         {draft.extraCards.length === 0 && <p className="deck-empty">None.</p>}
         {draft.extraCards.map((c, i) => (
-          <div className="deck-card-row" key={i}>
-            <input
-              className="deck-card-name"
-              value={c.name}
-              onChange={(e) => setExtra(i, { name: e.target.value })}
-            />
-            <input
-              className="deck-card-mod"
-              type="number"
-              value={c.modifier}
-              onChange={(e) => setExtra(i, { modifier: Number.parseInt(e.target.value, 10) || 0 })}
-            />
-            <button className="btn btn--ghost deck-remove" onClick={() => removeExtra(i)}>
-              ×
-            </button>
+          <div className={'deck-card-block' + (c.consumed ? ' deck-card-block--consumed' : '')} key={i}>
+            <div className="deck-card-row">
+              <input
+                className="deck-card-name"
+                value={c.name}
+                onChange={(e) => setExtra(i, { name: e.target.value })}
+              />
+              <input
+                className="deck-card-mod"
+                type="number"
+                value={c.modifier}
+                onChange={(e) => setExtra(i, { modifier: Number.parseInt(e.target.value, 10) || 0 })}
+              />
+              {c.consumed && <span className="deck-consumed-badge">consumed</span>}
+              <button className="btn btn--ghost deck-remove" onClick={() => removeExtra(i)}>
+                ×
+              </button>
+            </div>
+            <div className="deck-card-row deck-card-row--opts">
+              <label className="deck-opt">
+                <span>Check</span>
+                <select
+                  value={c.checkType ?? ''}
+                  onChange={(e) => setExtra(i, { checkType: e.target.value || null })}
+                >
+                  <option value="">Any</option>
+                  {SKILLS.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="deck-opt">
+                <span>Redraw bonus</span>
+                <input
+                  className="deck-card-mod"
+                  type="number"
+                  placeholder="—"
+                  value={c.redrawModifier ?? ''}
+                  onChange={(e) =>
+                    setExtra(i, {
+                      redrawModifier: e.target.value === '' ? null : Number.parseInt(e.target.value, 10) || 0,
+                    })
+                  }
+                />
+              </label>
+              <label className="deck-opt">
+                <span>On use</span>
+                <select
+                  value={c.removal ?? ''}
+                  onChange={(e) =>
+                    setExtra(i, { removal: (e.target.value || null) as DeckCard['removal'] })
+                  }
+                >
+                  <option value="">Keep</option>
+                  <option value="consume">Consume (until rest)</option>
+                  <option value="burn">Burn (forever)</option>
+                </select>
+              </label>
+            </div>
           </div>
         ))}
       </div>
+
+      <p className="skills-hint">
+        A <em>check</em>-restricted card auto-passes on other checks; a <em>redraw bonus</em> card is
+        passed and its bonus adds to the final total; consume/burn removes the card once its result
+        is accepted.
+      </p>
 
       <p className="deck-total">
         Your deck: <strong>{deckSize} cards</strong>{' '}

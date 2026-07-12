@@ -7,11 +7,13 @@ import type {
   CombatSnapshot,
   DamageTypeId,
   DeckTemplate,
+  EncounterView,
   InventoryItemInput,
   InventorySnapshot,
   PlayerDeckConfig,
   PlayerDeckView,
   RosterEntry,
+  SkillCheckAccepted,
   SkillCheckResult,
   SpellbookSnapshot,
 } from './types';
@@ -177,6 +179,24 @@ export function skillCheck(playerId: string, skillId: string): Promise<SkillChec
   });
 }
 
+/** Proficiency gamble: forfeit the current card, draw the next; the d10 stays. */
+export function skillCheckRedraw(playerId: string): Promise<SkillCheckResult> {
+  return sendJson<SkillCheckResult>(
+    'POST',
+    `/characters/${encodeURIComponent(playerId)}/skill-check/redraw`,
+    {},
+  );
+}
+
+/** Accept the final card — applies consume/burn removal and closes the check. */
+export function skillCheckAccept(playerId: string): Promise<SkillCheckAccepted> {
+  return sendJson<SkillCheckAccepted>(
+    'POST',
+    `/characters/${encodeURIComponent(playerId)}/skill-check/accept`,
+    {},
+  );
+}
+
 // ── Combat actions (all resolve through the server's rule pipelines) ──
 
 type CombatAction = ActionResponse<CombatSnapshot>;
@@ -203,6 +223,20 @@ export function sendDamage(
 
 export function sendHeal(playerId: string, value: number): Promise<CombatAction> {
   return combatAction(playerId, 'heal', { value });
+}
+
+export function weaponAttack(playerId: string, itemId?: string): Promise<CombatAction> {
+  return combatAction(playerId, 'weapon-attack', itemId ? { itemId } : {});
+}
+
+/** Validated spend (M0-D): resource is 'ap' | 'mana' | the class resource type. 400 when insufficient. */
+export function spendResource(playerId: string, resource: string, amount: number): Promise<CombatAction> {
+  return combatAction(playerId, 'spend-resource', { resource, amount });
+}
+
+/** Capped gain (M0-D): resource is 'ap' | 'mana' | the class resource type. */
+export function gainResource(playerId: string, resource: string, amount: number): Promise<CombatAction> {
+  return combatAction(playerId, 'gain-resource', { resource, amount });
 }
 
 export function turnStart(playerId: string): Promise<CombatAction> {
@@ -371,6 +405,40 @@ export function updateBio(playerId: string, patch: BioPatch): Promise<BioSnapsho
 
 export function fetchRoomDeck(room: string): Promise<DeckTemplate> {
   return getJson<DeckTemplate>(`/rooms/${encodeURIComponent(room)}/deck`);
+}
+
+// ── Initiative & turn order ──
+
+export function fetchEncounter(room: string): Promise<EncounterView> {
+  return getJson<EncounterView>(`/rooms/${encodeURIComponent(room)}/encounter`);
+}
+
+/** Rolls d20 + DEX mod + initiative bonus per participant; omit playerIds for the whole room. */
+export function startEncounter(room: string, playerIds?: string[]): Promise<EncounterView> {
+  return sendJson<EncounterView>('POST', `/rooms/${encodeURIComponent(room)}/encounter/start`, {
+    playerIds: playerIds ?? null,
+  });
+}
+
+export function endEncounter(room: string): Promise<EncounterView> {
+  return sendJson<EncounterView>('POST', `/rooms/${encodeURIComponent(room)}/encounter/end`, {});
+}
+
+/** DM override: skip the current turn (AFK player). */
+export function encounterNextTurn(room: string): Promise<EncounterView> {
+  return sendJson<EncounterView>('POST', `/rooms/${encodeURIComponent(room)}/encounter/next`, {});
+}
+
+/** DM override: change a participant's initiative mid-combat. */
+export function setEncounterInitiative(
+  room: string,
+  playerId: string,
+  initiative: number,
+): Promise<EncounterView> {
+  return sendJson<EncounterView>('PUT', `/rooms/${encodeURIComponent(room)}/encounter/initiative`, {
+    playerId,
+    initiative,
+  });
 }
 
 export function updateRoomDeck(room: string, template: DeckTemplate): Promise<DeckTemplate> {

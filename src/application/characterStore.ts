@@ -7,6 +7,7 @@ import type {
   CombatSnapshot,
   DamageTypeId,
   DeckTemplate,
+  EncounterView,
   InventoryItemInput,
   InventorySnapshot,
   PlayerDeckConfig,
@@ -22,16 +23,22 @@ import {
   castSpell,
   combatStart,
   createCharacter as apiCreateCharacter,
+  encounterNextTurn,
+  endEncounter as apiEndEncounter,
   equipItem,
   fetchBio,
   fetchCombatSnapshot,
+  fetchEncounter,
   fetchInventory,
   fetchPlayerDeck,
   fetchRoomDeck,
   fetchRoster,
   fetchSpellbook,
   findCharacter,
+  gainResource,
   levelUp,
+  setEncounterInitiative,
+  startEncounter as apiStartEncounter,
   prepareSpells,
   purchaseItem,
   removeEffect,
@@ -41,6 +48,9 @@ import {
   sendDamage,
   sendHeal,
   skillCheck,
+  skillCheckAccept,
+  skillCheckRedraw,
+  spendResource,
   turnEnd,
   turnStart,
   unequipItem,
@@ -54,6 +64,7 @@ import {
   updateVitals,
   upgradeItem,
   useConsumable,
+  weaponAttack,
   type ApplyEffectBody,
   type CastBody,
   type CreateCharacterBody,
@@ -62,6 +73,7 @@ import {
   type ReviveBody,
   type VitalsPatch,
 } from '../platform/http';
+import type { Viewport } from '../platform/metadataGateway';
 
 type View = 'entry' | 'create' | 'roster' | 'sheet' | 'deck';
 type Role = 'player' | 'gm';
@@ -70,9 +82,13 @@ function msg(e: unknown): string {
   return e instanceof Error ? e.message : String(e);
 }
 
-interface CharacterState {
+export interface CharacterState {
   view: View;
   role: Role | null;
+  /** True when running inside Owlbear Rodeo — identity comes from the SDK, not the entry form. */
+  obrMode: boolean;
+  /** Which snapshot slice is mirrored to OBR metadata (follows the active tab). */
+  activeViewport: Viewport;
   roomName: string;
   email: string;
   roster: RosterEntry[];
@@ -90,9 +106,11 @@ interface CharacterState {
   spellbook: SpellbookSnapshot | null;
   acting: boolean;
   lastResolution: ResolutionResult | null;
+  encounter: EncounterView | null;
 
   setRoom: (room: string) => void;
   setEmail: (email: string) => void;
+  setActiveViewport: (viewport: Viewport) => void;
   enterAsPlayer: () => Promise<void>;
   enterAsGm: () => Promise<void>;
   createCharacter: (body: Omit<CreateCharacterBody, 'roomName' | 'email'>) => Promise<void>;
@@ -104,6 +122,7 @@ interface CharacterState {
   saveIdentity: (patch: IdentityPatch) => Promise<void>;
   saveProficiencies: (skillIds: string[]) => Promise<void>;
   drawSkill: (skillId: string) => Promise<void>;
+  redrawSkill: () => Promise<void>;
   clearDraw: () => void;
   openDeckEditor: () => Promise<void>;
   saveRoomDeck: (template: DeckTemplate) => Promise<void>;
@@ -124,10 +143,18 @@ interface CharacterState {
   doUseConsumable: (body: { itemId: string; tier?: number }) => Promise<void>;
   doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean }) => Promise<void>;
   doLevelUp: (choices: LevelUpChoices) => Promise<void>;
+  doWeaponAttack: (itemId?: string) => Promise<void>;
   doDamage: (value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number) => Promise<void>;
   doHeal: (value: number) => Promise<void>;
   doTurnStart: () => Promise<void>;
   doTurnEnd: () => Promise<void>;
+  doSpendResource: (resource: string, amount: number) => Promise<void>;
+  doGainResource: (resource: string, amount: number) => Promise<void>;
+  loadEncounter: () => Promise<void>;
+  startEncounter: () => Promise<void>;
+  endEncounter: () => Promise<void>;
+  skipTurn: () => Promise<void>;
+  overrideInitiative: (playerId: string, initiative: number) => Promise<void>;
   doApplyEffect: (body: ApplyEffectBody) => Promise<void>;
   doRemoveEffect: (effectId: string) => Promise<void>;
   doRevive: (body: ReviveBody) => Promise<void>;
@@ -139,6 +166,8 @@ interface CharacterState {
 export const useCharacterStore = create<CharacterState>((set, get) => ({
   view: 'entry',
   role: null,
+  obrMode: false,
+  activeViewport: 'combat',
   roomName: '',
   email: '',
   roster: [],
@@ -156,9 +185,11 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   spellbook: null,
   acting: false,
   lastResolution: null,
+  encounter: null,
 
   setRoom: (room) => set({ roomName: room }),
   setEmail: (email) => set({ email }),
+  setActiveViewport: (viewport) => set({ activeViewport: viewport }),
 
   enterAsPlayer: async () => {
     const { roomName, email } = get();
@@ -282,7 +313,32 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
-  clearDraw: () => set({ drawResult: null }),
+  redrawSkill: async () => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ drawing: true, error: null });
+    try {
+      set({ drawResult: await skillCheckRedraw(id), drawing: false });
+    } catch (e) {
+      set({ error: msg(e), drawing: false });
+    }
+  },
+
+  // Dismissing the banner ACCEPTS the result (DoF semantics): the server applies the
+  // final card's consume/burn removal and closes the check.
+  clearDraw: () => {
+    const { selectedPlayerId, drawResult } = get();
+    set({ drawResult: null });
+    if (!selectedPlayerId || !drawResult) return;
+    void skillCheckAccept(selectedPlayerId)
+      .then((accepted) => {
+        // a consumed/burned card changes the deck — refresh the Deck tab if loaded
+        if (accepted.cardRemoved && get().playerDeck) void get().loadPlayerDeck();
+      })
+      .catch(() => {
+        /* accept is best-effort; a lost session just means nothing to remove */
+      });
+  },
 
   openDeckEditor: async () => {
     set({ view: 'deck', error: null, roomDeck: null });
@@ -415,11 +471,77 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     if (get().spellbook) await get().loadSpellbook();
   },
 
+  doWeaponAttack: (itemId) => runCombatAction(set, get, (id) => weaponAttack(id, itemId)),
   doDamage: (value, damageType, tags, attackerMight) =>
     runCombatAction(set, get, (id) => sendDamage(id, value, damageType, tags, attackerMight)),
   doHeal: (value) => runCombatAction(set, get, (id) => sendHeal(id, value)),
-  doTurnStart: () => runCombatAction(set, get, (id) => turnStart(id)),
-  doTurnEnd: () => runCombatAction(set, get, (id) => turnEnd(id)),
+  // turn actions move the room's turn order — refresh it alongside the snapshot
+  doTurnStart: async () => {
+    await runCombatAction(set, get, (id) => turnStart(id));
+    if (get().encounter?.active) await get().loadEncounter();
+  },
+  doTurnEnd: async () => {
+    await runCombatAction(set, get, (id) => turnEnd(id));
+    if (get().encounter?.active) await get().loadEncounter();
+  },
+  doSpendResource: (resource, amount) =>
+    runCombatAction(set, get, (id) => spendResource(id, resource, amount)),
+  doGainResource: (resource, amount) =>
+    runCombatAction(set, get, (id) => gainResource(id, resource, amount)),
+
+  loadEncounter: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    try {
+      set({ encounter: await fetchEncounter(room) });
+    } catch {
+      /* polling is best-effort — keep the last known state */
+    }
+  },
+
+  startEncounter: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    set({ acting: true, error: null });
+    try {
+      set({ encounter: await apiStartEncounter(room), acting: false });
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  endEncounter: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    set({ acting: true, error: null });
+    try {
+      set({ encounter: await apiEndEncounter(room), acting: false });
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  skipTurn: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    set({ acting: true, error: null });
+    try {
+      set({ encounter: await encounterNextTurn(room), acting: false });
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  overrideInitiative: async (playerId, initiative) => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    set({ error: null });
+    try {
+      set({ encounter: await setEncounterInitiative(room, playerId, initiative) });
+    } catch (e) {
+      set({ error: msg(e) });
+    }
+  },
   doApplyEffect: (body) => runCombatAction(set, get, (id) => applyEffect(id, body)),
   doRemoveEffect: (effectId) => runCombatAction(set, get, (id) => removeEffect(id, effectId)),
   doRevive: (body) => runCombatAction(set, get, (id) => revive(id, body)),

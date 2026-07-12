@@ -34,6 +34,7 @@ export function SkillsPanel() {
   const drawResult = useCharacterStore((s) => s.drawResult);
   const saveProficiencies = useCharacterStore((s) => s.saveProficiencies);
   const drawSkill = useCharacterStore((s) => s.drawSkill);
+  const redrawSkill = useCharacterStore((s) => s.redrawSkill);
   const clearDraw = useCharacterStore((s) => s.clearDraw);
 
   const [draft, setDraft] = useState<Set<string> | null>(null);
@@ -92,7 +93,7 @@ export function SkillsPanel() {
           result={drawResult}
           pathId={snapshot.pathId}
           drawing={drawing}
-          onRedraw={() => void drawSkill(drawResult.skillId)}
+          onRedraw={() => void redrawSkill()}
           onClose={clearDraw}
         />
       )}
@@ -100,7 +101,7 @@ export function SkillsPanel() {
       <p className="skills-hint">
         {editing
           ? 'Toggle the skills this character is proficient in.'
-          : 'Click a skill to draw a card. A Stat card applies your ability modifier; proficiency (●) lets you redraw.'}
+          : 'Click a skill to draw a card. A Stat card applies your ability modifier; proficiency (●) grants redraws equal to your proficiency bonus — the die stays.'}
       </p>
       {error && editing && <p className="inline-error">{error}</p>}
 
@@ -152,12 +153,14 @@ function DrawBanner({
   onRedraw: () => void;
   onClose: () => void;
 }) {
-  // A fresh result object arrives on every draw/redraw — roll the die each time.
-  const [rolling, setRolling] = useState(!result.critical);
-  const [revealed, setRevealed] = useState(result.critical);
+  // The d10 is rolled once per check — animate it on a fresh draw only.
+  // A redraw swaps the card but the die is already settled.
+  const isRedraw = result.redrawsUsed > 0;
+  const [rolling, setRolling] = useState(!result.critical && !isRedraw);
+  const [revealed, setRevealed] = useState(result.critical || isRedraw);
 
   useEffect(() => {
-    if (result.critical) {
+    if (result.critical || result.redrawsUsed > 0) {
       setRolling(false);
       setRevealed(true);
     } else {
@@ -169,7 +172,13 @@ function DrawBanner({
   return (
     <div className="draw-banner">
       <div className="draw-card-art">
-        <CardFace key={`${result.skillId}-${result.card.name}-${result.d10}`} card={result.card} pathId={pathId} size={88} animating />
+        <CardFace
+          key={`${result.skillId}-${result.card.name}-${result.d10}-${result.redrawsUsed}`}
+          card={result.card}
+          pathId={pathId}
+          size={88}
+          animating
+        />
       </div>
       <div className="draw-info">
         <div className="draw-skill">
@@ -191,19 +200,54 @@ function DrawBanner({
             />
             <span className={'draw-eq' + (revealed ? ' draw-eq--shown' : '')}>
               <span className="draw-piece">{formatModifier(result.effectiveModifier ?? 0)}</span>
+              {result.bonusTotal !== 0 && (
+                <span className="draw-piece">{formatModifier(result.bonusTotal)}</span>
+              )}
               <span className="draw-piece">=</span>
               <span className="draw-total">{result.total}</span>
             </span>
           </div>
         )}
+        {result.passedCards.length > 0 && (
+          <div className="draw-passed">
+            Passed:{' '}
+            {result.passedCards
+              .map((p) =>
+                p.reason === 'wrong-check'
+                  ? `${p.card.name} (wrong check)`
+                  : `${p.card.name} (${formatModifier(p.card.redrawModifier ?? 0)} bonus)`,
+              )
+              .join(' · ')}
+          </div>
+        )}
+        {result.redrawBonuses.length > 0 && (
+          <div className="draw-bonuses">
+            {result.redrawBonuses.map((b, i) => (
+              <span className="draw-bonus-chip" key={i}>
+                {b.name} {formatModifier(b.modifier)}
+              </span>
+            ))}
+          </div>
+        )}
+        {result.card.removal && (
+          <div className="draw-removal-note">
+            {result.card.removal === 'burn'
+              ? 'This card is burned when accepted — gone for good.'
+              : 'This card is consumed when accepted — back after a rest.'}
+          </div>
+        )}
         <div className="draw-actions">
           {result.proficient && (
-            <button className="btn btn--ghost" onClick={onRedraw} disabled={drawing}>
-              {drawing ? '…' : 'Redraw'}
+            <button
+              className="btn btn--ghost"
+              onClick={onRedraw}
+              disabled={drawing || result.redrawsRemaining === 0}
+            >
+              {drawing ? '…' : `Redraw (${result.redrawsRemaining} left)`}
             </button>
           )}
           <button className="btn btn--ghost" onClick={onClose}>
-            Dismiss
+            {result.card.removal ? 'Accept' : 'Dismiss'}
           </button>
         </div>
       </div>

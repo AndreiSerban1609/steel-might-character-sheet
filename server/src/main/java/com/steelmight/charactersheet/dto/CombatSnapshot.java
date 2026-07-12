@@ -18,6 +18,8 @@ public record CombatSnapshot(
         int ma,
         ApView ap,
         ManaView mana,
+        // Class resource (M3 Part A): chakra/rages/energy/focus/… — null when the class has none.
+        ResourceView resource,
         int speed,
         int bonusInitiative,
         int deathStacks,
@@ -31,6 +33,8 @@ public record CombatSnapshot(
         List<String> proficiencies,
         List<EffectView> activeEffects,
         String equippedWeapon,
+        // every equipped WEAPON-kind item (two when dual-wielding) — drives the attack picker
+        List<String> equippedWeapons,
         String equippedArmor,
         List<String> conditions,
         // Q30 (M5-B): equipped gear without proficiency — display data for the DM.
@@ -42,6 +46,8 @@ public record CombatSnapshot(
     public record HpView(int current, int max, int temp) {}
     public record ApView(int current, int recovery, int max) {}
     public record ManaView(int current, int max) {}
+    /** max == null → unbounded (builder resources like focus). */
+    public record ResourceView(String type, int current, Integer max) {}
     public record EffectView(String id, String name, int stacks, Integer value, Integer rounds) {}
     public record PenaltyView(String itemId, String penalty) {}
 }
