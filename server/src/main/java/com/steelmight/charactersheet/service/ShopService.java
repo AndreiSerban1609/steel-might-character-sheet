@@ -73,6 +73,12 @@ public class ShopService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "only weapons can be silvered");
         }
         int tier = resolvePurchaseTier(item, req.tier());
+        // Same level cap as upgrades (Game Owner 2026-07-13): no buying weapons/armor above
+        // your level. Potions/scrolls use tier as potency — uncapped until ruled otherwise.
+        if ((item.kind() == ItemKind.WEAPON || item.kind() == ItemKind.ARMOR) && tier > c.getLevel()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "cannot buy level " + tier + " gear at character level " + c.getLevel());
+        }
 
         // Scrolls are OF a specific spell (Game Owner 2026-07-07) — chosen when buying.
         com.steelmight.charactersheet.gamedata.SpellDefinition scrollSpell = null;
@@ -208,6 +214,12 @@ public class ShopService {
                     item.id() + " is already at the maximum level (20)");
         }
         int target = current + 1;
+        // Items cannot be upgraded past the character's level (Game Owner 2026-07-13):
+        // a level 3 conqueror cannot carry a level 4 pike.
+        if (target > c.getLevel()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "cannot upgrade past your level (" + c.getLevel() + ")");
+        }
 
         var result = new ResolutionResult();
         boolean success;

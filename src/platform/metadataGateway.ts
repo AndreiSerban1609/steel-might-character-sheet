@@ -7,7 +7,17 @@ import OBR from '@owlbear-rodeo/sdk';
  */
 export type Viewport = 'combat' | 'bio' | 'inventory' | 'spellbook';
 
+/** One player's mirrored slice: which viewport they broadcast and its snapshot. */
+export interface SheetSlice {
+  viewport: Viewport;
+  data: unknown;
+}
+
 const KEY_PREFIX = 'com.deckoffates.sheets';
+
+/** Room-level pseudo-player segment — holds shared state like the encounter. */
+const ROOM_SEGMENT = 'room';
+const ENCOUNTER_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/encounter`;
 
 // Budget for a single viewport slice. The room-wide cap is 16 kB shared with the
 // Deck of Fates keys, so anything near this size is already a design problem.
@@ -52,19 +62,60 @@ export async function readViewport<T>(playerId: string, viewport: Viewport): Pro
   return (metadata[viewportKey(playerId, viewport)] as T | undefined) ?? null;
 }
 
+function sheetSlicesFrom(metadata: Record<string, unknown>): Record<string, SheetSlice> {
+  const slices: Record<string, SheetSlice> = {};
+  for (const [key, value] of Object.entries(metadata)) {
+    if (!key.startsWith(`${KEY_PREFIX}/`) || value === undefined) continue;
+    const [, playerId, viewport] = key.split('/');
+    if (!playerId || playerId === ROOM_SEGMENT || !viewport) continue;
+    slices[playerId] = { viewport: viewport as Viewport, data: value };
+  }
+  return slices;
+}
+
+/** Snapshot of every mirrored sheet slice in the room, keyed by player id. */
+export async function readAllViewports(): Promise<Record<string, SheetSlice>> {
+  if (!OBR.isAvailable) return {};
+  return sheetSlicesFrom(await OBR.room.getMetadata());
+}
+
 /**
- * Subscribe to every sheet viewport in the room. The handler fires once per
- * mirrored slice on each metadata change. Returns an unsubscribe function.
+ * Subscribe to the room's sheet viewports. The handler receives the complete
+ * slice record on every metadata change. Returns an unsubscribe function.
  */
 export function subscribeViewports(
-  handler: (playerId: string, viewport: Viewport, data: unknown) => void,
+  handler: (slices: Record<string, SheetSlice>) => void,
 ): () => void {
   if (!OBR.isAvailable) return () => {};
+  return OBR.room.onMetadataChange((metadata) => handler(sheetSlicesFrom(metadata)));
+}
+
+/**
+ * Mirror the room's encounter state (turn order) under a room-level key so
+ * clients get pushed updates instead of polling the server (Story 3.2).
+ */
+export async function writeEncounter(view: unknown): Promise<void> {
+  if (!OBR.isAvailable) return;
+  const size = JSON.stringify(view).length;
+  if (size > MAX_SLICE_CHARS) {
+    console.warn(`[sheets] encounter view is ${size} chars — not mirrored`);
+    return;
+  }
+  await OBR.room.setMetadata({ [ENCOUNTER_KEY]: view });
+}
+
+/** Read the mirrored encounter state, if any client has broadcast one. */
+export async function readEncounter(): Promise<unknown> {
+  if (!OBR.isAvailable) return null;
+  const metadata = await OBR.room.getMetadata();
+  return metadata[ENCOUNTER_KEY] ?? null;
+}
+
+/** Subscribe to the mirrored encounter state. Fires on every metadata change. */
+export function subscribeEncounter(handler: (view: unknown) => void): () => void {
+  if (!OBR.isAvailable) return () => {};
   return OBR.room.onMetadataChange((metadata) => {
-    for (const [key, value] of Object.entries(metadata)) {
-      if (!key.startsWith(`${KEY_PREFIX}/`) || value === undefined) continue;
-      const [, playerId, viewport] = key.split('/');
-      if (playerId && viewport) handler(playerId, viewport as Viewport, value);
-    }
+    const value = metadata[ENCOUNTER_KEY];
+    if (value !== undefined && value !== null) handler(value);
   });
 }

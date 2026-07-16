@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import type { Viewport } from '../platform/metadataGateway';
 import { casterTypeOf } from '../domain/spellCatalog';
+import { classHasAbilities } from '../domain/abilityCatalog';
+import { AbilitiesPanel } from './AbilitiesPanel';
 import { StatsPanel } from './StatsPanel';
 import { CombatPanel } from './CombatPanel';
 import { SkillsPanel } from './SkillsPanel';
@@ -10,12 +12,13 @@ import { InventoryPanel } from './InventoryPanel';
 import { BioPanel } from './BioPanel';
 import { SpellbookPanel } from './SpellbookPanel';
 
-type Tab = 'stats' | 'combat' | 'spells' | 'skills' | 'inventory' | 'bio' | 'deck';
+type Tab = 'stats' | 'combat' | 'spells' | 'abilities' | 'skills' | 'inventory' | 'bio' | 'deck';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'stats', label: 'Stats' },
   { id: 'combat', label: 'Combat' },
   { id: 'spells', label: 'Spells' },
+  { id: 'abilities', label: 'Abilities' },
   { id: 'skills', label: 'Skills' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'bio', label: 'Bio' },
@@ -27,6 +30,7 @@ const VIEWPORT_BY_TAB: Record<Tab, Viewport> = {
   stats: 'combat',
   combat: 'combat',
   spells: 'spellbook',
+  abilities: 'combat',
   skills: 'combat',
   inventory: 'inventory',
   bio: 'bio',
@@ -40,9 +44,12 @@ export function Sheet() {
   const setActiveViewport = useCharacterStore((s) => s.setActiveViewport);
   const [rawTab, setTab] = useState<Tab>('stats');
 
-  // Non-casters have no spellbook — hide the tab (their abilities arrive with
-  // the use-ability round; resource spend/gain lives in the Combat tab).
-  const tabs = TABS.filter((t) => t.id !== 'spells' || !classId || casterTypeOf(classId) !== 'none');
+  // Non-casters have no spellbook; classes without extracted abilities have no Abilities tab.
+  const tabs = TABS.filter((t) => {
+    if (t.id === 'spells') return !classId || casterTypeOf(classId) !== 'none';
+    if (t.id === 'abilities') return classHasAbilities(classId);
+    return true;
+  });
   const tab: Tab = tabs.some((t) => t.id === rawTab) ? rawTab : 'stats';
 
   function selectTab(t: Tab) {
@@ -53,9 +60,11 @@ export function Sheet() {
   return (
     <section className="sheet">
       <div className="sheet-topbar">
-        <button className="btn btn--ghost" onClick={back}>
-          {role === 'gm' ? '← Roster' : '← Exit'}
-        </button>
+        {role === 'gm' && (
+          <button className="btn btn--ghost" onClick={back}>
+            ← Roster
+          </button>
+        )}
         <div className="tabs">
           {tabs.map((t) => (
             <button
@@ -73,6 +82,7 @@ export function Sheet() {
       {tab === 'stats' && <StatsPanel />}
       {tab === 'combat' && <CombatPanel />}
       {tab === 'spells' && <SpellbookPanel />}
+      {tab === 'abilities' && <AbilitiesPanel />}
       {tab === 'skills' && <SkillsPanel />}
       {tab === 'inventory' && <InventoryPanel />}
       {tab === 'bio' && <BioPanel />}

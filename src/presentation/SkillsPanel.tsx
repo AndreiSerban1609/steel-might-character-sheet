@@ -26,6 +26,8 @@ const ABILITY_UP: Record<string, AbilityScore> = {
 };
 const GROUP_ORDER: AbilityScore[] = ['STR', 'DEX', 'INT', 'WIS', 'CHA', 'WILL'];
 
+type AdvMode = 'none' | 'advantage' | 'disadvantage';
+
 export function SkillsPanel() {
   const snapshot = useCharacterStore((s) => s.snapshot);
   const saving = useCharacterStore((s) => s.saving);
@@ -38,6 +40,8 @@ export function SkillsPanel() {
   const clearDraw = useCharacterStore((s) => s.clearDraw);
 
   const [draft, setDraft] = useState<Set<string> | null>(null);
+  // Chosen BEFORE the draw (GM rule); resets to a normal draw after each check starts.
+  const [advMode, setAdvMode] = useState<AdvMode>('none');
 
   if (!snapshot) return <div className="panel-msg">No character loaded.</div>;
 
@@ -105,6 +109,28 @@ export function SkillsPanel() {
       </p>
       {error && editing && <p className="inline-error">{error}</p>}
 
+      {!editing && (
+        <div className="adv-toggle">
+          <span className="adv-toggle-label">Next draw:</span>
+          {(['none', 'advantage', 'disadvantage'] as AdvMode[]).map((m) => (
+            <button
+              key={m}
+              className={'adv-toggle-btn' + (advMode === m ? ' adv-toggle-btn--active' : '')}
+              title={
+                m === 'none'
+                  ? 'One d10, as normal'
+                  : m === 'advantage'
+                    ? 'Roll two d10s, keep the higher'
+                    : 'Roll two d10s, keep the lower'
+              }
+              onClick={() => setAdvMode(m)}
+            >
+              {m === 'none' ? 'Normal' : m === 'advantage' ? 'Advantage' : 'Disadvantage'}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="skills-groups">
         {GROUP_ORDER.filter((ab) => byAbility.has(ab)).map((ab) => (
           <div className="skills-group" key={ab}>
@@ -124,7 +150,14 @@ export function SkillsPanel() {
                   <div
                     className={cls}
                     key={sk.id}
-                    onClick={editing ? () => toggle(sk.id) : () => void drawSkill(sk.id)}
+                    onClick={
+                      editing
+                        ? () => toggle(sk.id)
+                        : () => {
+                            void drawSkill(sk.id, advMode === 'none' ? undefined : advMode);
+                            setAdvMode('none');
+                          }
+                    }
                   >
                     <span className="skill-prof-dot">{isProf ? '●' : '○'}</span>
                     <span className="skill-name">{sk.name}</span>
@@ -185,19 +218,47 @@ function DrawBanner({
           {SKILL_NAME.get(result.skillId) ?? result.skillId}
           <span className="draw-ability">{result.ability}</span>
         </div>
+        {result.advantage && (
+          <div
+            className={
+              'draw-adv-chip' +
+              (result.advantage === 'disadvantage' ? ' draw-adv-chip--dis' : '')
+            }
+          >
+            {result.advantage === 'advantage' ? 'Advantage — higher die' : 'Disadvantage — lower die'}
+          </div>
+        )}
         {result.critical ? (
           <div className="draw-outcome draw-outcome--crit">The GM decides</div>
         ) : (
           <div className="draw-outcome">
-            <DiceRoll
-              result={result.d10}
-              rolling={rolling}
-              size={54}
-              onRollComplete={() => {
-                setRolling(false);
-                setRevealed(true);
-              }}
-            />
+            <span className="draw-dice">
+              {result.d10Rolls.map((roll, i) => {
+                const usedIndex = result.d10Rolls.indexOf(result.d10);
+                const discarded = result.d10Rolls.length > 1 && i !== usedIndex;
+                return (
+                  <span
+                    key={i}
+                    className={'draw-die' + (discarded && revealed ? ' draw-die--discarded' : '')}
+                    title={discarded && revealed ? 'Discarded roll' : undefined}
+                  >
+                    <DiceRoll
+                      result={roll}
+                      rolling={rolling}
+                      size={54}
+                      onRollComplete={
+                        i === usedIndex
+                          ? () => {
+                              setRolling(false);
+                              setRevealed(true);
+                            }
+                          : undefined
+                      }
+                    />
+                  </span>
+                );
+              })}
+            </span>
             <span className={'draw-eq' + (revealed ? ' draw-eq--shown' : '')}>
               <span className="draw-piece">{formatModifier(result.effectiveModifier ?? 0)}</span>
               {result.bonusTotal !== 0 && (

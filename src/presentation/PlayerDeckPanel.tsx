@@ -31,7 +31,17 @@ export function PlayerDeckPanel() {
   const baseStat = room.statCount;
   const effStat = Math.max(0, baseStat + draft.statAdjust);
   const liveExtras = draft.extraCards.filter((c) => !c.consumed).length;
-  const deckSize = 2 + room.neutralCards.length + effStat + room.encounterCards.length + liveExtras;
+  const disabled = new Set(draft.disabledEncounters);
+  const liveEncounters = room.encounterCards.filter((_, i) => !disabled.has(i)).length;
+  const deckSize = 2 + room.neutralCards.length + effStat + liveEncounters + liveExtras;
+
+  function toggleEncounter(i: number) {
+    if (!draft) return;
+    const next = new Set(draft.disabledEncounters);
+    if (next.has(i)) next.delete(i);
+    else next.add(i);
+    setDraft({ ...draft, disabledEncounters: [...next].sort((a, b) => a - b) });
+  }
 
   function setExtra(i: number, patch: Partial<DeckCard>) {
     if (!draft) return;
@@ -87,6 +97,30 @@ export function PlayerDeckPanel() {
           room {baseStat}
           {draft.statAdjust >= 0 ? ` + ${draft.statAdjust}` : ` − ${-draft.statAdjust}`}
         </span>
+      </div>
+
+      <div className="deck-section">
+        <div className="deck-section-head">
+          <h3>Room encounter cards</h3>
+        </div>
+        {room.encounterCards.length === 0 && <p className="deck-empty">The GM has none set.</p>}
+        {room.encounterCards.map((c, i) => (
+          <label
+            className={'deck-encounter-row' + (disabled.has(i) ? ' deck-encounter-row--off' : '')}
+            key={i}
+          >
+            <input type="checkbox" checked={!disabled.has(i)} onChange={() => toggleEncounter(i)} />
+            <span className="deck-encounter-name">{c.name || 'Encounter'}</span>
+            <span className="deck-encounter-mod">
+              {c.modifier > 0 ? `+${c.modifier}` : c.modifier}
+            </span>
+            {c.description && <span className="deck-encounter-desc">{c.description}</span>}
+          </label>
+        ))}
+        <p className="skills-hint">
+          Untick an encounter card to leave it out of your deck (e.g. a reward lets you remove
+          one). The GM's base deck itself is unchanged.
+        </p>
       </div>
 
       <div className="deck-section">

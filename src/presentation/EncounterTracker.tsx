@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 
 /**
- * Room turn order. Polls the server while mounted (no push channel yet — the OBR
- * metadata mirror will replace this). GM gets start/skip/end + initiative overrides;
- * players see the order and whose turn it is.
+ * Room turn order. Inside OBR the room-metadata mirror pushes updates (Story 3.2);
+ * outside OBR (dev entry form) it falls back to polling the server while mounted.
+ * GM gets start/skip/end + initiative overrides; players see the order and whose
+ * turn it is.
  */
 export function EncounterTracker() {
   const encounter = useCharacterStore((s) => s.encounter);
+  const obrMode = useCharacterStore((s) => s.obrMode);
   const role = useCharacterStore((s) => s.role);
   const acting = useCharacterStore((s) => s.acting);
+  const roster = useCharacterStore((s) => s.roster);
   const loadEncounter = useCharacterStore((s) => s.loadEncounter);
   const startEncounter = useCharacterStore((s) => s.startEncounter);
   const endEncounter = useCharacterStore((s) => s.endEncounter);
@@ -19,26 +22,60 @@ export function EncounterTracker() {
   const isGm = role === 'gm';
   const [editing, setEditing] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
+  const [surprised, setSurprised] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     void loadEncounter();
+    if (obrMode) return; // metadata mirror pushes updates — no polling needed
     const timer = window.setInterval(() => void loadEncounter(), 5000);
     return () => window.clearInterval(timer);
-  }, [loadEncounter]);
+  }, [loadEncounter, obrMode]);
 
   if (!encounter?.active) {
     if (!isGm) return null;
+
+    function toggleSurprised(playerId: string) {
+      setSurprised((prev) => {
+        const next = new Set(prev);
+        if (next.has(playerId)) next.delete(playerId);
+        else next.add(playerId);
+        return next;
+      });
+    }
+
     return (
       <div className="encounter encounter--idle">
-        <span className="encounter-label">No encounter running</span>
-        <button
-          className="btn btn--gold"
-          title="Rolls d20 + DEX mod + initiative bonus for everyone in the room; AP set to starting value"
-          onClick={() => void startEncounter()}
-          disabled={acting}
-        >
-          Roll Initiative
-        </button>
+        <div className="encounter-idle-row">
+          <span className="encounter-label">No encounter running</span>
+          <button
+            className="btn btn--gold"
+            title="Rolls d20 + DEX mod + initiative bonus for everyone in the room; AP set to starting value. First turns give no AP recovery."
+            onClick={() => {
+              void startEncounter(surprised.size > 0 ? [...surprised] : undefined);
+              setSurprised(new Set());
+            }}
+            disabled={acting}
+          >
+            Roll Initiative
+          </button>
+        </div>
+        {roster.length > 0 && (
+          <div className="encounter-surprise-setup">
+            <span className="encounter-surprise-label" title="Ambushed characters skip the surprise round (round 0); the rest get a free round first">
+              Surprised:
+            </span>
+            {roster.map((r) => (
+              <label className="encounter-surprise-pick" key={r.playerId}>
+                <input
+                  type="checkbox"
+                  checked={surprised.has(r.playerId)}
+                  onChange={() => toggleSurprised(r.playerId)}
+                />
+                {r.name}
+              </label>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -54,12 +91,14 @@ export function EncounterTracker() {
   return (
     <div className="encounter">
       <div className="encounter-head">
-        <span className="encounter-round">Round {encounter.round}</span>
+        <span className="encounter-round">
+          {encounter.round === 0 ? 'Surprise round' : `Round ${encounter.round}`}
+        </span>
         <span className="encounter-turn">
           {current ? (
             <>
               <strong>{current.name}</strong>
-              {encounter.turnStarted ? ' is acting' : ' is up'}
+              {"'s turn"}
             </>
           ) : (
             '—'
@@ -79,12 +118,18 @@ export function EncounterTracker() {
       <div className="encounter-order">
         {encounter.entries.map((e) => {
           const isCurrent = e.playerId === encounter.currentPlayerId;
+          const surprisedNow = encounter.round === 0 && e.surprised;
           const cls =
             'encounter-entry' +
             (isCurrent ? ' encounter-entry--current' : '') +
-            (e.status === 'DEAD' ? ' encounter-entry--dead' : '');
+            (e.status === 'DEAD' ? ' encounter-entry--dead' : '') +
+            (surprisedNow ? ' encounter-entry--surprised' : '');
           return (
-            <span className={cls} key={e.playerId} title={e.status ?? undefined}>
+            <span
+              className={cls}
+              key={e.playerId}
+              title={surprisedNow ? 'Surprised — skipped this round' : (e.status ?? undefined)}
+            >
               {isCurrent && <span className="encounter-arrow">▶</span>}
               {e.name}
               {isGm && editing === e.playerId ? (

@@ -215,7 +215,7 @@
       "apCost": 0,
       "costs": [{ "resource": "focus", "amount": 20 }],
       "resolution": "auto",
-      "selfEffect": { "effectId": "reduced-weapon-ap-cost", "stacks": { "base": 1 } },
+      "selfEffect": { "effectId": "reduced-weapon-ap-cost", "stacks": 1 },
       "_question": "MK9 — mapped '-1 AP on the next attack' to reduced-weapon-ap-cost; confirm semantics match",
       "description": "Your next attack costs 1 less AP. Stacks up to 3 times (max -3 AP on one attack)."
     },

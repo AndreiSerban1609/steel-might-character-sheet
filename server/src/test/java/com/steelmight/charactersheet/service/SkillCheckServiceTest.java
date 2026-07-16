@@ -78,6 +78,48 @@ class SkillCheckServiceTest {
     }
 
     @Test
+    void advantageTakesTheHigherOfTwoDiceAndKeepsItAcrossRedraws() {
+        for (int i = 0; i < 40; i++) {
+            var r = service.draw("p1", "stealth", "advantage");
+            assertThat(r.d10Rolls()).hasSize(2).allSatisfy(d -> assertThat(d).isBetween(1, 10));
+            assertThat(r.d10()).isEqualTo(Math.max(r.d10Rolls().get(0), r.d10Rolls().get(1)));
+            assertThat(r.advantage()).isEqualTo("advantage");
+        }
+        // the pick is settled once per check — a redraw keeps die and rolls
+        var first = service.draw("p1", "stealth", "advantage");
+        var redrawn = service.redraw("p1");
+        assertThat(redrawn.d10()).isEqualTo(first.d10());
+        assertThat(redrawn.d10Rolls()).isEqualTo(first.d10Rolls());
+        assertThat(redrawn.advantage()).isEqualTo("advantage");
+    }
+
+    @Test
+    void disadvantageTakesTheLowerOfTwoDice() {
+        for (int i = 0; i < 40; i++) {
+            var r = service.draw("p1", "stealth", "disadvantage");
+            assertThat(r.d10Rolls()).hasSize(2);
+            assertThat(r.d10()).isEqualTo(Math.min(r.d10Rolls().get(0), r.d10Rolls().get(1)));
+            assertThat(r.advantage()).isEqualTo("disadvantage");
+        }
+    }
+
+    @Test
+    void normalDrawRollsASingleDie() {
+        var r = service.draw("p1", "stealth", null);
+        assertThat(r.d10Rolls()).containsExactly(r.d10());
+        assertThat(r.advantage()).isNull();
+        // "none" is accepted as an explicit normal draw
+        assertThat(service.draw("p1", "stealth", "none").advantage()).isNull();
+    }
+
+    @Test
+    void rejectsUnknownAdvantageValue() {
+        assertThatThrownBy(() -> service.draw("p1", "stealth", "sideways"))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("advantage");
+    }
+
+    @Test
     void drawResolvesConsistentlyAcrossManyDraws() {
         for (int i = 0; i < 80; i++) {
             var r = service.draw("p1", "stealth");

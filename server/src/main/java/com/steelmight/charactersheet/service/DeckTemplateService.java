@@ -78,6 +78,9 @@ public class DeckTemplateService {
                     blank(c.checkType()) ? null : c.checkType(), c.redrawModifier(),
                     blank(c.removal()) ? null : c.removal(), c.consumed()));
         }
+        pd.getDisabledEncounters().clear();
+        config.disabledEncounters().stream().filter(i -> i != null).distinct()
+                .forEach(pd.getDisabledEncounters()::add);
         return toConfig(playerRepo.save(pd));
     }
 
@@ -151,7 +154,10 @@ public class DeckTemplateService {
         for (int i = 0; i < Math.max(0, statCount); i++) {
             cards.add(new Card(CardType.STAT, "Stat", null, "Your ability shapes the outcome."));
         }
-        for (var e : nullToEmpty(room.encounterCards())) {
+        var encounters = nullToEmpty(room.encounterCards());
+        for (int i = 0; i < encounters.size(); i++) {
+            if (player != null && player.disabledEncounters().contains(i)) continue; // player opted out
+            var e = encounters.get(i);
             cards.add(new Card(CardType.ENCOUNTER, blank(e.name()) ? "Encounter" : e.name(), e.modifier(), e.description()));
         }
         if (player != null) {
@@ -185,6 +191,9 @@ public class DeckTemplateService {
             if (c.redrawModifier() != null && (c.redrawModifier() < -20 || c.redrawModifier() > 20)) {
                 throw badRequest("redrawModifier out of range (-20..20)");
             }
+        }
+        for (var idx : config.disabledEncounters()) {
+            if (idx != null && (idx < 0 || idx > 100)) throw badRequest("disabledEncounters index out of range");
         }
     }
 
@@ -238,6 +247,7 @@ public class DeckTemplateService {
                         .map(c -> new DeckCard(c.getName(), c.getModifier(), c.getDescription(),
                                 c.getCheckType(), c.getRedrawModifier(), c.getRemoval(),
                                 c.isConsumed() ? Boolean.TRUE : null))
-                        .toList());
+                        .toList(),
+                List.copyOf(d.getDisabledEncounters()));
     }
 }

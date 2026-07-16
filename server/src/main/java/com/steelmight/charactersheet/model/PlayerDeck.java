@@ -20,6 +20,12 @@ public class PlayerDeck {
     @OrderColumn(name = "idx")
     private List<TemplateCard> extraCards = new ArrayList<>();
 
+    /** Room Encounter cards this player disabled, as indices into the room template's list. */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "player_deck_disabled_encounters", joinColumns = @JoinColumn(name = "player_id"))
+    @Column(name = "encounter_idx")
+    private List<Integer> disabledEncounters = new ArrayList<>();
+
     protected PlayerDeck() {}
 
     public PlayerDeck(String playerId) {
@@ -32,4 +38,6 @@ public class PlayerDeck {
     public void setStatAdjust(int statAdjust) { this.statAdjust = statAdjust; }
 
     public List<TemplateCard> getExtraCards() { return extraCards; }
+
+    public List<Integer> getDisabledEncounters() { return disabledEncounters; }
 }

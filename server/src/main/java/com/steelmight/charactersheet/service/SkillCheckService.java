@@ -66,6 +66,8 @@ public class SkillCheckService {
         final String skillId;
         final AbilityScore ability;
         final int d10;
+        final List<Integer> d10Rolls;
+        final String advantage;
         final boolean proficient;
         final Deque<Card> remaining;
         final List<RedrawBonus> bonuses = new ArrayList<>();
@@ -73,11 +75,13 @@ public class SkillCheckService {
         int redrawsUsed;
         int redrawsRemaining;
 
-        DrawSession(String skillId, AbilityScore ability, int d10, boolean proficient,
-                    Deque<Card> remaining, int redrawsRemaining) {
+        DrawSession(String skillId, AbilityScore ability, int d10, List<Integer> d10Rolls,
+                    String advantage, boolean proficient, Deque<Card> remaining, int redrawsRemaining) {
             this.skillId = skillId;
             this.ability = ability;
             this.d10 = d10;
+            this.d10Rolls = d10Rolls;
+            this.advantage = advantage;
             this.proficient = proficient;
             this.remaining = remaining;
             this.redrawsRemaining = redrawsRemaining;
@@ -85,18 +89,43 @@ public class SkillCheckService {
     }
 
     public SkillCheckResult draw(String playerId, String skillId) {
+        return draw(playerId, skillId, null);
+    }
+
+    /**
+     * advantage ("advantage"/"disadvantage"/null) is chosen BEFORE the draw: two d10s are
+     * rolled and the higher (advantage) or lower (disadvantage) becomes the check's die —
+     * settled once, kept across redraws like a normal roll.
+     */
+    public SkillCheckResult draw(String playerId, String skillId, String advantage) {
         GameCharacter c = getCharacter(playerId);
         AbilityScore ability = abilityForSkill(skillId);
+        String mode = normalizeAdvantage(advantage);
 
         Deque<Card> deck = new ArrayDeque<>(shuffle(deckTemplates.effectiveDeck(c)));
-        int d10 = random.nextInt(10) + 1;
+        var rolls = new ArrayList<Integer>();
+        rolls.add(random.nextInt(10) + 1);
+        if (mode != null) rolls.add(random.nextInt(10) + 1);
+        int d10 = mode == null ? rolls.get(0)
+                : "advantage".equals(mode)
+                        ? Math.max(rolls.get(0), rolls.get(1))
+                        : Math.min(rolls.get(0), rolls.get(1));
         boolean proficient = c.getProficiencies().contains(skillId);
         int redraws = proficient ? engine.computeProficiencyBonus(c) : 0;
 
-        DrawSession session = new DrawSession(skillId, ability, d10, proficient, deck, redraws);
+        DrawSession session = new DrawSession(skillId, ability, d10, List.copyOf(rolls), mode,
+                proficient, deck, redraws);
         sessions.put(playerId, session);
         List<PassedCard> passed = advanceToFinalCard(session);
         return resolve(session, passed, c);
+    }
+
+    private static String normalizeAdvantage(String advantage) {
+        if (advantage == null || advantage.isBlank() || "none".equalsIgnoreCase(advantage)) return null;
+        String v = advantage.toLowerCase();
+        if ("advantage".equals(v) || "disadvantage".equals(v)) return v;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "advantage must be \"advantage\", \"disadvantage\" or omitted");
     }
 
     /** Deck of Fates gamble: forfeit the current card, draw the next; the d10 stays. */
@@ -177,6 +206,7 @@ public class SkillCheckService {
             total = session.d10 + m + bonusTotal;
         }
         return new SkillCheckResult(session.skillId, session.ability.name(), card, session.d10,
+                session.d10Rolls, session.advantage,
                 effectiveModifier, total, critical, session.proficient,
                 session.redrawsUsed, session.redrawsRemaining,
                 List.copyOf(passed), List.copyOf(session.bonuses), bonusTotal);

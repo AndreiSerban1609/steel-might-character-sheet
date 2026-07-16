@@ -120,4 +120,36 @@ class DeckTemplateServiceTest {
         assertThatThrownBy(() -> service.updatePlayerConfig("p1", new PlayerDeckConfig(99, List.of())))
                 .isInstanceOf(ResponseStatusException.class);
     }
+
+    // ---- Disabled encounter cards ----
+
+    @Test
+    void buildDeckSkipsDisabledEncounterCards() {
+        var room = service.getTemplate("nosuchroom"); // default: 3 encounter (Stumble, Distraction, Bad Luck)
+        var config = new PlayerDeckConfig(0, List.of(), List.of(0, 2));
+        var deck = service.buildDeck(room, config);
+
+        assertThat(deck).hasSize(12); // 14 default - 2 disabled encounters
+        var encounters = deck.stream().filter(c -> c.type() == CardType.ENCOUNTER).toList();
+        assertThat(encounters).hasSize(1);
+        assertThat(encounters.get(0).name()).isEqualTo("Distraction");
+    }
+
+    @Test
+    void disabledEncountersPersistAndOutOfRangeIndicesAreHarmless() {
+        service.updatePlayerConfig("p1", new PlayerDeckConfig(0, List.of(), List.of(1, 7)));
+
+        var config = service.getPlayerConfig("p1");
+        assertThat(config.disabledEncounters()).containsExactlyInAnyOrder(1, 7);
+        // index 7 points past the default room's 3 encounters -> simply no-ops
+        var deck = service.buildDeck(service.getTemplate("nosuchroom"), config);
+        assertThat(deck.stream().filter(c -> c.type() == CardType.ENCOUNTER).count()).isEqualTo(2);
+    }
+
+    @Test
+    void rejectsNegativeDisabledEncounterIndex() {
+        assertThatThrownBy(() -> service.updatePlayerConfig("p1",
+                new PlayerDeckConfig(0, List.of(), List.of(-1))))
+                .isInstanceOf(ResponseStatusException.class);
+    }
 }

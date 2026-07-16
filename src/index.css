@@ -182,6 +182,20 @@ body {
 
 /* ── Messages ── */
 
+.offline-banner {
+  text-align: center;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  border: 1px solid var(--negative);
+  border-radius: 8px;
+  background: #c45b4a1a;
+  color: var(--negative);
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .panel-msg {
   text-align: center;
   padding: 48px 16px;
@@ -408,6 +422,27 @@ body {
   justify-content: space-between;
   font-size: 0.85rem;
   color: var(--text-dim);
+}
+
+/* pulsing dot: this card's vitals come live from the OBR mirror */
+.roster-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #6fae5c;
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* ── Forms (entry / create) ── */
@@ -743,6 +778,65 @@ body {
   gap: 12px;
 }
 
+.draw-dice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.draw-die {
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.draw-die--discarded {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+.draw-adv-chip {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  color: #7fb069;
+  border: 1px solid #7fb069;
+}
+
+.draw-adv-chip--dis {
+  color: #d66;
+  border-color: #d66;
+}
+
+.adv-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-size: 12px;
+}
+
+.adv-toggle-label {
+  color: var(--text-dim, #9a8f7a);
+}
+
+.adv-toggle-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-dim, #9a8f7a);
+  font-size: 12px;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+.adv-toggle-btn--active {
+  color: var(--gold, #c9a227);
+  border-color: var(--gold, #c9a227);
+}
+
 .draw-eq {
   display: inline-flex;
   align-items: baseline;
@@ -919,6 +1013,109 @@ body {
   text-align: center;
 }
 
+.combat-resource-val--danger {
+  color: #d94f3d;
+}
+
+/* ── Abilities tab ── */
+
+.ability-group {
+  margin-bottom: 16px;
+}
+
+.ability-row {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+
+.ability-row-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ability-name {
+  font-weight: 700;
+  flex: 1;
+}
+
+.ability-cost {
+  font-size: 12px;
+  color: var(--gold, #c9a227);
+  white-space: nowrap;
+}
+
+.ability-cost-part--short {
+  color: #d66;
+  font-weight: 600;
+}
+
+.ability-budget {
+  font-size: 11px;
+  color: var(--text-dim, #9a8f7a);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.ability-budget--spent {
+  color: #d66;
+  border-color: #d66;
+}
+
+.ability-short-note {
+  font-size: 11px;
+  color: #d66;
+  margin-top: 4px;
+}
+
+.ability-use {
+  padding: 2px 12px;
+}
+
+.ability-desc {
+  font-size: 13px;
+  color: var(--text-dim, #9a8f7a);
+  margin-top: 4px;
+}
+
+.ability-lvl {
+  font-size: 11px;
+  color: var(--text-dim, #9a8f7a);
+}
+
+.ability-pick {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.ability-pick:hover {
+  background: rgba(201, 162, 39, 0.06);
+}
+
+.ability-pick--locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ability-pick-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ability-pick-desc {
+  font-size: 12px;
+  color: var(--text-dim, #9a8f7a);
+}
+
 .draw-passed {
   font-size: 13px;
   color: var(--text-dim, #9a8f7a);
@@ -1007,6 +1204,67 @@ body {
   display: flex;
   gap: 8px;
   margin-bottom: 6px;
+}
+
+.encounter-idle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.encounter-surprise-setup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.encounter-surprise-label {
+  color: var(--text-dim, #9a8f7a);
+}
+
+.encounter-surprise-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.encounter-entry--surprised {
+  opacity: 0.45;
+  font-style: italic;
+}
+
+.deck-encounter-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 2px;
+  cursor: pointer;
+}
+
+.deck-encounter-row--off .deck-encounter-name,
+.deck-encounter-row--off .deck-encounter-mod,
+.deck-encounter-row--off .deck-encounter-desc {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+.deck-encounter-name {
+  font-weight: 600;
+}
+
+.deck-encounter-mod {
+  color: var(--gold, #c9a227);
+  font-size: 12px;
+}
+
+.deck-encounter-desc {
+  color: var(--text-dim, #9a8f7a);
+  font-size: 12px;
+  font-style: italic;
 }
 
 .deck-card-block {

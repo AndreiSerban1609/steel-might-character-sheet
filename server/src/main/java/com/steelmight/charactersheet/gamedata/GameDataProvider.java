@@ -17,10 +17,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 @Component
@@ -72,6 +74,11 @@ public class GameDataProvider {
     /** casterWeaponId → typed definition (M4-A; the raw JsonNode stays for the item index). */
     private Map<String, CasterWeaponDefinition> casterWeaponsById;
 
+    /** abilityId → definition, from all six abilities-*.json files (Epic 1 / Story 1.1). */
+    private Map<String, AbilityDefinition> abilitiesById;
+    private Map<String, List<AbilityDefinition>> abilitiesByClassId;
+    private Map<String, List<PoolDefinition>> poolsByClassId;
+
     public GameDataProvider(ObjectMapper objectMapper,
                             @Value("${game.data-path}") String dataPath) {
         this.objectMapper = objectMapper;
@@ -106,11 +113,12 @@ public class GameDataProvider {
         loadSpells();
         loadCasterWeaponDefinitions();
         parseTalentMechanics();
+        loadAbilities();
 
         log.info("Game data loaded: {} effects, classes, weapons, armor, races, {} items, {} damage types, "
-                        + "{} spells, {} caster weapons",
+                        + "{} spells, {} caster weapons, {} abilities",
                 effectsById.size(), itemSpaceById.size(), damageCategoryByType.size(),
-                spellsById.size(), casterWeaponsById.size());
+                spellsById.size(), casterWeaponsById.size(), abilitiesById.size());
     }
 
     private static final List<String> SPELL_FILES = List.of(
@@ -141,6 +149,86 @@ public class GameDataProvider {
         // Spell classId values are class ids (renamed "class" = old subclass, e.g. "sorcerer").
         log.info("Loaded {} spells across {} classes: {}", spellsById.size(),
                 countByClassId.size(), countByClassId);
+    }
+
+    private static final List<String> ABILITY_FILES = List.of(
+            "abilities-archer.json", "abilities-monk.json", "abilities-rogue.json",
+            "abilities-warrior.json", "abilities-wildborn.json", "abilities-wraith-hunter.json");
+
+    private static final Set<String> ABILITY_KINDS =
+            Set.of("active", "reaction", "attack-enhancer", "passive");
+    private static final Set<String> ABILITY_RESOLUTIONS = Set.of("auto", "manual");
+
+    /** Non-caster class abilities + sub-resource pools (Epic 1). Fails fast on bad data. */
+    private void loadAbilities() throws IOException {
+        abilitiesById = new LinkedHashMap<>();
+        abilitiesByClassId = new LinkedHashMap<>();
+        poolsByClassId = new LinkedHashMap<>();
+        var countByClassId = new TreeMap<String, Integer>();
+
+        for (String filename : ABILITY_FILES) {
+            JsonNode root = loadFile(filename);
+            root.path("pools").fields().forEachRemaining(entry -> {
+                List<PoolDefinition> defs = objectMapper.convertValue(
+                        entry.getValue(), new TypeReference<>() {});
+                if (!defs.isEmpty()) poolsByClassId.put(entry.getKey(), List.copyOf(defs));
+            });
+
+            List<AbilityDefinition> abilities = objectMapper.convertValue(
+                    root.path("abilities"), new TypeReference<>() {});
+            for (var ability : abilities) {
+                validateAbility(ability, filename);
+                var previous = abilitiesById.put(ability.id(), ability);
+                if (previous != null) {
+                    throw new IllegalStateException("Duplicate ability id '" + ability.id()
+                            + "' in " + filename);
+                }
+                abilitiesByClassId.computeIfAbsent(ability.classId(), k -> new ArrayList<>())
+                        .add(ability);
+                countByClassId.merge(ability.classId(), 1, Integer::sum);
+            }
+        }
+        abilitiesByClassId.replaceAll((k, v) -> List.copyOf(v));
+        log.info("Loaded {} abilities across {} classes ({} pool classes): {}",
+                abilitiesById.size(), countByClassId.size(), poolsByClassId.size(), countByClassId);
+    }
+
+    private void validateAbility(AbilityDefinition a, String filename) {
+        if (a.id() == null || a.id().isBlank()) {
+            throw new IllegalStateException(filename + ": ability without id ('" + a.name() + "')");
+        }
+        String where = filename + "/" + a.id();
+        if (a.classId() == null || a.classId().isBlank()) {
+            throw new IllegalStateException(where + ": missing classId");
+        }
+        if (!ABILITY_KINDS.contains(a.kind())) {
+            throw new IllegalStateException(where + ": unknown kind '" + a.kind() + "'");
+        }
+        if (!ABILITY_RESOLUTIONS.contains(a.resolution())) {
+            throw new IllegalStateException(where + ": unknown resolution '" + a.resolution() + "'");
+        }
+        if (a.targetEffect() != null && !effectsById.containsKey(a.targetEffect().effectId())) {
+            throw new IllegalStateException(where + ": unknown targetEffect '"
+                    + a.targetEffect().effectId() + "'");
+        }
+        if (a.selfEffect() != null && !effectsById.containsKey(a.selfEffect().effectId())) {
+            throw new IllegalStateException(where + ": unknown selfEffect '"
+                    + a.selfEffect().effectId() + "'");
+        }
+    }
+
+    public AbilityDefinition getAbility(String id) {
+        return abilitiesById.get(id);
+    }
+
+    /** All abilities (actives, reactions, enhancers, choice-passives) for one class. */
+    public List<AbilityDefinition> getAbilitiesForClass(String classId) {
+        return abilitiesByClassId.getOrDefault(classId, List.of());
+    }
+
+    /** Sub-resource pool definitions for one class (empty for classes without pools). */
+    public List<PoolDefinition> getPoolsForClass(String classId) {
+        return classId != null ? poolsByClassId.getOrDefault(classId, List.of()) : List.of();
     }
 
     private void loadCasterWeaponDefinitions() {

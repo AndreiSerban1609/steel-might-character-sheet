@@ -48,6 +48,14 @@ public class TurnTickService {
     // ---- Turn start ----
 
     public ResolutionResult turnStart(GameCharacter character) {
+        return turnStart(character, true);
+    }
+
+    /**
+     * apRecovery is false on a character's FIRST turn of a combat (2026-07-16 ruling:
+     * everyone opens on starting AP, recovery begins with their second turn).
+     */
+    public ResolutionResult turnStart(GameCharacter character, boolean apRecovery) {
         var result = new ResolutionResult();
         int threshold = statEngine.computeStackThreshold(character);
 
@@ -58,12 +66,17 @@ public class TurnTickService {
         }
 
         // 2. AP recovery — carryover, capped at max; derivation handles dazed/stunned/haste.
-        int recovery = statEngine.computeAPRecovery(character);
-        int before = character.getAp().getCurrent();
-        int after = Math.min(character.getAp().getMax(), before + recovery);
-        if (after != before) {
-            character.getAp().setCurrent(after);
-            result.addStep("ap-recovery", "Recovered " + (after - before) + " AP", before, after);
+        if (apRecovery) {
+            int recovery = statEngine.computeAPRecovery(character);
+            int before = character.getAp().getCurrent();
+            int after = Math.min(character.getAp().getMax(), before + recovery);
+            if (after != before) {
+                character.getAp().setCurrent(after);
+                result.addStep("ap-recovery", "Recovered " + (after - before) + " AP", before, after);
+            }
+        } else {
+            int ap = character.getAp().getCurrent();
+            result.addStep("ap-recovery", "First turn of combat — no AP recovery", ap, ap);
         }
 
         // 3. Generic startOfTurn trigger dispatch (none in current data).

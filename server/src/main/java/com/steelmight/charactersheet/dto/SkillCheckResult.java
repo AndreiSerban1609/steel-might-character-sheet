@@ -12,12 +12,18 @@ import java.util.List;
  * {@code passedCards} are the cards auto-passed on THIS draw/redraw (wrong-check skips and
  * redraw-bonus cards); {@code redrawBonuses} accumulate across the whole check and their sum
  * ({@code bonusTotal}) is included in {@code total}.
+ *
+ * {@code advantage} ("advantage"/"disadvantage", null = normal) is chosen before the draw:
+ * two d10s are rolled ({@code d10Rolls}) and {@code d10} is the higher/lower of the pair.
+ * The pick is settled once per check — redraws keep it, like the die itself.
  */
 public record SkillCheckResult(
         String skillId,
         String ability,
         Card card,
         int d10,
+        List<Integer> d10Rolls,
+        String advantage,
         Integer effectiveModifier,
         Integer total,
         boolean critical,

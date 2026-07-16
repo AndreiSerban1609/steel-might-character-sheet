@@ -20,6 +20,8 @@ public record CombatSnapshot(
         ManaView mana,
         // Class resource (M3 Part A): chakra/rages/energy/focus/… — null when the class has none.
         ResourceView resource,
+        // Sub-resource pools (Story 1.2): perseverance/fury/… — empty for classes without pools.
+        List<PoolView> pools,
         int speed,
         int bonusInitiative,
         int deathStacks,
@@ -48,6 +50,8 @@ public record CombatSnapshot(
     public record ManaView(int current, int max) {}
     /** max == null → unbounded (builder resources like focus). */
     public record ResourceView(String type, int current, Integer max) {}
+    /** Sub-resource pool row; current can be negative (fury disaster rule). */
+    public record PoolView(String id, String name, int current, Integer max) {}
     public record EffectView(String id, String name, int stacks, Integer value, Integer rounds) {}
     public record PenaltyView(String itemId, String penalty) {}
 }

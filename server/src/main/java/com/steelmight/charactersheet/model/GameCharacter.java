@@ -143,6 +143,22 @@ public class GameCharacter {
     @Column(name = "feat_slot")
     private List<String> specFeats = new ArrayList<>();
 
+    /** Sub-resource pools (Epic 1 / Story 1.2) — materialized lazily from abilities-*.json defs. */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_pools", joinColumns = @JoinColumn(name = "player_id"))
+    private List<CharacterPool> pools = new ArrayList<>();
+
+    /** Choice-group ability picks (Story 1.3, free-form picker); group-null abilities are implicit. */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_known_abilities", joinColumns = @JoinColumn(name = "player_id"))
+    @Column(name = "ability_id")
+    private List<String> knownAbilities = new ArrayList<>();
+
+    /** Use counters for limit-bearing abilities (Story 1.4). */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_ability_uses", joinColumns = @JoinColumn(name = "player_id"))
+    private List<AbilityUse> abilityUses = new ArrayList<>();
+
     protected GameCharacter() {}
 
     public GameCharacter(String playerId) {
@@ -283,4 +299,26 @@ public class GameCharacter {
     public List<String> getProficiencies() { return proficiencies; }
     public List<String> getTalents() { return talents; }
     public List<String> getSpecFeats() { return specFeats; }
+
+    public List<CharacterPool> getPools() { return pools; }
+
+    public CharacterPool findPool(String poolId) {
+        return pools.stream().filter(p -> p.getPoolId().equals(poolId)).findFirst().orElse(null);
+    }
+
+    public List<String> getKnownAbilities() { return knownAbilities; }
+
+    public List<AbilityUse> getAbilityUses() { return abilityUses; }
+
+    /** Use counter for one ability, created on first use. */
+    public AbilityUse abilityUse(String abilityId) {
+        return abilityUses.stream()
+                .filter(u -> u.getAbilityId().equals(abilityId))
+                .findFirst()
+                .orElseGet(() -> {
+                    var use = new AbilityUse(abilityId);
+                    abilityUses.add(use);
+                    return use;
+                });
+    }
 }

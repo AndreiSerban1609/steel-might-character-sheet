@@ -145,6 +145,8 @@ export function StatsPanel() {
           edit={draft ? { value: draft.currentAp, onChange: (v) => setDraft({ ...draft, currentAp: v }) } : undefined}
         />
         <Vital label="AC" view={`${snapshot.ac}`} />
+        <Vital label="PA" view={`${snapshot.pa}`} />
+        <Vital label="MA" view={`${snapshot.ma}`} />
         <Vital label="Speed" view={`${snapshot.speed} ft`} />
         {snapshot.deathStacks > 0 && <Vital label="Death Stacks" view={`☠ ${snapshot.deathStacks}`} />}
       </div>

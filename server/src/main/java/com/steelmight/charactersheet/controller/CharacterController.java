@@ -253,7 +253,7 @@ public class CharacterController {
     @PostMapping("/{playerId}/skill-check")
     public SkillCheckResult skillCheck(@PathVariable String playerId,
                                        @RequestBody SkillCheckRequest req) {
-        return skillCheckService.draw(playerId, req.skillId());
+        return skillCheckService.draw(playerId, req.skillId(), req.advantage());
     }
 
     /** Proficiency gamble: forfeit the current card, draw the next; the d10 stays. */
@@ -266,6 +266,27 @@ public class CharacterController {
     @PostMapping("/{playerId}/skill-check/accept")
     public SkillCheckAccepted skillCheckAccept(@PathVariable String playerId) {
         return skillCheckService.accept(playerId);
+    }
+
+    // ── Class abilities (Epic 1) ──
+
+    @GetMapping("/{playerId}/abilities")
+    public AbilitiesSnapshot getAbilities(@PathVariable String playerId) {
+        return service.getAbilitiesSnapshot(playerId);
+    }
+
+    /** Free-form picker: replaces the choice-group picks (class + level validated). */
+    @PutMapping("/{playerId}/abilities")
+    public AbilitiesSnapshot updateAbilities(@PathVariable String playerId,
+                                             @RequestBody UpdateAbilitiesRequest req) {
+        return service.updateKnownAbilities(playerId, req);
+    }
+
+    /** Validate → spend costs → resolve (auto) or print the rule (manual). */
+    @PostMapping("/{playerId}/actions/use-ability")
+    public ActionResponse<CombatSnapshot> useAbility(@PathVariable String playerId,
+                                                     @Valid @RequestBody UseAbilityRequest req) {
+        return service.useAbility(playerId, req);
     }
 
     @GetMapping("/{playerId}/deck")

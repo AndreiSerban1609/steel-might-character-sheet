@@ -104,21 +104,59 @@ class EncounterServiceTest {
         assertThat(ended.resolution().getSteps())
                 .anyMatch(s -> s.rule().equals("turn-order"));
 
-        // order advanced to the second character
+        // order advanced to the second character, whose turn began automatically —
+        // their start ticks land in the ender's log, name-prefixed
+        var secondName = repo.findById(second).orElseThrow().getName();
         assertThat(encounters.get(ROOM).currentPlayerId()).isEqualTo(second);
-        assertThat(encounters.get(ROOM).turnStarted()).isFalse();
+        assertThat(encounters.get(ROOM).turnStarted()).isTrue();
+        assertThat(ended.resolution().getSteps())
+                .anyMatch(s -> s.rule().startsWith(secondName + ":"));
+
+        // and the second character can only END their (auto-started) turn
+        assertThatThrownBy(() -> characterService.turnStart(second))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("already started");
+        characterService.turnEnd(second);
     }
 
     @Test
     void wrappingPastTheLastEntryIncrementsTheRound() {
         var view = encounters.start(ROOM, null);
+        // first turn starts manually here (the controller does it on encounter start);
+        // every later turn begins automatically when the previous one ends
+        characterService.turnStart(view.entries().get(0).playerId());
         for (var entry : view.entries()) {
-            characterService.turnStart(entry.playerId());
             characterService.turnEnd(entry.playerId());
         }
         var after = encounters.get(ROOM);
         assertThat(after.round()).isEqualTo(2);
         assertThat(after.currentPlayerId()).isEqualTo(view.entries().get(0).playerId());
+        assertThat(after.turnStarted()).isTrue(); // round 2's first turn is already running
+    }
+
+    @Test
+    void firstTurnOfCombatGetsNoApRecovery() {
+        var view = encounters.start(ROOM, null);
+        String first = view.currentPlayerId();
+        String second = view.entries().get(1).playerId();
+        String third = view.entries().get(2).playerId();
+
+        // everyone opens on starting AP; a first turn adds nothing
+        var started = characterService.turnStart(first);
+        assertThat(started.snapshot().ap().current()).isEqualTo(6);
+        assertThat(started.resolution().getSteps())
+                .anyMatch(s -> s.rule().equals("ap-recovery") && s.note().contains("First turn"));
+
+        // auto-started round-1 turns are first turns too — still no recovery
+        characterService.turnEnd(first);
+        assertThat(repo.findById(second).orElseThrow().getAp().getCurrent()).isEqualTo(6);
+
+        characterService.turnEnd(second);
+        characterService.turnEnd(third);
+
+        // round 2 wraps back to the first character — their SECOND turn recovers
+        assertThat(encounters.get(ROOM).round()).isEqualTo(2);
+        assertThat(repo.findById(first).orElseThrow().getAp().getCurrent()).isEqualTo(10); // 6+6 capped
     }
 
     @Test
@@ -133,8 +171,10 @@ class EncounterServiceTest {
         characterService.turnStart(first);
         characterService.turnEnd(first);
 
+        // the dead second entry is skipped and the third's turn auto-starts
         assertThat(encounters.get(ROOM).currentPlayerId())
                 .isEqualTo(view.entries().get(2).playerId());
+        assertThat(encounters.get(ROOM).turnStarted()).isTrue();
     }
 
     @Test
@@ -152,6 +192,55 @@ class EncounterServiceTest {
         var after = encounters.get(ROOM);
         assertThat(after.currentPlayerId()).isEqualTo(second);
         assertThat(after.entries().get(after.entries().size() - 1).playerId()).isEqualTo(first);
+    }
+
+    @Test
+    void surpriseRoundSkipsTheAmbushedThenRoundOneIsNormal() {
+        var view = encounters.start(ROOM, new StartEncounterRequest(null, List.of("e2")));
+        assertThat(view.round()).isEqualTo(0); // surprise round
+        assertThat(view.currentPlayerId()).isNotEqualTo("e2");
+        assertThat(view.entries()).anyMatch(e -> e.playerId().equals("e2") && e.surprised());
+
+        // play the surprise round: only the un-surprised act, in initiative order
+        characterService.turnStart(view.currentPlayerId());
+        var order = view.entries().stream().map(e -> e.playerId()).toList();
+        for (var id : order) {
+            if (id.equals("e2")) continue;
+            assertThat(encounters.get(ROOM).currentPlayerId()).isEqualTo(id);
+            characterService.turnEnd(id);
+        }
+
+        // the wrap lands on round 1 at the top of the FULL order — e2 acts normally now
+        var roundOne = encounters.get(ROOM);
+        assertThat(roundOne.round()).isEqualTo(1);
+        assertThat(roundOne.currentPlayerId()).isEqualTo(order.get(0));
+
+        // AP: surprisers already took their first (no-recovery) turn in round 0, so
+        // their round-1 turn recovers (6+6 capped at 10); e2's round-1 turn is its
+        // FIRST — no recovery, still 6.
+        var cur = roundOne;
+        while (!cur.currentPlayerId().equals("e2")) {
+            String id = cur.currentPlayerId();
+            assertThat(repo.findById(id).orElseThrow().getAp().getCurrent()).isEqualTo(10);
+            characterService.turnEnd(id);
+            cur = encounters.get(ROOM);
+        }
+        assertThat(repo.findById("e2").orElseThrow().getAp().getCurrent()).isEqualTo(6);
+    }
+
+    @Test
+    void allSurprisedSkipsStraightToRoundOne() {
+        var view = encounters.start(ROOM, new StartEncounterRequest(null, List.of("e1", "e2", "e3")));
+        assertThat(view.round()).isEqualTo(1); // no one can act in round 0 — skip it
+        assertThat(view.currentPlayerId()).isEqualTo(view.entries().get(0).playerId());
+    }
+
+    @Test
+    void rejectsSurprisedNonParticipant() {
+        assertThatThrownBy(() -> encounters.start(ROOM,
+                new StartEncounterRequest(List.of("e1", "e2"), List.of("e3"))))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("not a participant");
     }
 
     @Test

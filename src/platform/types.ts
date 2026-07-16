@@ -22,6 +22,14 @@ export interface ResourceView {
   max: number | null;
 }
 
+/** Sub-resource pool row; current can be negative (fury disaster rule). */
+export interface PoolView {
+  id: string;
+  name: string;
+  current: number;
+  max: number | null;
+}
+
 export interface ManaView {
   current: number;
   max: number;
@@ -87,6 +95,10 @@ export interface SkillCheckResult {
   ability: string;
   card: Card;
   d10: number;
+  /** Both dice when rolled with advantage/disadvantage ([d10] on a normal draw). */
+  d10Rolls: number[];
+  /** Chosen before the draw; d10 = the higher (advantage) / lower (disadvantage) roll. */
+  advantage: 'advantage' | 'disadvantage' | null;
   effectiveModifier: number | null;
   total: number | null;
   critical: boolean;
@@ -105,6 +117,24 @@ export interface SkillCheckResult {
 export interface SkillCheckAccepted {
   cardRemoved: boolean;
   removal: 'consume' | 'burn' | null;
+}
+
+/** Per-ability budget status — the null side means "no limit of that kind". */
+export interface AbilityUseView {
+  abilityId: string;
+  perRestRemaining: number | null;
+  perRestMax: number | null;
+  perTurnRemaining: number | null;
+  perTurnMax: number | null;
+}
+
+/** Known class abilities: group-null entries are class-granted; picked = the editable choices. */
+export interface AbilitiesSnapshot {
+  classId: string;
+  known: string[];
+  picked: string[];
+  /** Only abilities that declare per-rest/per-turn limits appear here (server-computed). */
+  uses: AbilityUseView[];
 }
 
 export interface DeckCard {
@@ -130,6 +160,8 @@ export interface DeckTemplate {
 export interface PlayerDeckConfig {
   statAdjust: number;
   extraCards: DeckCard[];
+  /** Room Encounter cards this player opted out of, by index into the room template's list. */
+  disabledEncounters: number[];
 }
 
 export interface PlayerDeckView {
@@ -143,9 +175,11 @@ export interface EncounterEntryView {
   name: string;
   initiative: number;
   status: 'ALIVE' | 'DOWNED' | 'DEAD' | null;
+  /** Ambushed: auto-skipped during the surprise round (round 0). */
+  surprised: boolean;
 }
 
-/** A room's turn order. active=false → no encounter running. */
+/** A room's turn order. active=false → no encounter running. round 0 = surprise round. */
 export interface EncounterView {
   active: boolean;
   round: number;
@@ -354,6 +388,8 @@ export interface CombatSnapshot {
   mana: ManaView;
   /** Class resource (chakra/rages/energy/focus/…) — null when the class has none. */
   resource: ResourceView | null;
+  /** Sub-resource pools (perseverance/fury/…) — empty for classes without pools. */
+  pools: PoolView[];
   speed: number;
   bonusInitiative: number;
   deathStacks: number;

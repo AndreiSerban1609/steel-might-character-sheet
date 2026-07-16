@@ -3,6 +3,7 @@ package com.steelmight.charactersheet.service;
 import com.steelmight.charactersheet.dto.*;
 import com.steelmight.charactersheet.engine.*;
 import com.steelmight.charactersheet.model.*;
+import com.steelmight.charactersheet.gamedata.AbilityDefinition;
 import com.steelmight.charactersheet.gamedata.Dice;
 import com.steelmight.charactersheet.gamedata.DiceFormula;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -547,7 +549,7 @@ public class CharacterService {
                     result.addStep("spend-" + req.resource(),
                             "Spent " + req.amount() + " " + req.resource(), before, before - req.amount());
                 } else {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown resource: " + req.resource());
+                    spendFromPool(c, req.resource(), req.amount(), result);
                 }
             }
         }
@@ -556,10 +558,409 @@ public class CharacterService {
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
+    /**
+     * Spend from a sub-resource pool (Story 1.2). Pools whose definition declares a
+     * `min` (fury) may go NEGATIVE — the cost is still paid and the disaster rule is
+     * adjudicated at the table (B12); all other pools validate sufficiency.
+     */
+    private void spendFromPool(GameCharacter c, String poolId, int amount, ResolutionResult result) {
+        spendFromPool(c, poolId, amount, result, "");
+    }
+
+    private void spendFromPool(GameCharacter c, String poolId, int amount, ResolutionResult result,
+                               String noteSuffix) {
+        ensurePools(c);
+        var pool = c.findPool(poolId);
+        if (pool == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown resource: " + poolId);
+        }
+        var def = gameData.getPoolsForClass(c.getClassId()).stream()
+                .filter(d -> d.id().equals(poolId)).findFirst().orElse(null);
+        boolean mayGoNegative = def != null && def.min() != null;
+        int before = pool.getCurrent();
+        if (!mayGoNegative) {
+            requireSufficient(poolId, before, amount);
+        }
+        pool.setCurrent(before - amount);
+        result.addStep("spend-" + poolId,
+                "Spent " + amount + " " + poolId + noteSuffix
+                        + (pool.getCurrent() < 0 ? " — pool is NEGATIVE (disaster rule, DM adjudicates)" : ""),
+                before, pool.getCurrent());
+    }
+
+    /**
+     * Materialize missing pools from the class's definitions (Story 1.2): numeric pools
+     * at/above their unlock level start at `initial`. Formula pools (shapeshift-hp)
+     * wait for their rulings (S1/S7).
+     */
+    private void ensurePools(GameCharacter c) {
+        if (c.getClassId() == null) return;
+        for (var def : gameData.getPoolsForClass(c.getClassId())) {
+            if (def.initial() == null || def.maxFormula() != null) continue;
+            if (def.unlockLevel() != null && c.getLevel() < def.unlockLevel()) continue;
+            if (c.findPool(def.id()) == null) {
+                c.getPools().add(new CharacterPool(def.id(), def.initial(), def.max()));
+            }
+        }
+    }
+
     private static void requireSufficient(String resource, int have, int need) {
         if (have < need) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insufficient " + resource + ": have " + have + ", need " + need);
+        }
+    }
+
+    // ── Class abilities (Epic 1: Stories 1.3 + 1.4) ──
+
+    public AbilitiesSnapshot getAbilitiesSnapshot(String playerId) {
+        return buildAbilitiesSnapshot(getCharacter(playerId));
+    }
+
+    /** Effective known set: group-null abilities are class-granted at their level; picks add the rest. */
+    private AbilitiesSnapshot buildAbilitiesSnapshot(GameCharacter c) {
+        var known = new ArrayList<String>();
+        for (var def : gameData.getAbilitiesForClass(c.getClassId())) {
+            if (def.group() == null && def.minLevel() <= c.getLevel()) {
+                known.add(def.id());
+            }
+        }
+        for (var picked : c.getKnownAbilities()) {
+            if (!known.contains(picked)) known.add(picked);
+        }
+        var uses = new ArrayList<AbilitiesSnapshot.AbilityUseView>();
+        for (var id : known) {
+            var def = gameData.getAbility(id);
+            if (def == null || (def.usesPerRest() == null && def.usesPerTurn() == null)) continue;
+            // Read the counter without abilityUse() — that helper creates a row, and this is a read path.
+            var use = c.getAbilityUses().stream()
+                    .filter(u -> u.getAbilityId().equals(id)).findFirst().orElse(null);
+            Integer perRestMax = maxUsesPerRest(c, def);
+            Integer perRestRemaining = perRestMax != null
+                    ? Math.max(0, perRestMax - (use != null ? use.getUsedThisRest() : 0)) : null;
+            Integer perTurnMax = def.usesPerTurn();
+            Integer perTurnRemaining = perTurnMax != null
+                    ? Math.max(0, perTurnMax - (use != null ? use.getUsedThisTurn() : 0)) : null;
+            uses.add(new AbilitiesSnapshot.AbilityUseView(id, perRestRemaining, perRestMax, perTurnRemaining, perTurnMax));
+        }
+        return new AbilitiesSnapshot(c.getClassId(), known, List.copyOf(c.getKnownAbilities()), uses);
+    }
+
+    /** Free-form picker (Story 1.3 ruling): class + level checks only, no choice-group enforcement. */
+    public AbilitiesSnapshot updateKnownAbilities(String playerId, UpdateAbilitiesRequest req) {
+        var c = getCharacter(playerId);
+        var ids = req.abilityIds() != null
+                ? req.abilityIds().stream().distinct().toList()
+                : List.<String>of();
+        for (var id : ids) {
+            var def = gameData.getAbility(id);
+            if (def == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unknown ability: " + id);
+            }
+            if (!def.classId().equals(c.getClassId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        def.name() + " belongs to " + def.classId() + ", not " + c.getClassId());
+            }
+            if (def.minLevel() > c.getLevel()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        def.name() + " requires level " + def.minLevel());
+            }
+        }
+        c.getKnownAbilities().clear();
+        c.getKnownAbilities().addAll(ids);
+        repo.save(c);
+        return buildAbilitiesSnapshot(c);
+    }
+
+    /**
+     * Use a class ability (Story 1.4): validate (known → prevented → budgets → costs,
+     * all-or-nothing) → spend → resolve. auto: heal/self-effects/grants applied by the
+     * server; manual: the rules text lands in the log. Target effects are COMPUTED into
+     * the payload but applied at the table until the encounter model.
+     */
+    public ActionResponse<CombatSnapshot> useAbility(String playerId, UseAbilityRequest req) {
+        var c = getCharacter(playerId);
+        var ability = gameData.getAbility(req.abilityId());
+        if (ability == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "unknown ability: " + req.abilityId());
+        }
+        if ("passive".equals(ability.kind())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + " is a passive — it is always on");
+        }
+        if (!ability.classId().equals(c.getClassId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + " belongs to " + ability.classId());
+        }
+        if (ability.minLevel() > c.getLevel()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + " requires level " + ability.minLevel());
+        }
+        boolean implicitlyKnown = ability.group() == null;
+        if (!implicitlyKnown && !c.getKnownAbilities().contains(ability.id())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + " is not known — pick it in the Abilities tab");
+        }
+
+        // Prevented (stunned, frozen … — dormancy/composite-aware, same as cast step 5).
+        int threshold = statEngine.computeStackThreshold(c);
+        var prevented = ActiveMechanics.collect(c, gameData, threshold, MechanicType.PREVENT_ACTION).stream()
+                .filter(h -> h.mechanic().action() == PreventableAction.ALL)
+                .findFirst();
+        if (prevented.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "cannot use abilities while " + prevented.get().def().name().toLowerCase());
+        }
+
+        // Pending cost rulings (MK13/MK17) — refuse rather than guess.
+        if (Boolean.TRUE.equals(ability.costEqualsHealing()) || ability.costPercentOfMaxResource() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + "'s cost model awaits a Game Owner ruling — resolve at the table");
+        }
+
+        // Use budgets (usesPerTurn resets on turn start; usesPerRest per the tier ruling).
+        var use = (ability.usesPerTurn() != null || ability.usesPerRest() != null)
+                ? c.abilityUse(ability.id()) : null;
+        if (use != null && ability.usesPerTurn() != null && use.getUsedThisTurn() >= ability.usesPerTurn()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    ability.name() + " was already used this turn (max " + ability.usesPerTurn() + "/turn)");
+        }
+        Integer maxPerRest = maxUsesPerRest(c, ability);
+        if (use != null && maxPerRest != null && use.getUsedThisRest() >= maxPerRest) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "no " + ability.name() + " uses left until a rest (" + maxPerRest + " per rest)");
+        }
+
+        var result = new ResolutionResult();
+
+        // AP cost ("all" = Onslaught: requires base recovery AP available, consumes everything).
+        int apCost = 0;
+        boolean apAll = false;
+        if (ability.apCost() != null) {
+            if (ability.apCost().isSpecial()) {
+                if ("all".equalsIgnoreCase(ability.apCost().special())) {
+                    apAll = true;
+                } else {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "AP cost '" + ability.apCost().special() + "' — DM adjudicates");
+                }
+            } else if (ability.apCost().flat() != null) {
+                apCost = ability.apCost().flat();
+            }
+        }
+        if (apAll) {
+            requireSufficient("ap", c.getAp().getCurrent(), c.getAp().getRecovery());
+            apCost = c.getAp().getCurrent();
+        } else if (apCost > 0) {
+            requireSufficient("ap", c.getAp().getCurrent(), apCost);
+        }
+
+        // Resource costs: roll dice costs first, validate EVERYTHING, then spend (all-or-nothing).
+        record CostLine(String resource, int total, String rollNote) {}
+        var costLines = new ArrayList<CostLine>();
+        for (var cost : ability.costs() != null ? ability.costs() : List.<AbilityDefinition.AbilityCost>of()) {
+            int total = cost.amount() != null ? cost.amount() : 0;
+            String rollNote = "";
+            if (cost.amountDice() != null) {
+                int roll = 0;
+                for (int i = 0; i < cost.amountDice().count(); i++) {
+                    roll += randomSource.nextInt(cost.amountDice().sides()) + 1;
+                }
+                total += roll;
+                rollNote = " (" + cost.amountDice() + " rolled " + roll + ")";
+            }
+            costLines.add(new CostLine(cost.resource(), total, rollNote));
+        }
+        ensurePools(c);
+        for (var line : costLines) {
+            if (c.getResource() != null && line.resource().equals(c.getResource().getType())) {
+                requireSufficient(line.resource(), c.getResource().getCurrent(), line.total());
+            } else if ("mana".equals(line.resource())) {
+                requireSufficient("mana", c.getMana().getCurrent(), line.total());
+            } else {
+                var pool = c.findPool(line.resource());
+                if (pool == null) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            ability.name() + " needs the " + line.resource() + " pool, which this character does not have");
+                }
+                var def = gameData.getPoolsForClass(c.getClassId()).stream()
+                        .filter(d -> d.id().equals(line.resource())).findFirst().orElse(null);
+                if (def == null || def.min() == null) { // min-bearing pools (fury) may go negative
+                    requireSufficient(line.resource(), pool.getCurrent(), line.total());
+                }
+            }
+        }
+
+        // Spend.
+        if (apCost > 0) {
+            int before = c.getAp().getCurrent();
+            c.getAp().setCurrent(before - apCost);
+            result.addStep("spend-ap", "Spent " + apCost + " AP" + (apAll ? " (all)" : ""), before, before - apCost);
+        }
+        for (var line : costLines) {
+            if (c.getResource() != null && line.resource().equals(c.getResource().getType())) {
+                int before = c.getResource().getCurrent();
+                c.getResource().setCurrent(before - line.total());
+                result.addStep("spend-" + line.resource(),
+                        "Spent " + line.total() + " " + line.resource() + line.rollNote(), before, before - line.total());
+            } else if ("mana".equals(line.resource())) {
+                int before = c.getMana().getCurrent();
+                c.getMana().setCurrent(before - line.total());
+                result.addStep("spend-mana", "Spent " + line.total() + " mana" + line.rollNote(), before, before - line.total());
+            } else {
+                spendFromPool(c, line.resource(), line.total(), result, line.rollNote());
+            }
+        }
+        if (use != null) {
+            use.setUsedThisTurn(use.getUsedThisTurn() + 1);
+            use.setUsedThisRest(use.getUsedThisRest() + 1);
+            if (maxPerRest != null) {
+                result.addStep("ability-uses", ability.name() + " uses left until rest",
+                        maxPerRest - use.getUsedThisRest() + 1, maxPerRest - use.getUsedThisRest());
+            }
+        }
+
+        // Resolve.
+        if ("auto".equals(ability.resolution())) {
+            resolveAutoAbility(c, ability, result);
+        } else {
+            result.addStep("use-ability", ability.name()
+                    + ("reaction".equals(ability.kind()) ? " (reaction)" : "")
+                    + ("attack-enhancer".equals(ability.kind()) ? " (declared on an attack)" : "")
+                    + " — " + ability.description(), 0, 0);
+        }
+        emitTargetEffect(c, ability, result);
+        if (ability.nextTurnApPenalty() != null) {
+            result.addStep("ability-note", "Start your next turn with " + ability.nextTurnApPenalty()
+                    + " fewer AP (apply manually at turn start — A6 wiring pending)", 0, 0);
+        }
+
+        repo.save(c);
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
+    }
+
+    private void resolveAutoAbility(GameCharacter c, AbilityDefinition ability, ResolutionResult result) {
+        if (ability.grants() != null) {
+            for (var grant : ability.grants()) {
+                gainAny(c, grant.resource(), grant.amount(), result);
+            }
+        }
+        if (ability.riders() != null) {
+            for (var rider : ability.riders()) {
+                if (rider.minLevel() != null && c.getLevel() < rider.minLevel()) continue;
+                for (var gain : rider.gains() != null ? rider.gains() : List.<AbilityDefinition.ResourceAmount>of()) {
+                    gainAny(c, gain.resource(), gain.amount(), result);
+                }
+            }
+        }
+        if (ability.healing() != null) {
+            int total = rollAbilityHealing(c, ability, result);
+            var healResult = healingPipeline.resolve(new HealEvent(total), c);
+            mergeSteps(result, "ability", healResult);
+        }
+        if (ability.selfEffect() != null) {
+            var se = ability.selfEffect();
+            var applied = effectEngine.apply(c, new EffectApplication(
+                    se.effectId(), "ability:" + ability.id(), se.stacks(), null,
+                    se.durationRounds(), true, false, false, null));
+            mergeSteps(result, "ability", applied);
+        }
+    }
+
+    /** Dice count: fixed | per level | base + 1 per level beyond the threshold level. */
+    private int rollAbilityHealing(GameCharacter c, AbilityDefinition ability, ResolutionResult result) {
+        var formula = ability.healing();
+        int total = 0;
+        var rolls = new ArrayList<Integer>();
+        if (formula.dice() != null) {
+            var dice = formula.dice();
+            int count = 0;
+            if (dice.count() != null) count = dice.count();
+            else if (dice.countPerLevel() != null) count = dice.countPerLevel() * c.getLevel();
+            else if (dice.countBase() != null) {
+                count = dice.countBase() + Math.max(0,
+                        c.getLevel() - (dice.countPerLevelBeyond() != null ? dice.countPerLevelBeyond() : c.getLevel()));
+            }
+            for (int i = 0; i < count; i++) {
+                int roll = randomSource.nextInt(dice.sides()) + 1;
+                rolls.add(roll);
+                total += roll;
+            }
+        }
+        int flat = 0;
+        if (formula.statFlat() != null) {
+            var statFlat = formula.statFlat();
+            int mod = c.getStats().modifier(AbilityScore.valueOf(statFlat.stat().toUpperCase()));
+            double value = mod;
+            if (Boolean.TRUE.equals(statFlat.perLevel())) value *= c.getLevel();
+            if (statFlat.multiplier() != null) value *= statFlat.multiplier();
+            flat = (int) Math.floor(value);
+        }
+        total += flat;
+        total = Math.max(0, total);
+        result.putPayload("healingRoll", Map.of("rolls", rolls, "flat", flat, "total", total));
+        return total;
+    }
+
+    /** Target effects are computed here, applied at the table (no targets until the encounter model). */
+    private void emitTargetEffect(GameCharacter c, AbilityDefinition ability, ResolutionResult result) {
+        var te = ability.targetEffect();
+        if (te == null) return;
+        String duration = te.durationRounds() != null ? " for " + te.durationRounds() + " round(s)" : "";
+        if (te.stacks() != null) {
+            int stacks = resolveStacks(te.stacks(), c.getLevel());
+            result.addStep("ability-target", "Apply " + stacks + " " + te.effectId()
+                    + " stack(s) to the target" + duration + " (DM applies)", 0, stacks);
+            result.putPayload("targetEffect", Map.of("effectId", te.effectId(), "stacks", stacks));
+        } else if (te.valueFromWeaponAverageDivisor() != null) {
+            result.addStep("ability-target", "Apply " + te.effectId() + " with value = your weapon's average"
+                    + " damage / " + te.valueFromWeaponAverageDivisor() + " (rounded down)" + duration
+                    + " (DM computes)", 0, 0);
+        }
+    }
+
+    private static int resolveStacks(AbilityDefinition.StacksFormula formula, int level) {
+        if (formula.base() != null) return formula.base();
+        if (formula.perLevel() != null) return formula.perLevel() * level;
+        double value = level;
+        if (formula.levelMultiplier() != null) value = level * formula.levelMultiplier();
+        if (formula.levelOffset() != null) value = level + formula.levelOffset();
+        if (formula.levelDivisor() != null) value = value / formula.levelDivisor();
+        return (int) ("down".equals(formula.round()) ? Math.floor(value) : Math.ceil(value));
+    }
+
+    /** usesPerRest: flat amount, or stat-modifier-many with a minimum (Adrenaline: WILL mod, min 1). */
+    private Integer maxUsesPerRest(GameCharacter c, AbilityDefinition ability) {
+        var uses = ability.usesPerRest();
+        if (uses == null) return null;
+        if (uses.amount() != null) return uses.amount();
+        int mod = c.getStats().modifier(AbilityScore.valueOf(uses.stat().toUpperCase()));
+        return Math.max(uses.min() != null ? uses.min() : 0, mod);
+    }
+
+    /** Gain into AP / mana / the class resource / a pool — capped like gainResource. */
+    private void gainAny(GameCharacter c, String resource, int amount, ResolutionResult result) {
+        switch (resource) {
+            case "ap" -> gainInto(result, "ap", amount,
+                    c.getAp().getCurrent(), c.getAp().getMax(), v -> c.getAp().setCurrent(v));
+            case "mana" -> gainInto(result, "mana", amount,
+                    c.getMana().getCurrent(), statEngine.computeMaxMana(c), v -> c.getMana().setCurrent(v));
+            default -> {
+                if (c.getResource() != null && resource.equals(c.getResource().getType())) {
+                    Integer derived = statEngine.computeClassResourceMax(c);
+                    int cap = derived == null ? c.getResource().getMax()
+                            : derived == StatDerivationEngine.UNBOUNDED_RESOURCE ? Integer.MAX_VALUE : derived;
+                    gainInto(result, resource, amount, c.getResource().getCurrent(), cap,
+                            v -> c.getResource().setCurrent(v));
+                } else {
+                    ensurePools(c);
+                    var pool = c.findPool(resource);
+                    if (pool != null) {
+                        int cap = pool.getMax() != null ? pool.getMax() : Integer.MAX_VALUE;
+                        gainInto(result, resource, amount, pool.getCurrent(), cap, pool::setCurrent);
+                    }
+                }
+            }
         }
     }
 
@@ -1175,7 +1576,14 @@ public class CharacterService {
                             c.getResource().getCurrent(), cap,
                             v -> c.getResource().setCurrent(v));
                 } else {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown resource: " + req.resource());
+                    ensurePools(c);
+                    var pool = c.findPool(req.resource());
+                    if (pool == null) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown resource: " + req.resource());
+                    }
+                    int cap = pool.getMax() != null ? pool.getMax() : Integer.MAX_VALUE;
+                    gainInto(result, req.resource(), req.amount(),
+                            pool.getCurrent(), cap, pool::setCurrent);
                 }
             }
         }
@@ -1199,9 +1607,12 @@ public class CharacterService {
         var c = getCharacter(playerId);
         // Turn gating: within a running encounter, only the current character may start,
         // and only once (strict start → end alternation). Free ticking outside encounters.
-        encounters.validateAndMarkTurnStart(c);
+        // A participant's FIRST turn of the combat gets no AP recovery (2026-07-16 ruling).
+        boolean apRecovery = encounters.validateAndMarkTurnStart(c);
+        // Per-turn ability budgets reset at turn start (Story 1.4).
+        c.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
         // M2-B: DoT ticks (Q13: before AP recovery) → AP recovery → startOfTurn triggers.
-        var result = turnTickService.turnStart(c);
+        var result = turnTickService.turnStart(c, apRecovery);
         repo.save(c);
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
@@ -1213,9 +1624,18 @@ public class CharacterService {
         // expiry / threshold stack consumption (M0-A/N9).
         var result = turnTickService.turnEnd(c);
         repo.save(c);
-        String next = encounters.completeTurn(c);
+        var next = encounters.completeTurn(c);
         if (next != null) {
-            result.addStep("turn-order", "Turn passes to " + next, 0, 0);
+            result.addStep("turn-order", "Turn passes to " + next.name() + " (round " + next.round() + ")", 0, 0);
+            // Players never start turns themselves in combat — the next character's turn
+            // begins here (budgets reset, DoT ticks, AP recovery), merged into this log.
+            var nextChar = next.playerId().equals(c.getPlayerId()) ? c : getCharacter(next.playerId());
+            if (nextChar.getLifeStatus() != LifeStatus.DEAD) {
+                boolean apRecovery = encounters.validateAndMarkTurnStart(nextChar);
+                nextChar.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
+                mergeSteps(result, nextChar.getName(), turnTickService.turnStart(nextChar, apRecovery));
+                repo.save(nextChar);
+            }
         }
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
@@ -1368,7 +1788,41 @@ public class CharacterService {
             result.addStep("rest-deck", "Consumed deck cards restored", 0, cardsRestored);
         }
 
-        // 8. M5-C: usesPerLongRest item charges restore with the same floor+probability
+        // 8. Sub-resource pools (Story 1.2, ruling 2026-07-13): on-rest pools regain
+        //    ceil(tier% × max), additive and capped. Manual pools (fury) are untouched.
+        ensurePools(c);
+        for (var poolDef : gameData.getPoolsForClass(c.getClassId())) {
+            if (!"on-rest".equals(poolDef.restore()) || poolDef.max() == null) continue;
+            var pool = c.findPool(poolDef.id());
+            if (pool == null) continue;
+            int before = pool.getCurrent();
+            int regained = (int) Math.ceil(poolDef.max() * p);
+            int after = Math.min(poolDef.max(), before + regained);
+            if (after != before) {
+                pool.setCurrent(after);
+                result.addStep("rest-pool", poolDef.name() + " +" + (after - before)
+                        + " (" + tier + "%)", before, after);
+            }
+        }
+
+        // 8b. Ability use budgets (Story 1.4, tier ruling): usedThisRest reduces by
+        //     ceil(tier% × maxUses) — NOT a full clear. Turn budgets clear too.
+        for (var abilityUse : c.getAbilityUses()) {
+            abilityUse.setUsedThisTurn(0);
+            if (abilityUse.getUsedThisRest() <= 0) continue;
+            var def = gameData.getAbility(abilityUse.getAbilityId());
+            Integer maxUses = def != null ? maxUsesPerRest(c, def) : null;
+            if (maxUses == null) continue;
+            int restored = (int) Math.ceil(maxUses * p);
+            int after = Math.max(0, abilityUse.getUsedThisRest() - restored);
+            if (after != abilityUse.getUsedThisRest()) {
+                result.addStep("rest-ability", (def.name() != null ? def.name() : abilityUse.getAbilityId())
+                        + " uses restored (" + tier + "%)", abilityUse.getUsedThisRest(), after);
+                abilityUse.setUsedThisRest(after);
+            }
+        }
+
+        // 9. M5-C: usesPerLongRest item charges restore with the same floor+probability
         //    treatment as charge-style class resources at partial tiers.
         for (var entry : c.getInventory()) {
             var item = gameData.findItem(entry.getItemId());
@@ -1680,6 +2134,17 @@ public class CharacterService {
 
         List<String> conditions = deriveConditions(c);
 
+        ensurePools(c); // materialize sub-resource pools on first sight (Story 1.2)
+        var poolViews = c.getPools().stream()
+                .map(pool -> {
+                    var def = gameData.getPoolsForClass(c.getClassId()).stream()
+                            .filter(d -> d.id().equals(pool.getPoolId())).findFirst().orElse(null);
+                    return new CombatSnapshot.PoolView(pool.getPoolId(),
+                            def != null && def.name() != null ? def.name() : pool.getPoolId(),
+                            pool.getCurrent(), pool.getMax());
+                })
+                .toList();
+
         CombatSnapshot.ResourceView resourceView = null;
         if (c.getResource() != null && c.getResource().getType() != null) {
             Integer derived = statEngine.computeClassResourceMax(c);
@@ -1707,6 +2172,7 @@ public class CharacterService {
                 new CombatSnapshot.ApView(c.getAp().getCurrent(), statEngine.computeAPRecovery(c), c.getAp().getMax()),
                 new CombatSnapshot.ManaView(c.getMana().getCurrent(), statEngine.computeMaxMana(c)),
                 resourceView,
+                poolViews,
                 statEngine.computeSpeed(c), c.getBonusInitiative(), c.getDeathStacks(),
                 c.getLifeStatus().name(),
                 downed ? c.getDownedRoundsRemaining() : null,

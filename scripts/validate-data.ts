@@ -411,6 +411,63 @@ if (characterCreation) {
   }
 }
 
+// ── 18. Class Abilities (abilities-*.json, Epic 1) ──
+
+const abilityFiles = [
+  'abilities-archer.json', 'abilities-monk.json', 'abilities-rogue.json',
+  'abilities-warrior.json', 'abilities-wildborn.json', 'abilities-wraith-hunter.json'
+];
+const validAbilityKinds = new Set(['active', 'reaction', 'attack-enhancer', 'passive']);
+const validAbilityResolutions = new Set(['auto', 'manual']);
+const validPoolRestores = new Set(['on-rest', 'manual']);
+
+{
+  const allAbilityIds = new Set<string>();
+  let abilityCount = 0;
+  for (const af of abilityFiles) {
+    const doc = loadJson(af);
+    if (!doc) continue;
+    if (!Array.isArray(doc.abilities)) { error(`${af}: missing 'abilities' array`); continue; }
+
+    for (const [cls, defs] of Object.entries(doc.pools ?? {}) as [string, any[]][]) {
+      if (!allSubclassIds.has(cls)) error(`${af}: pools key "${cls}" is not a known class`);
+      for (const pd of defs) {
+        if (!pd.id) error(`${af} pools[${cls}]: pool missing id`);
+        if (!validPoolRestores.has(pd.restore)) error(`${af} pools[${cls}/${pd.id}]: invalid restore "${pd.restore}"`);
+        const isFormula = pd.maxFormula != null;
+        if (!isFormula && typeof pd.initial !== 'number') error(`${af} pools[${cls}/${pd.id}]: numeric pool needs 'initial'`);
+        if (typeof pd.max === 'number' && typeof pd.initial === 'number' && pd.initial > pd.max) {
+          error(`${af} pools[${cls}/${pd.id}]: initial ${pd.initial} > max ${pd.max}`);
+        }
+      }
+    }
+
+    for (const a of doc.abilities) {
+      abilityCount++;
+      const where = `${af} [${a.id ?? a.name ?? '?'}]`;
+      if (!a.id) { error(`${where}: missing id`); continue; }
+      if (allAbilityIds.has(a.id)) error(`${where}: duplicate ability id across files`);
+      allAbilityIds.add(a.id);
+      if (!allSubclassIds.has(a.classId)) error(`${where}: classId "${a.classId}" is not a known class`);
+      if (typeof a.minLevel !== 'number' || a.minLevel < 1 || a.minLevel > 20) error(`${where}: invalid minLevel ${a.minLevel}`);
+      if (!validAbilityKinds.has(a.kind)) error(`${where}: invalid kind "${a.kind}"`);
+      if (!validAbilityResolutions.has(a.resolution)) error(`${where}: invalid resolution "${a.resolution}"`);
+      if (!a.description) error(`${where}: missing description`);
+      for (const c of a.costs ?? []) {
+        if (!c.resource) error(`${where}: cost missing resource`);
+        if (c.amount == null && c.amountDice == null) error(`${where}: cost needs amount or amountDice`);
+      }
+      if (a.targetEffect && !effectIds.has(a.targetEffect.effectId)) {
+        error(`${where}: targetEffect "${a.targetEffect.effectId}" not in effects.json`);
+      }
+      if (a.selfEffect && !effectIds.has(a.selfEffect.effectId)) {
+        error(`${where}: selfEffect "${a.selfEffect.effectId}" not in effects.json`);
+      }
+    }
+  }
+  console.log(`\n── Class ability files: ${abilityCount} abilities, ${allAbilityIds.size} unique ids ──`);
+}
+
 // ── Summary ──
 
 console.log('\n═══════════════════════════════════');

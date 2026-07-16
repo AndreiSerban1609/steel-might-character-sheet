@@ -1,4 +1,5 @@
 import type {
+  AbilitiesSnapshot,
   AbilityScore,
   ActionResponse,
   BioPatch,
@@ -72,6 +73,61 @@ export function setApiBase(value: string): void {
   API_BASE = trimmed ? normalizeBase(trimmed) : (import.meta.env.VITE_API_BASE ?? '/api');
 }
 
+// ── Connectivity (Story 3.3) ──
+// A fetch that rejects (network error, server down, tunnel gone) flips the app
+// into offline mode; while offline, a slow probe pings /health until the server
+// answers again. Gateway errors (502–504) count as offline too — a tunnel can be
+// up while the backend behind it is not.
+
+let serverOffline = false;
+let probeTimer: number | null = null;
+const offlineListeners = new Set<(offline: boolean) => void>();
+
+const PROBE_INTERVAL_MS = 10_000;
+
+/** Subscribe to offline/online transitions. Returns an unsubscribe function. */
+export function subscribeConnectivity(listener: (offline: boolean) => void): () => void {
+  offlineListeners.add(listener);
+  return () => offlineListeners.delete(listener);
+}
+
+function setOffline(offline: boolean): void {
+  if (offline === serverOffline) return;
+  serverOffline = offline;
+  for (const listener of offlineListeners) listener(offline);
+  if (typeof window === 'undefined') return;
+  if (offline && probeTimer === null) {
+    probeTimer = window.setInterval(() => void probeHealth(), PROBE_INTERVAL_MS);
+  } else if (!offline && probeTimer !== null) {
+    window.clearInterval(probeTimer);
+    probeTimer = null;
+  }
+}
+
+async function probeHealth(): Promise<void> {
+  try {
+    const res = await fetch(`${API_BASE}/health`);
+    // any real answer from the backend (even a 404 from an older build) proves
+    // reachability; 5xx may be a gateway speaking for a dead server
+    if (res.status < 500) setOffline(false);
+  } catch {
+    /* still down */
+  }
+}
+
+/** fetch + connectivity bookkeeping — every HTTP call goes through here. */
+async function trackedFetch(input: string, init?: RequestInit): Promise<Response> {
+  let res: Response;
+  try {
+    res = await fetch(input, init);
+  } catch {
+    setOffline(true);
+    throw new Error('Server unreachable — changes are not being saved.');
+  }
+  if (res.status < 502 || res.status > 504) setOffline(false);
+  return res;
+}
+
 export interface VitalsPatch {
   currentHp?: number;
   tempHp?: number;
@@ -115,13 +171,13 @@ async function errText(res: Response, path: string): Promise<string> {
 }
 
 async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`);
+  const res = await trackedFetch(`${API_BASE}${path}`);
   if (!res.ok) throw new Error(await errText(res, path));
   return (await res.json()) as T;
 }
 
 async function sendJson<T>(method: 'POST' | 'PUT', path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await trackedFetch(`${API_BASE}${path}`, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -140,7 +196,7 @@ export function fetchCombatSnapshot(playerId: string): Promise<CombatSnapshot> {
 }
 
 export async function findCharacter(room: string, email: string): Promise<CharacterCreatedResponse | null> {
-  const res = await fetch(
+  const res = await trackedFetch(
     `${API_BASE}/characters/find?room=${encodeURIComponent(room)}&email=${encodeURIComponent(email)}`,
   );
   if (res.status === 404) return null;
@@ -173,9 +229,14 @@ export function updateProficiencies(playerId: string, skillIds: string[]): Promi
   });
 }
 
-export function skillCheck(playerId: string, skillId: string): Promise<SkillCheckResult> {
+export function skillCheck(
+  playerId: string,
+  skillId: string,
+  advantage?: 'advantage' | 'disadvantage',
+): Promise<SkillCheckResult> {
   return sendJson<SkillCheckResult>('POST', `/characters/${encodeURIComponent(playerId)}/skill-check`, {
     skillId,
+    advantage: advantage ?? null,
   });
 }
 
@@ -195,6 +256,19 @@ export function skillCheckAccept(playerId: string): Promise<SkillCheckAccepted> 
     `/characters/${encodeURIComponent(playerId)}/skill-check/accept`,
     {},
   );
+}
+
+// ── Class abilities (Epic 1) ──
+
+export function fetchAbilities(playerId: string): Promise<AbilitiesSnapshot> {
+  return getJson<AbilitiesSnapshot>(`/characters/${encodeURIComponent(playerId)}/abilities`);
+}
+
+/** Free-form picker: replaces the choice-group picks (class + level validated server-side). */
+export function updateAbilities(playerId: string, abilityIds: string[]): Promise<AbilitiesSnapshot> {
+  return sendJson<AbilitiesSnapshot>('PUT', `/characters/${encodeURIComponent(playerId)}/abilities`, {
+    abilityIds,
+  });
 }
 
 // ── Combat actions (all resolve through the server's rule pipelines) ──
@@ -227,6 +301,11 @@ export function sendHeal(playerId: string, value: number): Promise<CombatAction>
 
 export function weaponAttack(playerId: string, itemId?: string): Promise<CombatAction> {
   return combatAction(playerId, 'weapon-attack', itemId ? { itemId } : {});
+}
+
+/** Use a class ability: validate → spend costs → resolve (auto) or print the rule (manual). */
+export function useAbility(playerId: string, abilityId: string): Promise<CombatAction> {
+  return combatAction(playerId, 'use-ability', { abilityId });
 }
 
 /** Validated spend (M0-D): resource is 'ap' | 'mana' | the class resource type. 400 when insufficient. */
@@ -280,7 +359,7 @@ export function rest(playerId: string, tier: number): Promise<CombatAction> {
 }
 
 export async function removeEffect(playerId: string, effectId: string): Promise<CombatAction> {
-  const res = await fetch(
+  const res = await trackedFetch(
     `${API_BASE}/characters/${encodeURIComponent(playerId)}/actions/remove-effect?effectId=${encodeURIComponent(effectId)}`,
     { method: 'POST' },
   );
@@ -413,10 +492,16 @@ export function fetchEncounter(room: string): Promise<EncounterView> {
   return getJson<EncounterView>(`/rooms/${encodeURIComponent(room)}/encounter`);
 }
 
-/** Rolls d20 + DEX mod + initiative bonus per participant; omit playerIds for the whole room. */
-export function startEncounter(room: string, playerIds?: string[]): Promise<EncounterView> {
+/** Rolls d20 + DEX mod + initiative bonus per participant; omit playerIds for the whole room.
+ *  surprisedPlayerIds opens the encounter on a surprise round (round 0) that skips them. */
+export function startEncounter(
+  room: string,
+  playerIds?: string[],
+  surprisedPlayerIds?: string[],
+): Promise<EncounterView> {
   return sendJson<EncounterView>('POST', `/rooms/${encodeURIComponent(room)}/encounter/start`, {
     playerIds: playerIds ?? null,
+    surprisedPlayerIds: surprisedPlayerIds ?? null,
   });
 }
 

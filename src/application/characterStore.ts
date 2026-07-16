@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type {
+  AbilitiesSnapshot,
   AbilityScore,
   ActionResponse,
   BioPatch,
@@ -22,6 +23,9 @@ import {
   castScroll,
   castSpell,
   combatStart,
+  fetchAbilities,
+  updateAbilities,
+  useAbility,
   createCharacter as apiCreateCharacter,
   encounterNextTurn,
   endEncounter as apiEndEncounter,
@@ -73,7 +77,8 @@ import {
   type ReviveBody,
   type VitalsPatch,
 } from '../platform/http';
-import type { Viewport } from '../platform/metadataGateway';
+import { subscribeConnectivity } from '../platform/http';
+import type { SheetSlice, Viewport } from '../platform/metadataGateway';
 
 type View = 'entry' | 'create' | 'roster' | 'sheet' | 'deck';
 type Role = 'player' | 'gm';
@@ -89,6 +94,10 @@ export interface CharacterState {
   obrMode: boolean;
   /** Which snapshot slice is mirrored to OBR metadata (follows the active tab). */
   activeViewport: Viewport;
+  /** Every sheet slice mirrored to the room, keyed by player id (Story 3.1). */
+  partyViewports: Record<string, SheetSlice>;
+  /** True after a network-level fetch failure; cleared on the next success (Story 3.3). */
+  serverOffline: boolean;
   roomName: string;
   email: string;
   roster: RosterEntry[];
@@ -107,6 +116,7 @@ export interface CharacterState {
   acting: boolean;
   lastResolution: ResolutionResult | null;
   encounter: EncounterView | null;
+  abilities: AbilitiesSnapshot | null;
 
   setRoom: (room: string) => void;
   setEmail: (email: string) => void;
@@ -121,7 +131,7 @@ export interface CharacterState {
   saveVitals: (patch: VitalsPatch) => Promise<void>;
   saveIdentity: (patch: IdentityPatch) => Promise<void>;
   saveProficiencies: (skillIds: string[]) => Promise<void>;
-  drawSkill: (skillId: string) => Promise<void>;
+  drawSkill: (skillId: string, advantage?: 'advantage' | 'disadvantage') => Promise<void>;
   redrawSkill: () => Promise<void>;
   clearDraw: () => void;
   openDeckEditor: () => Promise<void>;
@@ -150,8 +160,12 @@ export interface CharacterState {
   doTurnEnd: () => Promise<void>;
   doSpendResource: (resource: string, amount: number) => Promise<void>;
   doGainResource: (resource: string, amount: number) => Promise<void>;
+  loadAbilities: () => Promise<void>;
+  saveAbilities: (abilityIds: string[]) => Promise<void>;
+  doUseAbility: (abilityId: string) => Promise<void>;
+  adoptEncounter: (view: EncounterView) => void;
   loadEncounter: () => Promise<void>;
-  startEncounter: () => Promise<void>;
+  startEncounter: (surprisedPlayerIds?: string[]) => Promise<void>;
   endEncounter: () => Promise<void>;
   skipTurn: () => Promise<void>;
   overrideInitiative: (playerId: string, initiative: number) => Promise<void>;
@@ -168,6 +182,8 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   role: null,
   obrMode: false,
   activeViewport: 'combat',
+  partyViewports: {},
+  serverOffline: false,
   roomName: '',
   email: '',
   roster: [],
@@ -186,6 +202,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   acting: false,
   lastResolution: null,
   encounter: null,
+  abilities: null,
 
   setRoom: (room) => set({ roomName: room }),
   setEmail: (email) => set({ email }),
@@ -201,7 +218,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     try {
       const found = await findCharacter(roomName, email);
       if (found) {
-        set({ selectedPlayerId: found.playerId, snapshot: found.snapshot, view: 'sheet', loading: false, inventory: null, bio: null, spellbook: null });
+        set({ selectedPlayerId: found.playerId, snapshot: found.snapshot, view: 'sheet', loading: false, inventory: null, bio: null, spellbook: null, abilities: null });
       } else {
         set({ view: 'create', loading: false });
       }
@@ -224,7 +241,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     set({ saving: true, error: null });
     try {
       const created = await apiCreateCharacter({ ...body, roomName, email });
-      set({ selectedPlayerId: created.playerId, snapshot: created.snapshot, view: 'sheet', saving: false, inventory: null, bio: null, spellbook: null });
+      set({ selectedPlayerId: created.playerId, snapshot: created.snapshot, view: 'sheet', saving: false, inventory: null, bio: null, spellbook: null, abilities: null });
     } catch (e) {
       set({ error: msg(e), saving: false });
     }
@@ -240,7 +257,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   },
 
   selectPlayer: async (playerId) => {
-    set({ selectedPlayerId: playerId, view: 'sheet', snapshot: null, loading: true, error: null, drawResult: null, playerDeck: null, inventory: null, bio: null, spellbook: null });
+    set({ selectedPlayerId: playerId, view: 'sheet', snapshot: null, loading: true, error: null, drawResult: null, playerDeck: null, inventory: null, bio: null, spellbook: null, abilities: null });
     try {
       set({ snapshot: await fetchCombatSnapshot(playerId), loading: false });
     } catch (e) {
@@ -302,12 +319,12 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
-  drawSkill: async (skillId) => {
+  drawSkill: async (skillId, advantage) => {
     const id = get().selectedPlayerId;
     if (!id) return;
     set({ drawing: true, error: null });
     try {
-      set({ drawResult: await skillCheck(id, skillId), drawing: false });
+      set({ drawResult: await skillCheck(id, skillId, advantage), drawing: false });
     } catch (e) {
       set({ error: msg(e), drawing: false });
     }
@@ -489,22 +506,69 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   doGainResource: (resource, amount) =>
     runCombatAction(set, get, (id) => gainResource(id, resource, amount)),
 
+  loadAbilities: async () => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ error: null });
+    try {
+      set({ abilities: await fetchAbilities(id) });
+    } catch (e) {
+      set({ error: msg(e) });
+    }
+  },
+
+  saveAbilities: async (abilityIds) => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ saving: true, error: null });
+    try {
+      set({ abilities: await updateAbilities(id, abilityIds), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  doUseAbility: async (abilityId) => {
+    await runCombatAction(set, get, (id) => useAbility(id, abilityId));
+    // A use changes the per-rest/per-turn budgets the panel displays.
+    if (!get().error) await get().loadAbilities();
+  },
+
+  adoptEncounter: (view) => {
+    const prev = get().encounter;
+    set({ encounter: view });
+    // Turns auto-start server-side — when the order just reached the viewed character,
+    // their sheet already ticked (DoTs, AP recovery, per-turn budgets): pull it fresh.
+    const id = get().selectedPlayerId;
+    const becameMyTurn =
+      view.active && !!id && view.currentPlayerId === id && prev?.currentPlayerId !== id;
+    if (becameMyTurn && !get().acting) {
+      void fetchCombatSnapshot(id).then(
+        (snap) => set({ snapshot: snap }),
+        () => undefined /* best-effort refresh */,
+      );
+      void get().loadAbilities();
+    }
+  },
+
   loadEncounter: async () => {
     const room = get().roomName;
     if (!room.trim()) return;
     try {
-      set({ encounter: await fetchEncounter(room) });
+      get().adoptEncounter(await fetchEncounter(room));
     } catch {
       /* polling is best-effort — keep the last known state */
     }
   },
 
-  startEncounter: async () => {
+  startEncounter: async (surprisedPlayerIds) => {
     const room = get().roomName;
     if (!room.trim()) return;
     set({ acting: true, error: null });
     try {
-      set({ encounter: await apiStartEncounter(room), acting: false });
+      const view = await apiStartEncounter(room, undefined, surprisedPlayerIds);
+      set({ acting: false });
+      get().adoptEncounter(view);
     } catch (e) {
       set({ error: msg(e), acting: false });
     }
@@ -526,7 +590,9 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     if (!room.trim()) return;
     set({ acting: true, error: null });
     try {
-      set({ encounter: await encounterNextTurn(room), acting: false });
+      const view = await encounterNextTurn(room);
+      set({ acting: false });
+      get().adoptEncounter(view);
     } catch (e) {
       set({ error: msg(e), acting: false });
     }
@@ -549,6 +615,9 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   doRest: (tier) => runCombatAction(set, get, (id) => rest(id, tier)),
   clearResolution: () => set({ lastResolution: null }),
 }));
+
+// The platform layer reports connectivity transitions; the flag drives the offline banner.
+subscribeConnectivity((offline) => useCharacterStore.setState({ serverOffline: offline }));
 
 /** Shared shape of every combat action: post, then adopt the returned resolution + snapshot. */
 async function runCombatAction(

@@ -61,14 +61,28 @@ public class EncounterService {
                 .thenComparing((Rolled r) -> -r.c().getStats().modifier(AbilityScore.DEX))
                 .thenComparing(r -> r.c().getName()));
 
+        var surprised = req != null && req.surprisedPlayerIds() != null
+                ? req.surprisedPlayerIds() : List.<String>of();
+        for (var id : surprised) {
+            if (participants.stream().noneMatch(p -> p.getPlayerId().equals(id))) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "surprised character is not a participant: " + id);
+            }
+        }
+
         var enc = repo.findById(room).orElseGet(() -> new RoomEncounter(room));
         enc.getEntries().clear();
         for (var r : rolled) {
-            enc.getEntries().add(new EncounterEntry(r.c().getPlayerId(), r.c().getName(), r.initiative()));
+            var entry = new EncounterEntry(r.c().getPlayerId(), r.c().getName(), r.initiative());
+            entry.setSurprised(surprised.contains(r.c().getPlayerId()));
+            enc.getEntries().add(entry);
         }
-        enc.setRoundNumber(1);
+        // Surprise round = round 0: the full order stands, but surprised entries are
+        // auto-skipped (as if at 0 AP) until the order wraps into round 1.
+        enc.setRoundNumber(surprised.isEmpty() ? 1 : 0);
         enc.setCurrentIndex(0);
         enc.setTurnStarted(false);
+        skipInactive(enc);
         return toView(repo.save(enc));
     }
 
@@ -119,10 +133,13 @@ public class EncounterService {
     /**
      * Gate + mark a turn start. No-op when the room has no encounter or the
      * character isn't a participant (free-form ticking stays possible).
+     *
+     * @return whether AP recovery applies to this turn — false only on a participant's
+     *         FIRST turn of the combat (2026-07-16 ruling: everyone opens on starting AP).
      */
-    public void validateAndMarkTurnStart(GameCharacter c) {
+    public boolean validateAndMarkTurnStart(GameCharacter c) {
         var enc = encounterFor(c);
-        if (enc == null) return;
+        if (enc == null) return true;
         var current = enc.current();
         if (!current.getPlayerId().equals(c.getPlayerId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -132,8 +149,11 @@ public class EncounterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "turn already started — end it to pass to the next character");
         }
+        boolean firstTurn = !current.hasTookTurn();
+        current.setTookTurn(true);
         enc.setTurnStarted(true);
         repo.save(enc);
+        return !firstTurn;
     }
 
     /** Gate a turn end (must be the current character, turn must be started). */
@@ -151,15 +171,18 @@ public class EncounterService {
         }
     }
 
-    /** Advance after a successful turn end. Returns "name (round N)" for the log, or null. */
-    public String completeTurn(GameCharacter c) {
+    /** Advance after a successful turn end. Returns the new current entry for the log/auto-start, or null. */
+    public NextTurn completeTurn(GameCharacter c) {
         var enc = encounterFor(c);
         if (enc == null) return null;
         advance(enc);
         repo.save(enc);
         var next = enc.current();
-        return next == null ? null : next.getName() + " (round " + enc.getRoundNumber() + ")";
+        return next == null ? null : new NextTurn(next.getPlayerId(), next.getName(), enc.getRoundNumber());
     }
+
+    /** The entry whose turn begins after an advance. */
+    public record NextTurn(String playerId, String name, int round) {}
 
     // ---- internals ----
 
@@ -172,20 +195,36 @@ public class EncounterService {
         return participant ? enc : null;
     }
 
-    /** Move to the next living participant; wrapping increments the round. */
+    /** Move to the next actionable participant; wrapping increments the round. */
     private void advance(RoomEncounter enc) {
         enc.setTurnStarted(false);
+        step(enc);
+        skipInactive(enc);
+    }
+
+    /**
+     * Skip entries that cannot act where the order currently stands: the DEAD, and —
+     * during the surprise round only (round 0) — the surprised. Wrapping past the end
+     * increments the round, so surprised entries stop being skipped from round 1 on.
+     */
+    private void skipInactive(RoomEncounter enc) {
         int size = enc.getEntries().size();
-        for (int step = 1; step <= size; step++) {
-            int next = enc.getCurrentIndex() + 1;
-            if (next >= size) {
-                next = 0;
-                enc.setRoundNumber(enc.getRoundNumber() + 1);
-            }
-            enc.setCurrentIndex(next);
-            if (!isDead(enc.getEntries().get(next).getPlayerId())) return;
+        for (int guard = 0; guard < size; guard++) {
+            var current = enc.getEntries().get(enc.getCurrentIndex());
+            boolean surprisedNow = enc.getRoundNumber() == 0 && current.isSurprised();
+            if (!surprisedNow && !isDead(current.getPlayerId())) return;
+            step(enc);
         }
         // everyone is dead — leave the index where it landed; the DM ends the encounter
+    }
+
+    private void step(RoomEncounter enc) {
+        int next = enc.getCurrentIndex() + 1;
+        if (next >= enc.getEntries().size()) {
+            next = 0;
+            enc.setRoundNumber(enc.getRoundNumber() + 1);
+        }
+        enc.setCurrentIndex(next);
     }
 
     private boolean isDead(String playerId) {
@@ -217,7 +256,8 @@ public class EncounterService {
         var entries = enc.getEntries().stream()
                 .map(e -> new EncounterView.Entry(e.getPlayerId(), e.getName(), e.getInitiative(),
                         characters.findById(e.getPlayerId())
-                                .map(ch -> ch.getLifeStatus().name()).orElse(null)))
+                                .map(ch -> ch.getLifeStatus().name()).orElse(null),
+                        e.isSurprised()))
                 .toList();
         var current = enc.current();
         return new EncounterView(true, enc.getRoundNumber(),

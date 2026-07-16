@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import { liveVitalsFromSlice } from '../domain/partyMirror';
 import { titleCase } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
 
 export function RosterView() {
   const roster = useCharacterStore((s) => s.roster);
+  const partyViewports = useCharacterStore((s) => s.partyViewports);
   const roomName = useCharacterStore((s) => s.roomName);
   const loading = useCharacterStore((s) => s.loading);
   const error = useCharacterStore((s) => s.error);
   const loadRoster = useCharacterStore((s) => s.loadRoster);
   const selectPlayer = useCharacterStore((s) => s.selectPlayer);
   const openDeckEditor = useCharacterStore((s) => s.openDeckEditor);
-  const back = useCharacterStore((s) => s.back);
 
   useEffect(() => {
     void loadRoster();
@@ -20,9 +21,6 @@ export function RosterView() {
   return (
     <section className="roster">
       <div className="sheet-bar">
-        <button className="btn btn--ghost" onClick={back}>
-          ← Exit
-        </button>
         <button className="btn btn--ghost" onClick={() => void openDeckEditor()}>
           Room Deck
         </button>
@@ -45,7 +43,12 @@ export function RosterView() {
 
       <div className="roster-grid">
         {roster.map((r) => {
-          const pct = r.maxHp > 0 ? Math.max(0, Math.min(100, (r.currentHp / r.maxHp) * 100)) : 0;
+          // live vitals from the player's mirrored combat viewport, when broadcast
+          const live = liveVitalsFromSlice(partyViewports[r.playerId]);
+          const currentHp = live?.currentHp ?? r.currentHp;
+          const maxHp = live?.maxHp ?? r.maxHp;
+          const ac = live?.ac ?? r.ac;
+          const pct = maxHp > 0 ? Math.max(0, Math.min(100, (currentHp / maxHp) * 100)) : 0;
           return (
             <button className="roster-card" key={r.playerId} onClick={() => void selectPlayer(r.playerId)}>
               <div className="roster-card-name">{r.name}</div>
@@ -58,9 +61,12 @@ export function RosterView() {
               </div>
               <div className="roster-card-stats">
                 <span>
-                  HP {r.currentHp}/{r.maxHp}
+                  HP {currentHp}/{maxHp}
+                  {live && (
+                    <span className="roster-live-dot" title="Live from the table (OBR mirror)" />
+                  )}
                 </span>
-                <span>AC {r.ac}</span>
+                <span>AC {ac}</span>
               </div>
             </button>
           );

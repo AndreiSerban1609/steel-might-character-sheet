@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import type { DamageTypeId } from '../platform/types';
+import type { DamageTypeId, PoolView } from '../platform/types';
 import { DAMAGE_TYPE_OPTIONS, EFFECT_OPTIONS, effectName, effectOption } from '../domain/combatCatalog';
 import { itemName } from '../domain/itemCatalog';
 import { camelToWords } from '../domain/stats';
@@ -25,6 +25,7 @@ export function CombatPanel() {
   const doGainResource = useCharacterStore((s) => s.doGainResource);
   const encounter = useCharacterStore((s) => s.encounter);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
+  const role = useCharacterStore((s) => s.role);
   const doApplyEffect = useCharacterStore((s) => s.doApplyEffect);
   const doRemoveEffect = useCharacterStore((s) => s.doRemoveEffect);
   const doRevive = useCharacterStore((s) => s.doRevive);
@@ -50,13 +51,13 @@ export function CombatPanel() {
   const hpPct = snapshot.hp.max > 0 ? (snapshot.hp.current / snapshot.hp.max) * 100 : 0;
   const selectedFx = effectOption(fxId);
 
-  // Turn gating mirrors the server rules: within an encounter, only the current
-  // character may start, and end requires a started turn. Non-participants tick freely.
+  // Turn gating mirrors the server rules: turns begin automatically in an encounter
+  // (the GM opens combat, ending a turn starts the next), so participants only ever
+  // END their turn. Manual start/combat-start ticking stays for free play / the GM.
   const inEncounter =
     !!encounter?.active && encounter.entries.some((e) => e.playerId === selectedPlayerId);
   const isMyTurn = inEncounter && encounter!.currentPlayerId === selectedPlayerId;
-  const startBlocked = inEncounter && (!isMyTurn || encounter!.turnStarted);
-  const endBlocked = inEncounter && (!isMyTurn || !encounter!.turnStarted);
+  const endBlocked = inEncounter && !isMyTurn;
 
   function submitDamage() {
     const v = parsePositive(dmgValue);
@@ -241,6 +242,16 @@ export function CombatPanel() {
           </button>
         </div>
 
+        {snapshot.pools.map((pool) => (
+          <PoolRow
+            key={pool.id}
+            pool={pool}
+            acting={acting}
+            onSpend={(v) => void doSpendResource(pool.id, v)}
+            onGain={(v) => void doGainResource(pool.id, v)}
+          />
+        ))}
+
         {snapshot.resource && (
           <div className="combat-form">
             <span className="combat-form-label">{camelToWords(snapshot.resource.type).replace(/-/g, ' ')}</span>
@@ -282,30 +293,34 @@ export function CombatPanel() {
 
         <div className="combat-form">
           <span className="combat-form-label">Turn</span>
+          {!inEncounter && (
+            <button
+              className="btn btn--ghost"
+              title="Free-play tick: DoTs, then AP recovery (turns start automatically in combat)"
+              onClick={() => void doTurnStart()}
+              disabled={acting}
+            >
+              Start (AP)
+            </button>
+          )}
           <button
             className="btn btn--ghost"
-            title={startBlocked ? (isMyTurn ? 'Turn already started' : 'Not your turn yet') : undefined}
-            onClick={() => void doTurnStart()}
-            disabled={acting || startBlocked}
-          >
-            Start (AP)
-          </button>
-          <button
-            className="btn btn--ghost"
-            title={endBlocked ? (isMyTurn ? 'Start your turn first' : 'Not your turn yet') : undefined}
+            title={endBlocked ? 'Not your turn yet' : 'End your turn: HoTs tick, durations expire, play passes on'}
             onClick={() => void doTurnEnd()}
             disabled={acting || endBlocked}
           >
-            End (tick)
+            End turn
           </button>
-          <button
-            className="btn btn--ghost"
-            title="Combat start: AP to starting value, revive-DC counter reset"
-            onClick={() => void doCombatStart()}
-            disabled={acting}
-          >
-            Combat start
-          </button>
+          {role === 'gm' && (
+            <button
+              className="btn btn--ghost"
+              title="Combat start: AP to starting value, revive-DC counter reset (encounter start does this for everyone)"
+              onClick={() => void doCombatStart()}
+              disabled={acting}
+            >
+              Combat start
+            </button>
+          )}
         </div>
 
         <div className="combat-form">
@@ -396,5 +411,61 @@ export function CombatPanel() {
 
       {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
     </>
+  );
+}
+
+/** One sub-resource pool (perseverance/fury/…) with its own spend/gain amount. */
+function PoolRow({
+  pool,
+  acting,
+  onSpend,
+  onGain,
+}: {
+  pool: PoolView;
+  acting: boolean;
+  onSpend: (amount: number) => void;
+  onGain: (amount: number) => void;
+}) {
+  const [amount, setAmount] = useState('1');
+  const negative = pool.current < 0;
+
+  return (
+    <div className="combat-form">
+      <span className="combat-form-label">{pool.name}</span>
+      <span
+        className={'combat-resource-val' + (negative ? ' combat-resource-val--danger' : '')}
+        title={negative ? 'Pool is negative — disaster rule, DM adjudicates' : undefined}
+      >
+        {pool.current}
+        {pool.max != null ? ` / ${pool.max}` : ' / ∞'}
+      </span>
+      <input
+        className="combat-num"
+        type="number"
+        min={1}
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <button
+        className="btn btn--ghost"
+        onClick={() => {
+          const v = parsePositive(amount);
+          if (v) onSpend(v);
+        }}
+        disabled={acting}
+      >
+        Spend
+      </button>
+      <button
+        className="btn btn--ghost"
+        onClick={() => {
+          const v = parsePositive(amount);
+          if (v) onGain(v);
+        }}
+        disabled={acting}
+      >
+        Gain
+      </button>
+    </div>
   );
 }
