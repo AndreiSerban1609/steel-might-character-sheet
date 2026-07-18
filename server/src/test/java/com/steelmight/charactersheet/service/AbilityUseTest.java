@@ -94,6 +94,59 @@ class AbilityUseTest {
         assertThat(after.perTurnRemaining()).isEqualTo(0);
     }
 
+    // ── Self-effects apply for BOTH resolutions (2026-07-18 fix) ──
+
+    private GameCharacter saveCharacter(String id, String pathId, String classId, ClassResource resource) {
+        var c = new GameCharacter(id);
+        c.setName(id);
+        c.setLevel(5);
+        c.setPathId(pathId);
+        c.setClassId(classId);
+        c.setStats(new Stats(14, 12, 14, 10, 10, 14, 10));
+        c.setHp(new HitPoints(100, 100, 0));
+        c.setMana(new ManaPool(0, 0));
+        c.setAp(new ActionPoints(6, 6, 10));
+        c.setResource(resource);
+        return repo.save(c);
+    }
+
+    @Test
+    void manualAbilityStillAppliesItsStructuredSelfEffect() {
+        saveCharacter("barb", "warrior", "barbarian", new ClassResource("rages", 4, 4));
+
+        var used = service.useAbility("barb", new UseAbilityRequest("rage"));
+
+        assertThat(used.snapshot().resource().current()).isEqualTo(3); // 1 rage spent
+        assertThat(used.snapshot().activeEffects())
+                .anyMatch(e -> e.id().equals("physical-resistance") && Integer.valueOf(3).equals(e.rounds()));
+        // the narrative rules text still lands in the log
+        assertThat(used.resolution().getSteps()).anyMatch(s -> s.rule().equals("use-ability"));
+    }
+
+    @Test
+    void autoSelfEffectOnHasValueEffectUsesStacksAsValue() {
+        saveCharacter("marty", "monk", "martyr", new ClassResource("focus", 30, 30));
+
+        var used = service.useAbility("marty", new UseAbilityRequest("focus-swift-strikes"));
+
+        assertThat(used.snapshot().resource().current()).isEqualTo(10); // 20 focus spent
+        assertThat(used.snapshot().activeEffects())
+                .anyMatch(e -> e.id().equals("reduced-weapon-ap-cost") && Integer.valueOf(1).equals(e.value()));
+    }
+
+    @Test
+    void valuelessHasValueSelfEffectBecomesADmNoteInsteadOfCrashing() {
+        saveCharacter("marty2", "monk", "martyr", new ClassResource("focus", 30, 30));
+
+        var used = service.useAbility("marty2", new UseAbilityRequest("focus-to-temp-hp"));
+
+        // the amount depends on the focus the player chooses to spend — DM applies it
+        assertThat(used.resolution().getSteps())
+                .anyMatch(s -> s.rule().equals("ability-self-effect") && s.note().contains("DM applies"));
+        assertThat(used.snapshot().activeEffects()).noneMatch(e -> e.id().equals("temporary-hp"));
+        assertThat(used.snapshot().hp().temp()).isEqualTo(0);
+    }
+
     // ── Story 1.4: use-ability ──
 
     @Test

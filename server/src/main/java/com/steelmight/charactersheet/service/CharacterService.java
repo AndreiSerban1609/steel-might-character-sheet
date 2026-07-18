@@ -829,6 +829,9 @@ public class CharacterService {
                     + ("attack-enhancer".equals(ability.kind()) ? " (declared on an attack)" : "")
                     + " — " + ability.description(), 0, 0);
         }
+        // A structured self-effect is real for BOTH resolutions — a manual ability keeps
+        // its narrative text, but its mechanical slice (rage's resistance) still applies.
+        applySelfEffect(c, ability, result);
         emitTargetEffect(c, ability, result);
         if (ability.nextTurnApPenalty() != null) {
             result.addStep("ability-note", "Start your next turn with " + ability.nextTurnApPenalty()
@@ -858,13 +861,30 @@ public class CharacterService {
             var healResult = healingPipeline.resolve(new HealEvent(total), c);
             mergeSteps(result, "ability", healResult);
         }
-        if (ability.selfEffect() != null) {
-            var se = ability.selfEffect();
-            var applied = effectEngine.apply(c, new EffectApplication(
-                    se.effectId(), "ability:" + ability.id(), se.stacks(), null,
-                    se.durationRounds(), true, false, false, null));
-            mergeSteps(result, "ability", applied);
+    }
+
+    /**
+     * hasValue effects need a magnitude: the data's int stacks doubles as it
+     * (reduced-weapon-ap-cost 1 = −1 AP); with neither, the amount depends on the
+     * spend and the DM applies it (focus-to-temp-hp) — applying valueless would 400.
+     */
+    private void applySelfEffect(GameCharacter c, AbilityDefinition ability, ResolutionResult result) {
+        var se = ability.selfEffect();
+        if (se == null) return;
+        var def = gameData.getEffect(se.effectId());
+        Integer value = null;
+        if (def != null && def.hasValue()) {
+            if (se.stacks() == null) {
+                result.addStep("ability-self-effect", ability.name() + " grants " + se.effectId()
+                        + " — magnitude depends on the spend (DM applies)", 0, 0);
+                return;
+            }
+            value = se.stacks();
         }
+        var applied = effectEngine.apply(c, new EffectApplication(
+                se.effectId(), "ability:" + ability.id(), se.stacks(), value,
+                se.durationRounds(), true, false, false, null));
+        mergeSteps(result, "ability", applied);
     }
 
     /** Dice count: fixed | per level | base + 1 per level beyond the threshold level. */
