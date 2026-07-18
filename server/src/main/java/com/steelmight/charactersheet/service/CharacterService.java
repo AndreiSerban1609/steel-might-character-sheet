@@ -1783,16 +1783,18 @@ public class CharacterService {
             mergeSteps(result, "rest", effectEngine.remove(c, effectId));
         }
 
-        // 5. N10: ANY rest clears every accumulated threshold stack, regardless of tier.
-        var thresholdEffects = c.getActiveEffects().stream()
+        // 5. N10: ANY rest clears every accumulated negative stack, regardless of tier.
+        //    multiInstance DoTs (burning, envenomed) are exempt from threshold
+        //    dormancy/consumption but NOT from this — you don't sleep while on fire.
+        var stackEffects = c.getActiveEffects().stream()
                 .filter(e -> {
                     var def = gameData.getEffect(e.getEffectId());
-                    return def != null && def.stackBased() && !def.multiInstance() && def.isNegative();
+                    return def != null && def.stackBased() && def.isNegative();
                 })
                 .map(ActiveEffect::getEffectId)
                 .distinct()
                 .toList();
-        for (var effectId : thresholdEffects) {
+        for (var effectId : stackEffects) {
             mergeSteps(result, "rest", effectEngine.remove(c, effectId));
         }
 

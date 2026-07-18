@@ -73,6 +73,20 @@ class RestActionsTest {
 
     // Criterion 6 — full rest
 
+    @Test
+    void anyRestClearsMultiInstanceDotStacks() {
+        // N10: burning/envenomed are exempt from threshold consumption (multiInstance)
+        // but their accumulated stacks still dissipate on ANY rest — even a poor one.
+        seed("barb", "warrior", "barbarian", 5);
+        applyEffect("barb", "burning", 3, null, null);
+        applyEffect("barb", "envenomed", 2, null, null);
+
+        var snap = service.rest("barb", new RestRequest(25)).snapshot();
+
+        assertThat(snap.activeEffects()).noneMatch(e -> e.id().equals("burning"));
+        assertThat(snap.activeEffects()).noneMatch(e -> e.id().equals("envenomed"));
+    }
+
     @Nested
     class FullRest {
         @Test
