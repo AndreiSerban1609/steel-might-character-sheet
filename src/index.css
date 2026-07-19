@@ -1206,6 +1206,12 @@ body {
   margin-bottom: 6px;
 }
 
+.mirror-note {
+  font-size: 12px;
+  color: var(--text-dim, #9a8f7a);
+  font-style: italic;
+}
+
 .audit {
   margin-top: 18px;
 }

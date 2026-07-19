@@ -1,9 +1,12 @@
 import { getObrIdentity, isObrAvailable, obrReady } from '../platform/obrClient';
 import {
+  clearSheetMetadata,
+  INACTIVE_ENCOUNTER,
   readAllViewports,
   readEncounter,
   subscribeEncounter,
   subscribeViewports,
+  sweepStaleSlices,
   writeEncounter,
   writeViewport,
   type SheetSlice,
@@ -40,8 +43,32 @@ export async function bootstrapObr(): Promise<void> {
     email: syntheticEmail(identity.playerId),
   });
   const { enterAsGm, enterAsPlayer } = useCharacterStore.getState();
-  if (identity.role === 'GM') await enterAsGm();
-  else await enterAsPlayer();
+  if (identity.role === 'GM') {
+    await enterAsGm();
+    // Housekeeping the original Deck of Fates never did: drop mirrored slices for
+    // characters that no longer exist in this room before they crowd the 16 kB cap.
+    const roster = useCharacterStore.getState().roster;
+    if (roster.length > 0) void sweepStaleSlices(roster.map((r) => r.playerId));
+  } else {
+    await enterAsPlayer();
+  }
+}
+
+/**
+ * GM escape hatch: flush every sheet key from room metadata and immediately
+ * re-mirror what this client knows. A live turn order survives the flush;
+ * other players' slices rebuild on their next action. Returns keys removed.
+ */
+export async function resetTableMirror(): Promise<number> {
+  const state = useCharacterStore.getState();
+  const removed = await clearSheetMetadata(state.encounter?.active === true);
+  if (state.selectedPlayerId) {
+    const slice = sliceFor(state, state.activeViewport);
+    if (slice != null) {
+      await writeViewport(state.selectedPlayerId, state.activeViewport, slice);
+    }
+  }
+  return removed;
 }
 
 function sliceFor(state: CharacterState, viewport: Viewport): unknown {
@@ -106,12 +133,15 @@ function startViewportConsumer(): void {
  */
 function startEncounterSync(): void {
   let lastJson = '';
-  const consume = (view: unknown): void => {
-    const json = JSON.stringify(view);
+  const consume = (view: unknown | null): void => {
+    // An absent key means the encounter ended and was deleted (metadata is a
+    // viewport, not a ledger) — adopt the inactive view rather than going stale.
+    const effective = view ?? INACTIVE_ENCOUNTER;
+    const json = JSON.stringify(effective);
     if (json === lastJson) return;
     lastJson = json;
     // adoptEncounter also refreshes the sheet when the turn just became ours
-    useCharacterStore.getState().adoptEncounter(view as EncounterView);
+    useCharacterStore.getState().adoptEncounter(effective as EncounterView);
   };
   void readEncounter().then((view) => {
     if (view !== null) consume(view);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import { resetTableMirror } from '../application/obrBootstrap';
 import { fetchAudit } from '../platform/http';
 import type { AuditView } from '../platform/types';
 import { liveVitalsFromSlice } from '../domain/partyMirror';
@@ -12,13 +13,21 @@ export function RosterView() {
   const roomName = useCharacterStore((s) => s.roomName);
   const loading = useCharacterStore((s) => s.loading);
   const error = useCharacterStore((s) => s.error);
+  const obrMode = useCharacterStore((s) => s.obrMode);
   const loadRoster = useCharacterStore((s) => s.loadRoster);
   const selectPlayer = useCharacterStore((s) => s.selectPlayer);
   const openDeckEditor = useCharacterStore((s) => s.openDeckEditor);
+  const [mirrorNote, setMirrorNote] = useState<string | null>(null);
 
   useEffect(() => {
     void loadRoster();
   }, [loadRoster]);
+
+  async function resetMirror() {
+    const removed = await resetTableMirror();
+    setMirrorNote(`Cleared ${removed} mirrored key${removed === 1 ? '' : 's'} — slices rebuild as players act.`);
+    window.setTimeout(() => setMirrorNote(null), 6000);
+  }
 
   return (
     <section className="roster">
@@ -26,6 +35,16 @@ export function RosterView() {
         <button className="btn btn--ghost" onClick={() => void openDeckEditor()}>
           Room Deck
         </button>
+        {obrMode && (
+          <button
+            className="btn btn--ghost"
+            title="Flush this app's keys from OBR room metadata (fixes a full/stale room). A live turn order survives; sheets re-mirror on each player's next action."
+            onClick={() => void resetMirror()}
+          >
+            Reset table sync
+          </button>
+        )}
+        {mirrorNote && <span className="mirror-note">{mirrorNote}</span>}
       </div>
 
       <header className="roster-header">
