@@ -1,14 +1,18 @@
 package com.steelmight.charactersheet.controller;
 
+import com.steelmight.charactersheet.dto.AuditView;
 import com.steelmight.charactersheet.dto.DeckTemplate;
 import com.steelmight.charactersheet.dto.EncounterView;
 import com.steelmight.charactersheet.dto.SetInitiativeRequest;
 import com.steelmight.charactersheet.dto.StartEncounterRequest;
+import com.steelmight.charactersheet.service.AuditService;
 import com.steelmight.charactersheet.service.CharacterService;
 import com.steelmight.charactersheet.service.DeckTemplateService;
 import com.steelmight.charactersheet.service.EncounterService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -17,12 +21,21 @@ public class RoomController {
     private final DeckTemplateService deckService;
     private final EncounterService encounterService;
     private final CharacterService characterService;
+    private final AuditService auditService;
 
     public RoomController(DeckTemplateService deckService, EncounterService encounterService,
-                          CharacterService characterService) {
+                          CharacterService characterService, AuditService auditService) {
         this.deckService = deckService;
         this.encounterService = encounterService;
         this.characterService = characterService;
+        this.auditService = auditService;
+    }
+
+    /** The room's activity log, newest first — who did what, when (trusted-table review). */
+    @GetMapping("/{room}/audit")
+    public List<AuditView> audit(@PathVariable String room,
+                                 @RequestParam(defaultValue = "50") int limit) {
+        return auditService.recent(room, limit);
     }
 
     @GetMapping("/{room}/deck")

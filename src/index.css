@@ -1206,6 +1206,59 @@ body {
   margin-bottom: 6px;
 }
 
+.audit {
+  margin-top: 18px;
+}
+
+.audit-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audit-list {
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.audit-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.audit-row:last-child {
+  border-bottom: none;
+}
+
+.audit-time {
+  color: var(--text-dim, #9a8f7a);
+  white-space: nowrap;
+}
+
+.audit-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.audit-summary {
+  flex: 1;
+}
+
+.audit-action {
+  color: var(--text-dim, #9a8f7a);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .encounter-idle-row {
   display: flex;
   align-items: center;

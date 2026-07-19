@@ -34,6 +34,7 @@ public class CharacterService {
     private final RandomSource randomSource;
     private final DeckTemplateService deckTemplates;
     private final EncounterService encounters;
+    private final AuditService audit;
 
     public CharacterService(CharacterRepository repo,
                             DamageResolutionPipeline damagePipeline,
@@ -44,7 +45,8 @@ public class CharacterService {
                             GameDataProvider gameData,
                             RandomSource randomSource,
                             DeckTemplateService deckTemplates,
-                            EncounterService encounters) {
+                            EncounterService encounters,
+                            AuditService audit) {
         this.repo = repo;
         this.damagePipeline = damagePipeline;
         this.healingPipeline = healingPipeline;
@@ -55,6 +57,7 @@ public class CharacterService {
         this.randomSource = randomSource;
         this.deckTemplates = deckTemplates;
         this.encounters = encounters;
+        this.audit = audit;
     }
 
     /** Deterministic, human-readable id: slug(roomName) + "-" + lowercase(email). */
@@ -487,8 +490,11 @@ public class CharacterService {
                 req.ignoreResistance(), req.sourceId());
         event.setDuringOwnTurn(req.duringOwnTurn());
         event.setAttackerMight(req.attackerMight());
+        int hpBefore = c.getHp().getCurrent();
         var result = damagePipeline.resolve(event, c);
         repo.save(c);
+        audit.log(c, "damage", req.value() + " " + req.damageType() + " damage (HP "
+                + hpBefore + "→" + c.getHp().getCurrent() + ")");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -498,8 +504,11 @@ public class CharacterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "heal value must be positive");
         }
         var event = new HealEvent(req.value());
+        int hpBefore = c.getHp().getCurrent();
         var result = healingPipeline.resolve(event, c);
         repo.save(c);
+        audit.log(c, "heal", "Healed " + req.value() + " (HP "
+                + hpBefore + "→" + c.getHp().getCurrent() + ")");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -510,6 +519,10 @@ public class CharacterService {
                 req.duration(), req.duringOwnTurn(), req.bypassImmunity(), req.replaceExistingShield(),
                 req.durationType()));
         repo.save(c);
+        audit.log(c, "apply-effect", "Applied " + req.effectId()
+                + (req.stacks() != null && req.stacks() > 1 ? " ×" + req.stacks() : "")
+                + (req.value() != null ? " (value " + req.value() + ")" : "")
+                + (req.duration() != null ? " for " + req.duration() + "r" : ""));
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -517,6 +530,7 @@ public class CharacterService {
         var c = getCharacter(playerId);
         var result = effectEngine.remove(c, effectId);
         repo.save(c);
+        audit.log(c, "remove-effect", "Removed " + effectId);
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -555,6 +569,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "spend-resource", "Spent " + req.amount() + " " + req.resource());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -839,6 +854,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "use-ability", "Used " + ability.name());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1279,6 +1295,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "cast", "Cast " + spell.name());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1561,6 +1578,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "weapon-attack", "Attacked with " + entry.getItemId());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1609,6 +1627,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "gain-resource", "Gained " + req.amount() + " " + req.resource());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1678,6 +1697,7 @@ public class CharacterService {
                             + " dies; Death fight after this combat", 0, 0);
             result.addTriggeredEffect("death");
             repo.save(c);
+            audit.log(c, "revive", "Revive CRIT-FAILED — dead, Death fight pending");
             return new ActionResponse<>(result, buildCombatSnapshot(c));
         }
 
@@ -1706,6 +1726,7 @@ public class CharacterService {
         result.addStep("revive", c.getName() + " is back up", before, hp);
 
         repo.save(c);
+        audit.log(c, "revive", "Revived at " + hp + " HP");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1866,6 +1887,7 @@ public class CharacterService {
         }
 
         repo.save(c);
+        audit.log(c, "rest", "Rested (" + tier + "%)");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -2031,6 +2053,11 @@ public class CharacterService {
             c.getMana().setCurrent(Math.min(req.currentMana(), statEngine.computeMaxMana(c)));
         }
         repo.save(c);
+        audit.log(c, "vitals-edit", "Vitals override"
+                + (req.currentHp() != null ? " HP=" + req.currentHp() : "")
+                + (req.tempHp() != null ? " temp=" + req.tempHp() : "")
+                + (req.currentAp() != null ? " AP=" + req.currentAp() : "")
+                + (req.currentMana() != null ? " mana=" + req.currentMana() : ""));
         return buildCombatSnapshot(c);
     }
 

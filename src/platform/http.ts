@@ -2,6 +2,7 @@ import type {
   AbilitiesSnapshot,
   AbilityScore,
   ActionResponse,
+  AuditView,
   BioPatch,
   BioSnapshot,
   CharacterCreatedResponse,
@@ -484,6 +485,11 @@ export function updateBio(playerId: string, patch: BioPatch): Promise<BioSnapsho
 
 export function fetchRoomDeck(room: string): Promise<DeckTemplate> {
   return getJson<DeckTemplate>(`/rooms/${encodeURIComponent(room)}/deck`);
+}
+
+/** The room's activity log, newest first — who did what, when. */
+export function fetchAudit(room: string, limit = 50): Promise<AuditView[]> {
+  return getJson<AuditView[]>(`/rooms/${encodeURIComponent(room)}/audit?limit=${limit}`);
 }
 
 // ── Initiative & turn order ──

@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import { fetchAudit } from '../platform/http';
+import type { AuditView } from '../platform/types';
 import { liveVitalsFromSlice } from '../domain/partyMirror';
 import { titleCase } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
@@ -72,6 +74,65 @@ export function RosterView() {
           );
         })}
       </div>
+
+      <ActivityLog room={roomName} />
     </section>
+  );
+}
+
+/**
+ * The room's audit trail (trusted-table review): every state-changing action —
+ * including a player dismissing one of their own effects — is one line here.
+ */
+function ActivityLog({ room }: { room: string }) {
+  const [open, setOpen] = useState(false);
+  const [entries, setEntries] = useState<AuditView[] | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  async function refresh() {
+    try {
+      setFailed(false);
+      setEntries(await fetchAudit(room));
+    } catch {
+      setFailed(true);
+    }
+  }
+
+  useEffect(() => {
+    if (open) void refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, room]);
+
+  if (!room.trim()) return null;
+
+  return (
+    <div className="audit">
+      <div className="audit-head">
+        <button className="btn btn--ghost" onClick={() => setOpen(!open)}>
+          {open ? '▾ Activity log' : '▸ Activity log'}
+        </button>
+        {open && (
+          <button className="btn btn--ghost" onClick={() => void refresh()}>
+            Refresh
+          </button>
+        )}
+      </div>
+      {open && failed && <p className="inline-error">Could not load the activity log.</p>}
+      {open && entries && entries.length === 0 && <p className="deck-empty">Nothing yet.</p>}
+      {open && entries && entries.length > 0 && (
+        <div className="audit-list">
+          {entries.map((e, i) => (
+            <div className="audit-row" key={i}>
+              <span className="audit-time">
+                {new Date(e.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+              <span className="audit-name">{e.characterName}</span>
+              <span className="audit-summary">{e.summary}</span>
+              <span className="audit-action">{e.action}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

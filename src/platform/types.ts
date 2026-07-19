@@ -179,6 +179,15 @@ export interface EncounterEntryView {
   surprised: boolean;
 }
 
+/** One line of the room's activity log (newest first): who did what, when. */
+export interface AuditView {
+  time: string;
+  playerId: string;
+  characterName: string;
+  action: string;
+  summary: string;
+}
+
 /** A room's turn order. active=false → no encounter running. round 0 = surprise round. */
 export interface EncounterView {
   active: boolean;
