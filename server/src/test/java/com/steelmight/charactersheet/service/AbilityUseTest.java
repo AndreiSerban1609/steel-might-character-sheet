@@ -1,8 +1,11 @@
 package com.steelmight.charactersheet.service;
 
+import com.steelmight.charactersheet.dto.AbilitiesSnapshot;
 import com.steelmight.charactersheet.dto.RestRequest;
 import com.steelmight.charactersheet.dto.UpdateAbilitiesRequest;
+import com.steelmight.charactersheet.dto.UpdateCustomAbilitiesRequest;
 import com.steelmight.charactersheet.dto.UseAbilityRequest;
+import com.steelmight.charactersheet.dto.UseCustomAbilityRequest;
 import com.steelmight.charactersheet.model.*;
 import com.steelmight.charactersheet.repository.CharacterRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,6 +95,33 @@ class AbilityUseTest {
                 .filter(u -> u.abilityId().equals("adrenaline")).findFirst().orElseThrow();
         assertThat(after.perRestRemaining()).isEqualTo(1);
         assertThat(after.perTurnRemaining()).isEqualTo(0);
+    }
+
+    // ── Free-text custom abilities (2026-07-20 Game Owner ruling) ──
+
+    @Test
+    void customAbilitiesRoundTripAndPrintOnUse() {
+        var updated = service.updateCustomAbilities("conq", new UpdateCustomAbilitiesRequest(List.of(
+                new AbilitiesSnapshot.CustomAbilityView("Beast Bond",
+                        "Companion acts on my initiative (AR3 pending)."))));
+        assertThat(updated.custom()).hasSize(1);
+        assertThat(updated.custom().get(0).name()).isEqualTo("Beast Bond");
+
+        // case-insensitive by name; the rules text lands in the log for the table
+        var used = service.useCustomAbility("conq", new UseCustomAbilityRequest("beast bond"));
+        assertThat(used.resolution().getSteps())
+                .anyMatch(s -> s.rule().equals("use-custom-ability")
+                        && s.note().contains("Companion acts on my initiative"));
+
+        assertThatThrownBy(() -> service.useCustomAbility("conq", new UseCustomAbilityRequest("nope")))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("no custom ability named");
+
+        assertThatThrownBy(() -> service.updateCustomAbilities("conq",
+                new UpdateCustomAbilitiesRequest(List.of(
+                        new AbilitiesSnapshot.CustomAbilityView(" ", "x")))))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("needs a name");
     }
 
     // ── Self-effects apply for BOTH resolutions (2026-07-18 fix) ──

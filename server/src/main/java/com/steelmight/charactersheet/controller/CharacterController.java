@@ -282,6 +282,20 @@ public class CharacterController {
         return service.updateKnownAbilities(playerId, req);
     }
 
+    /** Free-text abilities pending official rulings — replace-list semantics. */
+    @PutMapping("/{playerId}/abilities/custom")
+    public AbilitiesSnapshot updateCustomAbilities(@PathVariable String playerId,
+                                                   @RequestBody UpdateCustomAbilitiesRequest req) {
+        return service.updateCustomAbilities(playerId, req);
+    }
+
+    /** Print a free-text ability into the resolution log (table adjudicates). */
+    @PostMapping("/{playerId}/actions/use-custom-ability")
+    public ActionResponse<CombatSnapshot> useCustomAbility(@PathVariable String playerId,
+                                                           @RequestBody UseCustomAbilityRequest req) {
+        return service.useCustomAbility(playerId, req);
+    }
+
     /** Validate → spend costs → resolve (auto) or print the rule (manual). */
     @PostMapping("/{playerId}/actions/use-ability")
     public ActionResponse<CombatSnapshot> useAbility(@PathVariable String playerId,

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import type { Viewport } from '../platform/metadataGateway';
 import { casterTypeOf } from '../domain/spellCatalog';
-import { classHasAbilities } from '../domain/abilityCatalog';
 import { AbilitiesPanel } from './AbilitiesPanel';
 import { StatsPanel } from './StatsPanel';
 import { CombatPanel } from './CombatPanel';
@@ -44,10 +43,10 @@ export function Sheet() {
   const setActiveViewport = useCharacterStore((s) => s.setActiveViewport);
   const [rawTab, setTab] = useState<Tab>('stats');
 
-  // Non-casters have no spellbook; classes without extracted abilities have no Abilities tab.
+  // Non-casters have no spellbook. Abilities shows for EVERY class: even those
+  // without extracted data get the free-text custom section (2026-07-20 ruling).
   const tabs = TABS.filter((t) => {
     if (t.id === 'spells') return !classId || casterTypeOf(classId) !== 'none';
-    if (t.id === 'abilities') return classHasAbilities(classId);
     return true;
   });
   const tab: Tab = tabs.some((t) => t.id === rawTab) ? rawTab : 'stats';

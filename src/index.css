@@ -1072,6 +1072,33 @@ body {
   margin-top: 4px;
 }
 
+.custom-edit {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.custom-edit-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.custom-edit-name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.custom-edit-text {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  font: inherit;
+  font-size: 13px;
+}
+
 .ability-use {
   padding: 2px 12px;
 }

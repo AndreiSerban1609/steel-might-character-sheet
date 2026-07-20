@@ -7,6 +7,7 @@ import type {
   BioSnapshot,
   CharacterCreatedResponse,
   CombatSnapshot,
+  CustomAbilityView,
   DamageTypeId,
   DeckTemplate,
   EncounterView,
@@ -272,6 +273,18 @@ export function updateAbilities(playerId: string, abilityIds: string[]): Promise
   });
 }
 
+/** Replace the free-text ability list (pending-rulings escape hatch, 2026-07-20). */
+export function updateCustomAbilities(
+  playerId: string,
+  abilities: CustomAbilityView[],
+): Promise<AbilitiesSnapshot> {
+  return sendJson<AbilitiesSnapshot>(
+    'PUT',
+    `/characters/${encodeURIComponent(playerId)}/abilities/custom`,
+    { abilities },
+  );
+}
+
 // ── Combat actions (all resolve through the server's rule pipelines) ──
 
 type CombatAction = ActionResponse<CombatSnapshot>;
@@ -307,6 +320,11 @@ export function weaponAttack(playerId: string, itemId?: string): Promise<CombatA
 /** Use a class ability: validate → spend costs → resolve (auto) or print the rule (manual). */
 export function useAbility(playerId: string, abilityId: string): Promise<CombatAction> {
   return combatAction(playerId, 'use-ability', { abilityId });
+}
+
+/** Print a free-text ability into the resolution log — the table adjudicates. */
+export function useCustomAbility(playerId: string, name: string): Promise<CombatAction> {
+  return combatAction(playerId, 'use-custom-ability', { name });
 }
 
 /** Validated spend (M0-D): resource is 'ap' | 'mana' | the class resource type. 400 when insufficient. */

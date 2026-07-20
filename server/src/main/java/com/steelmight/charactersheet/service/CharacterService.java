@@ -658,7 +658,59 @@ public class CharacterService {
                     ? Math.max(0, perTurnMax - (use != null ? use.getUsedThisTurn() : 0)) : null;
             uses.add(new AbilitiesSnapshot.AbilityUseView(id, perRestRemaining, perRestMax, perTurnRemaining, perTurnMax));
         }
-        return new AbilitiesSnapshot(c.getClassId(), known, List.copyOf(c.getKnownAbilities()), uses);
+        var custom = c.getCustomAbilities().stream()
+                .map(a -> new AbilitiesSnapshot.CustomAbilityView(a.getName(), a.getText()))
+                .toList();
+        return new AbilitiesSnapshot(c.getClassId(), known, List.copyOf(c.getKnownAbilities()), uses, custom);
+    }
+
+    /**
+     * Free-text abilities (2026-07-20 Game Owner ruling): until every ability question
+     * is resolved, players write the unresolved ones here verbatim. Replace-list
+     * semantics like the picker; the table adjudicates what they do.
+     */
+    public AbilitiesSnapshot updateCustomAbilities(String playerId, UpdateCustomAbilitiesRequest req) {
+        var c = getCharacter(playerId);
+        var entries = req.abilities() != null ? req.abilities() : List.<AbilitiesSnapshot.CustomAbilityView>of();
+        if (entries.size() > 40) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "too many custom abilities (max 40)");
+        }
+        for (var a : entries) {
+            if (a.name() == null || a.name().isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "every custom ability needs a name");
+            }
+            if (a.name().length() > 100) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "custom ability name too long (max 100)");
+            }
+            if (a.text() != null && a.text().length() > 4000) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "custom ability text too long (max 4000): " + a.name());
+            }
+        }
+        c.getCustomAbilities().clear();
+        for (var a : entries) {
+            c.getCustomAbilities().add(new CustomAbility(a.name().trim(), a.text() != null ? a.text() : ""));
+        }
+        repo.save(c);
+        audit.log(c, "custom-abilities", "Custom ability list updated (" + entries.size() + " entries)");
+        return buildAbilitiesSnapshot(c);
+    }
+
+    /** Print a free-text ability into the resolution log — costs/outcomes are table calls. */
+    public ActionResponse<CombatSnapshot> useCustomAbility(String playerId, UseCustomAbilityRequest req) {
+        var c = getCharacter(playerId);
+        var name = req.name() != null ? req.name().trim() : "";
+        var ability = c.getCustomAbilities().stream()
+                .filter(a -> a.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "no custom ability named: " + name));
+        var result = new ResolutionResult();
+        result.addStep("use-custom-ability", ability.getName()
+                + (ability.getText().isBlank() ? "" : " — " + ability.getText())
+                + " (free-text — the table adjudicates costs and outcomes)", 0, 0);
+        audit.log(c, "use-ability", "Used " + ability.getName() + " (custom)");
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
     /** Free-form picker (Story 1.3 ruling): class + level checks only, no choice-group enforcement. */

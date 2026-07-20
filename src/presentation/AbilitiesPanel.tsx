@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import type { CustomAbilityView } from '../platform/types';
 import {
   abilitiesForClass,
   abilityById,
@@ -21,10 +22,13 @@ export function AbilitiesPanel() {
   const lastResolution = useCharacterStore((s) => s.lastResolution);
   const loadAbilities = useCharacterStore((s) => s.loadAbilities);
   const saveAbilities = useCharacterStore((s) => s.saveAbilities);
+  const saveCustomAbilities = useCharacterStore((s) => s.saveCustomAbilities);
   const doUseAbility = useCharacterStore((s) => s.doUseAbility);
+  const doUseCustomAbility = useCharacterStore((s) => s.doUseCustomAbility);
   const clearResolution = useCharacterStore((s) => s.clearResolution);
 
   const [draft, setDraft] = useState<Set<string> | null>(null);
+  const [customDraft, setCustomDraft] = useState<CustomAbilityView[] | null>(null);
 
   useEffect(() => {
     void loadAbilities();
@@ -34,7 +38,72 @@ export function AbilitiesPanel() {
   if (!abilities) return <div className="panel-msg">Loading abilities…</div>;
 
   const catalog = abilitiesForClass(snapshot.classId);
+  const custom = abilities.custom ?? []; // tolerate an older backend
   const editing = draft !== null;
+
+  // ── Custom editor: free-text abilities until the official rulings land ──
+  if (customDraft !== null) {
+    function setEntry(i: number, patch: Partial<CustomAbilityView>) {
+      setCustomDraft((d) => (d ? d.map((a, idx) => (idx === i ? { ...a, ...patch } : a)) : d));
+    }
+
+    async function saveCustom() {
+      if (!customDraft) return;
+      await saveCustomAbilities(customDraft);
+      if (!useCharacterStore.getState().error) setCustomDraft(null);
+    }
+
+    return (
+      <>
+        <div className="sheet-actionbar">
+          <div className="edit-actions">
+            <button className="btn btn--ghost" onClick={() => setCustomDraft(null)} disabled={saving}>
+              Cancel
+            </button>
+            <button className="btn btn--gold" onClick={() => void saveCustom()} disabled={saving}>
+              {saving ? 'Saving…' : 'Save'}
+            </button>
+          </div>
+        </div>
+        <p className="skills-hint">
+          Write abilities that aren't in the app yet, exactly as they read in your class document.
+          Costs and outcomes are resolved at the table until the official version lands.
+        </p>
+        {error && <p className="inline-error">{error}</p>}
+
+        {customDraft.map((a, i) => (
+          <div className="custom-edit" key={i}>
+            <div className="custom-edit-head">
+              <input
+                className="custom-edit-name"
+                placeholder="Ability name"
+                value={a.name}
+                onChange={(e) => setEntry(i, { name: e.target.value })}
+              />
+              <button
+                className="btn btn--ghost deck-remove"
+                onClick={() => setCustomDraft((d) => (d ? d.filter((_, idx) => idx !== i) : d))}
+              >
+                ×
+              </button>
+            </div>
+            <textarea
+              className="custom-edit-text"
+              placeholder="Rules text — what it does, what it costs, how often…"
+              value={a.text}
+              onChange={(e) => setEntry(i, { text: e.target.value })}
+            />
+          </div>
+        ))}
+        <button
+          className="btn btn--ghost"
+          onClick={() => setCustomDraft((d) => [...(d ?? []), { name: '', text: '' }])}
+        >
+          + Add ability
+        </button>
+      </>
+    );
+  }
 
   // ── Picker (edit mode): choice-group abilities the character may learn ──
   if (editing) {
@@ -112,19 +181,32 @@ export function AbilitiesPanel() {
   const known = abilities.known
     .map((id) => abilityById(id))
     .filter((a): a is AbilityEntry => a !== undefined);
-  const usesById = new Map(abilities.uses.map((u) => [u.abilityId, u]));
+  const usesById = new Map((abilities.uses ?? []).map((u) => [u.abilityId, u]));
 
   return (
     <>
       <div className="sheet-actionbar">
-        <button className="btn btn--ghost" onClick={() => setDraft(new Set(abilities.picked))}>
-          Edit picks
-        </button>
+        <div className="edit-actions">
+          {catalog.length > 0 && (
+            <button className="btn btn--ghost" onClick={() => setDraft(new Set(abilities.picked))}>
+              Edit picks
+            </button>
+          )}
+          <button className="btn btn--ghost" onClick={() => setCustomDraft(custom.map((a) => ({ ...a })))}>
+            Edit custom
+          </button>
+        </div>
       </div>
 
       {error && <p className="inline-error">{error}</p>}
-      {known.length === 0 && (
+      {known.length === 0 && catalog.length > 0 && (
         <p className="panel-msg">No abilities yet — pick your class choices via "Edit picks".</p>
+      )}
+      {catalog.length === 0 && custom.length === 0 && (
+        <p className="panel-msg">
+          This class's abilities aren't in the app yet — use "Edit custom" to write them in
+          free text until the official data lands.
+        </p>
       )}
 
       {KIND_ORDER.map((kind) => {
@@ -202,6 +284,31 @@ export function AbilitiesPanel() {
           </div>
         );
       })}
+
+      {custom.length > 0 && (
+        <div className="ability-group">
+          <h3 className="skills-group-title">
+            <span>Custom — pending rulings</span>
+          </h3>
+          {custom.map((entry) => (
+            <div className="ability-row" key={entry.name}>
+              <div className="ability-row-head">
+                <span className="ability-name">{entry.name}</span>
+                <span className="ability-cost">free-text</span>
+                <button
+                  className="btn btn--gold ability-use"
+                  title="Prints the rules text into the log — the table adjudicates costs and outcomes"
+                  onClick={() => void doUseCustomAbility(entry.name)}
+                  disabled={acting}
+                >
+                  Use
+                </button>
+              </div>
+              <div className="ability-desc">{entry.text}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
     </>

@@ -14,7 +14,10 @@ public record AbilitiesSnapshot(
         List<String> picked,
         // Budget status for limit-bearing known abilities (per-rest/per-turn) — the server
         // computes maxUses formulas (flat or stat-mod-with-min); the frontend only displays.
-        List<AbilityUseView> uses
+        List<AbilityUseView> uses,
+        // Player-written free-text abilities pending official rulings (2026-07-20) —
+        // the table adjudicates costs and outcomes; the sheet stores and prints them.
+        List<CustomAbilityView> custom
 ) {
     /** The perRest / perTurn pair is null when the ability has no limit of that kind. */
     public record AbilityUseView(
@@ -24,4 +27,6 @@ public record AbilitiesSnapshot(
             Integer perTurnRemaining,
             Integer perTurnMax
     ) {}
+
+    public record CustomAbilityView(String name, String text) {}
 }

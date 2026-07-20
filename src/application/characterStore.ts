@@ -6,6 +6,7 @@ import type {
   BioPatch,
   BioSnapshot,
   CombatSnapshot,
+  CustomAbilityView,
   DamageTypeId,
   DeckTemplate,
   EncounterView,
@@ -25,7 +26,9 @@ import {
   combatStart,
   fetchAbilities,
   updateAbilities,
+  updateCustomAbilities,
   useAbility,
+  useCustomAbility,
   createCharacter as apiCreateCharacter,
   encounterNextTurn,
   endEncounter as apiEndEncounter,
@@ -162,7 +165,9 @@ export interface CharacterState {
   doGainResource: (resource: string, amount: number) => Promise<void>;
   loadAbilities: () => Promise<void>;
   saveAbilities: (abilityIds: string[]) => Promise<void>;
+  saveCustomAbilities: (abilities: CustomAbilityView[]) => Promise<void>;
   doUseAbility: (abilityId: string) => Promise<void>;
+  doUseCustomAbility: (name: string) => Promise<void>;
   adoptEncounter: (view: EncounterView) => void;
   loadEncounter: () => Promise<void>;
   startEncounter: (surprisedPlayerIds?: string[]) => Promise<void>;
@@ -528,11 +533,24 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
+  saveCustomAbilities: async (abilities) => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ saving: true, error: null });
+    try {
+      set({ abilities: await updateCustomAbilities(id, abilities), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
   doUseAbility: async (abilityId) => {
     await runCombatAction(set, get, (id) => useAbility(id, abilityId));
     // A use changes the per-rest/per-turn budgets the panel displays.
     if (!get().error) await get().loadAbilities();
   },
+
+  doUseCustomAbility: (name) => runCombatAction(set, get, (id) => useCustomAbility(id, name)),
 
   adoptEncounter: (view) => {
     const prev = get().encounter;

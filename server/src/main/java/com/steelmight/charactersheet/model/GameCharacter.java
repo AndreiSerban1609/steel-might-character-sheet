@@ -154,6 +154,12 @@ public class GameCharacter {
     @Column(name = "ability_id")
     private List<String> knownAbilities = new ArrayList<>();
 
+    /** Player-written free-text abilities pending official rulings (2026-07-20). */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_custom_abilities", joinColumns = @JoinColumn(name = "player_id"))
+    @OrderColumn(name = "idx")
+    private List<CustomAbility> customAbilities = new ArrayList<>();
+
     /** Use counters for limit-bearing abilities (Story 1.4). */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "character_ability_uses", joinColumns = @JoinColumn(name = "player_id"))
@@ -307,6 +313,8 @@ public class GameCharacter {
     }
 
     public List<String> getKnownAbilities() { return knownAbilities; }
+
+    public List<CustomAbility> getCustomAbilities() { return customAbilities; }
 
     public List<AbilityUse> getAbilityUses() { return abilityUses; }
 

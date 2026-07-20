@@ -128,6 +128,12 @@ export interface AbilityUseView {
   perTurnMax: number | null;
 }
 
+/** A player-written free-text ability, pending official rulings (2026-07-20). */
+export interface CustomAbilityView {
+  name: string;
+  text: string;
+}
+
 /** Known class abilities: group-null entries are class-granted; picked = the editable choices. */
 export interface AbilitiesSnapshot {
   classId: string;
@@ -135,6 +141,8 @@ export interface AbilitiesSnapshot {
   picked: string[];
   /** Only abilities that declare per-rest/per-turn limits appear here (server-computed). */
   uses: AbilityUseView[];
+  /** Free-text abilities the player wrote — the table adjudicates costs and outcomes. */
+  custom: CustomAbilityView[];
 }
 
 export interface DeckCard {
