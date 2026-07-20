@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import { resetTableMirror } from '../application/obrBootstrap';
 import { fetchAudit } from '../platform/http';
 import type { AuditView } from '../platform/types';
 import { liveVitalsFromSlice } from '../domain/partyMirror';
@@ -17,6 +16,7 @@ export function RosterView() {
   const loadRoster = useCharacterStore((s) => s.loadRoster);
   const selectPlayer = useCharacterStore((s) => s.selectPlayer);
   const openDeckEditor = useCharacterStore((s) => s.openDeckEditor);
+  const resetTableMirror = useCharacterStore((s) => s.resetTableMirror);
   const [mirrorNote, setMirrorNote] = useState<string | null>(null);
 
   useEffect(() => {

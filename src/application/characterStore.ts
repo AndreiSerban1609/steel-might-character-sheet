@@ -81,7 +81,12 @@ import {
   type VitalsPatch,
 } from '../platform/http';
 import { subscribeConnectivity } from '../platform/http';
-import type { SheetSlice, Viewport } from '../platform/metadataGateway';
+import {
+  clearSheetMetadata,
+  writeViewport,
+  type SheetSlice,
+  type Viewport,
+} from '../platform/metadataGateway';
 
 type View = 'entry' | 'create' | 'roster' | 'sheet' | 'deck';
 type Role = 'player' | 'gm';
@@ -169,6 +174,8 @@ export interface CharacterState {
   doUseAbility: (abilityId: string) => Promise<void>;
   doUseCustomAbility: (name: string) => Promise<void>;
   adoptEncounter: (view: EncounterView) => void;
+  /** Flush all sheet keys from OBR room metadata and re-mirror this client's slice. */
+  resetTableMirror: () => Promise<number>;
   loadEncounter: () => Promise<void>;
   startEncounter: (surprisedPlayerIds?: string[]) => Promise<void>;
   endEncounter: () => Promise<void>;
@@ -562,11 +569,29 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       view.active && !!id && view.currentPlayerId === id && prev?.currentPlayerId !== id;
     if (becameMyTurn && !get().acting) {
       void fetchCombatSnapshot(id).then(
-        (snap) => set({ snapshot: snap }),
+        (snap) => {
+          // Re-check at RESOLVE time: an action fired meanwhile has a fresher
+          // snapshot in its response — a stale fetch must not clobber it.
+          const s = get();
+          if (!s.acting && s.selectedPlayerId === id) set({ snapshot: snap });
+        },
         () => undefined /* best-effort refresh */,
       );
       void get().loadAbilities();
     }
+  },
+
+  resetTableMirror: async () => {
+    // GM escape hatch: flush every sheet key from room metadata, then immediately
+    // re-mirror what this client knows. A live turn order survives the flush;
+    // other players' slices rebuild on their next action.
+    const state = get();
+    const removed = await clearSheetMetadata(state.encounter?.active === true);
+    if (state.selectedPlayerId) {
+      const slice = sliceFor(state, state.activeViewport);
+      if (slice != null) await writeViewport(state.selectedPlayerId, state.activeViewport, slice);
+    }
+    return removed;
   },
 
   loadEncounter: async () => {
@@ -638,6 +663,20 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 subscribeConnectivity((offline) => useCharacterStore.setState({ serverOffline: offline }));
 
 /** Shared shape of every combat action: post, then adopt the returned resolution + snapshot. */
+/** Which slice of state a viewport mirrors — shared by the OBR broadcast and the reset. */
+export function sliceFor(state: CharacterState, viewport: Viewport): unknown {
+  switch (viewport) {
+    case 'combat':
+      return state.snapshot;
+    case 'bio':
+      return state.bio;
+    case 'inventory':
+      return state.inventory;
+    case 'spellbook':
+      return state.spellbook;
+  }
+}
+
 async function runCombatAction(
   set: (partial: Partial<CharacterState>) => void,
   get: () => CharacterState,

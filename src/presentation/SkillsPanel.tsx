@@ -188,6 +188,8 @@ function DrawBanner({
 }) {
   // The d10 is rolled once per check — animate it on a fresh draw only.
   // A redraw swaps the card but the die is already settled.
+  // Fallback for a backend that predates advantage draws (deploy-order skew).
+  const rolls = result.d10Rolls ?? [result.d10];
   const isRedraw = result.redrawsUsed > 0;
   const [rolling, setRolling] = useState(!result.critical && !isRedraw);
   const [revealed, setRevealed] = useState(result.critical || isRedraw);
@@ -233,9 +235,9 @@ function DrawBanner({
         ) : (
           <div className="draw-outcome">
             <span className="draw-dice">
-              {result.d10Rolls.map((roll, i) => {
-                const usedIndex = result.d10Rolls.indexOf(result.d10);
-                const discarded = result.d10Rolls.length > 1 && i !== usedIndex;
+              {rolls.map((roll, i) => {
+                const usedIndex = rolls.indexOf(result.d10);
+                const discarded = rolls.length > 1 && i !== usedIndex;
                 return (
                   <span
                     key={i}

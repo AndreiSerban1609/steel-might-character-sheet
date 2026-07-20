@@ -10,6 +10,7 @@ import com.steelmight.charactersheet.service.CharacterService;
 import com.steelmight.charactersheet.service.DeckTemplateService;
 import com.steelmight.charactersheet.service.EncounterService;
 import jakarta.validation.Valid;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,7 +58,9 @@ public class RoomController {
 
     /** Rolls d20 + DEX mod + initiative bonus per participant and opens the turn order.
      *  Also runs each participant's combat-start pipeline (Q18: AP → starting value),
-     *  then begins the first character's turn — players only ever END turns in combat. */
+     *  then begins the first character's turn — players only ever END turns in combat.
+     *  Transactional: the composition is all-or-nothing (no half-started encounters). */
+    @Transactional
     @PostMapping("/{room}/encounter/start")
     public EncounterView startEncounter(@PathVariable String room,
                                         @RequestBody(required = false) StartEncounterRequest req) {
@@ -75,6 +78,7 @@ public class RoomController {
     }
 
     /** DM override: skip the current turn (AFK player) and advance. */
+    @Transactional
     @PostMapping("/{room}/encounter/next")
     public EncounterView nextTurn(@PathVariable String room) {
         encounterService.forceNext(room);
@@ -85,13 +89,16 @@ public class RoomController {
     /**
      * Turns begin automatically (players only end them). Composed here, like
      * combat-start, to keep EncounterService free of a CharacterService cycle.
+     * Starts only characters that can act — a null status means the character
+     * row is gone (deleted mid-combat) and starting it would 404.
      */
     private void autoStartCurrentTurn(String room) {
         var view = encounterService.get(room);
         if (!view.active() || view.turnStarted() || view.currentPlayerId() == null) return;
-        boolean currentIsDead = view.entries().stream()
-                .anyMatch(e -> e.playerId().equals(view.currentPlayerId()) && "DEAD".equals(e.status()));
-        if (!currentIsDead) characterService.turnStart(view.currentPlayerId());
+        boolean canAct = view.entries().stream()
+                .anyMatch(e -> e.playerId().equals(view.currentPlayerId())
+                        && e.status() != null && !"DEAD".equals(e.status()));
+        if (canAct) characterService.turnStart(view.currentPlayerId());
     }
 
     /** DM override: change a participant's initiative mid-combat. */

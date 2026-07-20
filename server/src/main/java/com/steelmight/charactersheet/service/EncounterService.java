@@ -227,10 +227,12 @@ public class EncounterService {
         enc.setCurrentIndex(next);
     }
 
+    /** DEAD characters are skipped — and so are entries whose character no longer
+     *  exists (deleted mid-combat); landing on one would wedge every turn action. */
     private boolean isDead(String playerId) {
         return characters.findById(playerId)
                 .map(ch -> ch.getLifeStatus() == LifeStatus.DEAD)
-                .orElse(false);
+                .orElse(true);
     }
 
     private List<GameCharacter> resolveParticipants(String room, StartEncounterRequest req) {

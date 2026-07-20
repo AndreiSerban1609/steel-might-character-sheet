@@ -79,7 +79,10 @@ public class DeckTemplateService {
                     blank(c.removal()) ? null : c.removal(), c.consumed()));
         }
         pd.getDisabledEncounters().clear();
-        config.disabledEncounters().stream().filter(i -> i != null).distinct()
+        config.disabledEncounters().stream()
+                .filter(n -> n != null && !n.isBlank())
+                .map(n -> n.trim().toLowerCase())
+                .distinct()
                 .forEach(pd.getDisabledEncounters()::add);
         return toConfig(playerRepo.save(pd));
     }
@@ -154,11 +157,18 @@ public class DeckTemplateService {
         for (int i = 0; i < Math.max(0, statCount); i++) {
             cards.add(new Card(CardType.STAT, "Stat", null, "Your ability shapes the outcome."));
         }
-        var encounters = nullToEmpty(room.encounterCards());
-        for (int i = 0; i < encounters.size(); i++) {
-            if (player != null && player.disabledEncounters().contains(i)) continue; // player opted out
-            var e = encounters.get(i);
-            cards.add(new Card(CardType.ENCOUNTER, blank(e.name()) ? "Encounter" : e.name(), e.modifier(), e.description()));
+        // Normalize here, not just at save time — raw configs must match too.
+        var disabledNames = player == null ? java.util.Set.<String>of()
+                : player.disabledEncounters().stream()
+                        .filter(n -> n != null && !n.isBlank())
+                        .map(n -> n.trim().toLowerCase())
+                        .collect(java.util.stream.Collectors.toSet());
+        for (var e : nullToEmpty(room.encounterCards())) {
+            String name = blank(e.name()) ? "Encounter" : e.name();
+            if (disabledNames.contains(name.toLowerCase())) {
+                continue; // player opted out (matched by card name — stable across GM deck edits)
+            }
+            cards.add(new Card(CardType.ENCOUNTER, name, e.modifier(), e.description()));
         }
         if (player != null) {
             var extras = nullToEmpty(player.extraCards());
@@ -192,8 +202,11 @@ public class DeckTemplateService {
                 throw badRequest("redrawModifier out of range (-20..20)");
             }
         }
-        for (var idx : config.disabledEncounters()) {
-            if (idx != null && (idx < 0 || idx > 100)) throw badRequest("disabledEncounters index out of range");
+        if (config.disabledEncounters().size() > 30) {
+            throw badRequest("too many disabled encounter cards (max 30)");
+        }
+        for (var name : config.disabledEncounters()) {
+            if (name != null && name.length() > 80) throw badRequest("disabled card name too long (max 80)");
         }
     }
 

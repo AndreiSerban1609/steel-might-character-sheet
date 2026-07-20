@@ -121,12 +121,12 @@ class DeckTemplateServiceTest {
                 .isInstanceOf(ResponseStatusException.class);
     }
 
-    // ---- Disabled encounter cards ----
+    // ---- Disabled encounter cards (matched by NAME — stable across GM deck edits) ----
 
     @Test
-    void buildDeckSkipsDisabledEncounterCards() {
+    void buildDeckSkipsDisabledEncounterCardsByNameCaseInsensitively() {
         var room = service.getTemplate("nosuchroom"); // default: 3 encounter (Stumble, Distraction, Bad Luck)
-        var config = new PlayerDeckConfig(0, List.of(), List.of(0, 2));
+        var config = new PlayerDeckConfig(0, List.of(), List.of("Stumble", "bad luck"));
         var deck = service.buildDeck(room, config);
 
         assertThat(deck).hasSize(12); // 14 default - 2 disabled encounters
@@ -136,20 +136,26 @@ class DeckTemplateServiceTest {
     }
 
     @Test
-    void disabledEncountersPersistAndOutOfRangeIndicesAreHarmless() {
-        service.updatePlayerConfig("p1", new PlayerDeckConfig(0, List.of(), List.of(1, 7)));
+    void disabledCardsPersistAndSurviveARoomDeckReshape() {
+        service.updatePlayerConfig("p1", new PlayerDeckConfig(0, List.of(), List.of("Distraction", "No Such Card")));
 
         var config = service.getPlayerConfig("p1");
-        assertThat(config.disabledEncounters()).containsExactlyInAnyOrder(1, 7);
-        // index 7 points past the default room's 3 encounters -> simply no-ops
-        var deck = service.buildDeck(service.getTemplate("nosuchroom"), config);
-        assertThat(deck.stream().filter(c -> c.type() == CardType.ENCOUNTER).count()).isEqualTo(2);
+        assertThat(config.disabledEncounters()).containsExactlyInAnyOrder("distraction", "no such card");
+
+        // the GM reshaping the room deck (new card FIRST) must not shift the opt-out
+        service.updateTemplate("reshape", new DeckTemplate(List.of(), 0, List.of(
+                new DeckCard("Ambush", -2, ""),
+                new DeckCard("Distraction", -1, ""))));
+        var deck = service.buildDeck(service.getTemplate("reshape"), config);
+        var encounters = deck.stream().filter(c -> c.type() == CardType.ENCOUNTER).toList();
+        assertThat(encounters).hasSize(1);
+        assertThat(encounters.get(0).name()).isEqualTo("Ambush"); // Distraction stays disabled
     }
 
     @Test
-    void rejectsNegativeDisabledEncounterIndex() {
+    void rejectsOverlongDisabledCardName() {
         assertThatThrownBy(() -> service.updatePlayerConfig("p1",
-                new PlayerDeckConfig(0, List.of(), List.of(-1))))
+                new PlayerDeckConfig(0, List.of(), List.of("x".repeat(81)))))
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

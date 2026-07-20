@@ -29,6 +29,7 @@ public class AuditEntry {
     private String action;
 
     /** One-line human summary: "Removed burning", "Took 20 SLASHING damage", … */
+    @jakarta.persistence.Column(length = 300) // must fit AuditService.MAX_SUMMARY
     private String summary;
 
     private Instant createdAt;

@@ -4,10 +4,10 @@ import java.util.List;
 
 /**
  * A player's deck customization: a net change to Stat cards, their own extra cards, and
- * room Encounter cards they've opted out of (by index into the room template's list —
- * indices go stale if the GM edits the room deck, trusted-table risk like classCardIndex).
+ * room Encounter cards they've opted out of — matched by card NAME (case-insensitive),
+ * so a GM reshaping the room deck can't silently shift which card is disabled.
  */
-public record PlayerDeckConfig(int statAdjust, List<DeckCard> extraCards, List<Integer> disabledEncounters) {
+public record PlayerDeckConfig(int statAdjust, List<DeckCard> extraCards, List<String> disabledEncounters) {
 
     public PlayerDeckConfig {
         disabledEncounters = disabledEncounters != null ? disabledEncounters : List.of();

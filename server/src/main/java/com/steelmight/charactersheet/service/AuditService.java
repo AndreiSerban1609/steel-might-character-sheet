@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Room activity log. Every state-changing character action records one line —
@@ -26,6 +27,10 @@ public class AuditService {
 
     private final AuditEntryRepository repo;
 
+    /** Pruning is amortized — a COUNT on every single action is wasted work. */
+    private final AtomicLong logCount = new AtomicLong();
+    private static final int PRUNE_EVERY = 50;
+
     public AuditService(AuditEntryRepository repo) {
         this.repo = repo;
     }
@@ -36,7 +41,9 @@ public class AuditService {
         String text = summary != null && summary.length() > MAX_SUMMARY
                 ? summary.substring(0, MAX_SUMMARY - 1) + "…" : summary;
         repo.save(new AuditEntry(c.getRoomName(), c.getPlayerId(), c.getName(), action, text));
-        prune(c.getRoomName());
+        if (logCount.incrementAndGet() % PRUNE_EVERY == 0) {
+            prune(c.getRoomName());
+        }
     }
 
     private void prune(String room) {

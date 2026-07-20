@@ -49,16 +49,19 @@ public class SkillCheckService {
     private final RandomSource random;
     private final DeckTemplateService deckTemplates;
     private final StatDerivationEngine engine;
+    private final AuditService audit;
 
     private final Map<String, DrawSession> sessions = new ConcurrentHashMap<>();
 
     public SkillCheckService(CharacterRepository repo, GameDataProvider gameData, RandomSource random,
-                             DeckTemplateService deckTemplates, StatDerivationEngine engine) {
+                             DeckTemplateService deckTemplates, StatDerivationEngine engine,
+                             AuditService audit) {
         this.repo = repo;
         this.gameData = gameData;
         this.random = random;
         this.deckTemplates = deckTemplates;
         this.engine = engine;
+        this.audit = audit;
     }
 
     /** State of one in-flight skill check. */
@@ -96,7 +99,10 @@ public class SkillCheckService {
      * advantage ("advantage"/"disadvantage"/null) is chosen BEFORE the draw: two d10s are
      * rolled and the higher (advantage) or lower (disadvantage) becomes the check's die —
      * settled once, kept across redraws like a normal roll.
+     * Writable transaction: draws land in the room audit trail (crits and redraw gambles
+     * are exactly the adjudication surface the trail exists for).
      */
+    @Transactional
     public SkillCheckResult draw(String playerId, String skillId, String advantage) {
         GameCharacter c = getCharacter(playerId);
         AbilityScore ability = abilityForSkill(skillId);
@@ -117,7 +123,9 @@ public class SkillCheckService {
                 proficient, deck, redraws);
         sessions.put(playerId, session);
         List<PassedCard> passed = advanceToFinalCard(session);
-        return resolve(session, passed, c);
+        var result = resolve(session, passed, c);
+        audit.log(c, "skill-check", drawSummary("Drew", session, result));
+        return result;
     }
 
     private static String normalizeAdvantage(String advantage) {
@@ -128,7 +136,16 @@ public class SkillCheckService {
                 "advantage must be \"advantage\", \"disadvantage\" or omitted");
     }
 
+    private static String drawSummary(String verb, DrawSession session, SkillCheckResult result) {
+        return verb + " " + session.skillId
+                + (session.advantage != null ? " (" + session.advantage + ")" : "")
+                + ": " + result.card().name()
+                + (result.critical() ? " — GM decides"
+                        : " (d10 " + result.d10() + ", total " + result.total() + ")");
+    }
+
     /** Deck of Fates gamble: forfeit the current card, draw the next; the d10 stays. */
+    @Transactional
     public SkillCheckResult redraw(String playerId) {
         DrawSession session = sessions.get(playerId);
         if (session == null) {
@@ -144,7 +161,10 @@ public class SkillCheckService {
         session.redrawsUsed++;
         session.redrawsRemaining--;
         List<PassedCard> passed = advanceToFinalCard(session);
-        return resolve(session, passed, c);
+        var result = resolve(session, passed, c);
+        audit.log(c, "skill-check", drawSummary("Redrew", session, result)
+                + " [" + result.redrawsRemaining() + " redraws left]");
+        return result;
     }
 
     /**
@@ -160,6 +180,10 @@ public class SkillCheckService {
             return new SkillCheckAccepted(false, null);
         }
         String removal = deckTemplates.applyRemoval(playerId, card.classCardIndex());
+        if (removal != null) {
+            repo.findById(playerId).ifPresent(c -> audit.log(c, "skill-check",
+                    "Card " + ("consume".equals(removal) ? "consumed" : "burned") + ": " + card.name()));
+        }
         return new SkillCheckAccepted(removal != null, removal);
     }
 

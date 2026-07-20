@@ -122,6 +122,14 @@ class AbilityUseTest {
                         new AbilitiesSnapshot.CustomAbilityView(" ", "x")))))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("needs a name");
+
+        // use-by-name would silently pick the first duplicate — rejected up front
+        assertThatThrownBy(() -> service.updateCustomAbilities("conq",
+                new UpdateCustomAbilitiesRequest(List.of(
+                        new AbilitiesSnapshot.CustomAbilityView("Trick", "a"),
+                        new AbilitiesSnapshot.CustomAbilityView("trick", "b")))))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("duplicate custom ability name");
     }
 
     // ── Self-effects apply for BOTH resolutions (2026-07-18 fix) ──

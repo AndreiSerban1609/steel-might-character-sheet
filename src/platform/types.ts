@@ -168,8 +168,8 @@ export interface DeckTemplate {
 export interface PlayerDeckConfig {
   statAdjust: number;
   extraCards: DeckCard[];
-  /** Room Encounter cards this player opted out of, by index into the room template's list. */
-  disabledEncounters: number[];
+  /** Room Encounter cards this player opted out of, by card name (lowercased server-side). */
+  disabledEncounters: string[];
 }
 
 export interface PlayerDeckView {

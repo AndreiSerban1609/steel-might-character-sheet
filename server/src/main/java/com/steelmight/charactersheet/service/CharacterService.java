@@ -493,8 +493,10 @@ public class CharacterService {
         int hpBefore = c.getHp().getCurrent();
         var result = damagePipeline.resolve(event, c);
         repo.save(c);
-        audit.log(c, "damage", req.value() + " " + req.damageType() + " damage (HP "
-                + hpBefore + "→" + c.getHp().getCurrent() + ")");
+        int taken = hpBefore - c.getHp().getCurrent();
+        audit.log(c, "damage", req.value() + " " + req.damageType()
+                + (taken > 0 ? " — " + taken + " HP lost" : " — no HP lost (absorbed/immune)")
+                + " (HP " + hpBefore + "→" + c.getHp().getCurrent() + ")");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -675,6 +677,7 @@ public class CharacterService {
         if (entries.size() > 40) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "too many custom abilities (max 40)");
         }
+        var seenNames = new java.util.HashSet<String>();
         for (var a : entries) {
             if (a.name() == null || a.name().isBlank()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "every custom ability needs a name");
@@ -685,6 +688,11 @@ public class CharacterService {
             if (a.text() != null && a.text().length() > 4000) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "custom ability text too long (max 4000): " + a.name());
+            }
+            // use-by-name would silently pick the first duplicate — reject up front
+            if (!seenNames.add(a.name().trim().toLowerCase())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "duplicate custom ability name: " + a.name().trim());
             }
         }
         c.getCustomAbilities().clear();
@@ -1630,7 +1638,7 @@ public class CharacterService {
         }
 
         repo.save(c);
-        audit.log(c, "weapon-attack", "Attacked with " + entry.getItemId());
+        audit.log(c, "weapon-attack", "Attacked with " + node.path("name").asText(entry.getItemId()));
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1720,8 +1728,11 @@ public class CharacterService {
             result.addStep("turn-order", "Turn passes to " + next.name() + " (round " + next.round() + ")", 0, 0);
             // Players never start turns themselves in combat — the next character's turn
             // begins here (budgets reset, DoT ticks, AP recovery), merged into this log.
-            var nextChar = next.playerId().equals(c.getPlayerId()) ? c : getCharacter(next.playerId());
-            if (nextChar.getLifeStatus() != LifeStatus.DEAD) {
+            // findById, not getCharacter — a deleted character in the order must never
+            // 404 the ENDER's turn (advance() skips missing entries, but belt+braces).
+            var nextChar = next.playerId().equals(c.getPlayerId())
+                    ? c : repo.findById(next.playerId()).orElse(null);
+            if (nextChar != null && nextChar.getLifeStatus() != LifeStatus.DEAD) {
                 boolean apRecovery = encounters.validateAndMarkTurnStart(nextChar);
                 nextChar.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
                 mergeSteps(result, nextChar.getName(), turnTickService.turnStart(nextChar, apRecovery));

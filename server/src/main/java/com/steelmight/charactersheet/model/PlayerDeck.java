@@ -20,11 +20,12 @@ public class PlayerDeck {
     @OrderColumn(name = "idx")
     private List<TemplateCard> extraCards = new ArrayList<>();
 
-    /** Room Encounter cards this player disabled, as indices into the room template's list. */
+    /** Room Encounter cards this player disabled, matched by card NAME (case-insensitive,
+     *  stored lowercased) — indices went stale the moment the GM reshaped the room deck. */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "player_deck_disabled_encounters", joinColumns = @JoinColumn(name = "player_id"))
-    @Column(name = "encounter_idx")
-    private List<Integer> disabledEncounters = new ArrayList<>();
+    @CollectionTable(name = "player_deck_disabled_cards", joinColumns = @JoinColumn(name = "player_id"))
+    @Column(name = "card_name")
+    private List<String> disabledEncounters = new ArrayList<>();
 
     protected PlayerDeck() {}
 
@@ -39,5 +40,5 @@ public class PlayerDeck {
 
     public List<TemplateCard> getExtraCards() { return extraCards; }
 
-    public List<Integer> getDisabledEncounters() { return disabledEncounters; }
+    public List<String> getDisabledEncounters() { return disabledEncounters; }
 }

@@ -1,6 +1,5 @@
 import { getObrIdentity, isObrAvailable, obrReady } from '../platform/obrClient';
 import {
-  clearSheetMetadata,
   INACTIVE_ENCOUNTER,
   readAllViewports,
   readEncounter,
@@ -10,10 +9,9 @@ import {
   writeEncounter,
   writeViewport,
   type SheetSlice,
-  type Viewport,
 } from '../platform/metadataGateway';
 import type { EncounterView } from '../platform/types';
-import { useCharacterStore, type CharacterState } from './characterStore';
+import { sliceFor, useCharacterStore } from './characterStore';
 
 /**
  * OBR-native identity (no email available from the SDK): the backend id scheme is
@@ -55,36 +53,6 @@ export async function bootstrapObr(): Promise<void> {
 }
 
 /**
- * GM escape hatch: flush every sheet key from room metadata and immediately
- * re-mirror what this client knows. A live turn order survives the flush;
- * other players' slices rebuild on their next action. Returns keys removed.
- */
-export async function resetTableMirror(): Promise<number> {
-  const state = useCharacterStore.getState();
-  const removed = await clearSheetMetadata(state.encounter?.active === true);
-  if (state.selectedPlayerId) {
-    const slice = sliceFor(state, state.activeViewport);
-    if (slice != null) {
-      await writeViewport(state.selectedPlayerId, state.activeViewport, slice);
-    }
-  }
-  return removed;
-}
-
-function sliceFor(state: CharacterState, viewport: Viewport): unknown {
-  switch (viewport) {
-    case 'combat':
-      return state.snapshot;
-    case 'bio':
-      return state.bio;
-    case 'inventory':
-      return state.inventory;
-    case 'spellbook':
-      return state.spellbook;
-  }
-}
-
-/**
  * Mirror the active viewport to room metadata whenever it changes. Writes go
  * under the *viewed* character's id, so a GM resolving damage on a player's
  * sheet broadcasts to that player's slice (ARCHITECTURE.md §"DM applies damage").
@@ -101,9 +69,8 @@ function startBroadcastMirror(): void {
       viewport === previous.activeViewport &&
       slice === sliceFor(previous, viewport);
     if (unchanged) return;
-    void writeViewport(playerId, viewport, slice).catch((e) => {
-      console.warn('[sheets] failed to mirror viewport to OBR metadata', e);
-    });
+    // writeViewport never rejects — over-budget writes degrade inside the gateway
+    void writeViewport(playerId, viewport, slice);
   });
 }
 
@@ -133,9 +100,13 @@ function startViewportConsumer(): void {
  */
 function startEncounterSync(): void {
   let lastJson = '';
+  // Only treat an ABSENT key as "combat ended" after we've actually seen the key —
+  // otherwise a metadata change in a never-mirrored room would clobber an active
+  // encounter this client just loaded from the server (the authority).
+  let sawMirroredKey = false;
   const consume = (view: unknown | null): void => {
-    // An absent key means the encounter ended and was deleted (metadata is a
-    // viewport, not a ledger) — adopt the inactive view rather than going stale.
+    if (view === null && !sawMirroredKey) return;
+    if (view !== null) sawMirroredKey = true;
     const effective = view ?? INACTIVE_ENCOUNTER;
     const json = JSON.stringify(effective);
     if (json === lastJson) return;
@@ -152,8 +123,7 @@ function startEncounterSync(): void {
     const json = JSON.stringify(state.encounter);
     if (json === lastJson) return;
     lastJson = json;
-    void writeEncounter(state.encounter).catch((e) => {
-      console.warn('[sheets] failed to mirror encounter to OBR metadata', e);
-    });
+    // writeEncounter never rejects — over-budget writes degrade inside the gateway
+    void writeEncounter(state.encounter);
   });
 }

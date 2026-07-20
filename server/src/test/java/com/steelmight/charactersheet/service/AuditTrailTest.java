@@ -30,6 +30,9 @@ class AuditTrailTest {
     @Autowired
     private AuditEntryRepository auditRepo;
 
+    @Autowired
+    private SkillCheckService skillChecks;
+
     @BeforeEach
     void setUp() {
         auditRepo.deleteAll();
@@ -60,10 +63,19 @@ class AuditTrailTest {
         assertThat(feed.get(0).summary()).isEqualTo("Removed burning");
         assertThat(feed.get(0).characterName()).isEqualTo("Logged");
         assertThat(feed.get(1).action()).isEqualTo("damage");
-        assertThat(feed.get(1).summary()).contains("10 FIRE damage");
+        assertThat(feed.get(1).summary()).contains("10 FIRE").contains("HP lost");
         assertThat(feed.get(2).action()).isEqualTo("apply-effect");
         assertThat(feed.get(2).summary()).isEqualTo("Applied burning ×3");
         assertThat(feed.get(0).time()).isNotNull();
+    }
+
+    @Test
+    void skillDrawsLandInTheFeed() {
+        skillChecks.draw("p1", "stealth");
+
+        var feed = audit.recent("audit-room", 5);
+        assertThat(feed.get(0).action()).isEqualTo("skill-check");
+        assertThat(feed.get(0).summary()).startsWith("Drew stealth");
     }
 
     @Test
@@ -87,14 +99,16 @@ class AuditTrailTest {
     @Test
     void feedIsPrunedOncePastTheCap() {
         var c = repo.findById("p1").orElseThrow();
-        for (int i = 0; i < 420; i++) {
+        for (int i = 0; i < 500; i++) {
             audit.log(c, "test", "entry " + i);
         }
+        // pruning is amortized (every PRUNE_EVERY logs), so the transient bound is
+        // CAP + PRUNE_EVERY; the steady state trims back down to KEEP.
         long count = auditRepo.countByRoomName("audit-room");
-        assertThat(count).isLessThanOrEqualTo(400);
+        assertThat(count).isLessThanOrEqualTo(450);
         // newest entries survive
         List<String> recent = audit.recent("audit-room", 5).stream()
                 .map(a -> a.summary()).toList();
-        assertThat(recent.get(0)).isEqualTo("entry 419");
+        assertThat(recent.get(0)).isEqualTo("entry 499");
     }
 }

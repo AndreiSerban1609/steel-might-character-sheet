@@ -31,16 +31,19 @@ export function PlayerDeckPanel() {
   const baseStat = room.statCount;
   const effStat = Math.max(0, baseStat + draft.statAdjust);
   const liveExtras = draft.extraCards.filter((c) => !c.consumed).length;
+  // Opt-outs match by card NAME (case-insensitive) — stable across GM deck edits.
+  const cardKey = (c: DeckCard) => (c.name || 'Encounter').toLowerCase();
   const disabled = new Set(draft.disabledEncounters);
-  const liveEncounters = room.encounterCards.filter((_, i) => !disabled.has(i)).length;
+  const liveEncounters = room.encounterCards.filter((c) => !disabled.has(cardKey(c))).length;
   const deckSize = 2 + room.neutralCards.length + effStat + liveEncounters + liveExtras;
 
-  function toggleEncounter(i: number) {
+  function toggleEncounter(card: DeckCard) {
     if (!draft) return;
+    const key = cardKey(card);
     const next = new Set(draft.disabledEncounters);
-    if (next.has(i)) next.delete(i);
-    else next.add(i);
-    setDraft({ ...draft, disabledEncounters: [...next].sort((a, b) => a - b) });
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    setDraft({ ...draft, disabledEncounters: [...next].sort() });
   }
 
   function setExtra(i: number, patch: Partial<DeckCard>) {
@@ -106,10 +109,14 @@ export function PlayerDeckPanel() {
         {room.encounterCards.length === 0 && <p className="deck-empty">The GM has none set.</p>}
         {room.encounterCards.map((c, i) => (
           <label
-            className={'deck-encounter-row' + (disabled.has(i) ? ' deck-encounter-row--off' : '')}
+            className={'deck-encounter-row' + (disabled.has(cardKey(c)) ? ' deck-encounter-row--off' : '')}
             key={i}
           >
-            <input type="checkbox" checked={!disabled.has(i)} onChange={() => toggleEncounter(i)} />
+            <input
+              type="checkbox"
+              checked={!disabled.has(cardKey(c))}
+              onChange={() => toggleEncounter(c)}
+            />
             <span className="deck-encounter-name">{c.name || 'Encounter'}</span>
             <span className="deck-encounter-mod">
               {c.modifier > 0 ? `+${c.modifier}` : c.modifier}

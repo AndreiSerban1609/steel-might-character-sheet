@@ -178,6 +178,21 @@ class EncounterServiceTest {
     }
 
     @Test
+    void deletedCharactersAreSkippedInsteadOfWedgingTheTurn() {
+        var view = encounters.start(ROOM, null);
+        String first = view.currentPlayerId();
+        String second = view.entries().get(1).playerId();
+        repo.deleteById(second); // character removed mid-combat, entry remains
+
+        characterService.turnStart(first);
+        characterService.turnEnd(first); // must not 404 — the missing entry is skipped
+
+        assertThat(encounters.get(ROOM).currentPlayerId())
+                .isEqualTo(view.entries().get(2).playerId());
+        assertThat(encounters.get(ROOM).turnStarted()).isTrue();
+    }
+
+    @Test
     void dmCanForceNextAndOverrideInitiative() {
         var view = encounters.start(ROOM, null);
         String first = view.currentPlayerId();
