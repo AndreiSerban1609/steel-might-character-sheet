@@ -470,7 +470,13 @@ export function useConsumable(
  *  when several scrolls of the same kind carry different spells. */
 export function castScroll(
   playerId: string,
-  body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean },
+  body: {
+    itemId: string;
+    tier?: number;
+    spellId?: string;
+    applyEffectsToSelf?: boolean;
+    targetPlayerId?: string;
+  },
 ): Promise<CombatAction> {
   return combatAction(playerId, 'cast-scroll', body);
 }

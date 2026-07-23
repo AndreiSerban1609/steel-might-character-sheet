@@ -1,19 +1,31 @@
 import type { ResolutionResult, RollBreakdown } from '../platform/types';
 import { effectName } from '../domain/combatCatalog';
+import { useCharacterStore } from '../application/characterStore';
 
 /** Step-by-step action resolution + cast payload (dice, DC, pending effects). */
 export function ResolutionLog({
   resolution,
+  targetName,
   onClose,
 }: {
   resolution: ResolutionResult;
+  /** Party member the action targeted, when it wasn't the viewed character. */
+  targetName?: string | null;
   onClose: () => void;
 }) {
+  const roster = useCharacterStore((s) => s.roster);
   const payload = resolution.payload;
+  // The server reports raw player ids — show the character's name when we know it.
+  const appliedToName =
+    payload?.effectsAppliedTo &&
+    (roster.find((r) => r.playerId === payload.effectsAppliedTo)?.name ?? payload.effectsAppliedTo);
   return (
     <div className="combat-log">
       <div className="combat-log-head">
-        <h3 className="combat-section-title">Resolution</h3>
+        <h3 className="combat-section-title">
+          Resolution
+          {targetName && <span className="combat-log-target"> → {targetName}</span>}
+        </h3>
         <button className="btn btn--ghost" onClick={onClose}>
           Clear
         </button>
@@ -105,9 +117,9 @@ export function ResolutionLog({
           </strong>
         </p>
       )}
-      {payload?.effectsAppliedTo && (
+      {appliedToName && (
         <p className="cast-numbers">
-          Effects applied to <strong>{payload.effectsAppliedTo}</strong>
+          Effects applied to <strong>{appliedToName}</strong>
         </p>
       )}
       {payload?.newAbilities && payload.newAbilities.length > 0 && (

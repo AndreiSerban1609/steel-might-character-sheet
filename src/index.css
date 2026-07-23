@@ -1171,6 +1171,94 @@ body {
   margin: 2px 0;
 }
 
+/* ── Party targeting ── */
+
+.combat-form--target {
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  background: #d4af370d;
+}
+
+.combat-target-note {
+  font-size: 0.75rem;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.combat-log-target {
+  color: var(--text-dim);
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+/* ── Table draw toast (someone else's live draw) ── */
+
+.table-draw-toast {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* ≥14px on every side: crit card frames draw jags up to ~9px past the card edge */
+  padding: 14px 30px 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px #000000cc, inset 0 0 22px #d4af3712;
+  max-width: 320px;
+}
+
+.table-draw-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.table-draw-who {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-draw-what {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.table-draw-total {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.table-draw-total strong {
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+.table-draw-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.table-draw-close:hover {
+  color: var(--text);
+}
+
 .card-flip-in {
   animation: cardFlipIn 0.4s ease-out;
 }

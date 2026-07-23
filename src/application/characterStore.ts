@@ -18,6 +18,7 @@ import type {
   RosterEntry,
   SkillCheckResult,
   SpellbookSnapshot,
+  TableDraw,
 } from '../platform/types';
 import {
   applyEffect,
@@ -116,6 +117,8 @@ export interface CharacterState {
   error: string | null;
   drawing: boolean;
   drawResult: SkillCheckResult | null;
+  /** The table's current draw, adopted from room metadata (Deck of Fates-style live draws). */
+  tableDraw: TableDraw | null;
   roomDeck: DeckTemplate | null;
   playerDeck: PlayerDeckView | null;
   inventory: InventorySnapshot | null;
@@ -123,6 +126,8 @@ export interface CharacterState {
   spellbook: SpellbookSnapshot | null;
   acting: boolean;
   lastResolution: ResolutionResult | null;
+  /** Name of the party member the last resolution acted on (null = the viewed character). */
+  lastResolutionTarget: string | null;
   encounter: EncounterView | null;
   abilities: AbilitiesSnapshot | null;
 
@@ -159,11 +164,16 @@ export interface CharacterState {
   doEquip: (body: { itemId: string; tier?: number }) => Promise<void>;
   doUnequip: (body: { itemId: string; tier?: number }) => Promise<void>;
   doUseConsumable: (body: { itemId: string; tier?: number }) => Promise<void>;
-  doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean }) => Promise<void>;
+  doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean; targetPlayerId?: string }) => Promise<void>;
   doLevelUp: (choices: LevelUpChoices) => Promise<void>;
   doWeaponAttack: (itemId?: string) => Promise<void>;
   doDamage: (value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number) => Promise<void>;
   doHeal: (value: number) => Promise<void>;
+  /** Quiet room-roster refresh — feeds the target pickers without touching loading flags. */
+  refreshParty: () => Promise<void>;
+  doTargetedDamage: (targetId: string, value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number) => Promise<void>;
+  doTargetedHeal: (targetId: string, value: number) => Promise<void>;
+  doTargetedApplyEffect: (targetId: string, body: ApplyEffectBody) => Promise<void>;
   doTurnStart: () => Promise<void>;
   doTurnEnd: () => Promise<void>;
   doSpendResource: (resource: string, amount: number) => Promise<void>;
@@ -206,6 +216,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   error: null,
   drawing: false,
   drawResult: null,
+  tableDraw: null,
   roomDeck: null,
   playerDeck: null,
   inventory: null,
@@ -213,6 +224,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   spellbook: null,
   acting: false,
   lastResolution: null,
+  lastResolutionTarget: null,
   encounter: null,
   abilities: null,
 
@@ -231,6 +243,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       const found = await findCharacter(roomName, email);
       if (found) {
         set({ selectedPlayerId: found.playerId, snapshot: found.snapshot, view: 'sheet', loading: false, inventory: null, bio: null, spellbook: null, abilities: null });
+        void get().refreshParty();
       } else {
         set({ view: 'create', loading: false });
       }
@@ -254,6 +267,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     try {
       const created = await apiCreateCharacter({ ...body, roomName, email });
       set({ selectedPlayerId: created.playerId, snapshot: created.snapshot, view: 'sheet', saving: false, inventory: null, bio: null, spellbook: null, abilities: null });
+      void get().refreshParty();
     } catch (e) {
       set({ error: msg(e), saving: false });
     }
@@ -464,12 +478,15 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
-  doCast: (body) => runCombatAction(set, get, (id) => castSpell(id, body)),
+  doCast: async (body) => {
+    await runCombatAction(set, get, (id) => castSpell(id, body));
+    afterTargetedCast(set, get, body.targetPlayerId);
+  },
 
   doPrepareSpells: async (spellIds) => {
     await runCombatAction(set, get, (id) => prepareSpells(id, spellIds));
     // the prepared list lives in the spellbook snapshot, not the combat one
-    await get().loadSpellbook();
+    if (!get().error) await get().loadSpellbook();
   },
 
   doPurchase: (body) => runInventoryAction(set, get, (id) => purchaseItem(id, body)),
@@ -478,32 +495,53 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 
   // equip/unequip/use return a combat snapshot (AC/HP/AP change) — the item
   // flags live in the inventory snapshot, so refresh that too.
+  // The follow-up loads reset `error`, which would wipe the failure message of
+  // the action itself — skip them when it errored (nothing changed server-side).
   doEquip: async (body) => {
     await runCombatAction(set, get, (id) => equipItem(id, body));
-    await get().loadInventory();
+    if (!get().error) await get().loadInventory();
   },
   doUnequip: async (body) => {
     await runCombatAction(set, get, (id) => unequipItem(id, body));
-    await get().loadInventory();
+    if (!get().error) await get().loadInventory();
   },
   doUseConsumable: async (body) => {
     await runCombatAction(set, get, (id) => useConsumable(id, body));
-    await get().loadInventory();
+    if (!get().error) await get().loadInventory();
   },
   doCastScroll: async (body) => {
     await runCombatAction(set, get, (id) => castScroll(id, body));
+    if (get().error) return;
+    afterTargetedCast(set, get, body.targetPlayerId);
     await get().loadInventory();
   },
   doLevelUp: async (choices) => {
     await runCombatAction(set, get, (id) => levelUp(id, choices));
     // known spells changed → the spellbook (if loaded) is stale
-    if (get().spellbook) await get().loadSpellbook();
+    if (!get().error && get().spellbook) await get().loadSpellbook();
   },
 
   doWeaponAttack: (itemId) => runCombatAction(set, get, (id) => weaponAttack(id, itemId)),
   doDamage: (value, damageType, tags, attackerMight) =>
     runCombatAction(set, get, (id) => sendDamage(id, value, damageType, tags, attackerMight)),
   doHeal: (value) => runCombatAction(set, get, (id) => sendHeal(id, value)),
+
+  refreshParty: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    try {
+      set({ roster: await fetchRoster(room) });
+    } catch {
+      /* the party list is an enhancement — keep whatever we had */
+    }
+  },
+
+  doTargetedDamage: (targetId, value, damageType, tags, attackerMight) =>
+    runTargetedCombatAction(set, get, targetId, (id) => sendDamage(id, value, damageType, tags, attackerMight)),
+  doTargetedHeal: (targetId, value) =>
+    runTargetedCombatAction(set, get, targetId, (id) => sendHeal(id, value)),
+  doTargetedApplyEffect: (targetId, body) =>
+    runTargetedCombatAction(set, get, targetId, (id) => applyEffect(id, body)),
   // turn actions move the room's turn order — refresh it alongside the snapshot
   doTurnStart: async () => {
     await runCombatAction(set, get, (id) => turnStart(id));
@@ -656,7 +694,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   doRevive: (body) => runCombatAction(set, get, (id) => revive(id, body)),
   doCombatStart: () => runCombatAction(set, get, (id) => combatStart(id)),
   doRest: (tier) => runCombatAction(set, get, (id) => rest(id, tier)),
-  clearResolution: () => set({ lastResolution: null }),
+  clearResolution: () => set({ lastResolution: null, lastResolutionTarget: null }),
 }));
 
 // The platform layer reports connectivity transitions; the flag drives the offline banner.
@@ -687,7 +725,55 @@ async function runCombatAction(
   set({ acting: true, error: null });
   try {
     const response = await action(id);
-    set({ snapshot: response.snapshot, lastResolution: response.resolution, acting: false });
+    set({ snapshot: response.snapshot, lastResolution: response.resolution, lastResolutionTarget: null, acting: false });
+  } catch (e) {
+    set({ error: msg(e), acting: false });
+  }
+}
+
+/**
+ * Post-cast handling for a party-targeted cast (spell or scroll): the response
+ * snapshot is the CASTER's (they paid the costs), so fetch the target's fresh
+ * state and mirror it so their client picks the applied effects up (no-op
+ * outside OBR), and label the resolution with the target's name.
+ */
+function afterTargetedCast(
+  set: (partial: Partial<CharacterState>) => void,
+  get: () => CharacterState,
+  targetId: string | undefined,
+): void {
+  if (!targetId || get().error || targetId === get().selectedPlayerId) return;
+  const target = get().roster.find((r) => r.playerId === targetId);
+  set({ lastResolutionTarget: target?.name ?? targetId });
+  void fetchCombatSnapshot(targetId).then(
+    (snap) => writeViewport(targetId, 'combat', snap),
+    () => undefined /* mirror is best-effort */,
+  );
+}
+
+/**
+ * Run a combat action against a PARTY MEMBER who is not the viewed character:
+ * the response snapshot belongs to the target, so the local sheet must not
+ * adopt it — show the resolution, and mirror the target's fresh state to their
+ * metadata slice so their client picks it up (no-op outside OBR).
+ */
+async function runTargetedCombatAction(
+  set: (partial: Partial<CharacterState>) => void,
+  get: () => CharacterState,
+  targetId: string,
+  action: (playerId: string) => Promise<ActionResponse<CombatSnapshot>>,
+): Promise<void> {
+  if (targetId === get().selectedPlayerId) return runCombatAction(set, get, action);
+  set({ acting: true, error: null });
+  try {
+    const response = await action(targetId);
+    const target = get().roster.find((r) => r.playerId === targetId);
+    set({
+      lastResolution: response.resolution,
+      lastResolutionTarget: target?.name ?? targetId,
+      acting: false,
+    });
+    void writeViewport(targetId, 'combat', response.snapshot);
   } catch (e) {
     set({ error: msg(e), acting: false });
   }

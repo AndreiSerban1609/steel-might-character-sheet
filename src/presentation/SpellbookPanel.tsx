@@ -25,8 +25,12 @@ export function SpellbookPanel() {
 
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [castLevel, setCastLevel] = useState<number | null>(null);
-  const [selfApply, setSelfApply] = useState(false);
+  // '' = no effects target (DM applies) | 'self' | a party member's playerId
+  const [castTarget, setCastTarget] = useState('');
   const [prepDraft, setPrepDraft] = useState<string[] | null>(null);
+  const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
+  const roster = useCharacterStore((s) => s.roster);
+  const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
 
   useEffect(() => {
     void loadSpellbook();
@@ -51,14 +55,15 @@ export function SpellbookPanel() {
   function toggleExpand(id: string) {
     setExpandedId((cur) => (cur === id ? null : id));
     setCastLevel(null);
-    setSelfApply(false);
+    setCastTarget('');
   }
 
   function submitCast(spell: SpellEntry) {
     void doCast({
       spellId: spell.id,
       castAtLevel: castLevel ?? undefined,
-      applyEffectsToSelf: selfApply || undefined,
+      applyEffectsToSelf: castTarget === 'self' || undefined,
+      targetPlayerId: castTarget && castTarget !== 'self' ? castTarget : undefined,
     });
   }
 
@@ -122,14 +127,21 @@ export function SpellbookPanel() {
                 </select>
               )}
               {spell.effects && spell.effects.length > 0 && (
-                <label className="spell-self">
-                  <input
-                    type="checkbox"
-                    checked={selfApply}
-                    onChange={(e) => setSelfApply(e.target.checked)}
-                  />
-                  apply effects to self
-                </label>
+                <select
+                  value={castTarget}
+                  onChange={(e) => setCastTarget(e.target.value)}
+                  title="Who receives the spell's effects — you pay the costs either way"
+                >
+                  <option value="">effects: DM applies</option>
+                  <option value="self">effects: self</option>
+                  {roster
+                    .filter((r) => r.playerId !== selectedPlayerId)
+                    .map((r) => (
+                      <option key={r.playerId} value={r.playerId}>
+                        effects: {r.name}
+                      </option>
+                    ))}
+                </select>
               )}
               <button className="btn btn--gold" onClick={() => submitCast(spell)} disabled={acting}>
                 Cast
@@ -260,7 +272,13 @@ export function SpellbookPanel() {
         )}
       </div>
 
-      {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
+      {lastResolution && (
+        <ResolutionLog
+          resolution={lastResolution}
+          targetName={lastResolutionTarget}
+          onClose={clearResolution}
+        />
+      )}
     </>
   );
 }

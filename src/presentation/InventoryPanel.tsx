@@ -51,6 +51,7 @@ export function InventoryPanel() {
   const [pick, setPick] = useState('');
   const [readingScroll, setReadingScroll] = useState<string | null>(null);
   const doCastScroll = useCharacterStore((s) => s.doCastScroll);
+  const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
 
   useEffect(() => {
     void loadInventory();
@@ -338,7 +339,13 @@ export function InventoryPanel() {
 
       {!editing && <Shop gold={inventory.gold} acting={acting} onBuy={doPurchase} />}
 
-      {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
+      {lastResolution && (
+        <ResolutionLog
+          resolution={lastResolution}
+          targetName={lastResolutionTarget}
+          onClose={clearResolution}
+        />
+      )}
     </>
   );
 }
@@ -355,9 +362,18 @@ function ScrollReader({
   tier?: number;
   spellId: string;
   acting: boolean;
-  onCast: (body: { itemId: string; tier?: number; spellId: string; applyEffectsToSelf?: boolean }) => void;
+  onCast: (body: {
+    itemId: string;
+    tier?: number;
+    spellId: string;
+    applyEffectsToSelf?: boolean;
+    targetPlayerId?: string;
+  }) => void;
 }) {
-  const [selfApply, setSelfApply] = useState(false);
+  // '' = no effects target (DM applies) | 'self' | a party member's playerId
+  const [castTarget, setCastTarget] = useState('');
+  const roster = useCharacterStore((s) => s.roster);
+  const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
   const spell = useMemo(
     () =>
       spellsForScroll(cat.spellLevel ?? 1, (cat.casterType as 'minor' | 'major') ?? 'major').find(
@@ -374,15 +390,32 @@ function ScrollReader({
       </span>
       <div className="combat-form">
         {spell?.effects && spell.effects.length > 0 && (
-          <label className="spell-self">
-            <input type="checkbox" checked={selfApply} onChange={(e) => setSelfApply(e.target.checked)} />
-            apply effects to self
-          </label>
+          <select
+            value={castTarget}
+            onChange={(e) => setCastTarget(e.target.value)}
+            title="Who receives the scroll's effects — the scroll is consumed either way"
+          >
+            <option value="">effects: DM applies</option>
+            <option value="self">effects: self</option>
+            {roster
+              .filter((r) => r.playerId !== selectedPlayerId)
+              .map((r) => (
+                <option key={r.playerId} value={r.playerId}>
+                  effects: {r.name}
+                </option>
+              ))}
+          </select>
         )}
         <button
           className="btn btn--gold"
           onClick={() =>
-            onCast({ itemId: cat.id, tier, spellId, applyEffectsToSelf: selfApply || undefined })
+            onCast({
+              itemId: cat.id,
+              tier,
+              spellId,
+              applyEffectsToSelf: castTarget === 'self' || undefined,
+              targetPlayerId: castTarget && castTarget !== 'self' ? castTarget : undefined,
+            })
           }
           disabled={acting}
         >

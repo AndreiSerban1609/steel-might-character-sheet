@@ -18,6 +18,7 @@ const KEY_PREFIX = 'com.deckoffates.sheets';
 /** Room-level pseudo-player segment — holds shared state like the encounter. */
 const ROOM_SEGMENT = 'room';
 const ENCOUNTER_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/encounter`;
+const DRAW_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/draw`;
 
 // Budget for a single viewport slice. The room-wide cap is 16 kB shared with the
 // Deck of Fates keys, so anything near this size is already a design problem.
@@ -138,6 +139,41 @@ export async function writeEncounter(view: unknown): Promise<void> {
     return;
   }
   await safeSetMetadata({ [ENCOUNTER_KEY]: view }, 'encounter');
+}
+
+/**
+ * Mirror the table's current skill-check draw under a room-level key so every
+ * client sees it live (one draw at a time — a newer draw overwrites the key).
+ * Passing null deletes the key: the check was accepted or dismissed, and the
+ * mirror never keeps anything past its moment.
+ */
+export async function writeTableDraw(draw: unknown | null): Promise<void> {
+  if (!OBR.isAvailable) return;
+  if (draw == null) {
+    await safeSetMetadata({ [DRAW_KEY]: undefined }, 'draw cleanup');
+    return;
+  }
+  const size = JSON.stringify(draw).length;
+  if (size > MAX_SLICE_CHARS) {
+    console.warn(`[sheets] table draw is ${size} chars — not mirrored`);
+    return;
+  }
+  await safeSetMetadata({ [DRAW_KEY]: draw }, 'table draw');
+}
+
+/** Read the table's mirrored draw, if one is in progress. */
+export async function readTableDraw(): Promise<unknown> {
+  if (!OBR.isAvailable) return null;
+  const metadata = await OBR.room.getMetadata();
+  return metadata[DRAW_KEY] ?? null;
+}
+
+/** Subscribe to the table's mirrored draw; an absent key is delivered as null. */
+export function subscribeTableDraw(handler: (draw: unknown | null) => void): () => void {
+  if (!OBR.isAvailable) return () => {};
+  return OBR.room.onMetadataChange((metadata) => {
+    handler(metadata[DRAW_KEY] ?? null);
+  });
 }
 
 /** Read the mirrored encounter state, if any client has broadcast one. */

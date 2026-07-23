@@ -1,16 +1,20 @@
 import { getObrIdentity, isObrAvailable, obrReady } from '../platform/obrClient';
+import { fetchCombatSnapshot } from '../platform/http';
 import {
   INACTIVE_ENCOUNTER,
   readAllViewports,
   readEncounter,
+  readTableDraw,
   subscribeEncounter,
+  subscribeTableDraw,
   subscribeViewports,
   sweepStaleSlices,
   writeEncounter,
+  writeTableDraw,
   writeViewport,
   type SheetSlice,
 } from '../platform/metadataGateway';
-import type { EncounterView } from '../platform/types';
+import type { EncounterView, TableDraw } from '../platform/types';
 import { sliceFor, useCharacterStore } from './characterStore';
 
 /**
@@ -36,6 +40,7 @@ export async function bootstrapObr(): Promise<void> {
   startBroadcastMirror();
   startViewportConsumer();
   startEncounterSync();
+  startDrawSync();
   useCharacterStore.setState({
     roomName: identity.roomId,
     email: syntheticEmail(identity.playerId),
@@ -87,9 +92,34 @@ function startViewportConsumer(): void {
     if (json === lastJson) return;
     lastJson = json;
     useCharacterStore.setState({ partyViewports: slices });
+    maybeRefreshViewedSheet(slices);
   };
   void readAllViewports().then(adopt);
   subscribeViewports(adopt);
+}
+
+/**
+ * Targeting support: when ANOTHER client acts on the character this client is
+ * viewing (player-to-player damage/heal/effects), the actor mirrors the target's
+ * fresh combat snapshot. Spot the mismatch against our local snapshot and
+ * refetch from the server (the authority) — our own mirror writes echo back
+ * byte-identical and no-op here.
+ */
+function maybeRefreshViewedSheet(slices: Record<string, SheetSlice>): void {
+  const state = useCharacterStore.getState();
+  const id = state.selectedPlayerId;
+  if (!id || state.view !== 'sheet' || state.acting || state.snapshot == null) return;
+  const slice = slices[id];
+  if (!slice || slice.viewport !== 'combat' || slice.data == null) return;
+  if (JSON.stringify(slice.data) === JSON.stringify(state.snapshot)) return;
+  void fetchCombatSnapshot(id).then(
+    (snap) => {
+      // Re-check at resolve time — an action fired meanwhile has fresher state.
+      const s = useCharacterStore.getState();
+      if (!s.acting && s.selectedPlayerId === id) useCharacterStore.setState({ snapshot: snap });
+    },
+    () => undefined /* best-effort refresh */,
+  );
 }
 
 /**
@@ -98,6 +128,53 @@ function startViewportConsumer(): void {
  * broadcasts it; everyone else adopts it from metadata instead of polling.
  * The JSON guard breaks the write→change→write echo loop.
  */
+/**
+ * Live table draws (the "everyone sees the card" DoF behaviour): the drawing
+ * client mirrors each draw/redraw under the room-level draw key; every client
+ * adopts it into `tableDraw`. The drawer's own client renders the full banner
+ * off `drawResult`, so the toast only shows other people's draws.
+ */
+function startDrawSync(): void {
+  let lastJson = '';
+  const consume = (draw: unknown | null): void => {
+    const json = JSON.stringify(draw ?? null);
+    if (json === lastJson) return;
+    lastJson = json;
+    useCharacterStore.setState({ tableDraw: (draw as TableDraw | null) ?? null });
+  };
+  void readTableDraw().then((draw) => {
+    if (draw !== null) consume(draw);
+  });
+  subscribeTableDraw(consume);
+  // Ownership is tracked locally, not via the mirrored key — the metadata echo
+  // of our own write may not have landed yet when a fast draw→dismiss happens.
+  let wroteDrawFor: string | null = null;
+  useCharacterStore.subscribe((state, previous) => {
+    if (state.drawResult === previous.drawResult) return;
+    if (state.drawResult == null) {
+      // Check ended (accept/dismiss/character switch). Clear the table key only
+      // if the mirrored draw is still ours — a concurrent drawer may have
+      // already overwritten it, and their toast must survive our cleanup.
+      if (wroteDrawFor && (state.tableDraw == null || state.tableDraw.playerId === wroteDrawFor)) {
+        void writeTableDraw(null);
+      }
+      wroteDrawFor = null;
+      return;
+    }
+    const id = state.selectedPlayerId;
+    if (!id) return;
+    wroteDrawFor = id;
+    const payload: TableDraw = {
+      playerId: id,
+      playerName: state.snapshot?.name ?? 'Someone',
+      pathId: state.snapshot?.pathId ?? null,
+      result: state.drawResult,
+      at: Date.now(),
+    };
+    void writeTableDraw(payload);
+  });
+}
+
 function startEncounterSync(): void {
   let lastJson = '';
   // Only treat an ABSENT key as "combat ended" after we've actually seen the key —

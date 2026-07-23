@@ -4,6 +4,7 @@ import { CreateView } from './presentation/CreateView';
 import { RosterView } from './presentation/RosterView';
 import { DeckEditor } from './presentation/DeckEditor';
 import { Sheet } from './presentation/Sheet';
+import { TableDrawToast } from './presentation/TableDrawToast';
 
 export function App() {
   const view = useCharacterStore((s) => s.view);
@@ -15,6 +16,7 @@ export function App() {
           Server unreachable — the sheet is read-only until it returns.
         </div>
       )}
+      <TableDrawToast />
       {view === 'entry' && <EntryView />}
       {view === 'create' && <CreateView />}
       {view === 'roster' && <RosterView />}

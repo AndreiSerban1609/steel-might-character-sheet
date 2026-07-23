@@ -17,8 +17,11 @@ export function CombatPanel() {
   const acting = useCharacterStore((s) => s.acting);
   const error = useCharacterStore((s) => s.error);
   const lastResolution = useCharacterStore((s) => s.lastResolution);
-  const doDamage = useCharacterStore((s) => s.doDamage);
-  const doHeal = useCharacterStore((s) => s.doHeal);
+  const doTargetedDamage = useCharacterStore((s) => s.doTargetedDamage);
+  const doTargetedHeal = useCharacterStore((s) => s.doTargetedHeal);
+  const doTargetedApplyEffect = useCharacterStore((s) => s.doTargetedApplyEffect);
+  const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
+  const roster = useCharacterStore((s) => s.roster);
   const doTurnStart = useCharacterStore((s) => s.doTurnStart);
   const doTurnEnd = useCharacterStore((s) => s.doTurnEnd);
   const doSpendResource = useCharacterStore((s) => s.doSpendResource);
@@ -26,7 +29,6 @@ export function CombatPanel() {
   const encounter = useCharacterStore((s) => s.encounter);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
   const role = useCharacterStore((s) => s.role);
-  const doApplyEffect = useCharacterStore((s) => s.doApplyEffect);
   const doRemoveEffect = useCharacterStore((s) => s.doRemoveEffect);
   const doRevive = useCharacterStore((s) => s.doRevive);
   const doCombatStart = useCharacterStore((s) => s.doCombatStart);
@@ -45,11 +47,19 @@ export function CombatPanel() {
   const [fxDuration, setFxDuration] = useState('');
   const [restTier, setRestTier] = useState('100');
   const [resAmount, setResAmount] = useState('1');
+  const [targetId, setTargetId] = useState('');
 
   if (!snapshot) return <div className="panel-msg">No character loaded.</div>;
 
   const hpPct = snapshot.hp.max > 0 ? (snapshot.hp.current / snapshot.hp.max) * 100 : 0;
   const selectedFx = effectOption(fxId);
+
+  // Damage/heal/effects can target any party member (trusted table); everything
+  // else (attack rolls, turns, rest, pools) stays on the viewed character.
+  const party = roster.filter((r) => r.playerId !== selectedPlayerId);
+  const effectiveTarget =
+    targetId && party.some((r) => r.playerId === targetId) ? targetId : selectedPlayerId!;
+  const targetingOther = effectiveTarget !== selectedPlayerId;
 
   // Turn gating mirrors the server rules: turns begin automatically in an encounter
   // (the GM opens combat, ending a turn starts the next), so participants only ever
@@ -63,17 +73,17 @@ export function CombatPanel() {
     const v = parsePositive(dmgValue);
     if (!v) return;
     const might = parsePositive(dmgMight);
-    void doDamage(v, dmgType, undefined, might ?? undefined);
+    void doTargetedDamage(effectiveTarget, v, dmgType, undefined, might ?? undefined);
   }
 
   function submitHeal() {
     const v = parsePositive(healValue);
-    if (v) void doHeal(v);
+    if (v) void doTargetedHeal(effectiveTarget, v);
   }
 
   function submitEffect() {
     if (!fxId) return;
-    void doApplyEffect({
+    void doTargetedApplyEffect(effectiveTarget, {
       effectId: fxId,
       stacks: parsePositive(fxStacks) ?? 1,
       value: parsePositive(fxValue) ?? undefined,
@@ -168,6 +178,29 @@ export function CombatPanel() {
       </div>
 
       <div className="combat-actions">
+        {party.length > 0 && (
+          <div className={targetingOther ? 'combat-form combat-form--target' : 'combat-form'}>
+            <span className="combat-form-label">Target</span>
+            <select
+              value={effectiveTarget === selectedPlayerId ? '' : effectiveTarget}
+              onChange={(e) => setTargetId(e.target.value)}
+              title="Damage, heal, and effects below apply to this character"
+            >
+              <option value="">{snapshot.name} (this sheet)</option>
+              {party.map((r) => (
+                <option key={r.playerId} value={r.playerId}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+            {targetingOther && (
+              <span className="combat-target-note">
+                Damage, heal &amp; effects hit them — their sheet updates live
+              </span>
+            )}
+          </div>
+        )}
+
         {snapshot.equippedWeapons.length > 0 && (
           <div className="combat-form">
             <span className="combat-form-label">Attack</span>
@@ -409,7 +442,13 @@ export function CombatPanel() {
         </div>
       </div>
 
-      {lastResolution && <ResolutionLog resolution={lastResolution} onClose={clearResolution} />}
+      {lastResolution && (
+        <ResolutionLog
+          resolution={lastResolution}
+          targetName={lastResolutionTarget}
+          onClose={clearResolution}
+        />
+      )}
     </>
   );
 }

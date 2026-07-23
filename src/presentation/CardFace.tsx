@@ -25,6 +25,10 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
   const modDisplay = cardModifierDisplay(card);
   const w = size;
   const h = size * 1.45;
+  // The type ramp below is designed for size 200; under ~120px it needs more
+  // height than the card has and the name/description spill past the bottom edge
+  // (overflow must stay visible for the frame protrusions, so nothing clips it).
+  const compact = size < 120;
   const isCrit = card.type === 'STEEL_CRITICAL' || card.type === 'MIGHT_CRITICAL';
   const isSteel = card.type === 'STEEL_CRITICAL';
   const FrameComponent = getFrameComponent(card.type, themeId);
@@ -43,7 +47,7 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
     boxShadow: `0 4px 32px ${theme.glow}, inset 0 1px 0 rgba(255,255,255,0.08)`,
     position: 'relative',
     overflow: 'visible',
-    padding: '16px 12px',
+    padding: compact ? '10px 8px' : '16px 12px',
     animation: isCrit ? `${glowName} 2s ease-in-out infinite` : 'none',
   };
 
@@ -100,11 +104,11 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
           style={{
             background: theme.labelBg,
             borderRadius: 6,
-            padding: '3px 10px',
-            fontSize: 10,
+            padding: compact ? '2px 6px' : '3px 10px',
+            fontSize: compact ? 8 : 10,
             color: theme.accent,
             fontFamily: "'Cinzel', 'Palatino', serif",
-            letterSpacing: 2,
+            letterSpacing: compact ? 1 : 2,
             textTransform: 'uppercase',
             border: `1px solid ${theme.border}44`,
             zIndex: 5,
@@ -113,18 +117,18 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
           {label}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, zIndex: 5 }}>
-          <div style={{ fontSize: isCrit ? 48 : 36, color: theme.accent, textShadow: `0 0 20px ${theme.glow}`, lineHeight: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: compact ? 4 : 6, zIndex: 5 }}>
+          <div style={{ fontSize: isCrit ? (compact ? 30 : 48) : (compact ? 24 : 36), color: theme.accent, textShadow: `0 0 20px ${theme.glow}`, lineHeight: 1 }}>
             {theme.symbol}
           </div>
           <div
             style={{
-              fontSize: isCrit ? 22 : 28,
+              fontSize: isCrit ? (compact ? 14 : 22) : (compact ? 18 : 28),
               fontWeight: 700,
               color: '#fff',
               fontFamily: "'Cinzel', 'Palatino', serif",
               textShadow: `0 0 12px ${theme.glow}`,
-              letterSpacing: isCrit ? 3 : 1,
+              letterSpacing: isCrit ? (compact ? 1 : 3) : 1,
             }}
           >
             {modDisplay}
@@ -134,11 +138,11 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
         <div style={{ textAlign: 'center', zIndex: 5, maxWidth: '100%' }}>
           <div
             style={{
-              fontSize: 13,
+              fontSize: compact ? 11 : 13,
               fontWeight: 600,
               color: theme.accent,
               fontFamily: "'Cinzel', 'Palatino', serif",
-              marginBottom: 2,
+              marginBottom: compact ? 0 : 2,
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -146,7 +150,7 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
           >
             {card.name}
           </div>
-          {!isCrit && card.description && (
+          {!isCrit && !compact && card.description && (
             <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', fontStyle: 'italic', lineHeight: 1.3, maxHeight: 30, overflow: 'hidden' }}>
               {card.description}
             </div>

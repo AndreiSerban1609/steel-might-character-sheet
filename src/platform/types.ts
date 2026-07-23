@@ -119,6 +119,20 @@ export interface SkillCheckAccepted {
   removal: 'consume' | 'burn' | null;
 }
 
+/**
+ * A skill-check draw mirrored to the whole table (room-level metadata key).
+ * The drawing client shows its full banner; everyone else renders this as a toast.
+ */
+export interface TableDraw {
+  playerId: string;
+  playerName: string;
+  /** Path id of the drawer — themes CLASS card art on other clients. */
+  pathId: string | null;
+  result: SkillCheckResult;
+  /** Write timestamp — keys the toast's local dismiss so a new draw re-shows it. */
+  at: number;
+}
+
 /** Per-ability budget status — the null side means "no limit of that kind". */
 export interface AbilityUseView {
   abilityId: string;
