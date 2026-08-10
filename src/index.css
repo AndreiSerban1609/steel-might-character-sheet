@@ -1091,6 +1091,18 @@ body {
   font-weight: 600;
 }
 
+.custom-edit-ap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.custom-edit-ap-num {
+  width: 52px;
+}
+
 .custom-edit-text {
   width: 100%;
   min-height: 72px;

@@ -661,7 +661,7 @@ public class CharacterService {
             uses.add(new AbilitiesSnapshot.AbilityUseView(id, perRestRemaining, perRestMax, perTurnRemaining, perTurnMax));
         }
         var custom = c.getCustomAbilities().stream()
-                .map(a -> new AbilitiesSnapshot.CustomAbilityView(a.getName(), a.getText()))
+                .map(a -> new AbilitiesSnapshot.CustomAbilityView(a.getName(), a.getText(), a.getApCost()))
                 .toList();
         return new AbilitiesSnapshot(c.getClassId(), known, List.copyOf(c.getKnownAbilities()), uses, custom);
     }
@@ -694,17 +694,27 @@ public class CharacterService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "duplicate custom ability name: " + a.name().trim());
             }
+            if (a.apCost() != null && (a.apCost() < 0 || a.apCost() > 30)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "AP cost out of range (0-30): " + a.name().trim());
+            }
         }
         c.getCustomAbilities().clear();
         for (var a : entries) {
-            c.getCustomAbilities().add(new CustomAbility(a.name().trim(), a.text() != null ? a.text() : ""));
+            // 0 AP means "explicitly free" — store as no cost so Use skips the spend step
+            var apCost = a.apCost() != null && a.apCost() > 0 ? a.apCost() : null;
+            c.getCustomAbilities().add(new CustomAbility(a.name().trim(), a.text() != null ? a.text() : "", apCost));
         }
         repo.save(c);
         audit.log(c, "custom-abilities", "Custom ability list updated (" + entries.size() + " entries)");
         return buildAbilitiesSnapshot(c);
     }
 
-    /** Print a free-text ability into the resolution log — costs/outcomes are table calls. */
+    /**
+     * Print a free-text ability into the resolution log. When the player set an AP cost
+     * on it, that cost is validated and spent (M0-D semantics: insufficient → 400, no
+     * partial spend); everything else about the ability is still adjudicated at the table.
+     */
     public ActionResponse<CombatSnapshot> useCustomAbility(String playerId, UseCustomAbilityRequest req) {
         var c = getCharacter(playerId);
         var name = req.name() != null ? req.name().trim() : "";
@@ -714,10 +724,22 @@ public class CharacterService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "no custom ability named: " + name));
         var result = new ResolutionResult();
+        int apCost = ability.getApCost() != null ? ability.getApCost() : 0;
+        if (apCost > 0) {
+            int before = c.getAp().getCurrent();
+            requireSufficient("ap", before, apCost);
+            c.getAp().setCurrent(before - apCost);
+            result.addStep("spend-ap", "Spent " + apCost + " AP on " + ability.getName(),
+                    before, before - apCost);
+            repo.save(c);
+        }
         result.addStep("use-custom-ability", ability.getName()
                 + (ability.getText().isBlank() ? "" : " — " + ability.getText())
-                + " (free-text — the table adjudicates costs and outcomes)", 0, 0);
-        audit.log(c, "use-ability", "Used " + ability.getName() + " (custom)");
+                + (apCost > 0
+                        ? " (free-text — AP spent; the table adjudicates other costs and outcomes)"
+                        : " (free-text — the table adjudicates costs and outcomes)"), 0, 0);
+        audit.log(c, "use-ability", "Used " + ability.getName() + " (custom"
+                + (apCost > 0 ? ", " + apCost + " AP" : "") + ")");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 

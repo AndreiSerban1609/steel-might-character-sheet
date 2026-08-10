@@ -67,7 +67,8 @@ export function AbilitiesPanel() {
         </div>
         <p className="skills-hint">
           Write abilities that aren't in the app yet, exactly as they read in your class document.
-          Costs and outcomes are resolved at the table until the official version lands.
+          Set the AP cost so "Use" spends it for you — everything else is resolved at the table
+          until the official version lands.
         </p>
         {error && <p className="inline-error">{error}</p>}
 
@@ -80,6 +81,21 @@ export function AbilitiesPanel() {
                 value={a.name}
                 onChange={(e) => setEntry(i, { name: e.target.value })}
               />
+              <label className="custom-edit-ap" title="Optional — leave empty if the cost is a table call">
+                AP
+                <input
+                  className="combat-num custom-edit-ap-num"
+                  type="number"
+                  min={0}
+                  max={30}
+                  placeholder="—"
+                  value={a.apCost ?? ''}
+                  onChange={(e) => {
+                    const n = parseInt(e.target.value, 10);
+                    setEntry(i, { apCost: Number.isNaN(n) ? null : n });
+                  }}
+                />
+              </label>
               <button
                 className="btn btn--ghost deck-remove"
                 onClick={() => setCustomDraft((d) => (d ? d.filter((_, idx) => idx !== i) : d))}
@@ -290,23 +306,45 @@ export function AbilitiesPanel() {
           <h3 className="skills-group-title">
             <span>Custom — pending rulings</span>
           </h3>
-          {custom.map((entry) => (
-            <div className="ability-row" key={entry.name}>
-              <div className="ability-row-head">
-                <span className="ability-name">{entry.name}</span>
-                <span className="ability-cost">free-text</span>
-                <button
-                  className="btn btn--gold ability-use"
-                  title="Prints the rules text into the log — the table adjudicates costs and outcomes"
-                  onClick={() => void doUseCustomAbility(entry.name)}
-                  disabled={acting}
-                >
-                  Use
-                </button>
+          {custom.map((entry) => {
+            const apCost = entry.apCost ?? 0;
+            const short = apCost > 0 && apCost > snapshot.ap.current;
+            return (
+              <div className="ability-row" key={entry.name}>
+                <div className="ability-row-head">
+                  <span className="ability-name">{entry.name}</span>
+                  <span className="ability-cost">
+                    {apCost > 0 ? (
+                      <span
+                        className={short ? 'ability-cost-part ability-cost-part--short' : 'ability-cost-part'}
+                        title={`You have ${snapshot.ap.current}`}
+                      >
+                        {apCost} AP
+                      </span>
+                    ) : (
+                      'free-text'
+                    )}
+                  </span>
+                  <button
+                    className="btn btn--gold ability-use"
+                    title={
+                      apCost > 0
+                        ? 'Spends the AP cost; the rules text lands in the log — the table adjudicates the rest'
+                        : 'Prints the rules text into the log — the table adjudicates costs and outcomes'
+                    }
+                    onClick={() => void doUseCustomAbility(entry.name)}
+                    disabled={acting}
+                  >
+                    Use
+                  </button>
+                </div>
+                <div className="ability-desc">{entry.text}</div>
+                {short && (
+                  <div className="ability-short-note">Not enough AP right now — the server will reject the spend.</div>
+                )}
               </div>
-              <div className="ability-desc">{entry.text}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

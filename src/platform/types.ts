@@ -146,6 +146,8 @@ export interface AbilityUseView {
 export interface CustomAbilityView {
   name: string;
   text: string;
+  /** Optional flat AP cost — Use spends it through the validated path; null = table call. */
+  apCost?: number | null;
 }
 
 /** Known class abilities: group-null entries are class-granted; picked = the editable choices. */

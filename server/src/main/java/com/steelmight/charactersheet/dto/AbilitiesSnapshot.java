@@ -28,5 +28,6 @@ public record AbilitiesSnapshot(
             Integer perTurnMax
     ) {}
 
-    public record CustomAbilityView(String name, String text) {}
+    /** apCost is the one structured field — null means the table adjudicates the cost. */
+    public record CustomAbilityView(String name, String text, Integer apCost) {}
 }

@@ -103,7 +103,7 @@ class AbilityUseTest {
     void customAbilitiesRoundTripAndPrintOnUse() {
         var updated = service.updateCustomAbilities("conq", new UpdateCustomAbilitiesRequest(List.of(
                 new AbilitiesSnapshot.CustomAbilityView("Beast Bond",
-                        "Companion acts on my initiative (AR3 pending)."))));
+                        "Companion acts on my initiative (AR3 pending).", null))));
         assertThat(updated.custom()).hasSize(1);
         assertThat(updated.custom().get(0).name()).isEqualTo("Beast Bond");
 
@@ -119,17 +119,53 @@ class AbilityUseTest {
 
         assertThatThrownBy(() -> service.updateCustomAbilities("conq",
                 new UpdateCustomAbilitiesRequest(List.of(
-                        new AbilitiesSnapshot.CustomAbilityView(" ", "x")))))
+                        new AbilitiesSnapshot.CustomAbilityView(" ", "x", null)))))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("needs a name");
 
         // use-by-name would silently pick the first duplicate — rejected up front
         assertThatThrownBy(() -> service.updateCustomAbilities("conq",
                 new UpdateCustomAbilitiesRequest(List.of(
-                        new AbilitiesSnapshot.CustomAbilityView("Trick", "a"),
-                        new AbilitiesSnapshot.CustomAbilityView("trick", "b")))))
+                        new AbilitiesSnapshot.CustomAbilityView("Trick", "a", null),
+                        new AbilitiesSnapshot.CustomAbilityView("trick", "b", null)))))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("duplicate custom ability name");
+    }
+
+    @Test
+    void customAbilityWithApCostSpendsValidatedAp() {
+        service.updateCustomAbilities("conq", new UpdateCustomAbilitiesRequest(List.of(
+                new AbilitiesSnapshot.CustomAbilityView("Shield Slam", "Slam with the shield.", 4),
+                new AbilitiesSnapshot.CustomAbilityView("War Cry", "Shout.", 0))));
+
+        // 0 AP normalizes to "no cost" — Use stays a pure print
+        var snapshot = service.getAbilitiesSnapshot("conq");
+        assertThat(snapshot.custom()).anyMatch(a -> a.name().equals("Shield Slam")
+                && Integer.valueOf(4).equals(a.apCost()));
+        assertThat(snapshot.custom()).anyMatch(a -> a.name().equals("War Cry") && a.apCost() == null);
+
+        // uses spend AP through the validated path (setUp gives 6/6 AP)
+        var used = service.useCustomAbility("conq", new UseCustomAbilityRequest("Shield Slam"));
+        assertThat(used.snapshot().ap().current()).isEqualTo(2);
+        assertThat(used.resolution().getSteps())
+                .anyMatch(s -> s.rule().equals("spend-ap") && s.note().contains("4 AP"));
+        assertThat(repo.findById("conq").orElseThrow().getAp().getCurrent()).isEqualTo(2);
+
+        // insufficient AP → 400, no partial spend
+        assertThatThrownBy(() -> service.useCustomAbility("conq", new UseCustomAbilityRequest("Shield Slam")))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("ap");
+        assertThat(repo.findById("conq").orElseThrow().getAp().getCurrent()).isEqualTo(2);
+
+        // costless custom abilities never touch AP
+        service.useCustomAbility("conq", new UseCustomAbilityRequest("War Cry"));
+        assertThat(repo.findById("conq").orElseThrow().getAp().getCurrent()).isEqualTo(2);
+
+        assertThatThrownBy(() -> service.updateCustomAbilities("conq",
+                new UpdateCustomAbilitiesRequest(List.of(
+                        new AbilitiesSnapshot.CustomAbilityView("Bad", "x", -1)))))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("AP cost out of range");
     }
 
     // ── Self-effects apply for BOTH resolutions (2026-07-18 fix) ──
