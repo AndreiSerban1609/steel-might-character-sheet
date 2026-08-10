@@ -48,7 +48,8 @@ export function RosterView() {
       </div>
 
       <header className="roster-header">
-        <h1 className="roster-title">{roomName || 'Party'} Roster</h1>
+        {/* Inside OBR the "room name" is the opaque room hash — never show it. */}
+        <h1 className="roster-title">{obrMode ? 'Party' : roomName || 'Party'} Roster</h1>
         <p className="roster-sub">
           GM view · {roster.length} character{roster.length === 1 ? '' : 's'}
         </p>
