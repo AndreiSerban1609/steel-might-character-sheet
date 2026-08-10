@@ -257,8 +257,14 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       set({ error: 'Room is required.' });
       return;
     }
-    set({ role: 'gm', view: 'roster' });
-    await get().loadRoster();
+    // Stay on the entry screen until the roster actually loads — jumping to the
+    // roster on a dead server strands the GM with no Server connection field.
+    set({ role: 'gm', loading: true, error: null });
+    try {
+      set({ roster: await fetchRoster(get().roomName), view: 'roster', loading: false });
+    } catch (e) {
+      set({ error: msg(e), loading: false });
+    }
   },
 
   createCharacter: async (body) => {

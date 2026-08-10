@@ -196,6 +196,18 @@ body {
   text-transform: uppercase;
 }
 
+/* Server-connection field embedded in the banner: undo the banner's
+   shouty display styling so the form reads like the entry-screen one. */
+.offline-banner .conn {
+  margin-top: 8px;
+  border-top: 1px solid #c45b4a4d;
+  padding-top: 8px;
+  font-family: 'Crimson Text', serif;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text);
+}
+
 .panel-msg {
   text-align: center;
   padding: 48px 16px;

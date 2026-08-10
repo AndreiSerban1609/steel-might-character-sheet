@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import { getApiBase, setApiBase } from '../platform/http';
+import { ServerConnection } from './ServerConnection';
 
 export function EntryView() {
   const roomName = useCharacterStore((s) => s.roomName);
@@ -14,37 +13,7 @@ export function EntryView() {
   const enterAsPlayer = useCharacterStore((s) => s.enterAsPlayer);
   const enterAsGm = useCharacterStore((s) => s.enterAsGm);
 
-  const [apiInput, setApiInput] = useState(getApiBase());
-  const [apiSaved, setApiSaved] = useState(false);
-
-  function applyApi() {
-    setApiBase(apiInput);
-    setApiInput(getApiBase());
-    setApiSaved(true);
-  }
-
-  const connBox = (
-    <details className="conn">
-      <summary>Server connection</summary>
-      <p className="conn-hint">
-        Running inside Owlbear or against a hosted backend? Paste the backend URL (e.g. your Cloudflare
-        Tunnel URL). Leave as <code>/api</code> for local development.
-      </p>
-      <div className="conn-row">
-        <input
-          value={apiInput}
-          onChange={(e) => {
-            setApiInput(e.target.value);
-            setApiSaved(false);
-          }}
-          placeholder="https://xxxx.trycloudflare.com"
-        />
-        <button className="btn btn--ghost" onClick={applyApi}>
-          {apiSaved ? 'Saved' : 'Apply'}
-        </button>
-      </div>
-    </details>
-  );
+  const connBox = <ServerConnection />;
 
   // Inside Owlbear identity comes from the SDK — no form, just the handshake
   // (and a retry + server field in case the backend is unreachable).

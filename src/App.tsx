@@ -1,5 +1,6 @@
 import { useCharacterStore } from './application/characterStore';
 import { EntryView } from './presentation/EntryView';
+import { ServerConnection } from './presentation/ServerConnection';
 import { CreateView } from './presentation/CreateView';
 import { RosterView } from './presentation/RosterView';
 import { DeckEditor } from './presentation/DeckEditor';
@@ -14,6 +15,7 @@ export function App() {
       {serverOffline && (
         <div className="offline-banner">
           Server unreachable — the sheet is read-only until it returns.
+          {view !== 'entry' && <ServerConnection reloadOnApply />}
         </div>
       )}
       <TableDrawToast />
