@@ -7,6 +7,7 @@ public enum AbsorbMode {
     INSTANCES("instances"),
     TEMP_HP("tempHp"),
     MAGIC_SHIELD("magicShield"),
+    PHYSICAL_SHIELD("physicalShield"),
     PREVENT_LETHAL("preventLethal"),
     PERCENT_CAP("percentCap"),
     PERCENT_CHANCE("percentChance");

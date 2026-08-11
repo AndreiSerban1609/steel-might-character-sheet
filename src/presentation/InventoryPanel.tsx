@@ -8,9 +8,11 @@ import {
   displayPrice,
   displaySellback,
   isEquippable,
+  isProficientWithItem,
   isUsable,
   itemById,
   itemName,
+  proficiencyPenalty,
   usesTierPricing,
   type CatalogItem,
   type ItemKind,
@@ -459,6 +461,8 @@ function Shop({
   const [quantity, setQuantity] = useState(1);
   const [silvered, setSilvered] = useState(false);
   const [scrollSpell, setScrollSpell] = useState('');
+  const classId = useCharacterStore((s) => s.snapshot?.classId ?? null);
+  const pathId = useCharacterStore((s) => s.snapshot?.pathId ?? null);
 
   const options = useMemo(() => ITEM_CATALOG.filter((it) => it.kind === kind), [kind]);
   const item = itemId ? itemById(itemId) : undefined;
@@ -468,6 +472,10 @@ function Shop({
   const addedWeight = item ? round1((item.space ?? 1) * quantity) : null;
   const carryAfter = addedWeight != null ? round1(carriedSpace + addedWeight) : null;
   const overAfter = carryAfter != null && carryAfter > capacity;
+  const notProficient =
+    item != null &&
+    (item.kind === 'weapon' || item.kind === 'armor') &&
+    !isProficientWithItem(classId, pathId, item);
   // scrolls are bought FOR a specific spell ("Scroll of Magic Bolt")
   const scrollSpells = useMemo(
     () =>
@@ -510,6 +518,10 @@ function Shop({
               {it.name}
               {it.kind === 'caster' || it.kind === 'magic' || it.kind === 'scroll' || it.kind === 'general'
                 ? ` · ${displayPrice(it, 1) ?? '?'} g`
+                : ''}
+              {(it.kind === 'weapon' || it.kind === 'armor') &&
+              !isProficientWithItem(classId, pathId, it)
+                ? ' · not proficient'
                 : ''}
             </option>
           ))}
@@ -565,6 +577,11 @@ function Shop({
           Buy{total != null ? ` · ${total} g` : ''}
         </button>
       </div>
+      {notProficient && item && (
+        <p className="spell-prep-count inline-error">
+          ⚠ Not proficient with {item.name} — {proficiencyPenalty(item.kind)}.
+        </p>
+      )}
       {addedWeight != null && (
         <p className={overAfter ? 'spell-prep-count inline-error' : 'spell-prep-count'}>
           Weight +{addedWeight} sl → {carryAfter} / {capacity} sl carried

@@ -15,6 +15,10 @@ import java.util.Map;
  *                           its startingTalent is auto-granted
  * @param skillProficiencies exactly 3 distinct skill ids
  * @param knownSpells        casters: exactly the level-1 allotment (1 spell); others: empty
+ * @param startingWeaponId   optional: one free level-1 weapon, equipped (Game Owner 2026-08-12)
+ * @param startingArmorId    optional: one free level-1 body armor, equipped
+ * @param startingShield     optional: the free level-1 shield, equipped (blocked by a
+ *                           two-handed starting weapon)
  */
 public record CreateCharacterRequest(
         String roomName,
@@ -28,5 +32,8 @@ public record CreateCharacterRequest(
         Map<AbilityScore, Integer> stats,
         Map<AbilityScore, Integer> bonusAllocation,
         List<String> skillProficiencies,
-        List<String> knownSpells
+        List<String> knownSpells,
+        String startingWeaponId,
+        String startingArmorId,
+        Boolean startingShield
 ) {}

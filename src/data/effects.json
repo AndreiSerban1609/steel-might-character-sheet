@@ -1148,7 +1148,21 @@
           "valueFromStacks": true
         }
       ],
-      "description": "Absorbs up to X damage from magical sources before breaking."
+      "description": "Absorbs up to X damage from magical sources before breaking. Physical and true damage bypass it."
+    },
+    {
+      "id": "physical-shield",
+      "name": "Physical Shield",
+      "hasValue": true,
+      "mechanics": [
+        {
+          "type": "damageAbsorb",
+          "mode": "physicalShield",
+          "damageCategory": "physical",
+          "valueFromStacks": true
+        }
+      ],
+      "description": "Absorbs up to X damage from physical sources before breaking. Magical and true damage bypass it."
     },
     {
       "id": "charm-immunity",

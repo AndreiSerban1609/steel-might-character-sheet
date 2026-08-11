@@ -210,11 +210,12 @@ public class EffectApplicationEngine {
         return false;
     }
 
-    /** Shields per the unified shield rule: block, magic-shield, temporary-hp. */
+    /** Shields per the unified shield rule: block, magic/physical shield, temporary-hp. */
     private boolean isShield(EffectDefinition def) {
         return def.mechanicsOfType(MechanicType.DAMAGE_ABSORB).stream()
                 .anyMatch(m -> m.mode() == AbsorbMode.INSTANCES
                         || m.mode() == AbsorbMode.MAGIC_SHIELD
+                        || m.mode() == AbsorbMode.PHYSICAL_SHIELD
                         || m.mode() == AbsorbMode.TEMP_HP);
     }
 

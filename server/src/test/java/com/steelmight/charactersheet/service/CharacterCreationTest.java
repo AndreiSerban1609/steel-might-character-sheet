@@ -53,7 +53,7 @@ class CharacterCreationTest {
                 "human", "wizard", "sorcerer", "study", 1,
                 stats, bonus,
                 List.of("knowledge", "arcana", "investigation"),
-                spells);
+                spells, null, null, null);
     }
 
     private static CreateCharacterRequest validSorcerer() {
@@ -154,7 +154,7 @@ class CharacterCreationTest {
                 statArray(15, 12, 13, 9, 11, 10, 8),
                 Map.of(AbilityScore.STR, 2, AbilityScore.CON, 2, AbilityScore.DEX, 1),
                 List.of("athletics", "intimidation", "survival"),
-                List.of("magic-bolt"))))
+                List.of("magic-bolt"), null, null, null)))
                 .hasMessageContaining("non-casters");
     }
 
@@ -166,7 +166,7 @@ class CharacterCreationTest {
                 statArray(15, 12, 13, 9, 11, 10, 8),
                 Map.of(AbilityScore.STR, 2, AbilityScore.CON, 2, AbilityScore.DEX, 1),
                 List.of("athletics", "intimidation", "survival"),
-                List.of()));
+                List.of(), null, null, null));
 
         var entity = repo.findById(created.playerId()).orElseThrow();
         assertThat(entity.getResource().getType()).isEqualTo("rages");
@@ -175,25 +175,72 @@ class CharacterCreationTest {
         assertThat(entity.getTalents()).containsExactly("blood-rush"); // Berserker's startingTalent
     }
 
+    // Game Owner 2026-08-12: one weapon + one shield + one body armor, free at creation.
+    @Test
+    @org.springframework.transaction.annotation.Transactional
+    void startingEquipmentIsGrantedEquippedAtLevelOne() {
+        var base = validSorcerer();
+        var created = service.createCharacter(new CreateCharacterRequest(
+                base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
+                base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
+                base.skillProficiencies(), base.knownSpells(),
+                "longsword", "light-armor", true));
+
+        var entity = repo.findById(created.playerId()).orElseThrow();
+        assertThat(entity.getInventory())
+                .extracting(e -> e.getItemId())
+                .containsExactlyInAnyOrder("longsword", "light-armor", "shield");
+        assertThat(entity.getInventory())
+                .allSatisfy(e -> {
+                    assertThat(e.isEquipped()).isTrue();
+                    assertThat(e.getUpgradeTier()).isEqualTo(1);
+                });
+    }
+
+    @Test
+    void startingEquipmentRejectsTwoHandedWithShieldAndWrongKinds() {
+        var base = validSorcerer();
+        assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
+                base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
+                base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
+                base.skillProficiencies(), base.knownSpells(),
+                "greatsword", null, true)))
+                .hasMessageContaining("exclude each other");
+
+        assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
+                base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
+                base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
+                base.skillProficiencies(), base.knownSpells(),
+                "light-armor", null, null)))
+                .hasMessageContaining("must be a weapon");
+
+        assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
+                base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
+                base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
+                base.skillProficiencies(), base.knownSpells(),
+                null, "shield", null)))
+                .hasMessageContaining("must be a body armor");
+    }
+
     @Test
     void invalidSpecializationRaceAndSkillsAre400() {
         var base = validSorcerer();
         assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
                 base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
                 base.classId(), "berserker", 1, base.stats(), base.bonusAllocation(),
-                base.skillProficiencies(), base.knownSpells())))
+                base.skillProficiencies(), base.knownSpells(), null, null, null)))
                 .hasMessageContaining("not valid for class");
 
         assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
                 base.roomName(), base.email(), base.name(), "halfling", base.pathId(),
                 base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
-                base.skillProficiencies(), base.knownSpells())))
+                base.skillProficiencies(), base.knownSpells(), null, null, null)))
                 .hasMessageContaining("unknown race");
 
         assertThatThrownBy(() -> service.createCharacter(new CreateCharacterRequest(
                 base.roomName(), base.email(), base.name(), base.raceId(), base.pathId(),
                 base.classId(), base.specializationId(), 1, base.stats(), base.bonusAllocation(),
-                List.of("arcana", "arcana", "knowledge"), base.knownSpells())))
+                List.of("arcana", "arcana", "knowledge"), base.knownSpells(), null, null, null)))
                 .hasMessageContaining("distinct skill");
     }
 }

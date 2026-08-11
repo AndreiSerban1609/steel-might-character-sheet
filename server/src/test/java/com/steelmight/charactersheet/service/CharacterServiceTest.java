@@ -139,7 +139,7 @@ class CharacterServiceTest {
                 stats(9, 12, 13, 11, 10, 15, 8),
                 Map.of(AbilityScore.CHA, 2, AbilityScore.DEX, 2, AbilityScore.CON, 1),
                 List.of("persuasion", "performance", "deception"),
-                List.of("dissonating-song"));
+                List.of("dissonating-song"), null, null, null);
     }
 
     @Test
@@ -168,7 +168,7 @@ class CharacterServiceTest {
                 stats(15, 12, 13, 11, 10, 9, 8),
                 Map.of(AbilityScore.STR, 2, AbilityScore.DEX, 2, AbilityScore.CON, 1),
                 List.of("athletics", "intimidation", "survival"),
-                List.of());
+                List.of(), null, null, null);
         assertThatThrownBy(() -> service.createCharacter(req)).isInstanceOf(ResponseStatusException.class);
     }
 

@@ -9,6 +9,7 @@ import armorRaw from '../data/armor.json';
 import casterRaw from '../data/caster-weapons.json';
 import consumablesRaw from '../data/consumables.json';
 import pricingRaw from '../data/pricing.json';
+import classesRaw from '../data/classes.json';
 
 export type ItemKind = 'weapon' | 'armor' | 'caster' | 'potion' | 'magic' | 'scroll' | 'general';
 
@@ -31,6 +32,12 @@ export interface CatalogItem {
   casterType?: string;
   /** scrolls: minimum character level to read it */
   minCharLevel?: number;
+  /** class/path ids proficient with this item ('all' = everyone); absent = everyone */
+  proficientClasses?: string[];
+  /** armor subtype: 'light' | 'medium' | 'heavy' | 'shield' */
+  armorType?: string;
+  /** weapon properties ('two-handed', 'light', …) */
+  properties?: string[];
 }
 
 interface RawItem {
@@ -45,6 +52,9 @@ interface RawItem {
   spellLevel?: number;
   casterType?: string;
   minCharLevel?: number;
+  proficientClasses?: string[];
+  type?: string;
+  properties?: string[];
 }
 
 function spaceOf(it: RawItem): number {
@@ -67,6 +77,9 @@ function fromArray(arr: unknown, kind: ItemKind): CatalogItem[] {
       spellLevel: it.spellLevel,
       casterType: it.casterType,
       minCharLevel: it.minCharLevel,
+      proficientClasses: it.proficientClasses,
+      armorType: kind === 'armor' ? it.type : undefined,
+      properties: it.properties,
     }));
 }
 
@@ -92,6 +105,38 @@ export const ITEM_CATALOG: CatalogItem[] = [
   ...fromArray(consumables.scrolls, 'scroll'),
   ...fromArray(consumables.generalShop, 'general'),
 ].sort((a, b) => a.name.localeCompare(b.name));
+
+// ── Proficiency (mirror of StatDerivationEngine.isProficientWith, Q30) ──
+
+const PATH_ARMOR_PROFS = new Map(
+  (classesRaw as unknown as { id: string; armorProficiencies?: string[] }[]).map((p) => [
+    p.id,
+    p.armorProficiencies ?? [],
+  ]),
+);
+
+/** proficientClasses mixes class AND path ids; armor also honors the path's
+ *  armorProficiencies. Items without proficiency data count as proficient. */
+export function isProficientWithItem(
+  classId: string | null | undefined,
+  pathId: string | null | undefined,
+  item: CatalogItem,
+): boolean {
+  const profs = item.proficientClasses;
+  if (!profs || profs.length === 0) return true;
+  if (profs.some((p) => p === 'all' || p === classId || p === pathId)) return true;
+  if (item.kind === 'armor' && pathId && (PATH_ARMOR_PROFS.get(pathId) ?? []).includes(item.id)) {
+    return true;
+  }
+  return false;
+}
+
+/** What playing without proficiency costs (EquipmentService.penaltyText, mirrored). */
+export function proficiencyPenalty(kind: ItemKind): string {
+  return kind === 'weapon'
+    ? 'attacks get no proficiency or stat bonus and no weapon properties'
+    : 'cannot cast spells; attacks at disadvantage';
+}
 
 // ── Display pricing (mirror of ShopService.priceOf) ──
 

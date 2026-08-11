@@ -194,6 +194,7 @@ class RestActionsTest {
     }
 
     // Criterion 8 — tier → percent mapping and validation
+    // (Game Owner 2026-08-12: any integer 0-100 is a legal tier; only out-of-range rejects.)
 
     @Nested
     class Tiers {
@@ -205,13 +206,16 @@ class RestActionsTest {
             var snap = service.rest("bard", new RestRequest(25)).snapshot();
             assertThat(snap.hp().current()).isEqualTo(31); // floor(125 × 0.25)
 
-            snap = service.rest("bard", new RestRequest(75)).snapshot();
-            assertThat(snap.hp().current()).isEqualTo(31 + 93); // +floor(125 × 0.75)
+            snap = service.rest("bard", new RestRequest(40)).snapshot(); // free 0-100
+            assertThat(snap.hp().current()).isEqualTo(31 + 50); // +floor(125 × 0.40)
 
             snap = service.rest("bard", null).snapshot(); // omitted → 100%
             assertThat(snap.hp().current()).isEqualTo(125);
 
-            assertThatThrownBy(() -> service.rest("bard", new RestRequest(40)))
+            assertThatThrownBy(() -> service.rest("bard", new RestRequest(101)))
+                    .isInstanceOf(ResponseStatusException.class)
+                    .hasMessageContaining("tier");
+            assertThatThrownBy(() -> service.rest("bard", new RestRequest(-1)))
                     .isInstanceOf(ResponseStatusException.class)
                     .hasMessageContaining("tier");
         }

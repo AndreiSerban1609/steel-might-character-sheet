@@ -237,8 +237,53 @@ public class CharacterService {
             }
         }
 
+        grantStartingEquipment(c, req);
+
         repo.save(c);
         return new CharacterCreatedResponse(id, buildCombatSnapshot(c));
+    }
+
+    /**
+     * Starting equipment (Game Owner 2026-08-12): one weapon, one shield and one
+     * body armor — free, granted at item level 1 and equipped. Each pick is
+     * optional; a two-handed weapon and the shield exclude each other (the same
+     * rule EquipmentService enforces on equip). Non-proficient picks are allowed —
+     * the usual penalties apply at the table.
+     */
+    private void grantStartingEquipment(GameCharacter c, CreateCharacterRequest req) {
+        boolean shield = Boolean.TRUE.equals(req.startingShield());
+
+        if (req.startingWeaponId() != null && !req.startingWeaponId().isBlank()) {
+            var weapon = gameData.findItem(req.startingWeaponId());
+            if (weapon == null || weapon.kind() != com.steelmight.charactersheet.gamedata.ItemKind.WEAPON) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "startingWeaponId must be a weapon: " + req.startingWeaponId());
+            }
+            if (shield && EquipmentService.hasProperty(weapon, "two-handed")) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "a two-handed weapon and a shield exclude each other — pick one");
+            }
+            c.addItem(new InventoryEntry(weapon.id(), 1, 1, true));
+        }
+
+        if (req.startingArmorId() != null && !req.startingArmorId().isBlank()) {
+            var armor = gameData.findItem(req.startingArmorId());
+            if (armor == null || armor.kind() != com.steelmight.charactersheet.gamedata.ItemKind.ARMOR
+                    || EquipmentService.isShield(armor)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "startingArmorId must be a body armor: " + req.startingArmorId());
+            }
+            c.addItem(new InventoryEntry(armor.id(), 1, 1, true));
+        }
+
+        if (shield) {
+            var sh = gameData.findItem("shield");
+            if (sh == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "no shield item exists in the data");
+            }
+            c.addItem(new InventoryEntry(sh.id(), 1, 1, true));
+        }
     }
 
     private com.fasterxml.jackson.databind.JsonNode findRace(String raceId) {
@@ -1842,13 +1887,15 @@ public class CharacterService {
 
     /** Single tiered rest (M3 Part C / Q20): restores p% of HP/mana/class resources,
      *  clears until-rest effects and ALL threshold stacks (N10), resets prepared spells.
-     *  deathStacks and AP are untouched (AP is combat-scoped, Q18). */
+     *  deathStacks and AP are untouched (AP is combat-scoped, Q18).
+     *  Game Owner 2026-08-12: the quality tier is any integer 0-100, player-typed —
+     *  the fixed 25/50/75/100 steps are gone; every p%-scaled formula takes it as-is. */
     public ActionResponse<CombatSnapshot> rest(String playerId, RestRequest req) {
         var c = getCharacter(playerId);
         int tier = req != null && req.tier() != null ? req.tier() : 100;
-        if (tier != 25 && tier != 50 && tier != 75 && tier != 100) {
+        if (tier < 0 || tier > 100) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "tier must be 25, 50, 75 or 100 (got " + tier + ")");
+                    "tier must be between 0 and 100 (got " + tier + ")");
         }
         double p = tier / 100.0;
         var result = new ResolutionResult();

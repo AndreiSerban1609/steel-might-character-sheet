@@ -359,16 +359,23 @@ export function CombatPanel() {
 
         <div className="combat-form">
           <span className="combat-form-label">Rest</span>
-          <select value={restTier} onChange={(e) => setRestTier(e.target.value)}>
-            <option value="25">Poor (25%)</option>
-            <option value="50">Modest (50%)</option>
-            <option value="75">Good (75%)</option>
-            <option value="100">Full (100%)</option>
-          </select>
+          <input
+            className="combat-num"
+            type="number"
+            min={0}
+            max={100}
+            title="Rest quality, 0–100% — restores that share of HP/mana/resources (GM sets the number)"
+            value={restTier}
+            onChange={(e) => setRestTier(e.target.value)}
+          />
+          <span className="combat-form-label">%</span>
           <button
             className="btn btn--gold"
-            title="Restores HP/mana/resources by tier; clears until-rest effects and all accumulated stacks"
-            onClick={() => void doRest(Number.parseInt(restTier, 10))}
+            title="Restores HP/mana/resources by the given %; clears until-rest effects and all accumulated stacks"
+            onClick={() => {
+              const t = Number.parseInt(restTier, 10);
+              if (!Number.isNaN(t)) void doRest(Math.max(0, Math.min(100, t)));
+            }}
             disabled={acting}
           >
             Rest

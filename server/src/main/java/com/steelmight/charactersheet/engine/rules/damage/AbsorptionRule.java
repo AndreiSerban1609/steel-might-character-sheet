@@ -16,7 +16,10 @@ import org.springframework.stereotype.Component;
 /**
  * Absorption chain (M2-A rule 5), in order:
  * 1. Block (mode: instances) — one stack negates the entire damage instance.
- * 2. Magic shield — pool absorbing magical damage only (specific before general).
+ * 2. Typed shields (specific before general, Game Owner 2026-08-12): the magic
+ *    shield absorbs magical damage only, the physical shield physical damage
+ *    only — each is simply bypassed by the other category, and TRUE damage
+ *    bypasses both (only temp HP stands in its way).
  * 3. Temp HP — pool absorbing anything; ActiveEffect.value is the source of truth,
  *    hp.temp mirrors it (M0-A invariant).
  * Absorbed-to-0 damage still "landed" (Q04) — M2-B's trigger stage will care.
@@ -54,11 +57,18 @@ public class AbsorptionRule implements ResolutionRule<DamageEvent> {
             return;
         }
 
-        // 2. Magic shield — magical damage only.
+        // 2. Typed shields — each absorbs only its own damage category.
         if (event.getCategory() == DamageCategory.MAGICAL) {
             for (var hit : absorbs) {
                 if (hit.mechanic().mode() != AbsorbMode.MAGIC_SHIELD) continue;
                 absorbFromPool(event, character, hit.effect(), "magic-shield", false, result);
+                if (event.getValue() <= 0) return;
+            }
+        }
+        if (event.getCategory() == DamageCategory.PHYSICAL) {
+            for (var hit : absorbs) {
+                if (hit.mechanic().mode() != AbsorbMode.PHYSICAL_SHIELD) continue;
+                absorbFromPool(event, character, hit.effect(), "physical-shield", false, result);
                 if (event.getValue() <= 0) return;
             }
         }

@@ -3,6 +3,7 @@ import { useCharacterStore } from '../application/characterStore';
 import { ABILITY_ORDER, ABILITY_LABELS, titleCase } from '../domain/stats';
 import type { AbilityScore } from '../platform/types';
 import { casterTypeOf, spellsForClass } from '../domain/spellCatalog';
+import { ITEM_CATALOG, isProficientWithItem, proficiencyPenalty } from '../domain/itemCatalog';
 import classesRaw from '../data/classes.json';
 import classAbilitiesRaw from '../data/class-abilities.json';
 import racesRaw from '../data/races.json';
@@ -41,6 +42,10 @@ const DEFAULT_ASSIGNMENT: Record<AbilityScore, number> = {
   STR: 15, DEX: 13, CON: 12, INT: 11, WIS: 10, WILL: 9, CHA: 8,
 };
 
+// Starting equipment picks (Game Owner 2026-08-12): one weapon, one shield, one body armor.
+const START_WEAPONS = ITEM_CATALOG.filter((it) => it.kind === 'weapon');
+const START_ARMORS = ITEM_CATALOG.filter((it) => it.kind === 'armor' && it.armorType !== 'shield');
+
 export function CreateView() {
   const roomName = useCharacterStore((s) => s.roomName);
   const email = useCharacterStore((s) => s.email);
@@ -60,6 +65,9 @@ export function CreateView() {
   });
   const [skills, setSkills] = useState<string[]>([]);
   const [spellId, setSpellId] = useState('');
+  const [startWeapon, setStartWeapon] = useState('');
+  const [startArmor, setStartArmor] = useState('');
+  const [startShield, setStartShield] = useState(false);
 
   const path = PATHS.find((p) => p.id === pathId);
   const classSpecs = SPECS[classId] ?? [];
@@ -99,6 +107,24 @@ export function CreateView() {
   const bonusSum = ABILITY_ORDER.reduce((sum, a) => sum + bonus[a], 0);
   const needsSpell = casterType !== 'none';
 
+  const pickedWeapon = START_WEAPONS.find((w) => w.id === startWeapon);
+  const weaponIsTwoHanded = !!pickedWeapon?.properties?.includes('two-handed');
+  const nonProficientPicks = [
+    pickedWeapon,
+    START_ARMORS.find((a) => a.id === startArmor),
+    startShield ? ITEM_CATALOG.find((it) => it.id === 'shield') : undefined,
+  ].filter(
+    (it): it is NonNullable<typeof it> => !!it && !isProficientWithItem(classId, pathId, it),
+  );
+
+  function onStartWeaponChange(id: string) {
+    setStartWeapon(id);
+    // mirror of the server rule: a two-handed weapon and a shield exclude each other
+    if (START_WEAPONS.find((w) => w.id === id)?.properties?.includes('two-handed')) {
+      setStartShield(false);
+    }
+  }
+
   const canCreate =
     name.trim().length > 0 &&
     !!raceId && !!pathId && !!classId &&
@@ -125,6 +151,9 @@ export function CreateView() {
       bonusAllocation,
       skillProficiencies: skills,
       knownSpells: needsSpell ? [spellId] : [],
+      startingWeaponId: startWeapon || undefined,
+      startingArmorId: startArmor || undefined,
+      startingShield: startShield || undefined,
     });
   }
 
@@ -271,6 +300,51 @@ export function CreateView() {
           </select>
         </label>
       )}
+
+      <div className="create-section">
+        <h3 className="combat-section-title">Starting equipment (free, equipped at level 1)</h3>
+        <div className="field-row">
+          <label className="field">
+            <span>Weapon</span>
+            <select value={startWeapon} onChange={(e) => onStartWeaponChange(e.target.value)}>
+              <option value="">None</option>
+              {START_WEAPONS.map((it) => (
+                <option key={it.id} value={it.id}>
+                  {it.name}
+                  {!isProficientWithItem(classId, pathId, it) ? ' · not proficient' : ''}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="field">
+            <span>Armor</span>
+            <select value={startArmor} onChange={(e) => setStartArmor(e.target.value)}>
+              <option value="">None</option>
+              {START_ARMORS.map((it) => (
+                <option key={it.id} value={it.id}>
+                  {it.name}
+                  {!isProficientWithItem(classId, pathId, it) ? ' · not proficient' : ''}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="spell-self" title="Blocked while a two-handed weapon is picked">
+            <input
+              type="checkbox"
+              checked={startShield}
+              disabled={weaponIsTwoHanded}
+              onChange={(e) => setStartShield(e.target.checked)}
+            />
+            Shield{weaponIsTwoHanded ? ' (blocked by two-handed weapon)' : ''}
+          </label>
+        </div>
+        {nonProficientPicks.length > 0 && (
+          <p className="spell-prep-count inline-error">
+            ⚠ Not proficient with {nonProficientPicks.map((it) => it.name).join(', ')}:{' '}
+            {proficiencyPenalty(nonProficientPicks[0].kind)}.
+          </p>
+        )}
+      </div>
 
       <div className="form-actions">
         <button className="btn btn--ghost" onClick={back} disabled={saving}>

@@ -312,6 +312,28 @@ class DamageResolutionPipelineTest {
         }
 
         @Test
+        void physicalShieldIgnoresMagicalAndTrueDamage() {
+            applyEffect("physical-shield", 1, 20);
+
+            pipeline.resolve(event(20, DamageType.FIRE), character);
+            assertThat(character.getHp().getCurrent()).isEqualTo(85); // MA 5, shield untouched
+
+            var shield = character.getActiveEffects().stream()
+                    .filter(e -> e.getEffectId().equals("physical-shield")).findFirst().orElseThrow();
+            assertThat(shield.getValue()).isEqualTo(20);
+
+            pipeline.resolve(event(20, DamageType.SLASHING), character);
+            // 20 - PA 10 = 10 absorbed by the shield → 10 left, HP unchanged.
+            assertThat(character.getHp().getCurrent()).isEqualTo(85);
+            assertThat(shield.getValue()).isEqualTo(10);
+
+            // TRUE damage bypasses both typed shields (Game Owner 2026-08-12).
+            pipeline.resolve(event(5, DamageType.TRUE), character);
+            assertThat(character.getHp().getCurrent()).isEqualTo(80);
+            assertThat(shield.getValue()).isEqualTo(10);
+        }
+
+        @Test
         void damageCapCapsTheEvent() {
             applyEffect("damage-cap", 1, 5);
             var result = pipeline.resolve(event(50, DamageType.TRUE), character);

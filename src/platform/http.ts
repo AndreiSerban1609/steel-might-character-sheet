@@ -192,6 +192,10 @@ export interface CreateCharacterBody {
   skillProficiencies: string[];
   /** casters: exactly 1 level-1 spell; others: empty */
   knownSpells: string[];
+  /** starting equipment (Game Owner 2026-08-12): one free level-1 weapon/armor/shield, equipped */
+  startingWeaponId?: string;
+  startingArmorId?: string;
+  startingShield?: boolean;
 }
 
 async function errText(res: Response, path: string): Promise<string> {

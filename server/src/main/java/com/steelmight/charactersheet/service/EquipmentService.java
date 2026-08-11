@@ -186,7 +186,8 @@ public class EquipmentService {
         return item != null && (item.kind() == ItemKind.WEAPON || item.kind() == ItemKind.CASTER_WEAPON);
     }
 
-    private static boolean isShield(ResolvedItem item) {
+    /** Shields are armor-kind items with type "shield" (also used at creation). */
+    public static boolean isShield(ResolvedItem item) {
         return item != null && item.kind() == ItemKind.ARMOR
                 && "shield".equals(item.node().path("type").asText());
     }
@@ -195,7 +196,7 @@ public class EquipmentService {
         return item != null && item.kind() == ItemKind.WEAPON && hasProperty(item, "light");
     }
 
-    private static boolean hasProperty(ResolvedItem item, String property) {
+    public static boolean hasProperty(ResolvedItem item, String property) {
         for (var p : item.node().path("properties")) {
             if (property.equals(p.asText())) return true;
         }
