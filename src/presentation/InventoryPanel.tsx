@@ -337,7 +337,15 @@ export function InventoryPanel() {
             })}
       </div>
 
-      {!editing && <Shop gold={inventory.gold} acting={acting} onBuy={doPurchase} />}
+      {!editing && (
+        <Shop
+          gold={inventory.gold}
+          carriedSpace={inventory.carriedSpace}
+          capacity={inventory.carryCapacity}
+          acting={acting}
+          onBuy={doPurchase}
+        />
+      )}
 
       {lastResolution && (
         <ResolutionLog
@@ -428,10 +436,14 @@ function ScrollReader({
 
 function Shop({
   gold,
+  carriedSpace,
+  capacity,
   acting,
   onBuy,
 }: {
   gold: number;
+  carriedSpace: number;
+  capacity: number;
   acting: boolean;
   onBuy: (body: {
     itemId: string;
@@ -453,6 +465,9 @@ function Shop({
   const tiered = item ? usesTierPricing(item.kind) : false;
   const unit = item ? displayPrice(item, tier, silvered && item.kind === 'weapon') : null;
   const total = unit != null ? unit * quantity : null;
+  const addedWeight = item ? round1((item.space ?? 1) * quantity) : null;
+  const carryAfter = addedWeight != null ? round1(carriedSpace + addedWeight) : null;
+  const overAfter = carryAfter != null && carryAfter > capacity;
   // scrolls are bought FOR a specific spell ("Scroll of Magic Bolt")
   const scrollSpells = useMemo(
     () =>
@@ -550,6 +565,12 @@ function Shop({
           Buy{total != null ? ` · ${total} g` : ''}
         </button>
       </div>
+      {addedWeight != null && (
+        <p className={overAfter ? 'spell-prep-count inline-error' : 'spell-prep-count'}>
+          Weight +{addedWeight} sl → {carryAfter} / {capacity} sl carried
+          {overAfter && ' — over capacity'}
+        </p>
+      )}
       {total != null && total > gold && (
         <p className="spell-prep-count">Not enough gold ({gold} g on hand).</p>
       )}

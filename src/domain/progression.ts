@@ -113,6 +113,37 @@ export function featOptions(
   return all.filter((f) => !taken.includes(f.slot));
 }
 
+/** Owned-talent lookup: base talents by id, then the spec's additional talents
+ *  (their ids are name slugs — specializations.json has no ids). */
+export function talentInfo(
+  classId: string | null,
+  specializationId: string | null,
+  talentId: string,
+): TalentOption | undefined {
+  const base = talents.find((t) => t.id === talentId);
+  if (base) return { id: base.id, name: base.name, description: base.description };
+  if (!classId) return undefined;
+  return specTalentOptions(classId, specializationId).find((t) => t.id === talentId);
+}
+
+/** Spec feat by its taken slot id ('active' | 'passive' | 'modification'). */
+export function featInfo(
+  classId: string | null,
+  specializationId: string | null,
+  slot: string,
+): FeatOption | undefined {
+  if (!classId) return undefined;
+  const spec = findSpec(classId, specializationId);
+  const src =
+    slot === 'active' ? spec?.active
+    : slot === 'passive' ? spec?.passive
+    : slot === 'modification' ? spec?.modification
+    : undefined;
+  return src
+    ? { slot: slot as FeatOption['slot'], name: src.name, description: src.description }
+    : undefined;
+}
+
 /** Level 17: which of the 2 spec talents are still missing (0 = nothing to do,
  *  1 = auto-granted by the server, 2 = the player must pick one). */
 export function missingSpecTalents(

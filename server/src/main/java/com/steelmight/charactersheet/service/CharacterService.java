@@ -438,6 +438,10 @@ public class CharacterService {
             if (req.gold() < 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "gold must be >= 0");
             }
+            int before = c.getGold();
+            if (req.gold() != before) {
+                audit.log(c, "inventory-edit", "Gold set to " + req.gold() + " (was " + before + ")");
+            }
             c.setGold(req.gold());
         }
 

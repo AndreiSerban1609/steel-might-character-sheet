@@ -18,7 +18,9 @@ const KEY_PREFIX = 'com.deckoffates.sheets';
 /** Room-level pseudo-player segment — holds shared state like the encounter. */
 const ROOM_SEGMENT = 'room';
 const ENCOUNTER_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/encounter`;
-const DRAW_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/draw`;
+/** Pre-2026-08 single-draw key — still read so mid-deploy clients stay visible. */
+const LEGACY_DRAW_KEY = `${KEY_PREFIX}/${ROOM_SEGMENT}/draw`;
+const DRAW_KEY_PREFIX = `${KEY_PREFIX}/${ROOM_SEGMENT}/draw/`;
 
 // Budget for a single viewport slice. The room-wide cap is 16 kB shared with the
 // Deck of Fates keys, so anything near this size is already a design problem.
@@ -142,15 +144,16 @@ export async function writeEncounter(view: unknown): Promise<void> {
 }
 
 /**
- * Mirror the table's current skill-check draw under a room-level key so every
- * client sees it live (one draw at a time — a newer draw overwrites the key).
- * Passing null deletes the key: the check was accepted or dismissed, and the
- * mirror never keeps anything past its moment.
+ * Mirror one character's in-progress skill-check draw under its own key
+ * (`room/draw/{playerId}`), so concurrent draws never overwrite each other.
+ * Passing null deletes that character's key: the check was accepted or
+ * dismissed, and the mirror never keeps anything past its moment.
  */
-export async function writeTableDraw(draw: unknown | null): Promise<void> {
+export async function writeTableDraw(playerId: string, draw: unknown | null): Promise<void> {
   if (!OBR.isAvailable) return;
+  const key = DRAW_KEY_PREFIX + playerId;
   if (draw == null) {
-    await safeSetMetadata({ [DRAW_KEY]: undefined }, 'draw cleanup');
+    await safeSetMetadata({ [key]: undefined }, 'draw cleanup');
     return;
   }
   const size = JSON.stringify(draw).length;
@@ -158,21 +161,36 @@ export async function writeTableDraw(draw: unknown | null): Promise<void> {
     console.warn(`[sheets] table draw is ${size} chars — not mirrored`);
     return;
   }
-  await safeSetMetadata({ [DRAW_KEY]: draw }, 'table draw');
+  await safeSetMetadata({ [key]: draw }, 'table draw');
 }
 
-/** Read the table's mirrored draw, if one is in progress. */
-export async function readTableDraw(): Promise<unknown> {
-  if (!OBR.isAvailable) return null;
-  const metadata = await OBR.room.getMetadata();
-  return metadata[DRAW_KEY] ?? null;
+function tableDrawsFrom(metadata: Record<string, unknown>): Record<string, unknown> {
+  const draws: Record<string, unknown> = {};
+  // A not-yet-updated client may still mirror the old single key; adopt it
+  // under its payload's playerId so mixed-version tables keep seeing draws.
+  const legacy = metadata[LEGACY_DRAW_KEY] as { playerId?: string } | undefined;
+  if (legacy?.playerId) draws[legacy.playerId] = legacy;
+  for (const [key, value] of Object.entries(metadata)) {
+    if (!key.startsWith(DRAW_KEY_PREFIX) || value == null) continue;
+    const playerId = key.slice(DRAW_KEY_PREFIX.length);
+    if (playerId) draws[playerId] = value;
+  }
+  return draws;
 }
 
-/** Subscribe to the table's mirrored draw; an absent key is delivered as null. */
-export function subscribeTableDraw(handler: (draw: unknown | null) => void): () => void {
+/** All mirrored in-progress draws, keyed by the drawing character's player id. */
+export async function readTableDraws(): Promise<Record<string, unknown>> {
+  if (!OBR.isAvailable) return {};
+  return tableDrawsFrom(await OBR.room.getMetadata());
+}
+
+/** Subscribe to the room's mirrored draws; fires with the full record per change. */
+export function subscribeTableDraws(
+  handler: (draws: Record<string, unknown>) => void,
+): () => void {
   if (!OBR.isAvailable) return () => {};
   return OBR.room.onMetadataChange((metadata) => {
-    handler(metadata[DRAW_KEY] ?? null);
+    handler(tableDrawsFrom(metadata));
   });
 }
 

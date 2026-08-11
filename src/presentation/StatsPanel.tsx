@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import { ABILITY_ORDER, ABILITY_LABELS, formatModifier, titleCase } from '../domain/stats';
+import { featInfo, talentInfo } from '../domain/progression';
+import { HoverInfo } from './HoverInfo';
 import type { AbilityScore } from '../platform/types';
 import { LevelUpSection } from './LevelUpSection';
 
@@ -186,6 +188,34 @@ export function StatsPanel() {
           </div>
         ))}
       </div>
+
+      {!editing && (snapshot.talents.length > 0 || snapshot.specFeats.length > 0) && (
+        <>
+          <div className="section-bar">
+            <h2 className="section-title">Talents &amp; Feats</h2>
+          </div>
+          <div className="talent-chips">
+            {snapshot.talents.map((id) => {
+              const t = talentInfo(snapshot.classId, snapshot.specializationId, id);
+              return (
+                <HoverInfo info={t?.description} key={id}>
+                  <span className="talent-chip">{t?.name ?? titleCase(id)}</span>
+                </HoverInfo>
+              );
+            })}
+            {snapshot.specFeats.map((slot) => {
+              const f = featInfo(snapshot.classId, snapshot.specializationId, slot);
+              return (
+                <HoverInfo info={f?.description} key={slot}>
+                  <span className="talent-chip talent-chip--feat">
+                    {f?.name ?? titleCase(slot)}
+                  </span>
+                </HoverInfo>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       {!editing && <LevelUpSection />}
     </>

@@ -10,6 +10,7 @@ import {
   type SpellEntry,
 } from '../domain/spellCatalog';
 import { effectName } from '../domain/combatCatalog';
+import { HoverInfo } from './HoverInfo';
 import { ResolutionLog } from './ResolutionLog';
 
 export function SpellbookPanel() {
@@ -85,7 +86,9 @@ export function SpellbookPanel() {
     return (
       <li className={expanded ? 'spell-row spell-row--open' : 'spell-row'} key={id}>
         <button className="spell-head" onClick={() => toggleExpand(id)}>
-          <span className="spell-name">{spell.name}</span>
+          <HoverInfo info={expanded ? null : spell.description} focusable={false}>
+            <span className="spell-name">{spell.name}</span>
+          </HoverInfo>
           <span className="spell-meta">
             L{spell.level} · {formatCost(spell.apCost, 'AP')} · {formatCost(spell.manaCost, 'mana')}
             {spell.concentration && ' · conc.'}
@@ -259,7 +262,9 @@ export function SpellbookPanel() {
                           )
                         }
                       />
-                      <span className="spell-name">{s.name}</span>
+                      <HoverInfo info={s.description} focusable={false}>
+                        <span className="spell-name">{s.name}</span>
+                      </HoverInfo>
                       <span className="spell-meta">
                         L{s.level} · {formatCost(s.apCost, 'AP')} · {formatCost(s.manaCost, 'mana')}
                       </span>

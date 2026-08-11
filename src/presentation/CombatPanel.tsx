@@ -5,6 +5,7 @@ import { DAMAGE_TYPE_OPTIONS, EFFECT_OPTIONS, effectName, effectOption } from '.
 import { itemName } from '../domain/itemCatalog';
 import { camelToWords } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
+import { HoverInfo } from './HoverInfo';
 import { ResolutionLog } from './ResolutionLog';
 
 function parsePositive(v: string): number | null {
@@ -424,7 +425,9 @@ export function CombatPanel() {
         <div className="combat-effect-list">
           {snapshot.activeEffects.map((e, i) => (
             <span className="combat-effect" key={`${e.id}-${i}`}>
-              <span className="combat-effect-name">{effectName(e.id)}</span>
+              <HoverInfo info={effectOption(e.id)?.description}>
+                <span className="combat-effect-name">{effectName(e.id)}</span>
+              </HoverInfo>
               {e.stacks > 1 && <span className="combat-effect-meta">×{e.stacks}</span>}
               {e.stacks === 1 && <span className="combat-effect-meta">×1</span>}
               {e.value != null && <span className="combat-effect-meta">({e.value})</span>}

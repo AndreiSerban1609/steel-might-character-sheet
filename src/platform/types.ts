@@ -192,6 +192,8 @@ export interface PlayerDeckView {
   room: DeckTemplate;
   config: PlayerDeckConfig;
   deckSize: number;
+  /** The full effective deck, build order (draws shuffle; consumed/burned excluded). */
+  cards: Card[];
 }
 
 export interface EncounterEntryView {

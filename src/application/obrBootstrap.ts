@@ -4,9 +4,9 @@ import {
   INACTIVE_ENCOUNTER,
   readAllViewports,
   readEncounter,
-  readTableDraw,
+  readTableDraws,
   subscribeEncounter,
-  subscribeTableDraw,
+  subscribeTableDraws,
   subscribeViewports,
   sweepStaleSlices,
   writeEncounter,
@@ -130,34 +130,34 @@ function maybeRefreshViewedSheet(slices: Record<string, SheetSlice>): void {
  */
 /**
  * Live table draws (the "everyone sees the card" DoF behaviour): the drawing
- * client mirrors each draw/redraw under the room-level draw key; every client
- * adopts it into `tableDraw`. The drawer's own client renders the full banner
- * off `drawResult`, so the toast only shows other people's draws.
+ * client mirrors each draw/redraw under a PER-CHARACTER draw key, so two
+ * simultaneous checks never overwrite each other; every client adopts the full
+ * record into `tableDraws`. The drawer's own client renders the full banner
+ * off `drawResult`, so toasts only show other people's draws. A check the GM
+ * started hidden is never mirrored at all — the audit trail still has it.
  */
 function startDrawSync(): void {
   let lastJson = '';
-  const consume = (draw: unknown | null): void => {
-    const json = JSON.stringify(draw ?? null);
+  const consume = (draws: Record<string, unknown>): void => {
+    const json = JSON.stringify(draws);
     if (json === lastJson) return;
     lastJson = json;
-    useCharacterStore.setState({ tableDraw: (draw as TableDraw | null) ?? null });
+    useCharacterStore.setState({ tableDraws: draws as Record<string, TableDraw> });
   };
-  void readTableDraw().then((draw) => {
-    if (draw !== null) consume(draw);
+  void readTableDraws().then((draws) => {
+    if (Object.keys(draws).length > 0) consume(draws);
   });
-  subscribeTableDraw(consume);
+  subscribeTableDraws(consume);
   // Ownership is tracked locally, not via the mirrored key — the metadata echo
   // of our own write may not have landed yet when a fast draw→dismiss happens.
   let wroteDrawFor: string | null = null;
   useCharacterStore.subscribe((state, previous) => {
     if (state.drawResult === previous.drawResult) return;
-    if (state.drawResult == null) {
-      // Check ended (accept/dismiss/character switch). Clear the table key only
-      // if the mirrored draw is still ours — a concurrent drawer may have
-      // already overwritten it, and their toast must survive our cleanup.
-      if (wroteDrawFor && (state.tableDraw == null || state.tableDraw.playerId === wroteDrawFor)) {
-        void writeTableDraw(null);
-      }
+    if (state.drawResult == null || state.drawWasHidden) {
+      // Check ended (accept/dismiss/character switch) or went hidden: clear
+      // the key we own, if any. Keys are per-character, so this cannot step
+      // on another player's concurrent draw.
+      if (wroteDrawFor) void writeTableDraw(wroteDrawFor, null);
       wroteDrawFor = null;
       return;
     }
@@ -171,7 +171,7 @@ function startDrawSync(): void {
       result: state.drawResult,
       at: Date.now(),
     };
-    void writeTableDraw(payload);
+    void writeTableDraw(id, payload);
   });
 }
 

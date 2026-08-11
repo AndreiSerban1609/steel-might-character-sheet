@@ -21,7 +21,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'skills', label: 'Skills' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'bio', label: 'Bio' },
-  { id: 'deck', label: 'Deck' },
+  { id: 'deck', label: 'Skill Deck' },
 ];
 
 /** Which snapshot slice each tab mirrors to OBR metadata. */

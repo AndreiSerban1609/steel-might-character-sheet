@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
 import type { DeckCard, PlayerDeckConfig } from '../platform/types';
+import { CardFace } from './CardFace';
 import skillsRaw from '../data/skills.json';
 
 const SKILLS = skillsRaw as unknown as { id: string; name: string }[];
@@ -11,6 +12,7 @@ function clamp(v: number, lo: number, hi: number): number {
 
 export function PlayerDeckPanel() {
   const playerDeck = useCharacterStore((s) => s.playerDeck);
+  const pathId = useCharacterStore((s) => s.snapshot?.pathId);
   const saving = useCharacterStore((s) => s.saving);
   const error = useCharacterStore((s) => s.error);
   const loadPlayerDeck = useCharacterStore((s) => s.loadPlayerDeck);
@@ -214,6 +216,24 @@ export function PlayerDeckPanel() {
         Your deck: <strong>{deckSize} cards</strong>{' '}
         <span className="deck-locked">(2 criticals locked)</span>
       </p>
+
+      <details className="deck-section">
+        <summary className="deck-gallery-summary">
+          View whole deck ({playerDeck.cards.length} cards as saved)
+        </summary>
+        <div className="deck-gallery">
+          {playerDeck.cards.map((c, i) => (
+            <div className="deck-gallery-cell" key={`${c.name}-${i}`} title={c.description || c.name}>
+              <CardFace card={c} pathId={pathId ?? undefined} size={56} />
+              <span className="deck-gallery-name">{c.name}</span>
+            </div>
+          ))}
+        </div>
+        <p className="skills-hint">
+          What you can actually draw from right now — consumed and burned cards are not in it.
+          Unsaved edits above are not reflected until you save.
+        </p>
+      </details>
     </>
   );
 }

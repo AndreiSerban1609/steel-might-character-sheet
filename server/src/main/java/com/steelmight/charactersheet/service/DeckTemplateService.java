@@ -126,7 +126,8 @@ public class DeckTemplateService {
         var c = character(playerId);
         var room = getTemplate(c.getRoomName());
         var config = getPlayerConfig(playerId);
-        return new PlayerDeckView(room, config, buildDeck(room, config).size());
+        var cards = buildDeck(room, config);
+        return new PlayerDeckView(room, config, cards.size(), cards);
     }
 
     public PlayerDeckView updatePlayerDeck(String playerId, PlayerDeckConfig config) {

@@ -1221,11 +1221,19 @@ body {
 
 /* ── Table draw toast (someone else's live draw) ── */
 
-.table-draw-toast {
+.table-draw-stack {
   position: fixed;
   top: 14px;
   right: 14px;
   z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.table-draw-toast {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -1617,6 +1625,111 @@ body {
 
 .deck-total strong {
   color: var(--gold);
+}
+
+/* ── Talent & feat chips (Stats tab) ── */
+
+.talent-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 20px;
+}
+
+.talent-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--border-bright);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 13.5px;
+  cursor: help;
+}
+
+.talent-chip--feat {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+}
+
+/* ── Hover tooltips (spells / effects / talents) ── */
+
+.hoverinfo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hoverinfo-pop {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  width: max-content;
+  max-width: 280px;
+  padding: 8px 11px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-bright);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  color: var(--text);
+  font-size: 13.5px;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.45;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.hoverinfo:hover .hoverinfo-pop,
+.hoverinfo:focus-visible .hoverinfo-pop {
+  display: block;
+}
+
+.hoverinfo-pop strong {
+  color: var(--gold);
+}
+
+.deck-gallery-summary {
+  cursor: pointer;
+  color: var(--text-dim);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+}
+
+.deck-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* the crit/class SVG frames jag past the card edge — keep room for them */
+  padding: 16px 8px 8px;
+}
+
+.deck-gallery-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 78px;
+  padding-top: 6px;
+}
+
+.deck-gallery-name {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.2;
+  max-width: 78px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* ── Inventory ── */

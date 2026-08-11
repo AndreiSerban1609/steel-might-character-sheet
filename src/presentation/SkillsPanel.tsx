@@ -39,6 +39,10 @@ export function SkillsPanel() {
   const redrawSkill = useCharacterStore((s) => s.redrawSkill);
   const clearDraw = useCharacterStore((s) => s.clearDraw);
 
+  const role = useCharacterStore((s) => s.role);
+  const hiddenCheck = useCharacterStore((s) => s.hiddenCheck);
+  const setHiddenCheck = useCharacterStore((s) => s.setHiddenCheck);
+
   const [draft, setDraft] = useState<Set<string> | null>(null);
   // Chosen BEFORE the draw (GM rule); resets to a normal draw after each check starts.
   const [advMode, setAdvMode] = useState<AdvMode>('none');
@@ -128,6 +132,15 @@ export function SkillsPanel() {
               {m === 'none' ? 'Normal' : m === 'advantage' ? 'Advantage' : 'Disadvantage'}
             </button>
           ))}
+          {role === 'gm' && (
+            <button
+              className={'adv-toggle-btn' + (hiddenCheck ? ' adv-toggle-btn--active' : '')}
+              title="Draw without showing the table — the result stays on this screen (the activity log still records it)"
+              onClick={() => setHiddenCheck(!hiddenCheck)}
+            >
+              {hiddenCheck ? '🕶 Hidden' : 'Hidden'}
+            </button>
+          )}
         </div>
       )}
 

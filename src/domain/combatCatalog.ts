@@ -33,6 +33,7 @@ export interface EffectOption {
   polarity: 'negative' | 'positive';
   stackBased: boolean;
   hasValue: boolean;
+  description: string;
 }
 
 interface RawEffect {
@@ -40,6 +41,7 @@ interface RawEffect {
   name: string;
   stackBased?: boolean;
   hasValue?: boolean;
+  description?: string;
 }
 
 const effects = effectsRaw as unknown as { negative: RawEffect[]; positive: RawEffect[] };
@@ -52,6 +54,7 @@ export const EFFECT_OPTIONS: EffectOption[] = (['negative', 'positive'] as const
       polarity,
       stackBased: !!e.stackBased,
       hasValue: !!e.hasValue,
+      description: e.description ?? '',
     })),
   )
   .sort((a, b) => a.name.localeCompare(b.name));

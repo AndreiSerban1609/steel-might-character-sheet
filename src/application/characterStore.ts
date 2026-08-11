@@ -120,8 +120,13 @@ export interface CharacterState {
   error: string | null;
   drawing: boolean;
   drawResult: SkillCheckResult | null;
-  /** The table's current draw, adopted from room metadata (Deck of Fates-style live draws). */
-  tableDraw: TableDraw | null;
+  /** GM toggle: the next checks are drawn without mirroring to the table. */
+  hiddenCheck: boolean;
+  /** Whether the CURRENT in-flight check was started hidden (mid-check toggle
+   *  flips must not leak an already-hidden draw). */
+  drawWasHidden: boolean;
+  /** The table's in-progress draws by player id, adopted from room metadata. */
+  tableDraws: Record<string, TableDraw>;
   roomDeck: DeckTemplate | null;
   playerDeck: PlayerDeckView | null;
   inventory: InventorySnapshot | null;
@@ -150,6 +155,7 @@ export interface CharacterState {
   drawSkill: (skillId: string, advantage?: 'advantage' | 'disadvantage') => Promise<void>;
   redrawSkill: () => Promise<void>;
   clearDraw: () => void;
+  setHiddenCheck: (hidden: boolean) => void;
   openDeckEditor: () => Promise<void>;
   saveRoomDeck: (template: DeckTemplate) => Promise<void>;
   loadPlayerDeck: () => Promise<void>;
@@ -220,7 +226,9 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   error: null,
   drawing: false,
   drawResult: null,
-  tableDraw: null,
+  hiddenCheck: false,
+  drawWasHidden: false,
+  tableDraws: {},
   roomDeck: null,
   playerDeck: null,
   inventory: null,
@@ -360,13 +368,17 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   drawSkill: async (skillId, advantage) => {
     const id = get().selectedPlayerId;
     if (!id) return;
-    set({ drawing: true, error: null });
+    // Hidden is settled when the check STARTS — a mid-check toggle flip must
+    // not retroactively broadcast (or hide) the in-flight draw.
+    set({ drawing: true, error: null, drawWasHidden: get().hiddenCheck });
     try {
       set({ drawResult: await skillCheck(id, skillId, advantage), drawing: false });
     } catch (e) {
       set({ error: msg(e), drawing: false });
     }
   },
+
+  setHiddenCheck: (hidden) => set({ hiddenCheck: hidden }),
 
   redrawSkill: async () => {
     const id = get().selectedPlayerId;

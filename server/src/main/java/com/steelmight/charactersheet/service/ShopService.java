@@ -48,10 +48,13 @@ public class ShopService {
     private final CharacterService characterService;
     private final HealingResolutionPipeline healingPipeline;
     private final RandomSource randomSource;
+    private final AuditService audit;
 
     public ShopService(CharacterRepository repo, GameDataProvider gameData,
                        StatDerivationEngine statEngine, CharacterService characterService,
-                       HealingResolutionPipeline healingPipeline, RandomSource randomSource) {
+                       HealingResolutionPipeline healingPipeline, RandomSource randomSource,
+                       AuditService audit) {
+        this.audit = audit;
         this.repo = repo;
         this.gameData = gameData;
         this.statEngine = statEngine;
@@ -144,6 +147,9 @@ public class ShopService {
         }
 
         repo.save(c);
+        audit.log(c, "purchase", "Bought " + quantity + "× "
+                + (scrollSpell != null ? "Scroll of " + scrollSpell.name() : item.name())
+                + " for " + total + "g (gold " + before + "→" + c.getGold() + ")");
         return new ActionResponse<>(result, characterService.buildInventorySnapshot(c));
     }
 
@@ -189,6 +195,8 @@ public class ShopService {
                 before, c.getGold());
 
         repo.save(c);
+        audit.log(c, "sell", "Sold " + quantity + "× " + item.name()
+                + " for " + credit + "g (gold " + before + "→" + c.getGold() + ")");
         return new ActionResponse<>(result, characterService.buildInventorySnapshot(c));
     }
 
@@ -264,6 +272,8 @@ public class ShopService {
         }
 
         repo.save(c);
+        audit.log(c, "upgrade", item.name() + " " + req.mode() + " upgrade to level " + target
+                + (success ? "" : " FAILED — cost lost"));
         return new ActionResponse<>(result, characterService.buildInventorySnapshot(c));
     }
 
@@ -314,6 +324,7 @@ public class ShopService {
         }
 
         repo.save(c);
+        audit.log(c, "use-consumable", "Used " + item.name());
         return new ActionResponse<>(result, characterService.getCombatSnapshot(playerId));
     }
 

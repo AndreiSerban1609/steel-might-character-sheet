@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
+import { titleCase } from '../domain/stats';
 import type { BioPatch, BioSnapshot } from '../platform/types';
+import racesRaw from '../data/races.json';
+
+const RACE_NAME = new Map(
+  (racesRaw as unknown as { races: { id: string; name: string | null }[] }).races.map((r) => [
+    r.id,
+    r.name,
+  ]),
+);
 
 interface Draft {
   alignment: string;
@@ -161,6 +170,22 @@ export function BioPanel() {
       </div>
 
       {error && <p className="inline-error">{error}</p>}
+
+      <div className="bio-grid">
+        <ReadField
+          label="Race"
+          value={bio.raceId ? RACE_NAME.get(bio.raceId) ?? titleCase(bio.raceId) : null}
+        />
+        <ReadField
+          label="Path / Class"
+          value={
+            bio.pathId && bio.classId
+              ? `${titleCase(bio.pathId)} / ${titleCase(bio.classId)}` +
+                (bio.specializationId ? ` (${titleCase(bio.specializationId)})` : '')
+              : null
+          }
+        />
+      </div>
 
       <div className="bio-grid">
         <ReadField label="Alignment" value={editing ? null : bio.alignment} />
