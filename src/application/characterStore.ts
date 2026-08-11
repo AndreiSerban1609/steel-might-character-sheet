@@ -81,7 +81,7 @@ import {
   type ReviveBody,
   type VitalsPatch,
 } from '../platform/http';
-import { subscribeConnectivity } from '../platform/http';
+import { subscribeConnectivity, verifyServer } from '../platform/http';
 import {
   clearSheetMetadata,
   writeViewport,
@@ -107,6 +107,9 @@ export interface CharacterState {
   partyViewports: Record<string, SheetSlice>;
   /** True after a network-level fetch failure; cleared on the next success (Story 3.3). */
   serverOffline: boolean;
+  /** True when the entry gate found no real backend at the API base (fresh browser,
+   *  stale tunnel URL) — the entry screen opens the Server connection field on it. */
+  serverBad: boolean;
   roomName: string;
   email: string;
   roster: RosterEntry[];
@@ -206,6 +209,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   activeViewport: 'combat',
   partyViewports: {},
   serverOffline: false,
+  serverBad: false,
   roomName: '',
   email: '',
   roster: [],
@@ -239,6 +243,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       return;
     }
     set({ loading: true, error: null, role: 'player' });
+    if (!(await passesServerGate(set))) return;
     try {
       const found = await findCharacter(roomName, email);
       if (found) {
@@ -260,6 +265,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     // Stay on the entry screen until the roster actually loads — jumping to the
     // roster on a dead server strands the GM with no Server connection field.
     set({ role: 'gm', loading: true, error: null });
+    if (!(await passesServerGate(set))) return;
     try {
       set({ roster: await fetchRoster(get().roomName), view: 'roster', loading: false });
     } catch (e) {
@@ -718,6 +724,25 @@ export function sliceFor(state: CharacterState, viewport: Viewport): unknown {
       return state.inventory;
     case 'spellbook':
       return state.spellbook;
+  }
+}
+
+/**
+ * Entry gate: nobody proceeds to find/create/roster against a URL that doesn't
+ * answer like the game server. Without it, the static-host fallback's 404 on
+ * /find reads as "character doesn't exist" and strands new players on the
+ * create screen, whose final POST can only ever 405.
+ */
+async function passesServerGate(
+  set: (partial: Partial<CharacterState>) => void,
+): Promise<boolean> {
+  try {
+    await verifyServer();
+    set({ serverBad: false });
+    return true;
+  } catch (e) {
+    set({ serverBad: true, error: msg(e), loading: false });
+    return false;
   }
 }
 

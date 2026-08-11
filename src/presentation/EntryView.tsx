@@ -8,12 +8,20 @@ export function EntryView() {
   const error = useCharacterStore((s) => s.error);
   const obrMode = useCharacterStore((s) => s.obrMode);
   const role = useCharacterStore((s) => s.role);
+  const serverBad = useCharacterStore((s) => s.serverBad);
   const setRoom = useCharacterStore((s) => s.setRoom);
   const setEmail = useCharacterStore((s) => s.setEmail);
   const enterAsPlayer = useCharacterStore((s) => s.enterAsPlayer);
   const enterAsGm = useCharacterStore((s) => s.enterAsGm);
 
-  const connBox = <ServerConnection />;
+  // The gate failed → the connection field is the fix, so open it; in OBR mode
+  // (room/identity already known) applying a URL retries the handshake itself.
+  const connBox = (
+    <ServerConnection
+      forceOpen={serverBad}
+      onApply={obrMode ? () => void (role === 'gm' ? enterAsGm() : enterAsPlayer()) : undefined}
+    />
+  );
 
   // Inside Owlbear identity comes from the SDK — no form, just the handshake
   // (and a retry + server field in case the backend is unreachable).

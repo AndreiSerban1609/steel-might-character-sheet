@@ -117,6 +117,39 @@ async function probeHealth(): Promise<void> {
   }
 }
 
+/**
+ * Strict backend probe for the entry gate. The real server answers /health with
+ * JSON {"status":"up"}; a fresh browser's relative-/api fallback lands on the
+ * static host (GitHub Pages), which answers GETs with an HTML 404 — and that
+ * must read as "no server here", not as "character doesn't exist".
+ */
+export async function verifyServer(): Promise<void> {
+  let res: Response;
+  try {
+    res = await trackedFetch(`${API_BASE}/health`);
+  } catch {
+    throw new Error(
+      `Can't reach the game server at ${API_BASE} — check the URL under "Server connection" below.`,
+    );
+  }
+  let up = false;
+  if (res.ok) {
+    try {
+      const body = (await res.json()) as { status?: unknown };
+      up = typeof body.status === 'string';
+    } catch {
+      /* HTML or empty body — not the backend */
+    }
+  }
+  if (!up) {
+    throw new Error(
+      API_BASE === '/api'
+        ? 'No game server is configured — paste your server URL under "Server connection" below and apply.'
+        : `No game server answers at ${API_BASE} — fix the URL under "Server connection" below.`,
+    );
+  }
+}
+
 /** fetch + connectivity bookkeeping — every HTTP call goes through here. */
 async function trackedFetch(input: string, init?: RequestInit): Promise<Response> {
   let res: Response;
