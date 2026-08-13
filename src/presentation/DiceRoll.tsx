@@ -1,15 +1,19 @@
 // Ported from the Deck of Fates extension (src/components/DiceRoll.jsx).
-// Animated hexagonal d10: spins through random faces, then settles on the result.
+// Animated die: spins through random faces, then settles on the result. The d10 is the
+// skill-check die; `sides={20}` gives attack rolls the same treatment (demo feedback #17)
+// with a twenty-sided silhouette instead of the hexagonal one.
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
 
 interface DiceRollProps {
   result: number;
   rolling: boolean;
   size?: number;
+  /** Faces to spin through, and which silhouette to draw. */
+  sides?: 10 | 20;
   onRollComplete?: () => void;
 }
 
-export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRollProps) {
+export function DiceRoll({ result, rolling, size = 120, sides = 10, onRollComplete }: DiceRollProps) {
   const [displayNumber, setDisplayNumber] = useState<number>(result || 1);
   const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -42,7 +46,7 @@ export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRo
       if (progress > 0.6 && Math.random() < (progress - 0.6) * 2) {
         setDisplayNumber(result);
       } else {
-        setDisplayNumber(Math.floor(Math.random() * 10) + 1);
+        setDisplayNumber(Math.floor(Math.random() * sides) + 1);
       }
       delay = 50 + progress * 200;
       intervalRef.current = setTimeout(tick, delay);
@@ -54,7 +58,7 @@ export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRo
       if (intervalRef.current) clearTimeout(intervalRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [rolling, result]);
+  }, [rolling, result, sides]);
 
   useEffect(() => {
     if (!rolling && result != null) setDisplayNumber(result);
@@ -62,7 +66,11 @@ export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRo
 
   const s = size;
   const settled = !rolling && result != null;
-  const hex = 'polygon(50% 0%, 95% 30%, 95% 70%, 50% 100%, 5% 70%, 5% 30%)';
+  // d20s read as a triangle-faced icosahedron in profile; d10s keep the flat hex.
+  const hex =
+    sides === 20
+      ? 'polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)'
+      : 'polygon(50% 0%, 95% 30%, 95% 70%, 50% 100%, 5% 70%, 5% 30%)';
 
   const dieStyle: CSSProperties = {
     width: s,
@@ -91,7 +99,8 @@ export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRo
   };
 
   const numberStyle: CSSProperties = {
-    fontSize: s * 0.42,
+    // Two-digit d20 results need to fit the same face.
+    fontSize: s * (sides === 20 ? 0.36 : 0.42),
     fontWeight: 700,
     color: settled ? '#fff' : '#d4c9a8',
     fontFamily: "'Cinzel', 'Palatino', serif",
@@ -104,7 +113,7 @@ export function DiceRoll({ result, rolling, size = 120, onRollComplete }: DiceRo
   };
 
   return (
-    <div style={dieStyle} aria-label={`d10: ${settled ? result : 'rolling'}`}>
+    <div style={dieStyle} aria-label={`d${sides}: ${settled ? result : 'rolling'}`}>
       <div style={borderStyle} />
       <span style={numberStyle}>{displayNumber}</span>
     </div>

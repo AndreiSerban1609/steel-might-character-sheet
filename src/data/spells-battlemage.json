@@ -31,7 +31,12 @@
         "dice": "1d4"
       }
     },
-    "description": "You enhance a weapon with a fiery aura. Attacking a target sets it on fire; at the start of their turn they burn for [spell modifier + 1d4] fire damage. Stacks up to 3 times."
+    "description": "You enhance a weapon with a fiery aura. Attacking a target sets it on fire; at the start of their turn they burn for [spell modifier + 1d4] fire damage. Stacks up to 3 times.",
+    "tags": [
+      "damage",
+      "buff",
+      "fire"
+    ]
   },
   {
     "id": "chilling-edge",
@@ -65,7 +70,12 @@
         "dice": null
       }
     },
-    "description": "You enhance a weapon with a frost aura. Attacks deal [spell modifier] additional ice damage and reduce MS by 5 for 1 turn. Stacks up to 4 times."
+    "description": "You enhance a weapon with a frost aura. Attacks deal [spell modifier] additional ice damage and reduce MS by 5 for 1 turn. Stacks up to 4 times.",
+    "tags": [
+      "damage",
+      "buff",
+      "ice"
+    ]
   },
   {
     "id": "corroding-slashes",
@@ -99,7 +109,12 @@
         "dice": "1d8"
       }
     },
-    "description": "You enhance a weapon with an acidic aura. Attacks deal [spell modifier + 3 + 1d8] bonus poison damage and lower AC by 1. Stacks up to 3 times; stacks disappear at end of creature's turn."
+    "description": "You enhance a weapon with an acidic aura. Attacks deal [spell modifier + 3 + 1d8] bonus poison damage and lower AC by 1. Stacks up to 3 times; stacks disappear at end of creature's turn.",
+    "tags": [
+      "damage",
+      "buff",
+      "poison"
+    ]
   },
   {
     "id": "impact-wave",
@@ -133,7 +148,12 @@
         "dice": "1d6"
       }
     },
-    "description": "You enhance a weapon with stored force. Attacks produce a 15 ft long, 5 ft wide impact wave; creatures failing a DEX save take [spell modifier + 3 + 1d6] force damage (ignores armor)."
+    "description": "You enhance a weapon with stored force. Attacks produce a 15 ft long, 5 ft wide impact wave; creatures failing a DEX save take [spell modifier + 3 + 1d6] force damage (ignores armor).",
+    "tags": [
+      "damage",
+      "buff",
+      "force"
+    ]
   },
   {
     "id": "hasting-attacks",
@@ -156,7 +176,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon to be swift. Attacking a target grants you 1 more AP at the start of your next turn. Stacks up to 2 times."
+    "description": "You enhance a weapon to be swift. Attacking a target grants you 1 more AP at the start of your next turn. Stacks up to 2 times.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "weapon-defence",
@@ -179,7 +202,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Until the end of your next turn your weapons deal 0 damage and you gain the weapon's damage value as PA (average value for dice; only main weapon if dual wielding)."
+    "description": "Until the end of your next turn your weapons deal 0 damage and you gain the weapon's damage value as PA (average value for dice; only main weapon if dual wielding).",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "mend-weapon",
@@ -202,7 +228,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You mend and repair weapons, reducing effects of usage or other debuffs, as long as the weapon is still usable when you begin fixing it."
+    "description": "You mend and repair weapons, reducing effects of usage or other debuffs, as long as the weapon is still usable when you begin fixing it.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "shocking-slashes",
@@ -236,7 +265,13 @@
         "dice": null
       }
     },
-    "description": "You enhance a weapon with a shock aura. Attacks deal [2 x spell modifier] additional lightning damage and a spark jumps to the nearest enemy within 15 ft dealing [4d8] lightning damage (ignores armor)."
+    "description": "You enhance a weapon with a shock aura. Attacks deal [2 x spell modifier] additional lightning damage and a spark jumps to the nearest enemy within 15 ft dealing [4d8] lightning damage (ignores armor).",
+    "tags": [
+      "damage",
+      "buff",
+      "movement",
+      "lightning"
+    ]
   },
   {
     "id": "brightness-strikes",
@@ -259,7 +294,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with a bright aura. Attacks illuminate a 10 ft area around the target until the start of your next turn. Light applies before the attack roll, removing darkness disadvantage."
+    "description": "You enhance a weapon with a bright aura. Attacks illuminate a 10 ft area around the target until the start of your next turn. Light applies before the attack roll, removing darkness disadvantage.",
+    "tags": [
+      "damage",
+      "buff",
+      "debuff",
+      "light"
+    ]
   },
   {
     "id": "sparkswinger",
@@ -293,7 +334,14 @@
         "dice": "2d10"
       }
     },
-    "description": "You enhance a weapon with fire sparks. Attacks cause 2 sparks to jump to the 2 nearest enemies within 10 ft, each taking [2 x spell modifier + 4d10] fire damage (ignores armor)."
+    "description": "You enhance a weapon with fire sparks. Attacks cause 2 sparks to jump to the 2 nearest enemies within 10 ft, each taking [2 x spell modifier + 4d10] fire damage (ignores armor).",
+    "tags": [
+      "damage",
+      "buff",
+      "movement",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "lightning-call",
@@ -327,7 +375,13 @@
         "dice": "2d12"
       }
     },
-    "description": "You enhance a weapon with lightning aura. Attacks call lightning on the target's location; all creatures (except you) within 10 ft must DEX save or take [2 x spell modifier + 4d12] lightning damage."
+    "description": "You enhance a weapon with lightning aura. Attacks call lightning on the target's location; all creatures (except you) within 10 ft must DEX save or take [2 x spell modifier + 4d12] lightning damage.",
+    "tags": [
+      "damage",
+      "buff",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "ray-weapons",
@@ -352,7 +406,10 @@
     "scaling": {
       "manaCostIncrease": 20
     },
-    "description": "You enhance a weapon to strike at range. For the rest of the turn your attacks with that weapon have 20 ft range. At higher levels: +10 ft range."
+    "description": "You enhance a weapon to strike at range. For the rest of the turn your attacks with that weapon have 20 ft range. At higher levels: +10 ft range.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "snaring-flurry",
@@ -375,7 +432,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon. Attacks add stacks on the target. At 3 stacks the target must CON save or become snared for 1 turn."
+    "description": "You enhance a weapon. Attacks add stacks on the target. At 3 stacks the target must CON save or become snared for 1 turn.",
+    "tags": [
+      "buff",
+      "debuff"
+    ]
   },
   {
     "id": "weapon-sentinel",
@@ -398,7 +459,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You animate a weapon to stand guard for the duration. It can alert you to danger or fight on its own (standard weapon damage, your AC, 0 PA, 0 MA, 10% of your max HP). Cannot dual wield while active."
+    "description": "You animate a weapon to stand guard for the duration. It can alert you to danger or fight on its own (standard weapon damage, your AC, 0 PA, 0 MA, 10% of your max HP). Cannot dual wield while active.",
+    "tags": [
+      "defense",
+      "summon",
+      "ritual"
+    ]
   },
   {
     "id": "stone-strike",
@@ -421,7 +487,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with the power of the mountain. The next attack that hits forces a CON save or the target is knocked prone. Targets that save are immune for the rest of the turn."
+    "description": "You enhance a weapon with the power of the mountain. The next attack that hits forces a CON save or the target is knocked prone. Targets that save are immune for the rest of the turn.",
+    "tags": [
+      "buff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "blinding-strikes",
@@ -444,7 +515,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with a blinding aura. Attacks force a CON save or the target is blinded for 1 turn. Targets that save are immune for the rest of the turn."
+    "description": "You enhance a weapon with a blinding aura. Attacks force a CON save or the target is blinded for 1 turn. Targets that save are immune for the rest of the turn.",
+    "tags": [
+      "buff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "strikers-shield",
@@ -467,7 +543,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon to create a shield with every hit. Weapon damage dealt grants temporary HP equal to half the damage dealt. Shield cannot exceed 150. Persists after duration but stops regenerating."
+    "description": "You enhance a weapon to create a shield with every hit. Weapon damage dealt grants temporary HP equal to half the damage dealt. Shield cannot exceed 150. Persists after duration but stops regenerating.",
+    "tags": [
+      "buff",
+      "defense"
+    ]
   },
   {
     "id": "silencing-slash",
@@ -490,7 +570,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon to silence a foe. The next hit forces a CON save, silencing the target for 1 turn on fail. Immune for the rest of the turn on success."
+    "description": "You enhance a weapon to silence a foe. The next hit forces a CON save, silencing the target for 1 turn on fail. Immune for the rest of the turn on success.",
+    "tags": [
+      "buff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "firebrand",
@@ -524,7 +609,12 @@
         "dice": "1d10"
       }
     },
-    "description": "You enhance a weapon with an ancient brand of fire. The weapon deals [3 x spell modifier + 9 + 3d10] bonus fire damage on hit for the duration."
+    "description": "You enhance a weapon with an ancient brand of fire. The weapon deals [3 x spell modifier + 9 + 3d10] bonus fire damage on hit for the duration.",
+    "tags": [
+      "damage",
+      "buff",
+      "fire"
+    ]
   },
   {
     "id": "poisonous-edge",
@@ -547,7 +637,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with a poisonous aura. Targets must CON save or become poisoned for 1 turn. Immune for the rest of the turn on success."
+    "description": "You enhance a weapon with a poisonous aura. Targets must CON save or become poisoned for 1 turn. Immune for the rest of the turn on success.",
+    "tags": [
+      "damage",
+      "buff",
+      "defense",
+      "poison"
+    ]
   },
   {
     "id": "indestructible-steel",
@@ -570,7 +666,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Your weapons take no damage from oozes or hitting surfaces for the duration."
+    "description": "Your weapons take no damage from oozes or hitting surfaces for the duration.",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "chaining-strikes",
@@ -593,7 +692,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon to spawn magical chains. On hit, up to 2 creatures of your choice within 30 ft of the target must STR save or be pulled up to 15 ft to the closest unoccupied space to the target."
+    "description": "You enhance a weapon to spawn magical chains. On hit, up to 2 creatures of your choice within 30 ft of the target must STR save or be pulled up to 15 ft to the closest unoccupied space to the target.",
+    "tags": [
+      "buff",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "contaminating-blows",
@@ -627,7 +731,13 @@
         "dice": "1d10"
       }
     },
-    "description": "You enhance a weapon to contaminate targets. Each hit applies a contamination stack. At the start of their turn, the creature takes [4 x spell modifier + 33 + 4d10] poison damage per stack. At 5 stacks, contamination spreads to all enemies within 10 ft."
+    "description": "You enhance a weapon to contaminate targets. Each hit applies a contamination stack. At the start of their turn, the creature takes [4 x spell modifier + 33 + 4d10] poison damage per stack. At 5 stacks, contamination spreads to all enemies within 10 ft.",
+    "tags": [
+      "damage",
+      "buff",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "phantasmal-strikes",
@@ -661,7 +771,12 @@
         "dice": "2d8"
       }
     },
-    "description": "You enhance a weapon to call upon the dead. Each hit spawns a ghostly apparition that makes a ranged attack against a foe within 40 ft, dealing [4 x spell modifier + 30 + 8d8] spectral damage (does not ignore armor)."
+    "description": "You enhance a weapon to call upon the dead. Each hit spawns a ghostly apparition that makes a ranged attack against a foe within 40 ft, dealing [4 x spell modifier + 30 + 8d8] spectral damage (does not ignore armor).",
+    "tags": [
+      "damage",
+      "buff",
+      "spectral"
+    ]
   },
   {
     "id": "thunder-blow",
@@ -695,7 +810,14 @@
         "dice": "2d10"
       }
     },
-    "description": "You enhance a weapon. The next hit summons a thunder wave in a 40 ft long, 5 ft wide line. Creatures must STR save or take [4 x spell modifier + 63 + 8d10] force damage and be pushed back 1d4 x 10 ft. Half damage on success."
+    "description": "You enhance a weapon. The next hit summons a thunder wave in a 40 ft long, 5 ft wide line. Creatures must STR save or take [4 x spell modifier + 63 + 8d10] force damage and be pushed back 1d4 x 10 ft. Half damage on success.",
+    "tags": [
+      "damage",
+      "buff",
+      "control",
+      "summon",
+      "force"
+    ]
   },
   {
     "id": "circle-of-the-steel",
@@ -718,7 +840,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create a 30 ft radius circle centered on you (does not move). Creatures in the circle have halved speeds, spells cost 1 more AP (2 more for concentration/channelling), and weapon attacks cost 1 less AP."
+    "description": "You create a 30 ft radius circle centered on you (does not move). Creatures in the circle have halved speeds, spells cost 1 more AP (2 more for concentration/channelling), and weapon attacks cost 1 less AP.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "teleporting-attacks",
@@ -741,7 +866,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with teleportation power. On hit, you can teleport the target up to 20 ft (on a safe surface)."
+    "description": "You enhance a weapon with teleportation power. On hit, you can teleport the target up to 20 ft (on a safe surface).",
+    "tags": [
+      "buff",
+      "movement"
+    ]
   },
   {
     "id": "evade",
@@ -764,7 +893,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration all attacks against you have disadvantage and you have advantage on all saving throws, but you take double damage."
+    "description": "For the duration all attacks against you have disadvantage and you have advantage on all saving throws, but you take double damage.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "stunning-blows",
@@ -787,7 +919,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon to stun foes. On hit, the target must CON save or be stunned for 1 turn. A target that saves is immune for the rest of the turn."
+    "description": "You enhance a weapon to stun foes. On hit, the target must CON save or be stunned for 1 turn. A target that saves is immune for the rest of the turn.",
+    "tags": [
+      "buff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "final-stand",
@@ -810,7 +947,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration your AC, PA, MA and all speeds drop to 0. Weapon attacks gain 100 ft range (must see target), 50% lifesteal, +10 to hit, and ignore up to [5 x spell modifier] armor. Immune to all CC."
+    "description": "For the duration your AC, PA, MA and all speeds drop to 0. Weapon attacks gain 100 ft range (must see target), 50% lifesteal, +10 to hit, and ignore up to [5 x spell modifier] armor. Immune to all CC.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "striker-overload",
@@ -833,7 +973,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration your on-hit effects trigger twice instead of once (including added weapon damage from spells like Firebrand)."
+    "description": "For the duration your on-hit effects trigger twice instead of once (including added weapon damage from spells like Firebrand).",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "arcane-enhancement",
@@ -860,7 +1003,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "You enhance a weapon with the essence of magic. Every hit deals [5 x spell modifier + 10d12] pure damage and applies an arcane stack. At 6 arcane stacks the target takes [10d20] pure damage."
+    "description": "You enhance a weapon with the essence of magic. Every hit deals [5 x spell modifier + 10d12] pure damage and applies an arcane stack. At 6 arcane stacks the target takes [10d20] pure damage.",
+    "tags": [
+      "damage",
+      "buff",
+      "pure"
+    ]
   },
   {
     "id": "magic-touch",
@@ -893,7 +1041,11 @@
         "dice": "2d10"
       }
     },
-    "description": "Make a melee spell attack against a target. On hit, the target takes [spell modifier + 11 + 2d10] pure damage."
+    "description": "Make a melee spell attack against a target. On hit, the target takes [spell modifier + 11 + 2d10] pure damage.",
+    "tags": [
+      "damage",
+      "pure"
+    ]
   },
   {
     "id": "burning-hands",
@@ -926,7 +1078,11 @@
         "dice": "2d12"
       }
     },
-    "description": "You cast a wave of fire in a 15 ft cone in front of you. Creatures must DEX save or take [spell modifier + 9 + 2d12] fire damage."
+    "description": "You cast a wave of fire in a 15 ft cone in front of you. Creatures must DEX save or take [spell modifier + 9 + 2d12] fire damage.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "light-orb",
@@ -959,7 +1115,12 @@
         "dice": "2d8"
       }
     },
-    "description": "You throw a radiant orb that bounces up to 1 time to random enemies within 10 ft. Targets must DEX save or take [spell modifier + 9 + 2d8] light damage and illuminates 5 ft area for 1 min."
+    "description": "You throw a radiant orb that bounces up to 1 time to random enemies within 10 ft. Targets must DEX save or take [spell modifier + 9 + 2d8] light damage and illuminates 5 ft area for 1 min.",
+    "tags": [
+      "damage",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "thunder-wave",
@@ -992,7 +1153,11 @@
         "dice": "2d8"
       }
     },
-    "description": "You create a wave of thunder in a 10 ft area around you. Creatures must CON save or take [spell modifier + 13 + 2d8] thunder damage."
+    "description": "You create a wave of thunder in a 10 ft area around you. Creatures must CON save or take [spell modifier + 13 + 2d8] thunder damage.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "ignition",
@@ -1025,7 +1190,11 @@
         "dice": "1d8"
       }
     },
-    "description": "You slam the ground creating a thin sheet of fire within 30 ft. Enemy creatures must DEX save or take [spell modifier + 4 + 1d8] fire damage. All ignitable surfaces catch fire."
+    "description": "You slam the ground creating a thin sheet of fire within 30 ft. Enemy creatures must DEX save or take [spell modifier + 4 + 1d8] fire damage. All ignitable surfaces catch fire.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "chilling-touch",
@@ -1058,7 +1227,12 @@
         "dice": "2d12"
       }
     },
-    "description": "Make a melee spell attack. On hit the target takes [spell modifier + 10 + 2d12] ice damage and MS is reduced by 10 for a round."
+    "description": "Make a melee spell attack. On hit the target takes [spell modifier + 10 + 2d12] ice damage and MS is reduced by 10 for a round.",
+    "tags": [
+      "damage",
+      "debuff",
+      "ice"
+    ]
   },
   {
     "id": "weakening-magic",
@@ -1081,7 +1255,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create an aura centered on you that moves with you. Creatures in the aura that you have damaged since their last turn have a [spell modifier] penalty to attacks against you."
+    "description": "You create an aura centered on you that moves with you. Creatures in the aura that you have damaged since their last turn have a [spell modifier] penalty to attacks against you.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "corrosive-touch",
@@ -1114,7 +1292,12 @@
         "dice": "2d12"
       }
     },
-    "description": "Make a melee spell attack. On hit, the target takes [2 x spell modifier + 30 + 4d12] poison damage and AC is reduced by 2 (cannot stack)."
+    "description": "Make a melee spell attack. On hit, the target takes [2 x spell modifier + 30 + 4d12] poison damage and AC is reduced by 2 (cannot stack).",
+    "tags": [
+      "damage",
+      "debuff",
+      "poison"
+    ]
   },
   {
     "id": "poison-wave",
@@ -1147,7 +1330,13 @@
         "dice": "2d10"
       }
     },
-    "description": "You emit a wave of poison. All creatures (except you) within range must CON save or take [2 x spell modifier + 28 + 4d10] poison damage. You become resistant to poison for the duration."
+    "description": "You emit a wave of poison. All creatures (except you) within range must CON save or take [2 x spell modifier + 28 + 4d10] poison damage. You become resistant to poison for the duration.",
+    "tags": [
+      "damage",
+      "defense",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "breath-of-darkness",
@@ -1180,7 +1369,12 @@
         "dice": "2d12"
       }
     },
-    "description": "You exhale darkness in a 15 ft cone. All creatures (including you) must DEX save or take [2 x spell modifier + 33 + 4d12] shadow damage. You automatically take the damage."
+    "description": "You exhale darkness in a 15 ft cone. All creatures (including you) must DEX save or take [2 x spell modifier + 33 + 4d12] shadow damage. You automatically take the damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "ice-orb",
@@ -1213,7 +1407,12 @@
         "dice": "2d8"
       }
     },
-    "description": "You throw an ice orb that bounces up to 3 times to random enemies within 10 ft. Targets must DEX save or take [2 x spell modifier + 24 + 4d8] ice damage. Consuming a slow grants an additional bounce."
+    "description": "You throw an ice orb that bounces up to 3 times to random enemies within 10 ft. Targets must DEX save or take [2 x spell modifier + 24 + 4d8] ice damage. Consuming a slow grants an additional bounce.",
+    "tags": [
+      "damage",
+      "aoe",
+      "ice"
+    ]
   },
   {
     "id": "scorching-touch",
@@ -1246,7 +1445,11 @@
         "dice": "1d10"
       }
     },
-    "description": "Make a melee spell attack. On hit the target takes [2 x spell modifier + 31 + 2d10] fire damage and is set on fire, taking [4d10] fire damage at the start of their turn (ignores armor)."
+    "description": "Make a melee spell attack. On hit the target takes [2 x spell modifier + 31 + 2d10] fire damage and is set on fire, taking [4d10] fire damage at the start of their turn (ignores armor).",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "blinding-radiance",
@@ -1279,7 +1482,13 @@
         "dice": "2d8"
       }
     },
-    "description": "You cast an aura of light. All enemy creatures within 15 ft must CON save or take [2 x spell modifier + 16 + 4d8] light damage and be blinded for 1 turn."
+    "description": "You cast an aura of light. All enemy creatures within 15 ft must CON save or take [2 x spell modifier + 16 + 4d8] light damage and be blinded for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "shield-of-the-brave",
@@ -1312,7 +1521,12 @@
         "dice": "2d12"
       }
     },
-    "description": "You gain temporary HP equal to [2 x spell modifier + 50 + 4d12] for each enemy creature within 10 ft. Temporary HP expires at the end of the duration."
+    "description": "You gain temporary HP equal to [2 x spell modifier + 50 + 4d12] for each enemy creature within 10 ft. Temporary HP expires at the end of the duration.",
+    "tags": [
+      "healing",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "exposing-magic",
@@ -1335,7 +1549,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn have one lower level of resistance to the last damage type you dealt."
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn have one lower level of resistance to the last damage type you dealt.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "supernova",
@@ -1368,7 +1585,12 @@
         "dice": "2d12"
       }
     },
-    "description": "You explode in a burst of fire. All creatures within 10 ft must DEX save or take [3 x spell modifier + 47 + 6d12] fire damage, half on success. You take full damage. The area becomes a fire surface."
+    "description": "You explode in a burst of fire. All creatures within 10 ft must DEX save or take [3 x spell modifier + 47 + 6d12] fire damage, half on success. You take full damage. The area becomes a fire surface.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "earthquake",
@@ -1401,7 +1623,12 @@
         "dice": "1d6"
       }
     },
-    "description": "You create an earthquake in the area within 60 ft. Enemy creatures must CON save or take [3 x spell modifier + 24 + 3d6] force damage and be knocked prone."
+    "description": "You create an earthquake in the area within 60 ft. Enemy creatures must CON save or take [3 x spell modifier + 24 + 3d6] force damage and be knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "force"
+    ]
   },
   {
     "id": "poison-breath",
@@ -1434,7 +1661,11 @@
         "dice": "2d10"
       }
     },
-    "description": "You breathe poison in a 15 ft cone. Creatures must CON save or take [3 x spell modifier + 23 + 6d10] poison damage and become poisoned until the end of your next turn."
+    "description": "You breathe poison in a 15 ft cone. Creatures must CON save or take [3 x spell modifier + 23 + 6d10] poison damage and become poisoned until the end of your next turn.",
+    "tags": [
+      "damage",
+      "poison"
+    ]
   },
   {
     "id": "shadow-orb",
@@ -1467,7 +1698,11 @@
         "dice": "2d8"
       }
     },
-    "description": "You throw a shadow orb that bounces up to 4 times. Targets must DEX save or take [3 x spell modifier + 16 + 6d8] shadow damage and be engulfed in shadows, taking [3d8] shadow damage at the start of each turn until they deal damage to you."
+    "description": "You throw a shadow orb that bounces up to 4 times. Targets must DEX save or take [3 x spell modifier + 16 + 6d8] shadow damage and be engulfed in shadows, taking [3d8] shadow damage at the start of each turn until they deal damage to you.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "shocking-touch",
@@ -1500,7 +1735,11 @@
         "dice": "2d12"
       }
     },
-    "description": "Make a melee spell attack. On hit the target takes [3 x spell modifier + 24 + 6d12] lightning damage and starts their turn with 2 less AP (cannot stack)."
+    "description": "Make a melee spell attack. On hit the target takes [3 x spell modifier + 24 + 6d12] lightning damage and starts their turn with 2 less AP (cannot stack).",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "silencing-touch",
@@ -1533,7 +1772,12 @@
         "dice": "2d10"
       }
     },
-    "description": "You force a target in melee range to make a CON save. On fail they take [3 x spell modifier + 15 + 6d10] pure damage and are silenced for 1 turn."
+    "description": "You force a target in melee range to make a CON save. On fail they take [3 x spell modifier + 15 + 6d10] pure damage and are silenced for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "pure"
+    ]
   },
   {
     "id": "super-conductor",
@@ -1566,7 +1810,12 @@
         "dice": "1d10"
       }
     },
-    "description": "You release up to 6 arcing bolts of electricity to creatures within 30 ft (no 2 arcs to the same creature). Targets must DEX save or take [3 x spell modifier + 45 + 3d10] lightning damage."
+    "description": "You release up to 6 arcing bolts of electricity to creatures within 30 ft (no 2 arcs to the same creature). Targets must DEX save or take [3 x spell modifier + 45 + 3d10] lightning damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "bloodless-magic",
@@ -1589,7 +1838,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to heal (considered 'decaying'). Some spells can overwrite this."
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to heal (considered 'decaying'). Some spells can overwrite this.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "ice-breath",
@@ -1622,7 +1874,12 @@
         "dice": "2d10"
       }
     },
-    "description": "You breathe freezing wind in a 15 ft cone. Creatures must CON save or take [4 x spell modifier + 47 + 8d10] ice damage and be frozen for 1 round. Half damage on success."
+    "description": "You breathe freezing wind in a 15 ft cone. Creatures must CON save or take [4 x spell modifier + 47 + 8d10] ice damage and be frozen for 1 round. Half damage on success.",
+    "tags": [
+      "damage",
+      "control",
+      "ice"
+    ]
   },
   {
     "id": "spectral-touch",
@@ -1655,7 +1912,11 @@
         "dice": "2d12"
       }
     },
-    "description": "Make a melee spell attack. On hit the target takes [4 x spell modifier + 46 + 8d12] spectral damage and becomes ethereal for 1 turn."
+    "description": "Make a melee spell attack. On hit the target takes [4 x spell modifier + 46 + 8d12] spectral damage and becomes ethereal for 1 turn.",
+    "tags": [
+      "damage",
+      "spectral"
+    ]
   },
   {
     "id": "pyroclasm",
@@ -1688,7 +1949,12 @@
         "dice": "2d6"
       }
     },
-    "description": "You throw a fireball that bounces up to 5 times to enemies within 10 ft. Targets must DEX save or take [4 x spell modifier + 42 + 8d6] fire damage, half on success. Kills reset the bounce count."
+    "description": "You throw a fireball that bounces up to 5 times to enemies within 10 ft. Targets must DEX save or take [4 x spell modifier + 42 + 8d6] fire damage, half on success. Kills reset the bounce count.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "closed-circuit",
@@ -1721,7 +1987,12 @@
         "dice": "2d10"
       }
     },
-    "description": "You cast lightning in a 15 ft area around you. ALL creatures (including you) must DEX save. You auto-take half damage. On fail: [4 x spell modifier + 62 + 8d10] lightning damage. If no allies harmed, targets have doubled AP costs next turn."
+    "description": "You cast lightning in a 15 ft area around you. ALL creatures (including you) must DEX save. You auto-take half damage. On fail: [4 x spell modifier + 62 + 8d10] lightning damage. If no allies harmed, targets have doubled AP costs next turn.",
+    "tags": [
+      "damage",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "poison-orbs",
@@ -1754,7 +2025,12 @@
         "dice": "1d6"
       }
     },
-    "description": "You throw a poison orb that bounces up to 10 times to creatures within 10 ft. Targets must DEX save or take [4 x spell modifier + 6 + 4d6] poison damage. Taking damage 3 times triggers an additional [20d6] poison damage."
+    "description": "You throw a poison orb that bounces up to 10 times to creatures within 10 ft. Targets must DEX save or take [4 x spell modifier + 6 + 4d6] poison damage. Taking damage 3 times triggers an additional [20d6] poison damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "arcane-hibernation",
@@ -1777,7 +2053,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration you take only half damage, all spells cost only half mana, but all attacking or casting spells costs double the AP."
+    "description": "For the duration you take only half damage, all spells cost only half mana, but all attacking or casting spells costs double the AP.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "disruptive-magic",
@@ -1800,7 +2079,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are disarmed at the start of their turn and interrupted from channelling or concentration."
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are disarmed at the start of their turn and interrupted from channelling or concentration.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "epidemic-of-fire",
@@ -1826,7 +2108,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "You cast a ray of fire that forks to the 5 nearest enemies within 30 ft. All targets must DEX save or take [5 x spell modifier + 70 + 10d12] fire damage, half on success. Targets take double damage from mass destruction."
+    "description": "You cast a ray of fire that forks to the 5 nearest enemies within 30 ft. All targets must DEX save or take [5 x spell modifier + 70 + 10d12] fire damage, half on success. Targets take double damage from mass destruction.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "chain-shock",
@@ -1852,7 +2139,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "You cast a bolt of lightning that bounces up to 3 times within 10 ft. Targets must CON save or take [5 x spell modifier + 10d8] lightning damage and be stunned for 3 turns. Half damage on success. CON save to end stun early."
+    "description": "You cast a bolt of lightning that bounces up to 3 times within 10 ft. Targets must CON save or take [5 x spell modifier + 10d8] lightning damage and be stunned for 3 turns. Half damage on success. CON save to end stun early.",
+    "tags": [
+      "damage",
+      "control",
+      "lightning"
+    ]
   },
   {
     "id": "arcane-devastation",
@@ -1878,7 +2170,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "You let out an explosion of magic. All creatures including you within 30 ft take [5 x spell modifier + 30d8] pure damage."
+    "description": "You let out an explosion of magic. All creatures including you within 30 ft take [5 x spell modifier + 30d8] pure damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "pure"
+    ]
   },
   {
     "id": "battlelust-arcana",
@@ -1901,7 +2198,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Until a long rest your spells do not cost mana, but you can only cast each spell once (consumed), after which the spell is unavailable until the long rest is completed."
+    "description": "Until a long rest your spells do not cost mana, but you can only cast each spell once (consumed), after which the spell is unavailable until the long rest is completed.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "enprison",
@@ -1924,7 +2224,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to leave the circle."
+    "description": "You create an aura centered on you that moves with you. Creatures you damaged since their last turn are unable to leave the circle.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "burning-agony",
@@ -1957,7 +2260,11 @@
         "dice": "1d12"
       }
     },
-    "description": "Your next 2 attacks deal [spell modifier] additional fire damage. On the third hit against the same target, the creature bursts into flames taking [spell modifier + 10 + 1d12] fire damage and gaining 1 stack of lasting punishment. Spell ends early if you switch targets."
+    "description": "Your next 2 attacks deal [spell modifier] additional fire damage. On the third hit against the same target, the creature bursts into flames taking [spell modifier + 10 + 1d12] fire damage and gaining 1 stack of lasting punishment. Spell ends early if you switch targets.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "chilling-rupture",
@@ -1991,7 +2298,12 @@
         "dice": "4d8"
       }
     },
-    "description": "You strike the ground in a 10 ft long, 5 ft wide line. Creatures must DEX save or take [spell modifier + 8 + 2d8] cold damage and have halved movement speed when moving away from you until end of your next turn."
+    "description": "You strike the ground in a 10 ft long, 5 ft wide line. Creatures must DEX save or take [spell modifier + 8 + 2d8] cold damage and have halved movement speed when moving away from you until end of your next turn.",
+    "tags": [
+      "damage",
+      "movement",
+      "ice"
+    ]
   },
   {
     "id": "fiery-aura",
@@ -2025,7 +2337,12 @@
         "dice": "4d6"
       }
     },
-    "description": "A burning aura surrounds you. At the start of each turn, all creatures within 5 ft take [spell modifier + 3 + 2d6] fire damage (ignores armor). Concentration cannot be broken by damage."
+    "description": "A burning aura surrounds you. At the start of each turn, all creatures within 5 ft take [spell modifier + 3 + 2d6] fire damage (ignores armor). Concentration cannot be broken by damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "judgement-bolt",
@@ -2059,7 +2376,11 @@
         "dice": "3d10"
       }
     },
-    "description": "You release a wave of force from your weapon at a creature within range. Make a ranged spell attack dealing [spell modifier + 18 + 1d10] force damage."
+    "description": "You release a wave of force from your weapon at a creature within range. Make a ranged spell attack dealing [spell modifier + 18 + 1d10] force damage.",
+    "tags": [
+      "damage",
+      "force"
+    ]
   },
   {
     "id": "uldurs-shield",
@@ -2084,7 +2405,10 @@
     "scaling": {
       "manaCostIncrease": 20
     },
-    "description": "While you have at least 2 stacks of lasting punishment on any target, you become resistant to physical damage from normal and silvered weapons for 1 round. Effect ends if the target loses its stacks. At higher levels: +1 round duration."
+    "description": "While you have at least 2 stacks of lasting punishment on any target, you become resistant to physical damage from normal and silvered weapons for 1 round. Effect ends if the target loses its stacks. At higher levels: +1 round duration.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "interrogation",
@@ -2107,7 +2431,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You project intense menace and clarity. You add [4 x spell modifier] to your next Intimidation check."
+    "description": "You project intense menace and clarity. You add [4 x spell modifier] to your next Intimidation check.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "lasting-endurance",
@@ -2141,7 +2468,11 @@
         "dice": "4d8"
       }
     },
-    "description": "If any creature has stacks of lasting punishment, you gain temporary HP equal to [spell modifier + 8 + 2d8] per stack. Temp HP expires after duration or at end of combat. Cannot recast until duration ends."
+    "description": "If any creature has stacks of lasting punishment, you gain temporary HP equal to [spell modifier + 8 + 2d8] per stack. Temp HP expires after duration or at end of combat. Cannot recast until duration ends.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "condemning-vigil",
@@ -2163,7 +2494,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "If the enemy has at least 2 stacks of lasting punishment, all their weapon and spell attacks against you have disadvantage. Lasts for the duration or until the stacks are removed."
+    "description": "If the enemy has at least 2 stacks of lasting punishment, all their weapon and spell attacks against you have disadvantage. Lasts for the duration or until the stacks are removed.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "vampiric-swing",
@@ -2197,7 +2531,11 @@
         "dice": "2d10"
       }
     },
-    "description": "You swing your weapon in a 10 ft cone. Enemy creatures must DEX save or take [2 x spell modifier + 37 + 4d10] weapon damage type. You heal for half the total damage dealt."
+    "description": "You swing your weapon in a 10 ft cone. Enemy creatures must DEX save or take [2 x spell modifier + 37 + 4d10] weapon damage type. You heal for half the total damage dealt.",
+    "tags": [
+      "damage",
+      "healing"
+    ]
   },
   {
     "id": "venom-infusion",
@@ -2220,7 +2558,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You convert all damage your weapon attacks deal into poison damage for up to 1 minute. You may end the effect early at any time."
+    "description": "You convert all damage your weapon attacks deal into poison damage for up to 1 minute. You may end the effect early at any time.",
+    "tags": [
+      "damage",
+      "poison"
+    ]
   },
   {
     "id": "poisonous-aura",
@@ -2254,7 +2596,12 @@
         "dice": "2d6"
       }
     },
-    "description": "A poisonous aura surrounds you. At the start of each turn, creatures within 5 ft take [2 x spell modifier + 6 + 4d6] poison damage. Consecutive turn hits also deal [2 x spell modifier + 25 + 6d12] bonus poison damage. Concentration unbreakable by damage."
+    "description": "A poisonous aura surrounds you. At the start of each turn, creatures within 5 ft take [2 x spell modifier + 6 + 4d6] poison damage. Consecutive turn hits also deal [2 x spell modifier + 25 + 6d12] bonus poison damage. Concentration unbreakable by damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "mountain-strike",
@@ -2279,7 +2626,10 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "Your next weapon attack that hits a creature with at least 2 stacks of lasting punishment forces a CON save or knocked prone. Cannot cast if no target has 2+ stacks. At higher levels: -1 stack required."
+    "description": "Your next weapon attack that hits a creature with at least 2 stacks of lasting punishment forces a CON save or knocked prone. Cannot cast if no target has 2+ stacks. At higher levels: -1 stack required.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "burst-of-renewal",
@@ -2302,7 +2652,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For 3 turns, you and the creature with 2+ stacks of lasting punishment receive twice as much healing from all sources. Ends if the condition is no longer met."
+    "description": "For 3 turns, you and the creature with 2+ stacks of lasting punishment receive twice as much healing from all sources. Ends if the condition is no longer met.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "apprehend",
@@ -2325,7 +2678,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You incapacitate a creature that is unconscious or has surrendered. The target can speak but cannot act. You may selectively restore certain capabilities (walking, hand use, spellcasting, teleportation)."
+    "description": "You incapacitate a creature that is unconscious or has surrendered. The target can speak but cannot act. You may selectively restore certain capabilities (walking, hand use, spellcasting, teleportation).",
+    "tags": [
+      "control",
+      "movement",
+      "ritual"
+    ]
   },
   {
     "id": "aegis-of-reckoning",
@@ -2350,7 +2708,10 @@
     "scaling": {
       "manaCostIncrease": 45
     },
-    "description": "Consume lasting punishment stacks to gain a shield that negates the next [stacks consumed] weapon attacks. At 3rd level (+45 mana): also blocks spell attacks. At 4th level (+45 mana): blocks any damage source."
+    "description": "Consume lasting punishment stacks to gain a shield that negates the next [stacks consumed] weapon attacks. At 3rd level (+45 mana): also blocks spell attacks. At 4th level (+45 mana): blocks any damage source.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "judgments-grasp",
@@ -2375,7 +2736,10 @@
     "scaling": {
       "manaCostIncrease": 15
     },
-    "description": "You bind a creature with an arcane tether. If it moves more than 20 ft away, it must CHA save or be stopped. Lasting punishment stacks add effects: 1=disadvantage on save, 2=auto-fail, 3=halved speed, 4=speed 0, 5=undispellable, 6=target dragged. At higher levels: -5 ft tether range."
+    "description": "You bind a creature with an arcane tether. If it moves more than 20 ft away, it must CHA save or be stopped. Lasting punishment stacks add effects: 1=disadvantage on save, 2=auto-fail, 3=halved speed, 4=speed 0, 5=undispellable, 6=target dragged. At higher levels: -5 ft tether range.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "shackles-of-pain",
@@ -2398,7 +2762,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Target with 2+ lasting punishment stacks must WILL save. On fail, damage you take is also dealt to the target (reduced by their armor). Ends if stacks are removed. Range only matters for casting."
+    "description": "Target with 2+ lasting punishment stacks must WILL save. On fail, damage you take is also dealt to the target (reduced by their armor). Ends if stacks are removed. Range only matters for casting.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "duel",
@@ -2421,7 +2788,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Target with 3+ lasting punishment stacks must WIS save or be unable to damage any creature other than you for the duration."
+    "description": "Target with 3+ lasting punishment stacks must WIS save or be unable to damage any creature other than you for the duration.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "arm-of-justice",
@@ -2455,7 +2825,13 @@
         "dice": "2d10"
       }
     },
-    "description": "You create a 60 ft long, 5 ft wide magic surface. A spectral arm drags creatures toward you. DEX save or take [3 x spell modifier + 58 + 6d10] spectral damage and be pulled to nearest unoccupied space."
+    "description": "You create a 60 ft long, 5 ft wide magic surface. A spectral arm drags creatures toward you. DEX save or take [3 x spell modifier + 58 + 6d10] spectral damage and be pulled to nearest unoccupied space.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "spectral"
+    ]
   },
   {
     "id": "steel-aura",
@@ -2489,7 +2865,12 @@
         "dice": "1d4"
       }
     },
-    "description": "A grey aura lingers around you. At the start of each turn, spears pierce the ground hitting creatures within 5 ft for [3 x spell modifier + 13 + 3d4] piercing damage. STR save or rooted for 1 turn. Hit by all 6 waves = rooted for 1 hour (unbreakable)."
+    "description": "A grey aura lingers around you. At the start of each turn, spears pierce the ground hitting creatures within 5 ft for [3 x spell modifier + 13 + 3d4] piercing damage. STR save or rooted for 1 turn. Hit by all 6 waves = rooted for 1 hour (unbreakable).",
+    "tags": [
+      "damage",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "channelled-fury",
@@ -2514,7 +2895,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Choose a target. Your attacks against the target have 50 ft range until the end of your next turn. At higher levels: +25 ft range."
+    "description": "Choose a target. Your attacks against the target have 50 ft range until the end of your next turn. At higher levels: +25 ft range.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "breakthrough",
@@ -2537,7 +2921,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration your attacks against objects deal double damage and you can break through tougher objects, including metal."
+    "description": "For the duration your attacks against objects deal double damage and you can break through tougher objects, including metal.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "circle-of-uldur",
@@ -2560,7 +2947,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You create a 15 ft radius circle centered on you (moves with you). At the start of each turn, creatures without lasting punishment stacks are pushed back 10 ft. Creatures entering must STR save. You can protect any number of creatures."
+    "description": "You create a 15 ft radius circle centered on you (moves with you). At the start of each turn, creatures without lasting punishment stacks are pushed back 10 ft. Creatures entering must STR save. You can protect any number of creatures.",
+    "tags": [
+      "control",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "power-burst",
@@ -2583,7 +2975,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration you leech energy from the target with 4+ lasting punishment stacks. You start your turn with 2 extra AP while the target starts with 2 less."
+    "description": "For the duration you leech energy from the target with 4+ lasting punishment stacks. You start your turn with 2 extra AP while the target starts with 2 less.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "forcefield",
@@ -2617,7 +3012,13 @@
         "dice": "2d6"
       }
     },
-    "description": "A brown aura lingers around you. At the start of your turn all creatures within 5 ft take [4 x spell modifier + 8d6] force damage. A creature hit 2 turns in a row is knocked prone."
+    "description": "A brown aura lingers around you. At the start of your turn all creatures within 5 ft take [4 x spell modifier + 8d6] force damage. A creature hit 2 turns in a row is knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "shield-of-justice",
@@ -2640,7 +3041,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration all damage you deal with lasting pain is converted to temporary HP."
+    "description": "For the duration all damage you deal with lasting pain is converted to temporary HP.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "vengeance",
@@ -2663,7 +3067,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Reaction: instantly make a weapon attack against the creature that attacked you (regardless of range). If not targeting the stacked creature, you use the stack damage. CON save or silenced/disarmed until end of their next turn."
+    "description": "Reaction: instantly make a weapon attack against the creature that attacked you (regardless of range). If not targeting the stacked creature, you use the stack damage. CON save or silenced/disarmed until end of their next turn.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "breakdown",
@@ -2683,7 +3090,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "A creature within range must WIS save. On fail they are unable to talk or think coherently, only speaking gibberish. Neither the target nor anyone else knows magic was used."
+    "description": "A creature within range must WIS save. On fail they are unable to talk or think coherently, only speaking gibberish. Neither the target nor anyone else knows magic was used.",
+    "tags": [
+      "debuff",
+      "ritual"
+    ]
   },
   {
     "id": "living-on-the-edge",
@@ -2706,7 +3117,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration you cannot drop below 1 HP as long as you have 6 stacks of lasting pain on a target."
+    "description": "For the duration you cannot drop below 1 HP as long as you have 6 stacks of lasting pain on a target.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "blind-justice",
@@ -2729,7 +3143,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration all damage you deal to a target with 6 stacks of lasting pain is converted to true damage."
+    "description": "For the duration all damage you deal to a target with 6 stacks of lasting pain is converted to true damage.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "uldurs-power",
@@ -2756,7 +3173,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Make a melee spell attack against a creature with 6 stacks of lasting pain. On hit: [5 x spell modifier + 105 + 10d12] pure damage. CON save or stunned for 1 min."
+    "description": "Make a melee spell attack against a creature with 6 stacks of lasting pain. On hit: [5 x spell modifier + 105 + 10d12] pure damage. CON save or stunned for 1 min.",
+    "tags": [
+      "damage",
+      "control",
+      "pure"
+    ]
   },
   {
     "id": "terrifying-aura",
@@ -2779,7 +3201,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "A dark aura surrounds you. At the start of your turn, creatures within 5 ft without lasting punishment stacks become terrified. The terrify effect ends when they move more than 60 ft away."
+    "description": "A dark aura surrounds you. At the start of your turn, creatures within 5 ft without lasting punishment stacks become terrified. The terrify effect ends when they move more than 60 ft away.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "endless-power",
@@ -2802,6 +3227,9 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration both you and the target with 6 stacks of lasting pain have no mana/energy/etc costs."
+    "description": "For the duration both you and the target with 6 stacks of lasting pain have no mana/energy/etc costs.",
+    "tags": [
+      "utility"
+    ]
   }
 ]

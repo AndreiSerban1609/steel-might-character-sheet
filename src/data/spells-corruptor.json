@@ -32,7 +32,11 @@
       }
     },
     "spellType": "caster",
-    "description": "You draw raw energy from the arcane veil and release it in a focused surge toward your foe. The target must succeed on a [Const, Int, Wis, Dex] saving throw (based on your current spirit), or on a Will saving throw if you have no spirit, or take [spell modifier + 12 + 2d10] damage of your spirit’s damage type [crushing, fire, lightning, spectral], or pure if you have no spirit. This spell can be cast again in the same turn."
+    "description": "You draw raw energy from the arcane veil and release it in a focused surge toward your foe. The target must succeed on a [Const, Int, Wis, Dex] saving throw (based on your current spirit), or on a Will saving throw if you have no spirit, or take [spell modifier + 12 + 2d10] damage of your spirit’s damage type [crushing, fire, lightning, spectral], or pure if you have no spirit. This spell can be cast again in the same turn.",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "earth-shock",
@@ -66,7 +70,14 @@
       }
     },
     "spellType": "caster",
-    "description": "You channel the weight and inevitability of the earth, sending a crushing force through your target. The target must succeed on a Constitution saving throw, or take [spell modifier + 13 + 2d6] force damage and have its movement speed reduced by [10] while moving toward you for the duration."
+    "description": "You channel the weight and inevitability of the earth, sending a crushing force through your target. The target must succeed on a Constitution saving throw, or take [spell modifier + 13 + 2d6] force damage and have its movement speed reduced by [10] while moving toward you for the duration.",
+    "tags": [
+      "damage",
+      "debuff",
+      "defense",
+      "movement",
+      "force"
+    ]
   },
   {
     "id": "spirit-strike",
@@ -104,7 +115,12 @@
       }
     },
     "spellType": "spirit command",
-    "description": "You issue a sharp command, and your spirit lunges to strike with its own nature. Your spirit makes an attack roll. On hit, it deals [spell modifier + 9 + 2d8] damage of its type and applies an additional effect: Earth: the spirit heals for the damage dealt​ Fire: the target gains a [3d8] Burning effect lasting 2 rounds​ Lightning: the target gains [1] Dazed stack​ Spectral: the target gains [1] Prone stack"
+    "description": "You issue a sharp command, and your spirit lunges to strike with its own nature. Your spirit makes an attack roll. On hit, it deals [spell modifier + 9 + 2d8] damage of its type and applies an additional effect: Earth: the spirit heals for the damage dealt​ Fire: the target gains a [3d8] Burning effect lasting 2 rounds​ Lightning: the target gains [1] Dazed stack​ Spectral: the target gains [1] Prone stack",
+    "tags": [
+      "damage",
+      "healing",
+      "control"
+    ]
   },
   {
     "id": "wild-attack",
@@ -127,7 +143,14 @@
       "manaCostIncrease": 10
     },
     "spellType": "spirit unlock",
-    "description": "You unleash a fragment of your spirit’s untamed nature, granting it a sudden, instinctive surge of power. Your spirit gains one use of the following (based on its type): Earth: 0 AP - next attack applies [2] Taunted stacks (on hit)​ Fire: 0 AP - next attack has advantage​ Lightning: 0 AP - next attack becomes a 90 ft lightning bolt, dealing the combined damage of an attack with both claws in a single instance as lightning damage​ Spectral: 0 AP - next attack becomes a dash, allowing the spirit to move up to 20 ft as part of the attack This spell can be cast again in the same turn at no mana cost, but only after the previous Wild Attack has been used."
+    "description": "You unleash a fragment of your spirit’s untamed nature, granting it a sudden, instinctive surge of power. Your spirit gains one use of the following (based on its type): Earth: 0 AP - next attack applies [2] Taunted stacks (on hit)​ Fire: 0 AP - next attack has advantage​ Lightning: 0 AP - next attack becomes a 90 ft lightning bolt, dealing the combined damage of an attack with both claws in a single instance as lightning damage​ Spectral: 0 AP - next attack becomes a dash, allowing the spirit to move up to 20 ft as part of the attack This spell can be cast again in the same turn at no mana cost, but only after the previous Wild Attack has been used.",
+    "tags": [
+      "damage",
+      "buff",
+      "control",
+      "movement",
+      "lightning"
+    ]
   },
   {
     "id": "phantasmagorical-spirit",
@@ -150,7 +173,12 @@
       "manaCostIncrease": 15
     },
     "spellType": "spirit enhancement​",
-    "description": "You blur the boundary between your spirit’s physical shape and the arcane veil from which you created it. It enters a ghost-like intangible state. For the duration, the spirit can move through solid objects and creatures, and its vision range becomes 20 ft. While active, you may channel to see through your spirit’s eyes. While doing so, your body becomes unconscious and unaware of its surroundings. If the spirit moves more than [200 ft] away from you, the effect ends immediately and the spirit is unsummoned (this does not consume your summon; see Summon Spirit)."
+    "description": "You blur the boundary between your spirit’s physical shape and the arcane veil from which you created it. It enters a ghost-like intangible state. For the duration, the spirit can move through solid objects and creatures, and its vision range becomes 20 ft. While active, you may channel to see through your spirit’s eyes. While doing so, your body becomes unconscious and unaware of its surroundings. If the spirit moves more than [200 ft] away from you, the effect ends immediately and the spirit is unsummoned (this does not consume your summon; see Summon Spirit).",
+    "tags": [
+      "control",
+      "movement",
+      "summon"
+    ]
   },
   {
     "id": "spiked-weapon",
@@ -183,7 +211,11 @@
       }
     },
     "spellType": "spirit weapon​",
-    "description": "You anchor a jagged construct of condensed arcane energy into the battlefield, its presence threatening any who move too close. While active, when a creature leaves the space within 5 ft of the construct, you may use your reaction to make an attack of opportunity against it. On hit, the target takes [spell modifier + 7 + 2d6] piercing damage. You may spend 1 AP to move the construct up to 30 ft. You must be within range to do so."
+    "description": "You anchor a jagged construct of condensed arcane energy into the battlefield, its presence threatening any who move too close. While active, when a creature leaves the space within 5 ft of the construct, you may use your reaction to make an attack of opportunity against it. On hit, the target takes [spell modifier + 7 + 2d6] piercing damage. You may spend 1 AP to move the construct up to 30 ft. You must be within range to do so.",
+    "tags": [
+      "damage",
+      "summon"
+    ]
   },
   {
     "id": "protective-energy",
@@ -216,7 +248,12 @@
       }
     },
     "spellType": "spirit weapon​",
-    "description": "You conjure a hovering shard of protective energy that lingers above an ally, ready to intercept incoming harm. When the target is damaged by a direct ability (not damage over time or secondary instances of the same ability), and is within 20 ft of your spirit, it gains [2d4] temporary HP lasting until the end of combat."
+    "description": "You conjure a hovering shard of protective energy that lingers above an ally, ready to intercept incoming harm. When the target is damaged by a direct ability (not damage over time or secondary instances of the same ability), and is within 20 ft of your spirit, it gains [2d4] temporary HP lasting until the end of combat.",
+    "tags": [
+      "damage",
+      "defense",
+      "summon"
+    ]
   },
   {
     "id": "exploding-darkness",
@@ -249,7 +286,12 @@
       }
     },
     "spellType": "caster",
-    "description": "You shoot a projectile of dark energy at an enemy within range. On a hit, the orb explodes and all creatures within 10 ft of the target, including the target, take [2 x spell modifier + 29 + 4d8] shadow damage."
+    "description": "You shoot a projectile of dark energy at an enemy within range. On a hit, the orb explodes and all creatures within 10 ft of the target, including the target, take [2 x spell modifier + 29 + 4d8] shadow damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "force-crush",
@@ -283,7 +325,13 @@
       }
     },
     "spellType": "caster",
-    "description": "You force a creature within range to make a Str saving throw. On a fail, the creature takes [2 x spell modifier + 33 + 4d10] force damage and is pushed up to 15 ft towards your spirit."
+    "description": "You force a creature within range to make a Str saving throw. On a fail, the creature takes [2 x spell modifier + 33 + 4d10] force damage and is pushed up to 15 ft towards your spirit.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "force"
+    ]
   },
   {
     "id": "spirit-lash",
@@ -316,7 +364,14 @@
       }
     },
     "spellType": "spirit command",
-    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [2 x spell modifier + 19 + 3d12] spirit damage. Fire spirit: the target has its PA reduced by [15] for a round. Earth spirit: the target must succeed on a Const saving throw or be rooted for a round Lightning spirit: the target has its resistance to lightning reduced by one level for a round Spectral spirit: the spirit’s next attack on the target will deal [5d8] additional spectral damage]"
+    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [2 x spell modifier + 19 + 3d12] spirit damage. Fire spirit: the target has its PA reduced by [15] for a round. Earth spirit: the target must succeed on a Const saving throw or be rooted for a round Lightning spirit: the target has its resistance to lightning reduced by one level for a round Spectral spirit: the spirit’s next attack on the target will deal [5d8] additional spectral damage]",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "defense",
+      "spectral"
+    ]
   },
   {
     "id": "magic-imbue",
@@ -335,7 +390,12 @@
     "damageType": "fire",
     "attackType": null,
     "spellType": "spirit unlock",
-    "description": "You unlock 2 use(s) of the following spell for your spirit (you must choose one spell that is granted at the moment of the cast) Fire spirit: any elementalist or battlecaster spell of the same level that deals fire damage Earth spirit: any guardian or druid spell of the same level Lightning spirit: any elementalist or stormbringer spell of the same level that deal lightning damage Spectral spirit: any phantom special attack (special attack 1 for 2nd level spell; special attack 2 for 3rd level spell; special attack 3 for 4th level spell or higher); the spirit is considered in the right form to apply the mark and then prock it with a different attack, without needing to consume any ap to change forms;"
+    "description": "You unlock 2 use(s) of the following spell for your spirit (you must choose one spell that is granted at the moment of the cast) Fire spirit: any elementalist or battlecaster spell of the same level that deals fire damage Earth spirit: any guardian or druid spell of the same level Lightning spirit: any elementalist or stormbringer spell of the same level that deal lightning damage Spectral spirit: any phantom special attack (special attack 1 for 2nd level spell; special attack 2 for 3rd level spell; special attack 3 for 4th level spell or higher); the spirit is considered in the right form to apply the mark and then prock it with a different attack, without needing to consume any ap to change forms;",
+    "tags": [
+      "damage",
+      "defense",
+      "fire"
+    ]
   },
   {
     "id": "cunning-spirit",
@@ -355,7 +415,10 @@
     "damageType": null,
     "attackType": null,
     "spellType": "spirit enhancement",
-    "description": "You enhance your spirit, making it more elusive. Your spirit removes one negative effect affecting it, and nullifies the first negative effect (not the damage that caused it) that would affect it."
+    "description": "You enhance your spirit, making it more elusive. Your spirit removes one negative effect affecting it, and nullifies the first negative effect (not the damage that caused it) that would affect it.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "shadow-energy",
@@ -389,7 +452,13 @@
       }
     },
     "spellType": "spirit weapon",
-    "description": "You create a dark artefact covered in shadows at a point within range. For the duration you can use the spirit weapon once per turn for 1 ap to force ALL creatures within 10 ft of the weapon to roll a dex saving throw.. On a fail, a target takes [2 x spell modifier + 8 + 2d8] shadow damage. For 1 ap you can move the weapon up to 30 ft. (but you must be in [range] ft of it to cast this)."
+    "description": "You create a dark artefact covered in shadows at a point within range. For the duration you can use the spirit weapon once per turn for 1 ap to force ALL creatures within 10 ft of the weapon to roll a dex saving throw.. On a fail, a target takes [2 x spell modifier + 8 + 2d8] shadow damage. For 1 ap you can move the weapon up to 30 ft. (but you must be in [range] ft of it to cast this).",
+    "tags": [
+      "damage",
+      "movement",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "energy-of-swiftness",
@@ -412,7 +481,10 @@
       "manaCostIncrease": 50
     },
     "spellType": "spirit weapon",
-    "description": "You create a windy artefact on top of a creature. At the end of each of your turns, the artefact grants the creature +[4] bonus AC for a round. For 1 ap, you can move the artefact to another creature within range."
+    "description": "You create a windy artefact on top of a creature. At the end of each of your turns, the artefact grants the creature +[4] bonus AC for a round. For 1 ap, you can move the artefact to another creature within range.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "banish",
@@ -436,7 +508,10 @@
       "manaCostIncrease": 50
     },
     "spellType": "caster",
-    "description": "You force a creature within range to make a Cha saving throw. On a fail, the creature is banished (turned ethereal) for up to 3 turns. An ethereal creature takes half damage from physical sources, but double from magic. The creature can repeat the saving throw at the end of each of their turns."
+    "description": "You force a creature within range to make a Cha saving throw. On a fail, the creature is banished (turned ethereal) for up to 3 turns. An ethereal creature takes half damage from physical sources, but double from magic. The creature can repeat the saving throw at the end of each of their turns.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "forced-kneel",
@@ -470,7 +545,12 @@
       }
     },
     "spellType": "caster",
-    "description": "You force a creature within range to make a Const saving throw. On a fail, the creature takes [3 x spell modifier + 35 + 3d10] force damage and is knocked prone."
+    "description": "You force a creature within range to make a Const saving throw. On a fail, the creature takes [3 x spell modifier + 35 + 3d10] force damage and is knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "force"
+    ]
   },
   {
     "id": "spirit-onslaught",
@@ -503,7 +583,11 @@
       }
     },
     "spellType": "spirit command",
-    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [3 x spell modifier + 48 + 6d12] spirit damage. Fire spirit: the attack deal another [2d12] damage for every [10 ft] range between the spirit and the target Earth spirit: the attack deals another [2d12] damage for every [50] current hp your spirit has Lightning spirit: the attack deals another [2d12] damage for every [50] missing hp your target has Spectral spirit: the attack also reduces the target’s PA and MA until the end of their turn for [2d12] for every time your spirit damaged them since the end of your last turn"
+    "description": "You instantly command your spirit to strike a foe within range. Your spirit rolls an attack against the target, and on a hit deals [3 x spell modifier + 48 + 6d12] spirit damage. Fire spirit: the attack deal another [2d12] damage for every [10 ft] range between the spirit and the target Earth spirit: the attack deals another [2d12] damage for every [50] current hp your spirit has Lightning spirit: the attack deals another [2d12] damage for every [50] missing hp your target has Spectral spirit: the attack also reduces the target’s PA and MA until the end of their turn for [2d12] for every time your spirit damaged them since the end of your last turn",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "elemental-powers",
@@ -536,7 +620,14 @@
       }
     },
     "spellType": "spirit unlock",
-    "description": "You unlock 2 USES of your spirit’s elemental power for your spirit (the spirit must be in range for the cast). Fire spirit: Melting doom (3 ap) - your spirit spits lava in a 10 ft wide 100 ft long line in a direction that lasts for up to 3 turns; all creatures that starts its turn in the lava, or move through it (they take the damage for every ap of movement - at the first step of the ap) automatically takes [3 x spell modifier + 23 + 6d6] fire damage (normally ignores armor) Earth spirit: Shockwave (3 ap) - your spirit slams the ground, forcing all enemies within 30 ft to roll a str saving throw; on a fail they take [3 x spell modifier + 60 + 6d8] force damage and are pulled to the nearest unoccupied space to next to the spirit Lightning spirit: Lightning onslaught (4 ap) your spirit makes 5 attacks on a target (requiring attack roll), each dealing [3 x spell modifier + 11 + 3d10] lightning damage and reducing the target’s ap by 1 Spectral spirit: Spectral breath (3 ap) - your spirit breaths a wave of spectral energy in a 15 ft long cone in front of it; all creatures within range must roll a dex saving throw; on a fail they take [3 x spell modifier + 50 + 6d12] spectral damage, and on a success they take half the amount;"
+    "description": "You unlock 2 USES of your spirit’s elemental power for your spirit (the spirit must be in range for the cast). Fire spirit: Melting doom (3 ap) - your spirit spits lava in a 10 ft wide 100 ft long line in a direction that lasts for up to 3 turns; all creatures that starts its turn in the lava, or move through it (they take the damage for every ap of movement - at the first step of the ap) automatically takes [3 x spell modifier + 23 + 6d6] fire damage (normally ignores armor) Earth spirit: Shockwave (3 ap) - your spirit slams the ground, forcing all enemies within 30 ft to roll a str saving throw; on a fail they take [3 x spell modifier + 60 + 6d8] force damage and are pulled to the nearest unoccupied space to next to the spirit Lightning spirit: Lightning onslaught (4 ap) your spirit makes 5 attacks on a target (requiring attack roll), each dealing [3 x spell modifier + 11 + 3d10] lightning damage and reducing the target’s ap by 1 Spectral spirit: Spectral breath (3 ap) - your spirit breaths a wave of spectral energy in a 15 ft long cone in front of it; all creatures within range must roll a dex saving throw; on a fail they take [3 x spell modifier + 50 + 6d12] spectral damage, and on a success they take half the amount;",
+    "tags": [
+      "damage",
+      "control",
+      "movement",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "spirit-wings",
@@ -559,7 +650,11 @@
       "manaCostIncrease": 15
     },
     "spellType": "spirit enhancement",
-    "description": "You enhance your spirit, giving it [30] flying speed for the duration."
+    "description": "You enhance your spirit, giving it [30] flying speed for the duration.",
+    "tags": [
+      "buff",
+      "movement"
+    ]
   },
   {
     "id": "siege-weapon",
@@ -592,7 +687,11 @@
       }
     },
     "spellType": "spirit weapon",
-    "description": "You create a giant artifact, similarly looking to a giant ram. For the duration you can use the spirit weapon once per turn for 6 ap to attack a creature within range. The attack automatically hits, and deals [100 + 8d20] crushing damage. This damage is doubled against constructs, and quadrupled against structures and objects."
+    "description": "You create a giant artifact, similarly looking to a giant ram. For the duration you can use the spirit weapon once per turn for 6 ap to attack a creature within range. The attack automatically hits, and deals [100 + 8d20] crushing damage. This damage is doubled against constructs, and quadrupled against structures and objects.",
+    "tags": [
+      "damage",
+      "summon"
+    ]
   },
   {
     "id": "hasting-energy",
@@ -615,7 +714,10 @@
       "manaCostIncrease": 50
     },
     "spellType": "spirit weapon",
-    "description": "You create a glowing artifact of light on top of a creature. That creature has [2] increased ap recovery. For 1 ap you can move the artifact to another creature."
+    "description": "You create a glowing artifact of light on top of a creature. That creature has [2] increased ap recovery. For 1 ap you can move the artifact to another creature.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "spirit-swap",
@@ -635,7 +737,10 @@
     "damageType": null,
     "attackType": null,
     "spellType": "caster",
-    "description": "You move your spirit up to 30 ft, then switch places with it."
+    "description": "You move your spirit up to 30 ft, then switch places with it.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "occult-blast",
@@ -668,7 +773,12 @@
       }
     },
     "spellType": "caster",
-    "description": "Make a ranged attack against a creature. On a hit, the target takes [4 x spell modifier + 58 + 8d10] shadow damage. If the target is affected by a negative effect, the attack automatically hits. For every additional negative effect affecting the target (beyond the first), the attack deals [4d10] additional damage"
+    "description": "Make a ranged attack against a creature. On a hit, the target takes [4 x spell modifier + 58 + 8d10] shadow damage. If the target is affected by a negative effect, the attack automatically hits. For every additional negative effect affecting the target (beyond the first), the attack deals [4d10] additional damage",
+    "tags": [
+      "damage",
+      "buff",
+      "shadow"
+    ]
   },
   {
     "id": "spirit-signature",
@@ -694,7 +804,15 @@
       "dice": "8d12"
     },
     "spellType": "spirit command",
-    "description": "You instantly command your spirit to use their signature ability. Fire spirit: spits a giant fireball at a point within range. all creatures within 30 ft roll a dex saving throw, taking [4 x spell modifier + 170 + 8d12] fire damage on a fail, or half as much on a success Earth spirit: forces all enemy targets within 30 ft to make a will saving throw or be taunted for up to 3 turns; they can repeat the saving throw at the end of every turn; while any creature is still taunted, the spirit reduces all received by half (after all other reductions) Lightning spirit: deals [4 x spell modifier + 140 + 8d12] lightning damage and forces the target to succeed on a const saving throw or be stunned for a turn; Spectral spirit: Absorb essence - the spirit deals [4 x spell modifier + 98 + 8d10] spectral damage to all enemies within 20 ft, and heals for half the damage dealt"
+    "description": "You instantly command your spirit to use their signature ability. Fire spirit: spits a giant fireball at a point within range. all creatures within 30 ft roll a dex saving throw, taking [4 x spell modifier + 170 + 8d12] fire damage on a fail, or half as much on a success Earth spirit: forces all enemy targets within 30 ft to make a will saving throw or be taunted for up to 3 turns; they can repeat the saving throw at the end of every turn; while any creature is still taunted, the spirit reduces all received by half (after all other reductions) Lightning spirit: deals [4 x spell modifier + 140 + 8d12] lightning damage and forces the target to succeed on a const saving throw or be stunned for a turn; Spectral spirit: Absorb essence - the spirit deals [4 x spell modifier + 98 + 8d10] spectral damage to all enemies within 20 ft, and heals for half the damage dealt",
+    "tags": [
+      "damage",
+      "healing",
+      "control",
+      "defense",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "spirit-rage",
@@ -714,7 +832,11 @@
     "damageType": null,
     "attackType": null,
     "spellType": "spirit unlock",
-    "description": "You unlock 3 USES of your spirit’s special rage power for your spirit (the spirit must be in range for the cast). Fire spirit: 0 ap, for 1 round the spirit deals x1.5 damage, but takes x1.5 damage; Earth spirit: 0 ap; for 1 round, the spirit doubles its armor, but deals no more modifier damage with its attacks (or commands/abilities that occur through it). Lightning spirit: 0 ap; for 1 round, the spirit has doubled ap recovery, but it automatically fails all saving throws and all attacks automatically hit it; Spectral spirit: 0 ap; for 1 round, the spirit heals for 100% of the damage it deals (or damage dealt through commands/abilities that occur through it), but has its PA and MA reduced to 0."
+    "description": "You unlock 3 USES of your spirit’s special rage power for your spirit (the spirit must be in range for the cast). Fire spirit: 0 ap, for 1 round the spirit deals x1.5 damage, but takes x1.5 damage; Earth spirit: 0 ap; for 1 round, the spirit doubles its armor, but deals no more modifier damage with its attacks (or commands/abilities that occur through it). Lightning spirit: 0 ap; for 1 round, the spirit has doubled ap recovery, but it automatically fails all saving throws and all attacks automatically hit it; Spectral spirit: 0 ap; for 1 round, the spirit heals for 100% of the damage it deals (or damage dealt through commands/abilities that occur through it), but has its PA and MA reduced to 0.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "shadow-bolt",
@@ -746,7 +868,11 @@
         "dice": "2d10"
       }
     },
-    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 16 + 1d10] shadow damage."
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 16 + 1d10] shadow damage.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "raise-skeleton",
@@ -779,7 +905,12 @@
         "dice": "1d8"
       }
     },
-    "description": "You raise a skeleton from a corpse. The skeleton has 45 hp, 12 AC, 0 PA, 0 MA, 20 MS, 4 ap recovery, and an attack deals [spell modifier + 8 + 1d8] slashing damage. The skeleton takes 25% of its max HP as true damage at the end of each of its turns. It takes its turn right after yours."
+    "description": "You raise a skeleton from a corpse. The skeleton has 45 hp, 12 AC, 0 PA, 0 MA, 20 MS, 4 ap recovery, and an attack deals [spell modifier + 8 + 1d8] slashing damage. The skeleton takes 25% of its max HP as true damage at the end of each of its turns. It takes its turn right after yours.",
+    "tags": [
+      "damage",
+      "defense",
+      "summon"
+    ]
   },
   {
     "id": "shadow-hand",
@@ -811,7 +942,13 @@
         "dice": "1d12"
       }
     },
-    "description": "You raise a shadow hand from the ground to grab a target. The target must succeed on a Str saving throw or take [spell modifier + 10 + 1d12] shadow damage and be restrained (snared) for a turn (rooted if the creature is larger than a regular humanoid)."
+    "description": "You raise a shadow hand from the ground to grab a target. The target must succeed on a Str saving throw or take [spell modifier + 10 + 1d12] shadow damage and be restrained (snared) for a turn (rooted if the creature is larger than a regular humanoid).",
+    "tags": [
+      "damage",
+      "control",
+      "summon",
+      "shadow"
+    ]
   },
   {
     "id": "bone-eater",
@@ -841,7 +978,11 @@
         "flat": 0
       }
     },
-    "description": "You consume a corpse, absorbing the essence of their bones. Increases your armors (PA and MA) by [spell modifier] for the duration."
+    "description": "You consume a corpse, absorbing the essence of their bones. Increases your armors (PA and MA) by [spell modifier] for the duration.",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "shadow-bird",
@@ -874,7 +1015,12 @@
         "dice": "2d6"
       }
     },
-    "description": "You create a shadow bird at an unoccupied space within range and choose a creature. At the start of each of the creature’s turns, if it is within [30 ft] of it, the bird shoots a magic ray at the target. The creature must succeed on a const saving throw or take [spell modifier + 5 + 2d6] shadow damage and be slowed by 10 speed while still within 30 ft of the bird. During your turn you can consume 1 ap to change the target of the bird, but not the position."
+    "description": "You create a shadow bird at an unoccupied space within range and choose a creature. At the start of each of the creature’s turns, if it is within [30 ft] of it, the bird shoots a magic ray at the target. The creature must succeed on a const saving throw or take [spell modifier + 5 + 2d6] shadow damage and be slowed by 10 speed while still within 30 ft of the bird. During your turn you can consume 1 ap to change the target of the bird, but not the position.",
+    "tags": [
+      "damage",
+      "control",
+      "shadow"
+    ]
   },
   {
     "id": "wicked-epiphany",
@@ -906,7 +1052,12 @@
         "dice": "1d4"
       }
     },
-    "description": "You force a creature within range to make a Wis saving throw. On a fail the target starts seeing all that is dark and gloomy as the absolute truth of the world. The target takes [spell modifier + 3 + 1d4] shadow damage at the start of each of their turns. The target can repeat the saving throw whenever they are healed, but not at the end of each turn."
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target starts seeing all that is dark and gloomy as the absolute truth of the world. The target takes [spell modifier + 3 + 1d4] shadow damage at the start of each of their turns. The target can repeat the saving throw whenever they are healed, but not at the end of each turn.",
+    "tags": [
+      "damage",
+      "healing",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-wave",
@@ -939,7 +1090,13 @@
         "dice": "2d8"
       }
     },
-    "description": "You create a wave of darkness in a 15 long cone in front of you. All creatures within range must succeed on a Str saving throw or take [spell modifier + 10 + 2d8] shadow damage and be pushed back 15 ft."
+    "description": "You create a wave of darkness in a 15 long cone in front of you. All creatures within range must succeed on a Str saving throw or take [spell modifier + 10 + 2d8] shadow damage and be pushed back 15 ft.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "pitch-black",
@@ -957,7 +1114,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You instantly snuff out all (or the ones you choose) torches, lights, etc. within range that are not kept lit by magical means."
+    "description": "You instantly snuff out all (or the ones you choose) torches, lights, etc. within range that are not kept lit by magical means.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "breathless",
@@ -973,7 +1133,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "For the duration you are cold to the touch and you do not appear to be breathing (but you are, so you can still suffocate etc.). An investigation check or passive investigation against your spell DC reveal these effects to be nothing more than a mirage. You can end the effect early (no cost required)"
+    "description": "For the duration you are cold to the touch and you do not appear to be breathing (but you are, so you can still suffocate etc.). An investigation check or passive investigation against your spell DC reveal these effects to be nothing more than a mirage. You can end the effect early (no cost required)",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "dark-echoes",
@@ -1005,7 +1168,11 @@
         "dice": "2d10"
       }
     },
-    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [2 x spell modifier + 32 + 4d10] shadow damage. If you attack the same target with a single-target (targeted) spell until the end of your next turn you can also cast the spell (free of all costs) on another target within 10 ft of the initial one."
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [2 x spell modifier + 32 + 4d10] shadow damage. If you attack the same target with a single-target (targeted) spell until the end of your next turn you can also cast the spell (free of all costs) on another target within 10 ft of the initial one.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "dark-shield",
@@ -1024,7 +1191,11 @@
     "scaling": {
       "manaCostIncrease": 20
     },
-    "description": "You create a dark shield around you. The first time a targeted (weapon) attack hits you you take no damage and if the attack was melee the attacker is pushed back 15 ft. Only triggers and works on creatures of size large or smaller."
+    "description": "You create a dark shield around you. The first time a targeted (weapon) attack hits you you take no damage and if the attack was melee the attacker is pushed back 15 ft. Only triggers and works on creatures of size large or smaller.",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "murderous-crows",
@@ -1057,7 +1228,12 @@
         "dice": "2d12"
       }
     },
-    "description": "You send forth a murder of shadow crows against a foe within range. The target must roll a Const saving throw. On a fail they take [2 x spell modifier + 39 + 4d12] shadow damage and are blinded for 1 turn."
+    "description": "You send forth a murder of shadow crows against a foe within range. The target must roll a Const saving throw. On a fail they take [2 x spell modifier + 39 + 4d12] shadow damage and are blinded for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "shadow"
+    ]
   },
   {
     "id": "corpse-explosion",
@@ -1090,7 +1266,12 @@
         "dice": "4d8"
       }
     },
-    "description": "You make a corpse explode. Targets within 10 ft of it must roll a Dex saving throw. On a fail they take [2 x spell modifier + 21 + 6d8] force damage. On a success they take only half."
+    "description": "You make a corpse explode. Targets within 10 ft of it must roll a Dex saving throw. On a fail they take [2 x spell modifier + 21 + 6d8] force damage. On a success they take only half.",
+    "tags": [
+      "damage",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "necrophagy",
@@ -1112,7 +1293,11 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "You consume a corpse, absorbing the essence of their flesh. For the duration your AC increases by [4] for the duration."
+    "description": "You consume a corpse, absorbing the essence of their flesh. For the duration your AC increases by [4] for the duration.",
+    "tags": [
+      "buff",
+      "defense"
+    ]
   },
   {
     "id": "spreading-void",
@@ -1145,7 +1330,12 @@
         "dice": "1d6"
       }
     },
-    "description": "You force a creature within range to make a Const saving throw. On a fail they are infected with darkness. They are surrounded by a shadowy aura and take [2 x spell modifier + 8 + 2d6] shadow damage at the start of each of their turns. If the target dies the effect is automatically transmitted to the nearest enemy creatures, should any exist within 20 ft of the target, and the duration resets. A target can repeat the saving throw every time they get healed, but not at the end of each turn."
+    "description": "You force a creature within range to make a Const saving throw. On a fail they are infected with darkness. They are surrounded by a shadowy aura and take [2 x spell modifier + 8 + 2d6] shadow damage at the start of each of their turns. If the target dies the effect is automatically transmitted to the nearest enemy creatures, should any exist within 20 ft of the target, and the duration resets. A target can repeat the saving throw every time they get healed, but not at the end of each turn.",
+    "tags": [
+      "damage",
+      "healing",
+      "shadow"
+    ]
   },
   {
     "id": "raising-darkness",
@@ -1178,7 +1368,14 @@
         "dice": "2d8"
       }
     },
-    "description": "Mark a point within range. The area on the ground within 15 ft of the point starts glowing in black. At the end of the turn a wave of darkness springs out of the ground and towards the sky. All creatures in the area must succeed on a Dex saving throw or take [2 x spell modifier + 26 + 4d8] shadow damage. If you choose to concentrate on the spell the area remains gloomy, and at the end of each turn of concentration the wave of darkness explodes again, the damage being increased by [5 + 2d8] every time."
+    "description": "Mark a point within range. The area on the ground within 15 ft of the point starts glowing in black. At the end of the turn a wave of darkness springs out of the ground and towards the sky. All creatures in the area must succeed on a Dex saving throw or take [2 x spell modifier + 26 + 4d8] shadow damage. If you choose to concentrate on the spell the area remains gloomy, and at the end of each turn of concentration the wave of darkness explodes again, the damage being increased by [5 + 2d8] every time.",
+    "tags": [
+      "damage",
+      "buff",
+      "defense",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "insecurity",
@@ -1208,7 +1405,12 @@
         "flat": 0
       }
     },
-    "description": "You force a target to make a Will saving throw. On a fail the target becomes insecure and afraid, becoming more susceptible to shadow damage. Their SA is reduced by [3 x spell modifier] for the duration."
+    "description": "You force a target to make a Will saving throw. On a fail the target becomes insecure and afraid, becoming more susceptible to shadow damage. Their SA is reduced by [3 x spell modifier] for the duration.",
+    "tags": [
+      "damage",
+      "debuff",
+      "shadow"
+    ]
   },
   {
     "id": "darkness",
@@ -1227,7 +1429,12 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "concentration You create a sphere of darkness (15 ft radius) centered on a point within range. The darkness blocks all light and all creatures in the area are effectively blind (if they don't have darkvision). Creatures outside the area cannot see inside it."
+    "description": "concentration You create a sphere of darkness (15 ft radius) centered on a point within range. The darkness blocks all light and all creatures in the area are effectively blind (if they don't have darkvision). Creatures outside the area cannot see inside it.",
+    "tags": [
+      "control",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "despair",
@@ -1247,7 +1454,10 @@
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "You force a creature within range to make a Will saving throw or fall in the depths of despair. The target becomes lethargic and lacks all motivation. The target is likely to abandon its post or job. If the target is in a group the target is likely to leave and go somewhere to be alone. The final decision belongs to the dm regarding the appropriate behaviour for the target. On a fail or at the end of the spell the target knows magic was used on them but does not know by whom necessarily (they can deduct it was you or perhaps they saw you etc. but they don't automatically know)."
+    "description": "You force a creature within range to make a Will saving throw or fall in the depths of despair. The target becomes lethargic and lacks all motivation. The target is likely to abandon its post or job. If the target is in a group the target is likely to leave and go somewhere to be alone. The final decision belongs to the dm regarding the appropriate behaviour for the target. On a fail or at the end of the spell the target knows magic was used on them but does not know by whom necessarily (they can deduct it was you or perhaps they saw you etc. but they don't automatically know).",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "unbearable-horror",
@@ -1280,7 +1490,11 @@
         "dice": "2d10"
       }
     },
-    "description": "You force a creature to make an int saving throw. On a fail they take [3 x spell modifier + 43 + 6d10] shadow damage and are affected by weight of darkness until the end of their next turn. Whenever they move while being affected they take [3d10] true damage for every ap consumed moving."
+    "description": "You force a creature to make an int saving throw. On a fail they take [3 x spell modifier + 43 + 6d10] shadow damage and are affected by weight of darkness until the end of their next turn. Whenever they move while being affected they take [3d10] true damage for every ap consumed moving.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "confinement",
@@ -1303,7 +1517,11 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "You force a target to make a Will saving throw. On a fail they target only receives half healing from all sources. If the target fails the saving throw by more than 5 (if they needed to roll a 15, and they roll 10 or below) they receive no healing instead. You cannot cast this on a creature already affected."
+    "description": "You force a target to make a Will saving throw. On a fail they target only receives half healing from all sources. If the target fails the saving throw by more than 5 (if they needed to roll a 15, and they roll 10 or below) they receive no healing instead. You cannot cast this on a creature already affected.",
+    "tags": [
+      "healing",
+      "debuff"
+    ]
   },
   {
     "id": "traumatise",
@@ -1323,7 +1541,11 @@
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "You force a creature to make a Wis saving throw or become traumatised for the duration. While traumatised, a creature is stunned, but their PA and MA are tripled and all incoming damage is halved. The creature can repeat the saving throw at the end of each turn."
+    "description": "You force a creature to make a Wis saving throw or become traumatised for the duration. While traumatised, a creature is stunned, but their PA and MA are tripled and all incoming damage is halved. The creature can repeat the saving throw at the end of each turn.",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "dark-sleep",
@@ -1342,7 +1564,12 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "You fall into a dark sleep. You are crystalised for the duration and your summons no longer take damage over time. All healing you receive is reduced to 0. You can end this effect early (but still end your turn - you wake up and then the round continues)."
+    "description": "You fall into a dark sleep. You are crystalised for the duration and your summons no longer take damage over time. All healing you receive is reduced to 0. You can end this effect early (but still end your turn - you wake up and then the round continues).",
+    "tags": [
+      "healing",
+      "control",
+      "summon"
+    ]
   },
   {
     "id": "false-promise",
@@ -1384,7 +1611,12 @@
         "dice": "1d12"
       }
     },
-    "description": "You heal a creature that is NOT completely healthy (full hp) for [6 x spell modifier + 89 + 12d12]. The target then takes [3 x spell modifier + 35 + 3d12] shadow damage at the start of each of their turns for the duration."
+    "description": "You heal a creature that is NOT completely healthy (full hp) for [6 x spell modifier + 89 + 12d12]. The target then takes [3 x spell modifier + 35 + 3d12] shadow damage at the start of each of their turns for the duration.",
+    "tags": [
+      "damage",
+      "healing",
+      "shadow"
+    ]
   },
   {
     "id": "corpse-lunge",
@@ -1416,7 +1648,13 @@
         "dice": "2d8"
       }
     },
-    "description": "You consume a corpse to create a shadow spectre that lunges in a 20 ft long line 10 ft wide line in the direction opposite of you (as you are facing the body, the line continues towards the horizon). All creatures in the range must roll a dex saving throw. On a fail they take [3 x spell modifier + 44 + 6d8] spectral damage. On a success they only take half as much."
+    "description": "You consume a corpse to create a shadow spectre that lunges in a 20 ft long line 10 ft wide line in the direction opposite of you (as you are facing the body, the line continues towards the horizon). All creatures in the range must roll a dex saving throw. On a fail they take [3 x spell modifier + 44 + 6d8] spectral damage. On a success they only take half as much.",
+    "tags": [
+      "damage",
+      "defense",
+      "aoe",
+      "spectral"
+    ]
   },
   {
     "id": "wits-leech",
@@ -1444,7 +1682,11 @@
     "scaling": {
       "manaCostIncrease": 15
     },
-    "description": "You consume a corpse, absorbing their wits. For the duration you add [1d4 + 1] to your: Int and Wis saving throws, passive investigation and passive perception, Perception and Investigation checks."
+    "description": "You consume a corpse, absorbing their wits. For the duration you add [1d4 + 1] to your: Int and Wis saving throws, passive investigation and passive perception, Perception and Investigation checks.",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "the-four-eyed-crow",
@@ -1476,7 +1718,11 @@
         "dice": "1d10"
       }
     },
-    "description": "You send forth a crow at a target within range. The crow flies from one target to another within 10 ft of them (only enemies). The crow prioritizes targets that it hasn't hit yet, but chooses randomly from them. A target “hit” by the crow must succeed on a Will saving throw or take [3 x spell modifier + 21 + 3d10] shadow damage and become terrified for 1 turn. A target can take the damage multiple times but cannot become terrified for more than 1 turn. The crow can bounce up to 5 times (“hitting” a target 6 times)."
+    "description": "You send forth a crow at a target within range. The crow flies from one target to another within 10 ft of them (only enemies). The crow prioritizes targets that it hasn't hit yet, but chooses randomly from them. A target “hit” by the crow must succeed on a Will saving throw or take [3 x spell modifier + 21 + 3d10] shadow damage and become terrified for 1 turn. A target can take the damage multiple times but cannot become terrified for more than 1 turn. The crow can bounce up to 5 times (“hitting” a target 6 times).",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "wicked-telekinesis",
@@ -1509,7 +1755,11 @@
         "dice": "2d4"
       }
     },
-    "description": "You force a target to make a Str saving throw. On a fail you create a dark beam that lifts them up and drops them with force on a spot within range, damaging them for [3 x spell modifier + 23 + 6d4] crushing damage. Both the target and the “teleporting” destination must be within [range] of you. A willing creature automatically fails the saving throw."
+    "description": "You force a target to make a Str saving throw. On a fail you create a dark beam that lifts them up and drops them with force on a spot within range, damaging them for [3 x spell modifier + 23 + 6d4] crushing damage. Both the target and the “teleporting” destination must be within [range] of you. A willing creature automatically fails the saving throw.",
+    "tags": [
+      "damage",
+      "movement"
+    ]
   },
   {
     "id": "dark-servant",
@@ -1528,7 +1778,11 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You mark a body with a mark of necromancy. The body rises as it stands and does your bidding (it is unable to fight, but can attempt to accomplish tasks to the best of its abilities). The body has the stats of the creature before death."
+    "description": "You mark a body with a mark of necromancy. The body rises as it stands and does your bidding (it is unable to fight, but can attempt to accomplish tasks to the best of its abilities). The body has the stats of the creature before death.",
+    "tags": [
+      "summon",
+      "ritual"
+    ]
   },
   {
     "id": "dark-sight",
@@ -1544,7 +1798,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You temporarily gain darkvision of 30 ft. This can see through magic darkness as well (that normally blocks vision)."
+    "description": "You temporarily gain darkvision of 30 ft. This can see through magic darkness as well (that normally blocks vision).",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "void-shard",
@@ -1577,7 +1834,11 @@
         "dice": "2d10"
       }
     },
-    "description": "You create a shard of darkness and throw it at a creature within range. The target must succeed on a dex saving throw or take [4 x spell modifier + 44 + 8d10] shadow damage and be affected by shadow vision for the duration. (shadow vision means that a creature is covered in a darkness that follows them; they are able to see perfectly 10 ft around them but nothing further than that)."
+    "description": "You create a shard of darkness and throw it at a creature within range. The target must succeed on a dex saving throw or take [4 x spell modifier + 44 + 8d10] shadow damage and be affected by shadow vision for the duration. (shadow vision means that a creature is covered in a darkness that follows them; they are able to see perfectly 10 ft around them but nothing further than that).",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "corruption",
@@ -1608,7 +1869,12 @@
         "dice": "1d12"
       }
     },
-    "description": "You cast a shadow ray on a creature within range that is affected by at least 3 shadow effects (shadow damage over time, or cc cast by necromancer etc.). All the shadow effects end and the creature takes [4 x spell modifier + 50 + 4d12] + [4 x spell modifier + 25 + 4d12] / shadow effect ended shadow damage and you heal for half the damage dealt."
+    "description": "You cast a shadow ray on a creature within range that is affected by at least 3 shadow effects (shadow damage over time, or cc cast by necromancer etc.). All the shadow effects end and the creature takes [4 x spell modifier + 50 + 4d12] + [4 x spell modifier + 25 + 4d12] / shadow effect ended shadow damage and you heal for half the damage dealt.",
+    "tags": [
+      "damage",
+      "healing",
+      "shadow"
+    ]
   },
   {
     "id": "void-feast",
@@ -1640,7 +1906,12 @@
         "dice": "1d8"
       }
     },
-    "description": "You cast the void upon a creature within range. The creature takes [4 x spell modifier + 34 + 4d8] shadow damage at the start of each of their turns for the duration. This effect can only be ended by a 5th level spell by a normal caster or 8th level spell by a major caster that heals the target (or straight up ends the effect). You can also end the effect at any time you want. If you go more than 300 ft away from the target, the effect also ends."
+    "description": "You cast the void upon a creature within range. The creature takes [4 x spell modifier + 34 + 4d8] shadow damage at the start of each of their turns for the duration. This effect can only be ended by a 5th level spell by a normal caster or 8th level spell by a major caster that heals the target (or straight up ends the effect). You can also end the effect at any time you want. If you go more than 300 ft away from the target, the effect also ends.",
+    "tags": [
+      "damage",
+      "healing",
+      "shadow"
+    ]
   },
   {
     "id": "circle-of-the-wicked",
@@ -1659,7 +1930,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You create a 30 ft radius circle centered on you (that does not move with you). Creatures inside the circle have their range tripled. For spells and attacks with melee range the range becomes 30 ft (all attacks have a shadow extension that casts them at the mentioned range)."
+    "description": "You create a 30 ft radius circle centered on you (that does not move with you). Creatures inside the circle have their range tripled. For spells and attacks with melee range the range becomes 30 ft (all attacks have a shadow extension that casts them at the mentioned range).",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "black-speech",
@@ -1691,7 +1965,13 @@
         "dice": "1d8"
       }
     },
-    "description": "You speak a dark ritual. All enemy creatures within range must roll a Wis saving throw. On a fail they take [4 x spell modifier + 65 + 4d8] shadow damage, or half as much on a success. If a creature failed the saving throw, they cannot target you (can still damage you with aoes) with anything for 1 turn."
+    "description": "You speak a dark ritual. All enemy creatures within range must roll a Wis saving throw. On a fail they take [4 x spell modifier + 65 + 4d8] shadow damage, or half as much on a success. If a creature failed the saving throw, they cannot target you (can still damage you with aoes) with anything for 1 turn.",
+    "tags": [
+      "damage",
+      "ritual",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "rotting-infestation",
@@ -1711,7 +1991,12 @@
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "const",
-    "description": "You explode a corpse, creating a rotting cloud of stench in a 10 ft area around it. Creatures in the area must succeed on a Const saving throw or be knocked prone (pucking) and become decaying until the end of your next turn (taking damage from healing)."
+    "description": "You explode a corpse, creating a rotting cloud of stench in a 10 ft area around it. Creatures in the area must succeed on a Const saving throw or be knocked prone (pucking) and become decaying until the end of your next turn (taking damage from healing).",
+    "tags": [
+      "healing",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "essence-leech",
@@ -1730,7 +2015,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You consume a corpse, absorbing their essence. You become resistant to all types of magic damage that you are currently normal to."
+    "description": "You consume a corpse, absorbing their essence. You become resistant to all types of magic damage that you are currently normal to.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "mist-of-the-necromancer",
@@ -1746,7 +2034,12 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You cover a 60 ft radius area in green mist. The mist obscures the area heavily, but can be seen through (causing disadvantage on attack rolls). If you channel for 1 minute you can cover up 6000 ft radius in mist."
+    "description": "You cover a 60 ft radius area in green mist. The mist obscures the area heavily, but can be seen through (causing disadvantage on attack rolls). If you channel for 1 minute you can cover up 6000 ft radius in mist.",
+    "tags": [
+      "debuff",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "dark-passage",
@@ -1765,7 +2058,11 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You enter a corpse (or skeleton) for the duration and control its MS. You are immune for the duration. On one of your turns or when the skeleton would die you exit the corpse teleporting up to 10 ft in a direction."
+    "description": "You enter a corpse (or skeleton) for the duration and control its MS. You are immune for the duration. On one of your turns or when the skeleton would die you exit the corpse teleporting up to 10 ft in a direction.",
+    "tags": [
+      "defense",
+      "movement"
+    ]
   },
   {
     "id": "aspect-of-darkness",
@@ -1784,7 +2081,13 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You enter a demonic overdrive. As long as you remain in combat you take 25% of your max HP as true damage (that bypasses all shields and effects that would block damage - even effects like Undying mantra), but you gain the following benefits: -your damage over time is doubled and converted to true damage (does not apply to this spell) -all healing and temporary HP you gain is doubled -you do not consume corpses when casting spells on them, but you can no longer summon skeletons; This spell ends early if you fall unconscious."
+    "description": "You enter a demonic overdrive. As long as you remain in combat you take 25% of your max HP as true damage (that bypasses all shields and effects that would block damage - even effects like Undying mantra), but you gain the following benefits: -your damage over time is doubled and converted to true damage (does not apply to this spell) -all healing and temporary HP you gain is doubled -you do not consume corpses when casting spells on them, but you can no longer summon skeletons; This spell ends early if you fall unconscious.",
+    "tags": [
+      "healing",
+      "control",
+      "defense",
+      "summon"
+    ]
   },
   {
     "id": "cannibalism",
@@ -1813,7 +2116,13 @@
       "flat": 55,
       "dice": "10d10"
     },
-    "description": "You consume a corpse, consuming their heart. For the duration you are immune to being terrified, mind-controlled, charmed, mad, sleeping and you heal for [5 x spell modifier + 55 + 10d10] at the start of each of your turns."
+    "description": "You consume a corpse, consuming their heart. For the duration you are immune to being terrified, mind-controlled, charmed, mad, sleeping and you heal for [5 x spell modifier + 55 + 10d10] at the start of each of your turns.",
+    "tags": [
+      "damage",
+      "healing",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "dark-exchange",
@@ -1832,7 +2141,11 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Choose a creature secretly. For 1 round (or until the end of your next turn if the chosen creature is you) damage and healing are swapped (the creature is damaged by healing and healed by damage - both ignoring armor and resistances). Creatures that damage/heal the chosen creature are unaware that the creature has them reversed."
+    "description": "Choose a creature secretly. For 1 round (or until the end of your next turn if the chosen creature is you) damage and healing are swapped (the creature is damaged by healing and healed by damage - both ignoring armor and resistances). Creatures that damage/heal the chosen creature are unaware that the creature has them reversed.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "wicked-revive",
@@ -1851,7 +2164,11 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You can consume the life of an innocent creature (child, herbivore animal, true priest, etc.) to bring a dead creature to life in a mauled, deformed shape. The creature retains its knowledge, thoughts, ideas etc. from before death. You have no control over the creature. The creature’s fighting capabilities may be restricted or enhanced (neither for allies). This can be done even if the creature lost the fight with death."
+    "description": "You can consume the life of an innocent creature (child, herbivore animal, true priest, etc.) to bring a dead creature to life in a mauled, deformed shape. The creature retains its knowledge, thoughts, ideas etc. from before death. You have no control over the creature. The creature’s fighting capabilities may be restricted or enhanced (neither for allies). This can be done even if the creature lost the fight with death.",
+    "tags": [
+      "healing",
+      "buff"
+    ]
   },
   {
     "id": "eldritch-blast",
@@ -1884,7 +2201,11 @@
       }
     },
     "caster": "you",
-    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 10 + 2d10] force damage."
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 10 + 2d10] force damage.",
+    "tags": [
+      "damage",
+      "force"
+    ]
   },
   {
     "id": "mosquito-swarm",
@@ -1918,7 +2239,10 @@
       }
     },
     "caster": "you",
-    "description": "You send forth a swarm of mosquitos upon a target. The target must succeed on a Const saving throw or take [spell modifier + 12 + 2d12] piercing damage."
+    "description": "You send forth a swarm of mosquitos upon a target. The target must succeed on a Const saving throw or take [spell modifier + 12 + 2d12] piercing damage.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "infernal-vengeance",
@@ -1952,7 +2276,11 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord causes hellish flames to engulf a target who just damaged you. The target takes [spell modifier + 3 + 2d4] fire damage (counts for your last turn for hellish pain)."
+    "description": "Your overlord causes hellish flames to engulf a target who just damaged you. The target takes [spell modifier + 3 + 2d4] fire damage (counts for your last turn for hellish pain).",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "cursed-lightning",
@@ -1986,7 +2314,12 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord causes a cursed lightning to strike a target within range. The target must succeed on a dex saving throw or take [spell modifier + 13 + 2d8] lightning damage and have a [spell modifier] penalty to their next roll (attack, damage, save, etc)."
+    "description": "Your overlord causes a cursed lightning to strike a target within range. The target must succeed on a dex saving throw or take [spell modifier + 13 + 2d8] lightning damage and have a [spell modifier] penalty to their next roll (attack, damage, save, etc).",
+    "tags": [
+      "damage",
+      "debuff",
+      "lightning"
+    ]
   },
   {
     "id": "dark-tentacles",
@@ -2020,7 +2353,11 @@
       }
     },
     "caster": "overlord",
-    "description": "Dark tentacles surround you. The first time an enemy creature comes within 10 ft of you the tentacles attempt to attack the target. The target must succeed on a Str saving throw or take [spell modifier + 5 + 1d6] crushing damage and be grabbed by the tentacles - which effectively roots them (the tentacles will automatically release them at the end of their next turn if they are unable to release themselves until then)."
+    "description": "Dark tentacles surround you. The first time an enemy creature comes within 10 ft of you the tentacles attempt to attack the target. The target must succeed on a Str saving throw or take [spell modifier + 5 + 1d6] crushing damage and be grabbed by the tentacles - which effectively roots them (the tentacles will automatically release them at the end of their next turn if they are unable to release themselves until then).",
+    "tags": [
+      "damage",
+      "control"
+    ]
   },
   {
     "id": "dark-curse",
@@ -2053,7 +2390,12 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord curses a creature within range. For the duration the target takes [spell modifier + 1d4] additional shadow damage whenever you damage the target (is considered overlord damage)."
+    "description": "Your overlord curses a creature within range. For the duration the target takes [spell modifier + 1d4] additional shadow damage whenever you damage the target (is considered overlord damage).",
+    "tags": [
+      "damage",
+      "debuff",
+      "shadow"
+    ]
   },
   {
     "id": "doom-bolt",
@@ -2086,7 +2428,11 @@
       }
     },
     "caster": "you",
-    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 14 + 2d10] lightning damage. On a hit you can choose to concentrate on the spell. If you do so you can cast this spell once on each of your turns with no mana cost (on the same target). If you do not cast it on one of your turns the effect ends and you lose concentration."
+    "description": "Make a ranged spell attack on a target within range. On a hit the target takes [spell modifier + 14 + 2d10] lightning damage. On a hit you can choose to concentrate on the spell. If you do so you can cast this spell once on each of your turns with no mana cost (on the same target). If you do not cast it on one of your turns the effect ends and you lose concentration.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "blood-fountain",
@@ -2106,7 +2452,10 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "You convert a surface of water (surface or puddle, not lakes or such) to blood."
+    "description": "You convert a surface of water (surface or puddle, not lakes or such) to blood.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "demons-tongue",
@@ -2134,7 +2483,10 @@
       "manaCostIncrease": 50
     },
     "caster": "overlord",
-    "description": "You can add [1d4 + 1] to your next persuasion, seduction, deception, intimidation check."
+    "description": "You can add [1d4 + 1] to your next persuasion, seduction, deception, intimidation check.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "fire-whip",
@@ -2167,7 +2519,12 @@
       }
     },
     "caster": "you",
-    "description": "You create a magic fire whip to strike a foe within range. The target must succeed on a const saving throw, or take [2 x spell modifier + 26 + 3d12] fire damage and be blinded for 1 turn."
+    "description": "You create a magic fire whip to strike a foe within range. The target must succeed on a const saving throw, or take [2 x spell modifier + 26 + 3d12] fire damage and be blinded for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "fire"
+    ]
   },
   {
     "id": "hellfire",
@@ -2201,7 +2558,12 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord casts a wave of fire in a 20 ft radius centered on you (or the avatar if available). All enemy creatures in range must succeed on a Dex saving throw or take [2 x spell modifier + 21 + 6d8] fire damage."
+    "description": "Your overlord casts a wave of fire in a 20 ft radius centered on you (or the avatar if available). All enemy creatures in range must succeed on a Dex saving throw or take [2 x spell modifier + 21 + 6d8] fire damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "expanding-shadows",
@@ -2233,7 +2595,12 @@
       }
     },
     "caster": "you",
-    "description": "You create a spear of darkness that you throw in a direction. The spear travels for 60 ft (60 ft long line 5 ft wide). Each creature in the path must succeed on a dex saving throw or take [2 x spell modifier + 44+ 5d10] shadow damage."
+    "description": "You create a spear of darkness that you throw in a direction. The spear travels for 60 ft (60 ft long line 5 ft wide). Each creature in the path must succeed on a dex saving throw or take [2 x spell modifier + 44+ 5d10] shadow damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "curse-of-fright",
@@ -2254,7 +2621,12 @@
     "attackType": "savingThrow",
     "saveStat": "will",
     "caster": "overlord",
-    "description": "Your overlord curses a target with fright. Everytime the creature damages you they must succeed on a Will saving throw or become terrified until the end of their turn."
+    "description": "Your overlord curses a target with fright. Everytime the creature damages you they must succeed on a Will saving throw or become terrified until the end of their turn.",
+    "tags": [
+      "damage",
+      "debuff",
+      "psychic"
+    ]
   },
   {
     "id": "tides-of-blood",
@@ -2288,7 +2660,11 @@
       }
     },
     "caster": "you",
-    "description": "You cast a wave of daggers of blood to strike all enemy foes within 15 ft of you. Any enemy within range must succeed on a const saving throw or take [2 x spell modifier + 28 + 2d10] piercing damage. If the target has blood (is not a construct, undead, etc) they become linked to all the other creatures with blood damaged by the spell. Until the end of your next turn, if one of the affected creatures deals damage to you, the same amount (after reductions) is dealt as true damage to all the other affected creatures."
+    "description": "You cast a wave of daggers of blood to strike all enemy foes within 15 ft of you. Any enemy within range must succeed on a const saving throw or take [2 x spell modifier + 28 + 2d10] piercing damage. If the target has blood (is not a construct, undead, etc) they become linked to all the other creatures with blood damaged by the spell. Until the end of your next turn, if one of the affected creatures deals damage to you, the same amount (after reductions) is dealt as true damage to all the other affected creatures.",
+    "tags": [
+      "damage",
+      "summon"
+    ]
   },
   {
     "id": "cursed-ground",
@@ -2308,7 +2684,13 @@
     "damageType": "poison",
     "attackType": null,
     "caster": "overlord",
-    "description": "You mark a point within range. The 15 ft area around it becomes cursed ground. Whenever a creature starts their turn in the area they must succeed on a Str saving throw or become rooted for the rest of their turn."
+    "description": "You mark a point within range. The 15 ft area around it becomes cursed ground. Whenever a creature starts their turn in the area they must succeed on a Str saving throw or become rooted for the rest of their turn.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "poison"
+    ]
   },
   {
     "id": "wicked-wall",
@@ -2329,7 +2711,10 @@
     "attackType": "savingThrow",
     "saveStat": "will",
     "caster": "overlord",
-    "description": "You create a 60 ft long 20 ft tall wall of darkness centered on a point within range. Enemies cannot pass through the walls, allies (including you) must succeed on a Will saving throw in order to pass through it, but all enemy attacks that pass through the wall deal double damage."
+    "description": "You create a 60 ft long 20 ft tall wall of darkness centered on a point within range. Enemies cannot pass through the walls, allies (including you) must succeed on a Will saving throw in order to pass through it, but all enemy attacks that pass through the wall deal double damage.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "demonic-serpent",
@@ -2362,7 +2747,10 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord creates a small poisonous snake at a point within range that attempts to bite a target next to it and then vanishes. The snake makes a spell attack against a target within 5 ft of it. On a hit the target takes [2 x spell modifier + 18 + 2d8] piercing damage, and [2 x spell modifier + 18 + 2d8] poison damage at the start of their turn."
+    "description": "Your overlord creates a small poisonous snake at a point within range that attempts to bite a target next to it and then vanishes. The snake makes a spell attack against a target within 5 ft of it. On a hit the target takes [2 x spell modifier + 18 + 2d8] piercing damage, and [2 x spell modifier + 18 + 2d8] poison damage at the start of their turn.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "rain-blood",
@@ -2382,7 +2770,10 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "Your overlord rains blood in a 30 ft radius area centered on a point within range (clear surfaces in the area become blood surfaces)."
+    "description": "Your overlord rains blood in a 30 ft radius area centered on a point within range (clear surfaces in the area become blood surfaces).",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "shadow-walk",
@@ -2402,7 +2793,10 @@
     "damageType": null,
     "attackType": null,
     "caster": "you",
-    "description": "While you channel (you are able to move) you are invisible. A passive investigation against your spell DC might make a creature realise there is a presence, but they cannot see you. An investigation check can detect your position. Truesight and such sees you. If you touch or bump into a creature (not push or shove or knock back/prone) the creature doesn’t realise you are there and doesn’t pay much thought to the event, unless their passive investigation (or check) succeeded against your spell DC, in which case you are “revealed” to them."
+    "description": "While you channel (you are able to move) you are invisible. A passive investigation against your spell DC might make a creature realise there is a presence, but they cannot see you. An investigation check can detect your position. Truesight and such sees you. If you touch or bump into a creature (not push or shove or knock back/prone) the creature doesn’t realise you are there and doesn’t pay much thought to the event, unless their passive investigation (or check) succeeded against your spell DC, in which case you are “revealed” to them.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "malediction",
@@ -2436,7 +2830,13 @@
       }
     },
     "caster": "overlord",
-    "description": "You curse the enemies in a 10 ft radius area centered on a point within range. Enemy targets in the area must succeed on a Cha saving throw or become cursed (they still take half damage on a success). At the start of their next turn they will take [3 x spell modifier + 23 + 6d10] shadow damage."
+    "description": "You curse the enemies in a 10 ft radius area centered on a point within range. Enemy targets in the area must succeed on a Cha saving throw or become cursed (they still take half damage on a success). At the start of their next turn they will take [3 x spell modifier + 23 + 6d10] shadow damage.",
+    "tags": [
+      "damage",
+      "debuff",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "eldritch-wave",
@@ -2470,7 +2870,12 @@
       }
     },
     "caster": "you",
-    "description": "You create a wave of eldritch force around you. All enemy creatures within 15 ft of you must succeed on a const saving throw or take [3 x spell modifier + 12 + 6d6] force damage and become snared until the end of your next turn."
+    "description": "You create a wave of eldritch force around you. All enemy creatures within 15 ft of you must succeed on a const saving throw or take [3 x spell modifier + 12 + 6d6] force damage and become snared until the end of your next turn.",
+    "tags": [
+      "damage",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "infect",
@@ -2504,7 +2909,12 @@
       }
     },
     "caster": "overlord",
-    "description": "You cast a horrid disease upon a target within range. The target must succeed on a const saving throw or take [3 x spell modifier + 22 + 6d8] poison damage and then become plagued for 1 turn (their current and max HP are reduced by 20%, and they are scaled back after). Effects that cure diseases cure infect too (it is considered a 3rd level spell disease)."
+    "description": "You cast a horrid disease upon a target within range. The target must succeed on a const saving throw or take [3 x spell modifier + 22 + 6d8] poison damage and then become plagued for 1 turn (their current and max HP are reduced by 20%, and they are scaled back after). Effects that cure diseases cure infect too (it is considered a 3rd level spell disease).",
+    "tags": [
+      "damage",
+      "debuff",
+      "poison"
+    ]
   },
   {
     "id": "black-shroud",
@@ -2524,7 +2934,11 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "You create a black shroud in a 15 ft radius area centered on a point within range. Creatures in the shroud are silenced and suffocating (these effects persist for all of the turn, even if the creature leaves the shroud)."
+    "description": "You create a black shroud in a 15 ft radius area centered on a point within range. Creatures in the shroud are silenced and suffocating (these effects persist for all of the turn, even if the creature leaves the shroud).",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "pyre",
@@ -2557,7 +2971,13 @@
       }
     },
     "caster": "you",
-    "description": "You attempt to force a creature on a magical pyre that you create, practically suppressing the target (incapacitated condition). The target must succeed on a Will saving throw or become tied to the pyre. For the duration at the start of each of the creature’s turns they take [3 x spell modifier + 56 + 3d12] fire damage, that IS reduced by armor. The target repeats the saving throw at the end of each of their turns, ending the effect on both of you. The target must be of size “large” or lower."
+    "description": "You attempt to force a creature on a magical pyre that you create, practically suppressing the target (incapacitated condition). The target must succeed on a Will saving throw or become tied to the pyre. For the duration at the start of each of the creature’s turns they take [3 x spell modifier + 56 + 3d12] fire damage, that IS reduced by armor. The target repeats the saving throw at the end of each of their turns, ending the effect on both of you. The target must be of size “large” or lower.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "fire"
+    ]
   },
   {
     "id": "death-wish",
@@ -2577,7 +2997,10 @@
     "damageType": null,
     "attackType": null,
     "caster": "you",
-    "description": "For the duration the thirst for blood runs in your veins. If you are below 50% of your max HP you deal 1.5 x damage with every ability. If you are below 10% of your max HP you deal 2 x damage with every ability."
+    "description": "For the duration the thirst for blood runs in your veins. If you are below 50% of your max HP you deal 1.5 x damage with every ability. If you are below 10% of your max HP you deal 2 x damage with every ability.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "dark-omen",
@@ -2611,7 +3034,11 @@
       }
     },
     "caster": "overlord",
-    "description": "You force a creature to make a Wis saving throw. On a fail they are affected by shadow vision for the duration. A creature can end the effect early if they deal damage to an ally (themselves included), in which case they take [3 x spell modifier + 34 + 6d8] psychic damage, or if they kill an opponent, in which case they take no damage."
+    "description": "You force a creature to make a Wis saving throw. On a fail they are affected by shadow vision for the duration. A creature can end the effect early if they deal damage to an ally (themselves included), in which case they take [3 x spell modifier + 34 + 6d8] psychic damage, or if they kill an opponent, in which case they take no damage.",
+    "tags": [
+      "damage",
+      "psychic"
+    ]
   },
   {
     "id": "sword-of-the-demon-king",
@@ -2644,7 +3071,12 @@
       }
     },
     "caster": "you",
-    "description": "You create a gigantic flame sword that you control using telekinesis. You smash it to the ground in a direction in front of you. The sword hit a 60 ft long 10 ft wide line. Creatures hit must succeed on a dex saving throw or take [3 x spell modifier + 54 + 6d12] fire damage and be forced to make a const saving throw or get knocked prone."
+    "description": "You create a gigantic flame sword that you control using telekinesis. You smash it to the ground in a direction in front of you. The sword hit a 60 ft long 10 ft wide line. Creatures hit must succeed on a dex saving throw or take [3 x spell modifier + 54 + 6d12] fire damage and be forced to make a const saving throw or get knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "fire"
+    ]
   },
   {
     "id": "excruciating-pain",
@@ -2668,7 +3100,11 @@
       "flat": 0
     },
     "caster": "you",
-    "description": "You attempt to cause excruciating pain to a creature within range. You force the target to make a Will saving throw. On a fail the target suffers horrible pain. They are knocked prone and rooted. You can cause them to take [3 x spell modifier] true damage on your turn (for 1 ap, repeatable). A defeated target (severly injured or unconscious but out of combat) automatically fails this saving throw and is incapacitated instead of rooted, and a creature that is above 50% of their max HP and in combat automatically succeeds. The target can repeat the saving throw at the end of each of their turns."
+    "description": "You attempt to cause excruciating pain to a creature within range. You force the target to make a Will saving throw. On a fail the target suffers horrible pain. They are knocked prone and rooted. You can cause them to take [3 x spell modifier] true damage on your turn (for 1 ap, repeatable). A defeated target (severly injured or unconscious but out of combat) automatically fails this saving throw and is incapacitated instead of rooted, and a creature that is above 50% of their max HP and in combat automatically succeeds. The target can repeat the saving throw at the end of each of their turns.",
+    "tags": [
+      "damage",
+      "control"
+    ]
   },
   {
     "id": "harden-heart",
@@ -2688,7 +3124,11 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "You harden the heart of a creature. They become cold blooded and uncaring. They are more susceptible to making cruel decisions, ignore pleas and be immune to any effects (magical or not) that would require a Will or resolve CHECKS. The target’s eyes become redish for the duration"
+    "description": "You harden the heart of a creature. They become cold blooded and uncaring. They are more susceptible to making cruel decisions, ignore pleas and be immune to any effects (magical or not) that would require a Will or resolve CHECKS. The target’s eyes become redish for the duration",
+    "tags": [
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "demonic-apparition",
@@ -2708,7 +3148,11 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "You can summon a demonic apparition of your overlord. The apparition does not fight but it can aid you with a task (check if a room is safe, scare off peasants, etc.)"
+    "description": "You can summon a demonic apparition of your overlord. The apparition does not fight but it can aid you with a task (check if a room is safe, scare off peasants, etc.)",
+    "tags": [
+      "summon",
+      "ritual"
+    ]
   },
   {
     "id": "meteorite-rain",
@@ -2742,7 +3186,13 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord sends rain of burning meteorites on a 30 ft area centered on a point within range. All creatures in the area must roll a dex saving throw, taking [2 x spell modifier + 36 + 2d10] crushing damage and [2 x spell modifier + 36 + 2d10] fire damage on a fail, or half as much on a success (only one gets reduced by armor, the one that the target has higher armor against)."
+    "description": "Your overlord sends rain of burning meteorites on a 30 ft area centered on a point within range. All creatures in the area must roll a dex saving throw, taking [2 x spell modifier + 36 + 2d10] crushing damage and [2 x spell modifier + 36 + 2d10] fire damage on a fail, or half as much on a success (only one gets reduced by armor, the one that the target has higher armor against).",
+    "tags": [
+      "damage",
+      "debuff",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "total-annihilation",
@@ -2762,7 +3212,11 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "Your overlord casts a dark curse on a land, destroying all green life (plants and such, plant-like monsters are not destroyed) in a 600 ft radius area. All animals in the area become sick and die in a few hours."
+    "description": "Your overlord casts a dark curse on a land, destroying all green life (plants and such, plant-like monsters are not destroyed) in a 600 ft radius area. All animals in the area become sick and die in a few hours.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "locust-horde",
@@ -2796,7 +3250,10 @@
       }
     },
     "caster": "overlord",
-    "description": "Your overlord calls a horde of locust-like insects. The wave affects a 60 ft side cube. All enemy creatures must roll a const saving throw. On a fail they take [4 x spell modifier + 24d4] piercing damage and insects enter their armor (if they are wearing armor). They must remove their armor, clean it and requip it (a total of 6 ap) to get rid of the insects. While a creature has insects in their armor they take [12d4] piercing damage at the start of each of their turns. On a success they only take half damage."
+    "description": "Your overlord calls a horde of locust-like insects. The wave affects a 60 ft side cube. All enemy creatures must roll a const saving throw. On a fail they take [4 x spell modifier + 24d4] piercing damage and insects enter their armor (if they are wearing armor). They must remove their armor, clean it and requip it (a total of 6 ap) to get rid of the insects. While a creature has insects in their armor they take [12d4] piercing damage at the start of each of their turns. On a success they only take half damage.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "plague",
@@ -2828,7 +3285,12 @@
       }
     },
     "caster": "overlord",
-    "description": "You send forth a plague in a 40 ft cube centered on a point within range. All targets within range must succeed on a const saving throw or become plagued for the duration. A plagues creature takes [4 x spell modifier] poison damage at the start of each turn (which also reduces their max hp). They can repeat the saving throw at the end of each turn."
+    "description": "You send forth a plague in a 40 ft cube centered on a point within range. All targets within range must succeed on a const saving throw or become plagued for the duration. A plagues creature takes [4 x spell modifier] poison damage at the start of each turn (which also reduces their max hp). They can repeat the saving throw at the end of each turn.",
+    "tags": [
+      "damage",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "grasp-of-the-starved",
@@ -2862,7 +3324,14 @@
       }
     },
     "caster": "overlord",
-    "description": "You summon the dead to aid you. All enemy creatures within range standing on blood are attacked by spectral hands that spring from the ground. They must roll str saving throws. On a fail, a creature takes [4 x spell modifier + 80 + 8d12] spectral damage and is rooted for 1 turn. On a success they only take half damage."
+    "description": "You summon the dead to aid you. All enemy creatures within range standing on blood are attacked by spectral hands that spring from the ground. They must roll str saving throws. On a fail, a creature takes [4 x spell modifier + 80 + 8d12] spectral damage and is rooted for 1 turn. On a success they only take half damage.",
+    "tags": [
+      "damage",
+      "control",
+      "summon",
+      "aoe",
+      "spectral"
+    ]
   },
   {
     "id": "soul-link",
@@ -2883,7 +3352,11 @@
     "attackType": "savingThrow",
     "saveStat": "cha",
     "caster": "overlord",
-    "description": "You mark a 15 ft radius area within range. All enemy creatures in the area must roll a Cha saving throw. All creatures that fail the saving throw are linked together for the duration. Whenever one of these creatures takes damage all the other linked creatures take half of the damage (after the reduction) as true damage. This effect does not apply on itself, poisons or other special effects, just on direct damage."
+    "description": "You mark a 15 ft radius area within range. All enemy creatures in the area must roll a Cha saving throw. All creatures that fail the saving throw are linked together for the duration. Whenever one of these creatures takes damage all the other linked creatures take half of the damage (after the reduction) as true damage. This effect does not apply on itself, poisons or other special effects, just on direct damage.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "blood-starvation",
@@ -2916,7 +3389,14 @@
       }
     },
     "caster": "you",
-    "description": "You mark all enemy creatures within 20 ft of a point within range. If you manage to do [300] damage to a marked creature (while it is marked; aka within the duration; the cast turn counts towards the duration) you absorb the blood within it and it takes [4 x spell modifier + 86 + 8d12] pure damage (creatures that do not have blood in their bodies are immune) and you are healed for the same amount, consuming the mark from the creature."
+    "description": "You mark all enemy creatures within 20 ft of a point within range. If you manage to do [300] damage to a marked creature (while it is marked; aka within the duration; the cast turn counts towards the duration) you absorb the blood within it and it takes [4 x spell modifier + 86 + 8d12] pure damage (creatures that do not have blood in their bodies are immune) and you are healed for the same amount, consuming the mark from the creature.",
+    "tags": [
+      "damage",
+      "healing",
+      "defense",
+      "aoe",
+      "pure"
+    ]
   },
   {
     "id": "enthral",
@@ -2937,7 +3417,11 @@
     "attackType": "savingThrow",
     "saveStat": "wis",
     "caster": "you",
-    "description": "You force a creature within range to make a Wis saving throw. On a fail the target becomes enthralled by you, practically becoming a mindless slave to you. The target loses most of its capabilities of proper speech or behaviour (gen cuvantul mindless se refera la mindless), they are able to speak but they do so in a very unusual way. Any creature that knew them previously immediately realises something is wrong with them. At the same time the target’s fighting capabilities are reduced to 0."
+    "description": "You force a creature within range to make a Wis saving throw. On a fail the target becomes enthralled by you, practically becoming a mindless slave to you. The target loses most of its capabilities of proper speech or behaviour (gen cuvantul mindless se refera la mindless), they are able to speak but they do so in a very unusual way. Any creature that knew them previously immediately realises something is wrong with them. At the same time the target’s fighting capabilities are reduced to 0.",
+    "tags": [
+      "debuff",
+      "ritual"
+    ]
   },
   {
     "id": "demonic-gate",
@@ -2961,7 +3445,12 @@
       "flat": 0
     },
     "caster": "you",
-    "description": "You teleport yourself and up to [spell modifier] other creatures within range by up to 600 ft in a direction of your choice. If the arrival point is occupied you take 50% of your max HP as true damage and the spell fails."
+    "description": "You teleport yourself and up to [spell modifier] other creatures within range by up to 600 ft in a direction of your choice. If the arrival point is occupied you take 50% of your max HP as true damage and the spell fails.",
+    "tags": [
+      "damage",
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "circle-of-death",
@@ -2981,7 +3470,10 @@
     "damageType": null,
     "attackType": null,
     "caster": "you",
-    "description": "You create a 15 ft radius circle centered on you (that does not move with you). All creatures within the circle deal and receive double damage."
+    "description": "You create a 15 ft radius circle centered on you (that does not move with you). All creatures within the circle deal and receive double damage.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "ultimate-service",
@@ -2998,7 +3490,12 @@
     "damageType": null,
     "attackType": null,
     "caster": "overlord",
-    "description": "Your overlord grants you one more chance for your service. You heal to full HP. For the duration all healing and damage (except for this spell’s) you receive is reduced to 0, you take 25% of your max HP as true damage at the end of every turn, all the spells you cast are empowered, your AC, all your armors and resistances become 0 (you also cannot benefit from any sort of shield, immunity buff or temporary HP). If combat ends this effect ends instantly. (cannot be cast out of combat; combat is considered ended only if your opponents are defeated)"
+    "description": "Your overlord grants you one more chance for your service. You heal to full HP. For the duration all healing and damage (except for this spell’s) you receive is reduced to 0, you take 25% of your max HP as true damage at the end of every turn, all the spells you cast are empowered, your AC, all your armors and resistances become 0 (you also cannot benefit from any sort of shield, immunity buff or temporary HP). If combat ends this effect ends instantly. (cannot be cast out of combat; combat is considered ended only if your opponents are defeated)",
+    "tags": [
+      "healing",
+      "buff",
+      "defense"
+    ]
   },
   {
     "id": "curse-of-death",
@@ -3019,7 +3516,12 @@
     "attackType": "savingThrow",
     "saveStat": "cha",
     "caster": "overlord",
-    "description": "You mark any number of creatures you see. If a creature’s might is lower than [your level / 8] they are automatically cursed, if their might is lower than [your level / 4] they must succeed on a Cha saving throw or be cursed, if their might is lower than [your level / 2] they have advantage on the saving throw, and they are immune otherwise. Whenever during the duration you can choose to instantly kill a cursed creature."
+    "description": "You mark any number of creatures you see. If a creature’s might is lower than [your level / 8] they are automatically cursed, if their might is lower than [your level / 4] they must succeed on a Cha saving throw or be cursed, if their might is lower than [your level / 2] they have advantage on the saving throw, and they are immune otherwise. Whenever during the duration you can choose to instantly kill a cursed creature.",
+    "tags": [
+      "debuff",
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "area-of-oblivion-tainted-grounds",
@@ -3045,7 +3547,13 @@
       "dice": "12d12"
     },
     "caster": "overlord",
-    "description": "You mark a spot within range. The 20 ft radius area centered on a point becomes shadowy and a blast of force rains down on it. All creatures in the area must roll a Will saving throw. They take [5 x spell modifier + 52 + 12d12] force damage, and if they fail the saving throw they are stunned for the duration. (const saving throw to end the effect early)"
+    "description": "You mark a spot within range. The 20 ft radius area centered on a point becomes shadowy and a blast of force rains down on it. All creatures in the area must roll a Will saving throw. They take [5 x spell modifier + 52 + 12d12] force damage, and if they fail the saving throw they are stunned for the duration. (const saving throw to end the effect early)",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "blood-storm",
@@ -3070,6 +3578,10 @@
       "dice": "5d10"
     },
     "caster": "overlord",
-    "description": "You start channelling a storm of blood. For the duration gigantic drops of piercing blood drop in the 90 ft radius area surrounding you. At the end of every turn of channelling a number of drops equal to the AP consumed drops on each target within range. Each drop deals [5 x spell modifier + 15 + 5d10] piercing damage that pierces armor."
+    "description": "You start channelling a storm of blood. For the duration gigantic drops of piercing blood drop in the 90 ft radius area surrounding you. At the end of every turn of channelling a number of drops equal to the AP consumed drops on each target within range. Each drop deals [5 x spell modifier + 15 + 5d10] piercing damage that pierces armor.",
+    "tags": [
+      "damage",
+      "aoe"
+    ]
   }
 ]

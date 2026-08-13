@@ -48,6 +48,8 @@ export interface SpellEntry {
   healing?: SpellDiceFormula | null;
   effects?: string[] | null;
   scaling?: SpellScaling | null;
+  /** Role + element tags (see scripts/tag-spells.ts); optional so older data still loads. */
+  tags?: string[] | null;
   description: string;
 }
 

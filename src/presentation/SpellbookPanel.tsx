@@ -29,6 +29,7 @@ export function SpellbookPanel() {
   // '' = no effects target (DM applies) | 'self' | a party member's playerId
   const [castTarget, setCastTarget] = useState('');
   const [prepDraft, setPrepDraft] = useState<string[] | null>(null);
+  const [tagFilter, setTagFilter] = useState('');
   const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
   const roster = useCharacterStore((s) => s.roster);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
@@ -52,6 +53,14 @@ export function SpellbookPanel() {
   const channeling = snapshot.activeEffects.find((e) => e.id === 'channeling');
   const classSpells = spellsForClass(snapshot.classId);
   const preparable = classSpells.filter((s) => s.level <= accessLevel);
+
+  // Tag filter over the known list — only offers tags the character actually has.
+  const knownTags = [
+    ...new Set(spellbook.knownSpells.flatMap((id) => spellById(id)?.tags ?? [])),
+  ].sort();
+  const visibleKnown = tagFilter
+    ? spellbook.knownSpells.filter((id) => spellById(id)?.tags?.includes(tagFilter))
+    : spellbook.knownSpells;
 
   function toggleExpand(id: string) {
     setExpandedId((cur) => (cur === id ? null : id));
@@ -94,6 +103,15 @@ export function SpellbookPanel() {
             {spell.concentration && ' · conc.'}
             {spell.channeling && ' · channel'}
           </span>
+          {spell.tags && spell.tags.length > 0 && (
+            <span className="spell-tags">
+              {spell.tags.map((t) => (
+                <span className="spell-tag" key={t}>
+                  {t}
+                </span>
+              ))}
+            </span>
+          )}
           {badge && <span className="spell-badge">{badge}</span>}
         </button>
         {expanded && (
@@ -190,9 +208,29 @@ export function SpellbookPanel() {
       </div>
 
       <div className="combat-effects">
-        <h3 className="combat-section-title">Known spells</h3>
+        <div className="combat-log-head">
+          <h3 className="combat-section-title">Known spells</h3>
+          {knownTags.length > 0 && (
+            <select
+              className="spell-tag-filter"
+              value={tagFilter}
+              onChange={(e) => setTagFilter(e.target.value)}
+              title="Filter your known spells by what they do"
+            >
+              <option value="">all tags</option>
+              {knownTags.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
         {spellbook.knownSpells.length === 0 && <p className="deck-empty">None learned yet.</p>}
-        <ul className="spell-list">{spellbook.knownSpells.map((id) => renderSpellRow(id, null))}</ul>
+        {spellbook.knownSpells.length > 0 && visibleKnown.length === 0 && (
+          <p className="deck-empty">No known spell is tagged “{tagFilter}”.</p>
+        )}
+        <ul className="spell-list">{visibleKnown.map((id) => renderSpellRow(id, null))}</ul>
       </div>
 
       <div className="combat-effects">

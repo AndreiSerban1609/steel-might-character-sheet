@@ -31,6 +31,11 @@
     "description": "Aura. Allies in range deal [spell modifier] bonus light damage on attack rolls. At higher levels: +[spell modifier / 2] bonus damage.",
     "effects": [
       "radiant-aura"
+    ],
+    "tags": [
+      "damage",
+      "buff",
+      "light"
     ]
   },
   {
@@ -54,6 +59,9 @@
     "description": "Aura. Allies in range gain +1 to attack rolls. Each miss increases bonus by +1, resets to +1 after a hit.",
     "effects": [
       "precision-aura"
+    ],
+    "tags": [
+      "buff"
     ]
   },
   {
@@ -94,7 +102,10 @@
         }
       }
     },
-    "description": "Heal an ally for [spell modifier + 11 + 2d10] and end one minor non-magical disease or poison/poisoned effect."
+    "description": "Heal an ally for [spell modifier + 11 + 2d10] and end one minor non-magical disease or poison/poisoned effect.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "crushing-light",
@@ -133,7 +144,11 @@
         }
       }
     },
-    "description": "Strike the ground, charging a 5 ft wide, 10 ft long line with divine energy. Erupts at start of next turn dealing [2x spell modifier + 24 + 3d12] light damage."
+    "description": "Strike the ground, charging a 5 ft wide, 10 ft long line with divine energy. Erupts at start of next turn dealing [2x spell modifier + 24 + 3d12] light damage.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "lights-blessing",
@@ -158,7 +173,11 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "First saving throw against a negative condition/penalty is rolled with advantage. At higher levels: -1 AP cost."
+    "description": "First saving throw against a negative condition/penalty is rolled with advantage. At higher levels: -1 AP cost.",
+    "tags": [
+      "buff",
+      "debuff"
+    ]
   },
   {
     "id": "divine-senses",
@@ -180,7 +199,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Add [spell modifier] to all insight, perception and investigation checks. Passive scores also increase by [spell modifier]."
+    "description": "Add [spell modifier] to all insight, perception and investigation checks. Passive scores also increase by [spell modifier].",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "stone-hammer",
@@ -219,7 +241,11 @@
         }
       }
     },
-    "description": "Ranged spell attack dealing [spell mod + 13 + 4d6] crushing damage and [spell mod + 13 + 4d6] light damage. Both reduced by armor."
+    "description": "Ranged spell attack dealing [spell mod + 13 + 4d6] crushing damage and [spell mod + 13 + 4d6] light damage. Both reduced by armor.",
+    "tags": [
+      "damage",
+      "debuff"
+    ]
   },
   {
     "id": "focused-faith",
@@ -259,7 +285,12 @@
         }
       }
     },
-    "description": "Gain [spell modifier + 25 + 2d10] temporary HP. While shield persists, cannot heal others. Disadvantage on two-handed/off-hand weapon attacks."
+    "description": "Gain [spell modifier + 25 + 2d10] temporary HP. While shield persists, cannot heal others. Disadvantage on two-handed/off-hand weapon attacks.",
+    "tags": [
+      "healing",
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "swarm-killer-aura",
@@ -282,6 +313,9 @@
     "description": "Aura. Allies in range are not affected by flanks/pack-tactics. Attacks against them cannot have advantage.",
     "effects": [
       "swarm-killer-aura"
+    ],
+    "tags": [
+      "buff"
     ]
   },
   {
@@ -305,6 +339,9 @@
     "description": "Aura. Allies in range have advantage on attack rolls on enemies if they and another ally are within melee range of a foe.",
     "effects": [
       "legion-aura"
+    ],
+    "tags": [
+      "buff"
     ]
   },
   {
@@ -327,7 +364,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Weapon shines bright/dim light (sunlight). Attacked creatures must CON save or be blinded for 1 turn."
+    "description": "Weapon shines bright/dim light (sunlight). Attacked creatures must CON save or be blinded for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "light"
+    ]
   },
   {
     "id": "smite-of-wrath",
@@ -366,7 +408,12 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [2x spell modifier + 32 + 4d10] lightning damage and target loses one random damage resistance until start of next turn."
+    "description": "Ranged spell attack. On hit: [2x spell modifier + 32 + 4d10] lightning damage and target loses one random damage resistance until start of next turn.",
+    "tags": [
+      "damage",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "smite-of-force",
@@ -405,7 +452,12 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [2x spell modifier + 35 + 4d8] force damage and target is pushed 15 ft."
+    "description": "Ranged spell attack. On hit: [2x spell modifier + 35 + 4d8] force damage and target is pushed 15 ft.",
+    "tags": [
+      "damage",
+      "control",
+      "force"
+    ]
   },
   {
     "id": "healing-orbs",
@@ -445,7 +497,10 @@
         }
       }
     },
-    "description": "Create 3 orbs. Each heals a creature in melee range for [2x spell modifier + 2d8]. Activate any time, no AP cost. Cannot heal self."
+    "description": "Create 3 orbs. Each heals a creature in melee range for [2x spell modifier + 2d8]. Activate any time, no AP cost. Cannot heal self.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "radiant-fury",
@@ -467,7 +522,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Prepare for next attack. If hit by weapon attack, absorb damage and become enraged until end of next turn, dealing double damage. CC ends the effect."
+    "description": "Prepare for next attack. If hit by weapon attack, absorb damage and become enraged until end of next turn, dealing double damage. CC ends the effect.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "radiant-explosion",
@@ -507,7 +565,13 @@
         }
       }
     },
-    "description": "AoE explosion of radiant energy. All enemies in 15 ft must CON save or take [2x spell modifier + 27 + 3d8] light damage and be knocked prone."
+    "description": "AoE explosion of radiant energy. All enemies in 15 ft must CON save or take [2x spell modifier + 27 + 3d8] light damage and be knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "hammer-of-justice",
@@ -529,7 +593,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Throw weapon at target (ranged weapon attack). On hit: weapon damage + teleport to target. On miss: weapon travels to range, can teleport to it or recall."
+    "description": "Throw weapon at target (ranged weapon attack). On hit: weapon damage + teleport to target. On miss: weapon travels to range, can teleport to it or recall.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "vampiric-aura",
@@ -552,6 +619,10 @@
     "description": "Aura. Allies in range heal for 20% of damage dealt with single target attacks and spells.",
     "effects": [
       "vampiric-aura"
+    ],
+    "tags": [
+      "healing",
+      "buff"
     ]
   },
   {
@@ -575,6 +646,10 @@
     "description": "Aura. Allies in range score critical hits when hitting a stunned or prone enemy.",
     "effects": [
       "predator-aura"
+    ],
+    "tags": [
+      "buff",
+      "control"
     ]
   },
   {
@@ -630,7 +705,13 @@
         }
       }
     },
-    "description": "Split into 2 bolts of light dashing 30 ft creating a circle. One deals [3x spell mod + 25 + 3d8] light damage, the other heals for the same. Free basic attack at destination."
+    "description": "Split into 2 bolts of light dashing 30 ft creating a circle. One deals [3x spell mod + 25 + 3d8] light damage, the other heals for the same. Free basic attack at destination.",
+    "tags": [
+      "damage",
+      "healing",
+      "movement",
+      "light"
+    ]
   },
   {
     "id": "gaze-of-the-gods",
@@ -653,7 +734,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Summon god's gaze on 5 ft radius area. All creatures must WILL save or be petrified for the duration. Repeat save at end of each turn."
+    "description": "Summon god's gaze on 5 ft radius area. All creatures must WILL save or be petrified for the duration. Repeat save at end of each turn.",
+    "tags": [
+      "debuff",
+      "summon",
+      "aoe"
+    ]
   },
   {
     "id": "searing-smite",
@@ -693,7 +779,11 @@
         }
       }
     },
-    "description": "On weapon attack, target takes [3x spell modifier + 3d6] bonus fire damage and takes double damage from all smites until end of next turn."
+    "description": "On weapon attack, target takes [3x spell modifier + 3d6] bonus fire damage and takes double damage from all smites until end of next turn.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "divine-shield",
@@ -718,7 +808,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Gain temporary HP equal to half max HP until end of next turn. Immune to all CC during this time. At higher levels: -1 AP cost."
+    "description": "Gain temporary HP equal to half max HP until end of next turn. Immune to all CC during this time. At higher levels: -1 AP cost.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "transposition-smite",
@@ -758,7 +851,12 @@
         }
       }
     },
-    "description": "Melee spell attack. On hit: [3x spell modifier + 23 + 6d4] force damage and target is teleported to a point within range."
+    "description": "Melee spell attack. On hit: [3x spell modifier + 23 + 6d4] force damage and target is teleported to a point within range.",
+    "tags": [
+      "damage",
+      "movement",
+      "force"
+    ]
   },
   {
     "id": "godly-mend",
@@ -797,7 +895,11 @@
         }
       }
     },
-    "description": "Heal an ally for [3x spell modifier + 10 + 3d10] and end all petrified, stunned, rooted, snared, paralysis, immobilised effects."
+    "description": "Heal an ally for [3x spell modifier + 10 + 3d10] and end all petrified, stunned, rooted, snared, paralysis, immobilised effects.",
+    "tags": [
+      "healing",
+      "control"
+    ]
   },
   {
     "id": "fearless-aura",
@@ -820,6 +922,10 @@
     "description": "Aura. Allies in range are immune to terrified. When an attempt to terrify them is made, they become enraged for 1 turn, dealing max dice damage.",
     "effects": [
       "fearless-aura"
+    ],
+    "tags": [
+      "buff",
+      "defense"
     ]
   },
   {
@@ -843,6 +949,10 @@
     "description": "Aura. Allies in range are resistant to light damage and immune to possession/enthrallment. No effect on already possessed/enthralled creatures.",
     "effects": [
       "purity-aura"
+    ],
+    "tags": [
+      "buff",
+      "defense"
     ]
   },
   {
@@ -883,7 +993,11 @@
         }
       }
     },
-    "description": "Smite alongside weapon attack. Target takes [4x spell modifier + 4d10] light damage. Max once per turn."
+    "description": "Smite alongside weapon attack. Target takes [4x spell modifier + 4d10] light damage. Max once per turn.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "godly-oasis",
@@ -906,7 +1020,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Teleport self and up to [spell modifier] creatures to a safe god-created oasis for rest. Duration reduced to 30 min if cast in combat. Return to exact spot."
+    "description": "Teleport self and up to [spell modifier] creatures to a safe god-created oasis for rest. Duration reduced to 30 min if cast in combat. Return to exact spot.",
+    "tags": [
+      "movement",
+      "ritual"
+    ]
   },
   {
     "id": "silence-the-heretics",
@@ -929,7 +1047,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Choose a creature secretly. First time any creature tries casting a verbal spell on the target, the attacker is silenced for the duration. Half duration if attacker's might >= your level."
+    "description": "Choose a creature secretly. First time any creature tries casting a verbal spell on the target, the attacker is silenced for the duration. Half duration if attacker's might >= your level.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "mountain-hammer",
@@ -969,7 +1090,11 @@
         }
       }
     },
-    "description": "Up to 5 ranged spell attacks against different foes. Each deals [4x spell mod + 50 + 4d12] crushing AND [4x spell mod + 50 + 4d12] light damage. Both reduced by armor."
+    "description": "Up to 5 ranged spell attacks against different foes. Each deals [4x spell mod + 50 + 4d12] crushing AND [4x spell mod + 50 + 4d12] light damage. Both reduced by armor.",
+    "tags": [
+      "damage",
+      "debuff"
+    ]
   },
   {
     "id": "banishing-smite",
@@ -1009,7 +1134,13 @@
         }
       }
     },
-    "description": "Melee spell attack. On hit: [4x spell modifier + 8d10] pure damage. Target must WILL save or be banished to god's prison for the duration."
+    "description": "Melee spell attack. On hit: [4x spell modifier + 8d10] pure damage. Target must WILL save or be banished to god's prison for the duration.",
+    "tags": [
+      "damage",
+      "control",
+      "ritual",
+      "pure"
+    ]
   },
   {
     "id": "divine-favour",
@@ -1032,7 +1163,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Teleport self and up to [spell modifier] allies 100 ft in one direction. Alternatively, channel 2 turns to teleport to nearest church of your god."
+    "description": "Teleport self and up to [spell modifier] allies 100 ft in one direction. Alternatively, channel 2 turns to teleport to nearest church of your god.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "grounded-aura",
@@ -1055,6 +1189,12 @@
     "description": "Aura. Allies in range are immune to teleportation, banishing and insta-kill effects.",
     "effects": [
       "grounded-aura"
+    ],
+    "tags": [
+      "buff",
+      "control",
+      "defense",
+      "movement"
     ]
   },
   {
@@ -1078,6 +1218,9 @@
     "description": "Aura. Allies in range roll d100 each time they take damage. On 85 or more, they take no damage.",
     "effects": [
       "blessed-aura"
+    ],
+    "tags": [
+      "buff"
     ]
   },
   {
@@ -1108,7 +1251,10 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Target must WILL save, taking [5x spell modifier + 245 + 10d12] true damage on fail, or half on success."
+    "description": "Target must WILL save, taking [5x spell modifier + 245 + 10d12] true damage on fail, or half on success.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "ultimate-fate",
@@ -1145,7 +1291,12 @@
       }
     },
     "scaling": null,
-    "description": "Channel a 60 ft long, 10 ft wide beam of fire and light. Each turn damages enemies and heals allies for [5x spell modifier + 5d12] per AP consumed. 1 AP to redirect 90 degrees."
+    "description": "Channel a 60 ft long, 10 ft wide beam of fire and light. Each turn damages enemies and heals allies for [5x spell modifier + 5d12] per AP consumed. 1 AP to redirect 90 degrees.",
+    "tags": [
+      "damage",
+      "healing",
+      "fire"
+    ]
   },
   {
     "id": "sacred-bolt",
@@ -1185,7 +1336,11 @@
         }
       }
     },
-    "description": "Ranged spell attack dealing [spell modifier + 11 + 2d8] light damage. Recastable same turn."
+    "description": "Ranged spell attack dealing [spell modifier + 11 + 2d8] light damage. Recastable same turn.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "healing-word",
@@ -1225,7 +1380,10 @@
         }
       }
     },
-    "description": "Heal an ally within range for [spell modifier + 4 + 2d6]. Recastable same turn at double mana each subsequent cast."
+    "description": "Heal an ally within range for [spell modifier + 4 + 2d6]. Recastable same turn at double mana each subsequent cast.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "shaming-word",
@@ -1248,7 +1406,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Target must WILL save or cannot look at you until start of next turn, giving disadvantage on attacks against you. Recastable on different targets."
+    "description": "Target must WILL save or cannot look at you until start of next turn, giving disadvantage on attacks against you. Recastable on different targets.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "back-from-the-edge",
@@ -1271,7 +1432,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Restore an unconscious creature within range to 1 HP without Medicine check. Placed last in initiative. Unavailable if campaign uses instant death."
+    "description": "Restore an unconscious creature within range to 1 HP without Medicine check. Placed last in initiative. Unavailable if campaign uses instant death.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "healing-touch-withering-touch",
@@ -1326,7 +1490,13 @@
         }
       }
     },
-    "description": "Healing: heal ally in melee for [spell mod + 12 + 3d10]. Necrotic: melee spell attack dealing [spell mod + 12 + 3d10] shadow damage."
+    "description": "Healing: heal ally in melee for [spell mod + 12 + 3d10]. Necrotic: melee spell attack dealing [spell mod + 12 + 3d10] shadow damage.",
+    "tags": [
+      "damage",
+      "healing",
+      "debuff",
+      "shadow"
+    ]
   },
   {
     "id": "energy-sacrifice",
@@ -1349,7 +1519,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Grant a creature within range 2 additional AP at the start of its next turn."
+    "description": "Grant a creature within range 2 additional AP at the start of its next turn.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "divine-chastise",
@@ -1374,7 +1547,10 @@
     "scaling": {
       "manaCostIncrease": 45
     },
-    "description": "Apply 1 weakened stack to a creature. Double stacks if you are severely injured. Scaling: +1 weakened stack per level."
+    "description": "Apply 1 weakened stack to a creature. Double stacks if you are severely injured. Scaling: +1 weakened stack per level.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "illuminate-eclipse",
@@ -1397,7 +1573,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Illuminate: create 15 ft radius sphere of light. Eclipse: create 15 ft radius sphere of darkness. Can be placed on an object to follow it."
+    "description": "Illuminate: create 15 ft radius sphere of light. Eclipse: create 15 ft radius sphere of darkness. Can be placed on an object to follow it.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "cleansed-vision",
@@ -1420,7 +1599,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "End blinded on a creature. For duration, creature gains 30 ft darkvision."
+    "description": "End blinded on a creature. For duration, creature gains 30 ft darkvision.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "lingering-light-lingering-darkness",
@@ -1475,7 +1657,12 @@
         }
       }
     },
-    "description": "Light: WILL save or [2x spell mod + 39 + 4d8] light damage, emits bright light 20 ft, auto-fails stealth. Darkness: heal [2x spell mod + 39 + 4d8], emits darkness 20 ft, advantage on stealth."
+    "description": "Light: WILL save or [2x spell mod + 39 + 4d8] light damage, emits bright light 20 ft, auto-fails stealth. Darkness: heal [2x spell mod + 39 + 4d8], emits darkness 20 ft, advantage on stealth.",
+    "tags": [
+      "damage",
+      "healing",
+      "light"
+    ]
   },
   {
     "id": "godly-expertise",
@@ -1498,7 +1685,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Reaction. On Knowledge, Arcana, or Religion check to identify holy/unholy objects, blessings/curses, or removal methods: add [5x spell modifier] to the roll."
+    "description": "Reaction. On Knowledge, Arcana, or Religion check to identify holy/unholy objects, blessings/curses, or removal methods: add [5x spell modifier] to the roll.",
+    "tags": [
+      "buff",
+      "debuff"
+    ]
   },
   {
     "id": "holy-revitalise-darkened-ruin",
@@ -1553,7 +1744,12 @@
         }
       }
     },
-    "description": "Revitalise: heal [2x spell mod + 22 + 4d6] and remove 1 burning/envenomed/bleeding/wounded. Ruin: CON save or [2x spell mod + 22 + 4d6] fire/poison damage + burning/envenomed effect."
+    "description": "Revitalise: heal [2x spell mod + 22 + 4d6] and remove 1 burning/envenomed/bleeding/wounded. Ruin: CON save or [2x spell mod + 22 + 4d6] fire/poison damage + burning/envenomed effect.",
+    "tags": [
+      "damage",
+      "healing",
+      "fire"
+    ]
   },
   {
     "id": "healing-invocation",
@@ -1593,7 +1789,11 @@
         }
       }
     },
-    "description": "Heal all allies in range for [4x spell mod + 32 + 8d10]. In combat, can channel up to 3 rounds; healing doubles each turn of channeling."
+    "description": "Heal all allies in range for [4x spell mod + 32 + 8d10]. In combat, can channel up to 3 rounds; healing doubles each turn of channeling.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "light-ward",
@@ -1616,7 +1816,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Ward a creature against harmful magic. Advantage on saving throws and spell attacks against it have disadvantage until start of your next turn."
+    "description": "Ward a creature against harmful magic. Advantage on saving throws and spell attacks against it have disadvantage until start of your next turn.",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "peaceful-retaliation",
@@ -1641,7 +1845,10 @@
     "scaling": {
       "manaCostIncrease": 45
     },
-    "description": "First weapon attack against chosen creature gives attacker 2 disarmed stacks. Can be used as reaction for half stacks. Scaling: +1 disarmed stack."
+    "description": "First weapon attack against chosen creature gives attacker 2 disarmed stacks. Can be used as reaction for half stacks. Scaling: +1 disarmed stack.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "worthy-requite",
@@ -1664,7 +1871,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Whenever you heal a creature, gain temporary HP equal to half the amount healed until start of next turn. Existing temp HP persists even if concentration breaks."
+    "description": "Whenever you heal a creature, gain temporary HP equal to half the amount healed until start of next turn. Existing temp HP persists even if concentration breaks.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "prayer-of-silence",
@@ -1689,7 +1900,11 @@
     "scaling": {
       "manaCostIncrease": 40
     },
-    "description": "Channel. At end of each turn, all enemies in range that can hear you must WILL save or gain 3 silenced stacks. Scaling: +1 silenced stack."
+    "description": "Channel. At end of each turn, all enemies in range that can hear you must WILL save or gain 3 silenced stacks. Scaling: +1 silenced stack.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "illuminating-descent",
@@ -1729,7 +1944,12 @@
         }
       }
     },
-    "description": "Choose a point. Holy light descends in 10 ft radius. DEX save or take [2x spell mod + 27 + 4d12] light damage."
+    "description": "Choose a point. Holy light descends in 10 ft radius. DEX save or take [2x spell mod + 27 + 4d12] light damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "healing-rays",
@@ -1769,7 +1989,11 @@
         }
       }
     },
-    "description": "Fire up to 3 healing rays. Each heals all creatures within 5 ft of impact for [3x spell mod + 39 + 9d6]. Each creature healed by only one ray."
+    "description": "Fire up to 3 healing rays. Each heals all creatures within 5 ft of impact for [3x spell mod + 39 + 9d6]. Each creature healed by only one ray.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "fountain-of-renewal",
@@ -1794,7 +2018,10 @@
     "scaling": {
       "manaCostIncrease": 15
     },
-    "description": "After channeling for duration, create a fountain lasting 1 day. 5 uses, 1 AP to drink, restores 10% max HP. Max 120 total HP restored. Scaling: +45 total HP."
+    "description": "After channeling for duration, create a fountain lasting 1 day. 5 uses, 1 AP to drink, restores 10% max HP. Max 120 total HP restored. Scaling: +45 total HP.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "repentance-subjugation",
@@ -1849,7 +2076,13 @@
         }
       }
     },
-    "description": "Repentance: CHA save or [3x spell mod + 17 + 5d8] light damage. Allies within 5 ft of target heal [3x spell mod + 5d8] per turn. Subjugation: shadow variant damages nearby enemies."
+    "description": "Repentance: CHA save or [3x spell mod + 17 + 5d8] light damage. Allies within 5 ft of target heal [3x spell mod + 5d8] per turn. Subjugation: shadow variant damages nearby enemies.",
+    "tags": [
+      "damage",
+      "healing",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "radiant-nova-umbral-nova",
@@ -1889,7 +2122,12 @@
         }
       }
     },
-    "description": "Radiant: WIS save or [3x spell mod + 42 + 6d12] light damage; heal for half total damage. Umbral: shadow variant; can sacrifice HP for bonus damage to all who failed."
+    "description": "Radiant: WIS save or [3x spell mod + 42 + 6d12] light damage; heal for half total damage. Umbral: shadow variant; can sacrifice HP for bonus damage to all who failed.",
+    "tags": [
+      "damage",
+      "healing",
+      "light"
+    ]
   },
   {
     "id": "holy-aid",
@@ -1929,7 +2167,11 @@
         }
       }
     },
-    "description": "End prone, rooted, and snared on a creature. Heal for [3x spell mod + 5 + 6d4]."
+    "description": "End prone, rooted, and snared on a creature. Heal for [3x spell mod + 5 + 6d4].",
+    "tags": [
+      "healing",
+      "control"
+    ]
   },
   {
     "id": "domain-of-tranquility",
@@ -1952,7 +2194,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 30 ft radius area centered on you. All creatures within are considered weakened. Does not modify existing weakened stacks. Double AP to center on a point within 30 ft."
+    "description": "Create a 30 ft radius area centered on you. All creatures within are considered weakened. Does not modify existing weakened stacks. Double AP to center on a point within 30 ft.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "brand-of-the-infidels",
@@ -1992,7 +2238,11 @@
         }
       }
     },
-    "description": "CON save or [6x spell mod + 83 + 10d10] fire damage + 5 decaying stacks. Can forgo fire damage for half AP cost."
+    "description": "CON save or [6x spell mod + 83 + 10d10] fire damage + 5 decaying stacks. Can forgo fire damage for half AP cost.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "forced-mediation",
@@ -2017,7 +2267,10 @@
     "scaling": {
       "manaCostIncrease": 45
     },
-    "description": "Two creatures cannot damage each other. Each unwilling creature may WILL save; if any succeeds, spell has no effect. Scaling: +2 to spell save DC."
+    "description": "Two creatures cannot damage each other. Each unwilling creature may WILL save; if any succeeds, spell has no effect. Scaling: +2 to spell save DC.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "enfeeble",
@@ -2057,7 +2310,11 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [3x spell mod + 40 + 3d8] psychic damage + 3 corroded stacks. Recastable same turn. Scaling: +1 corroded stack."
+    "description": "Ranged spell attack. On hit: [3x spell mod + 40 + 3d8] psychic damage + 3 corroded stacks. Recastable same turn. Scaling: +1 corroded stack.",
+    "tags": [
+      "damage",
+      "psychic"
+    ]
   },
   {
     "id": "divine-premonition",
@@ -2079,7 +2336,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Name an objective and a specific action. Make a Religion check (DC 50 baseline). On success, receive divine intuition whether the action would aid, hinder, or have no impact."
+    "description": "Name an objective and a specific action. Make a Religion check (DC 50 baseline). On success, receive divine intuition whether the action would aid, hinder, or have no impact.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "eyes-of-the-judge",
@@ -2102,7 +2362,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 20 ft tall statue of your god. Enemies in its 30 ft cone that damage you or allies must WILL save or be frightened until end of their turn."
+    "description": "Create a 20 ft tall statue of your god. Enemies in its 30 ft cone that damage you or allies must WILL save or be frightened until end of their turn.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "holy-cross-scorching-cross",
@@ -2157,7 +2420,12 @@
         }
       }
     },
-    "description": "Create a cross shape on the ground. Healing: creatures at 4 ends healed for [4x spell mod + 27 + 4d6], center creature healed for additional amount. Scorching: fire damage variant [4x spell mod + 37 + 4d6]."
+    "description": "Create a cross shape on the ground. Healing: creatures at 4 ends healed for [4x spell mod + 27 + 4d6], center creature healed for additional amount. Scorching: fire damage variant [4x spell mod + 37 + 4d6].",
+    "tags": [
+      "damage",
+      "healing",
+      "fire"
+    ]
   },
   {
     "id": "altar-of-silence",
@@ -2180,7 +2448,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 30 ft radius sphere where no creature can talk, disabling all verbal component spells."
+    "description": "Create a 30 ft radius sphere where no creature can talk, disabling all verbal component spells.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "refreshing-wave",
@@ -2220,7 +2492,11 @@
         }
       }
     },
-    "description": "60 degree, 90 ft cone. Heals all allies for [4x spell mod + 37 + 4d8] and removes burning and poisoned."
+    "description": "60 degree, 90 ft cone. Heals all allies for [4x spell mod + 37 + 4d8] and removes burning and poisoned.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "cleansing-spark",
@@ -2260,7 +2536,11 @@
         }
       }
     },
-    "description": "Heal ally for [4x spell mod + 4d10] and end one of: terrified, stunned, incapacitated, paralysed, petrified, crystallised."
+    "description": "Heal ally for [4x spell mod + 4d10] and end one of: terrified, stunned, incapacitated, paralysed, petrified, crystallised.",
+    "tags": [
+      "healing",
+      "control"
+    ]
   },
   {
     "id": "sanctuary",
@@ -2283,7 +2563,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 20 ft radius sphere of peace. No creature in area can take/deal damage or be targeted by negative effects. Channel/concentration can still be broken."
+    "description": "Create a 20 ft radius sphere of peace. No creature in area can take/deal damage or be targeted by negative effects. Channel/concentration can still be broken.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "divine-spark",
@@ -2323,7 +2606,11 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [4x spell mod + 90 + 10d12] light/shadow damage."
+    "description": "Ranged spell attack. On hit: [4x spell mod + 90 + 10d12] light/shadow damage.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "bells-of-the-church",
@@ -2378,7 +2665,13 @@
         }
       }
     },
-    "description": "Enemies that hear: CON save or [5x spell mod + 60 + 10d6] thunder damage + prone, half on success. Allies that hear: healed for same amount + end prone."
+    "description": "Enemies that hear: CON save or [5x spell mod + 60 + 10d6] thunder damage + prone, half on success. Allies that hear: healed for same amount + end prone.",
+    "tags": [
+      "damage",
+      "healing",
+      "control",
+      "thunder"
+    ]
   },
   {
     "id": "shield-of-faith",
@@ -2403,7 +2696,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Give creature 250 temporary HP. Immune to CC while shield persists. If shield depleted before duration, creature takes double damage for 1 round. Max once per creature per fight."
+    "description": "Give creature 250 temporary HP. Immune to CC while shield persists. If shield depleted before duration, creature takes double damage for 1 round. Max once per creature per fight.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "divine-teleportation",
@@ -2425,7 +2721,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Teleport to another point within range."
+    "description": "Teleport to another point within range.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "decadent-souls",
@@ -2448,7 +2747,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Target must WIS save or become decaying, being damaged by healing for the duration."
+    "description": "Target must WIS save or become decaying, being damaged by healing for the duration.",
+    "tags": [
+      "healing",
+      "debuff"
+    ]
   },
   {
     "id": "divine-light-divine-chaos",
@@ -2471,7 +2774,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Light: 90 ft cube, dissipates winds/clouds/darkness (unless from higher level spell). Chaos: 90 ft cube, creates wind/cloud/mist/darkness."
+    "description": "Light: 90 ft cube, dissipates winds/clouds/darkness (unless from higher level spell). Chaos: 90 ft cube, creates wind/cloud/mist/darkness.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "messenger-of-god",
@@ -2494,7 +2800,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Up to 100 creatures must WIS save or believe you are the true messenger of your god. Unaware of magic after spell ends. Only affects creatures capable of believing in gods."
+    "description": "Up to 100 creatures must WIS save or believe you are the true messenger of your god. Unaware of magic after spell ends. Only affects creatures capable of believing in gods.",
+    "tags": [
+      "debuff",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "revive",
@@ -2517,7 +2828,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "After 1 round of channeling, revive a creature dead less than 1 week. Does not regenerate limbs or cure effects at time of death. Respawns with 6 fatigue stacks and 1 HP."
+    "description": "After 1 round of channeling, revive a creature dead less than 1 week. Does not regenerate limbs or cure effects at time of death. Respawns with 6 fatigue stacks and 1 HP.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "plane-travel",
@@ -2540,7 +2854,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "After 1 hour of channeling, teleport self and up to [spell modifier] creatures to another plane of existence. Must know the plane's name. 1 day cooldown."
+    "description": "After 1 hour of channeling, teleport self and up to [spell modifier] creatures to another plane of existence. Must know the plane's name. 1 day cooldown.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "divine-glyph",
@@ -2580,7 +2897,14 @@
         }
       }
     },
-    "description": "Place a glyph on an object/wall. Protected against spells lvl 6 and lower and physical harm. When triggered: [12x spell mod + 200 + 24d10] damage + CON save or blinded 1 min."
+    "description": "Place a glyph on an object/wall. Protected against spells lvl 6 and lower and physical harm. When triggered: [12x spell mod + 200 + 24d10] damage + CON save or blinded 1 min.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "ritual",
+      "light"
+    ]
   },
   {
     "id": "holy-protection-unholy-protection",
@@ -2603,7 +2927,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "1 hour ritual to protect a building. Unholy/holy creatures must CHA save to enter. On success: disadvantage on all rolls, outline glows yellow."
+    "description": "1 hour ritual to protect a building. Unholy/holy creatures must CHA save to enter. On success: disadvantage on all rolls, outline glows yellow.",
+    "tags": [
+      "debuff",
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "holy-shelter",
@@ -2626,7 +2955,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Protect a creature. Any attacker must WILL save or their ability fails (AP and mana still consumed)."
+    "description": "Protect a creature. Any attacker must WILL save or their ability fails (AP and mana still consumed).",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "holy-relic-destruction-ward",
@@ -2681,7 +3014,14 @@
         }
       }
     },
-    "description": "Relic: heals allies within 30 ft for [3x spell mod + 18 + 3d6] per round. Ward: damages enemies within 30 ft for same (shadow, ignores armor). 150 HP, 18 AC. Scaling: +25 HP, +2 AC."
+    "description": "Relic: heals allies within 30 ft for [3x spell mod + 18 + 3d6] per round. Ward: damages enemies within 30 ft for same (shadow, ignores armor). 150 HP, 18 AC. Scaling: +25 HP, +2 AC.",
+    "tags": [
+      "damage",
+      "healing",
+      "defense",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "healing-tides",
@@ -2711,7 +3051,11 @@
       }
     },
     "scaling": null,
-    "description": "Heal all allies in range for [7x spell mod + 110 + 14d10] and end 1 negative effect per ally (your choice)."
+    "description": "Heal all allies in range for [7x spell mod + 110 + 14d10] and end 1 negative effect per ally (your choice).",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "complete-restoration",
@@ -2734,7 +3078,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Heal creature to full HP, remove all negative effects, recover all lost limbs/body parts. Once per combat."
+    "description": "Heal creature to full HP, remove all negative effects, recover all lost limbs/body parts. Once per combat.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "cleric-divine-blast",
@@ -2766,7 +3113,11 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Ranged spell attack. On hit: [7x spell mod + 85 + 7d12] light/shadow damage. Religion check DC 23 for bonus 200 true damage (god sends mission before reuse)."
+    "description": "Ranged spell attack. On hit: [7x spell mod + 85 + 7d12] light/shadow damage. Religion check DC 23 for bonus 200 true damage (god sends mission before reuse).",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "divine-judgement",
@@ -2806,7 +3157,14 @@
         }
       }
     },
-    "description": "All enemies in range must WILL save or take [7x spell mod + 7d4] light damage and be stunned for 3 turns. Half damage on success. 24hr immunity after saving/enduring."
+    "description": "All enemies in range must WILL save or take [7x spell mod + 7d4] light damage and be stunned for 3 turns. Half damage on success. 24hr immunity after saving/enduring.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "aid-of-the-divine",
@@ -2829,7 +3187,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Choose up to [spell modifier] creatures. All rolls of 10 and below are rerolled. Cannot be possessed, frightened or cursed/blessed."
+    "description": "Choose up to [spell modifier] creatures. All rolls of 10 and below are rerolled. Cannot be possessed, frightened or cursed/blessed.",
+    "tags": [
+      "buff",
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "tranquillity",
@@ -2852,7 +3215,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Healing rain falls from the sky. Restore up to 1000 HP split as you like among allies."
+    "description": "Healing rain falls from the sky. Restore up to 1000 HP split as you like among allies.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "true-resurrection",
@@ -2875,7 +3241,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Revive a creature dead up to 1 millennium. New body, all curses/illnesses removed. Religion check for >1000 years (DC 20 + 1 per century over). Full HP/resources. One attempt per creature ever."
+    "description": "Revive a creature dead up to 1 millennium. New body, all curses/illnesses removed. Religion check for >1000 years (DC 20 + 1 per century over). Full HP/resources. One attempt per creature ever.",
+    "tags": [
+      "healing",
+      "debuff"
+    ]
   },
   {
     "id": "land-of-angels-land-of-devils",
@@ -2898,7 +3268,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Teleport self and up to [spell modifier] creatures to your god's domain for the duration. God will not reject you but may ignore you."
+    "description": "Teleport self and up to [spell modifier] creatures to your god's domain for the duration. God will not reject you but may ignore you.",
+    "tags": [
+      "movement",
+      "ritual"
+    ]
   },
   {
     "id": "lightshot",
@@ -2937,7 +3311,11 @@
         }
       }
     },
-    "description": "Ranged spell attack against first target in path. On hit: [spell mod + 7 + 2d6] light damage."
+    "description": "Ranged spell attack against first target in path. On hit: [spell mod + 7 + 2d6] light damage.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "echoed-healing",
@@ -2977,7 +3355,10 @@
         }
       }
     },
-    "description": "Heal ally for [spell mod + 6 + 2d6]. If ally not full HP, recastable on same ally same turn (mana only on first cast)."
+    "description": "Heal ally for [spell mod + 6 + 2d6]. If ally not full HP, recastable on same ally same turn (mana only on first cast).",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "shield-of-shade",
@@ -3002,7 +3383,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Give creature [spell mod + 16 + 2d10] magic shield. While shield stands, creature resists shadow and light damage (only if previously normal against them)."
+    "description": "Give creature [spell mod + 16 + 2d10] magic shield. While shield stands, creature resists shadow and light damage (only if previously normal against them).",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "radiant-flame",
@@ -3042,7 +3426,12 @@
         }
       }
     },
-    "description": "10 ft radius sphere of light from the sky. DEX save or [spell mod + 7 + 2d10] fire damage."
+    "description": "10 ft radius sphere of light from the sky. DEX save or [spell mod + 7 + 2d10] fire damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "spear-of-illumination",
@@ -3082,7 +3471,12 @@
         }
       }
     },
-    "description": "Channel 2 turns. STR save or [spell mod + 17 + 4d12] light damage and pushed 1d4 x 10 ft. Half damage on success, no push."
+    "description": "Channel 2 turns. STR save or [spell mod + 17 + 4d12] light damage and pushed 1d4 x 10 ft. Half damage on success, no push.",
+    "tags": [
+      "damage",
+      "control",
+      "light"
+    ]
   },
   {
     "id": "chains-of-light",
@@ -3107,7 +3501,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "CHA save or rooted for duration. Only affects shadow realm creatures. CON save to end. At higher levels: can target any creature."
+    "description": "CHA save or rooted for duration. Only affects shadow realm creatures. CON save to end. At higher levels: can target any creature.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "radiant-trap",
@@ -3147,7 +3544,12 @@
         }
       }
     },
-    "description": "Place invisible glyph. When creature enters 5 ft: [spell mod + 1d10] damage and blinded for duration (CON save to end). Glyph lasts 3 turns."
+    "description": "Place invisible glyph. When creature enters 5 ft: [spell mod + 1d10] damage and blinded for duration (CON save to end). Glyph lasts 3 turns.",
+    "tags": [
+      "damage",
+      "control",
+      "light"
+    ]
   },
   {
     "id": "summon-light-swallow",
@@ -3170,7 +3572,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Summon a light bird. Telepathic communication within 100 ft. Can only move/fly. AC 10, 1 HP. If killed, you take 2d10 true damage."
+    "description": "Summon a light bird. Telepathic communication within 100 ft. Can only move/fly. AC 10, 1 HP. If killed, you take 2d10 true damage.",
+    "tags": [
+      "movement",
+      "summon",
+      "ritual"
+    ]
   },
   {
     "id": "force-blast",
@@ -3210,7 +3617,13 @@
         }
       }
     },
-    "description": "10 ft radius blast. All creatures (except you) must STR save or take [2x spell mod + 24 + 2d8] force damage and be pushed 15 ft."
+    "description": "10 ft radius blast. All creatures (except you) must STR save or take [2x spell mod + 24 + 2d8] force damage and be pushed 15 ft.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "armor-of-the-pure",
@@ -3233,7 +3646,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "First weapon attack that hits the protected creature deals no damage. If attacker is unholy, it must CON save or be stunned until end of next turn."
+    "description": "First weapon attack that hits the protected creature deals no damage. If attacker is unholy, it must CON save or be stunned until end of next turn.",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "radiant-ray",
@@ -3273,7 +3690,12 @@
         }
       }
     },
-    "description": "90 ft long, 10 ft wide line of light. DEX save or [2x spell mod + 21 + 2d10] light damage, half on success."
+    "description": "90 ft long, 10 ft wide line of light. DEX save or [2x spell mod + 21 + 2d10] light damage, half on success.",
+    "tags": [
+      "damage",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "streak-of-light",
@@ -3313,7 +3735,11 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [2x spell mod + 5 + 2d10] light damage. Repeatable this turn with no mana cost."
+    "description": "Ranged spell attack. On hit: [2x spell mod + 5 + 2d10] light damage. Repeatable this turn with no mana cost.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "radiant-flux",
@@ -3353,7 +3779,11 @@
         }
       }
     },
-    "description": "WILL save or creature is covered in bright aura. If you deal light damage to it this turn, it takes [2x spell mod + 51 + 6d12] additional light damage."
+    "description": "WILL save or creature is covered in bright aura. If you deal light damage to it this turn, it takes [2x spell mod + 51 + 6d12] additional light damage.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "prison-of-the-damned",
@@ -3376,7 +3806,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "10 ft radius sphere. Creatures inside must STR save (2 AP, once per turn) to leave."
+    "description": "10 ft radius sphere. Creatures inside must STR save (2 AP, once per turn) to leave.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "chain-healing",
@@ -3416,7 +3850,10 @@
         }
       }
     },
-    "description": "Heal target for [3x spell mod + 28 + 3d6]. Bounces to another ally in range of last target. Max 5 bounces, no repeats."
+    "description": "Heal target for [3x spell mod + 28 + 3d6]. Bounces to another ally in range of last target. Max 5 bounces, no repeats.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "twin-lights",
@@ -3456,7 +3893,11 @@
         }
       }
     },
-    "description": "Two reflecting light rays. Different targets: ranged spell attack each for [3x spell mod + 20 + 3d10] light/fire. Same target: DEX save or [3x spell mod + 48 + 3d10] combined."
+    "description": "Two reflecting light rays. Different targets: ranged spell attack each for [3x spell mod + 20 + 3d10] light/fire. Same target: DEX save or [3x spell mod + 48 + 3d10] combined.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "force-field",
@@ -3479,7 +3920,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "STR save or push creature with magical force. If hits wall, can channel to keep snared (disadvantage on repeat saves). Can cast exorcism spells while channeling. Large or smaller only."
+    "description": "STR save or push creature with magical force. If hits wall, can channel to keep snared (disadvantage on repeat saves). Can cast exorcism spells while channeling. Large or smaller only.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "teleporting-trinity",
@@ -3502,7 +3946,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Target 3 creatures (2 must be 20+ ft apart). Switch all creatures/objects in the three 10 ft radius areas cyclically (1->2, 2->3, 3->1)."
+    "description": "Target 3 creatures (2 must be 20+ ft apart). Switch all creatures/objects in the three 10 ft radius areas cyclically (1->2, 2->3, 3->1).",
+    "tags": [
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "holy-liturgy",
@@ -3541,7 +3989,12 @@
         }
       }
     },
-    "description": "All enemies in range that hear must CHA save or take [3x spell mod + 25 + 3d6] light damage. Double damage against unholy beings."
+    "description": "All enemies in range that hear must CHA save or take [3x spell mod + 25 + 3d6] light damage. Double damage against unholy beings.",
+    "tags": [
+      "damage",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "divine-prison",
@@ -3564,7 +4017,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 90 ft long, 10 ft wide line of light. At end of next turn, creatures on it are lifted 30 ft in spheres of light, incapacitated. WILL save each turn to end. Max 10 ft wide creatures."
+    "description": "Create a 90 ft long, 10 ft wide line of light. At end of next turn, creatures on it are lifted 30 ft in spheres of light, incapacitated. WILL save each turn to end. Max 10 ft wide creatures.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "scorching-sins",
@@ -3604,7 +4061,14 @@
         }
       }
     },
-    "description": "Create up to 40 ft radius glowing coal surface. Creatures starting turn in area take [3x spell mod + 4d4] fire damage. Extra damage per AP of movement. Triple damage for unholy. Reduced by armor."
+    "description": "Create up to 40 ft radius glowing coal surface. Creatures starting turn in area take [3x spell mod + 4d4] fire damage. Extra damage per AP of movement. Triple damage for unholy. Reduced by armor.",
+    "tags": [
+      "damage",
+      "buff",
+      "debuff",
+      "aoe",
+      "fire"
+    ]
   },
   {
     "id": "shaped-evil",
@@ -3627,7 +4091,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Force invisible creature's outline to glow. Pull creature from shadow/spectral plane (CHA save). Speaking true name auto-fails save for shadow/spectral plane; allows pulling from any plane with save."
+    "description": "Force invisible creature's outline to glow. Pull creature from shadow/spectral plane (CHA save). Speaking true name auto-fails save for shadow/spectral plane; allows pulling from any plane with save.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "purging-cross",
@@ -3667,7 +4134,12 @@
         }
       }
     },
-    "description": "Cross shape on ground. Creatures at ends: WILL save or [4x spell mod + 32 + 4d6] light damage. Center creature takes bonus. If all ends had creatures, center is stunned 1 min (no saves for 2 turns)."
+    "description": "Cross shape on ground. Creatures at ends: WILL save or [4x spell mod + 32 + 4d6] light damage. Center creature takes bonus. If all ends had creatures, center is stunned 1 min (no saves for 2 turns).",
+    "tags": [
+      "damage",
+      "control",
+      "light"
+    ]
   },
   {
     "id": "holy-steed",
@@ -3707,7 +4179,12 @@
         }
       }
     },
-    "description": "Spectral steed charges in 90 ft x 10 ft line. CON save or [4x spell mod + 31 + 4d10] spectral damage + prone, half on success. Can channel for 7 steeds (70 ft wide), double damage."
+    "description": "Spectral steed charges in 90 ft x 10 ft line. CON save or [4x spell mod + 31 + 4d10] spectral damage + prone, half on success. Can channel for 7 steeds (70 ft wide), double damage.",
+    "tags": [
+      "damage",
+      "control",
+      "spectral"
+    ]
   },
   {
     "id": "towards-the-light",
@@ -3730,7 +4207,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Spawn light essence. Creatures within 30 ft starting turn must WILL save or consume 1d4 AP walking toward it. Attacks of opportunity auto-miss affected creatures."
+    "description": "Spawn light essence. Creatures within 30 ft starting turn must WILL save or consume 1d4 AP walking toward it. Attacks of opportunity auto-miss affected creatures.",
+    "tags": [
+      "debuff",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "crucifix-of-protection",
@@ -3753,7 +4235,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Protect 15 ft diameter sphere around you (stationary). No magic damage can be received/dealt except light or true damage."
+    "description": "Protect 15 ft diameter sphere around you (stationary). No magic damage can be received/dealt except light or true damage.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "sky-strikes",
@@ -3793,7 +4279,12 @@
         }
       }
     },
-    "description": "10 ft radius light beam from sky. DEX save or [4x spell mod + 6 + 4d8] light damage. Two more free strikes (same spot same turn, or separate spots before end of next turn)."
+    "description": "10 ft radius light beam from sky. DEX save or [4x spell mod + 6 + 4d8] light damage. Two more free strikes (same spot same turn, or separate spots before end of next turn).",
+    "tags": [
+      "damage",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "healing-star",
@@ -3833,7 +4324,10 @@
         }
       }
     },
-    "description": "8 healing beams in star pattern, each 15 ft. Heal first creature hit for [4x spell mod + 4d6]. If X+ beams hit, recastable free (X starts at 1, increases). Does not heal self."
+    "description": "8 healing beams in star pattern, each 15 ft. Heal first creature hit for [4x spell mod + 4d6]. If X+ beams hit, recastable free (X starts at 1, increases). Does not heal self.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "let-there-be-light",
@@ -3856,7 +4350,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Cover 10 ft sphere in divine light until end of turn. All creatures take double light damage. At end of turn, covered creatures become immune to light damage until end of next turn."
+    "description": "Cover 10 ft sphere in divine light until end of turn. All creatures take double light damage. At end of turn, covered creatures become immune to light damage until end of next turn.",
+    "tags": [
+      "damage",
+      "defense",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "light-tower",
@@ -3879,7 +4379,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a 150 ft tall magical lighthouse. Light dispels fog/darkness/clouds from equal or lower level spells. Unholy beings in light: halved movement, no plane teleport, half damage."
+    "description": "Create a 150 ft tall magical lighthouse. Light dispels fog/darkness/clouds from equal or lower level spells. Unholy beings in light: halved movement, no plane teleport, half damage.",
+    "tags": [
+      "movement",
+      "ritual"
+    ]
   },
   {
     "id": "soul-transfer",
@@ -3934,7 +4438,12 @@
         }
       }
     },
-    "description": "CHA save. On fail: [5x spell mod + 10 + 5d12] pure damage; heal an ally for same amount. On success: half damage, half healing."
+    "description": "CHA save. On fail: [5x spell mod + 10 + 5d12] pure damage; heal an ally for same amount. On success: half damage, half healing.",
+    "tags": [
+      "damage",
+      "healing",
+      "pure"
+    ]
   },
   {
     "id": "fate-edict",
@@ -3957,7 +4466,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "CHA save or target takes no damage/healing for 2 turns. At end, all accumulated damage is multiplied by 1.5x and all healing is doubled. One target at a time."
+    "description": "CHA save or target takes no damage/healing for 2 turns. At end, all accumulated damage is multiplied by 1.5x and all healing is doubled. One target at a time.",
+    "tags": [
+      "healing",
+      "debuff"
+    ]
   },
   {
     "id": "dazing-beam",
@@ -3997,7 +4510,13 @@
         }
       }
     },
-    "description": "15 ft radius sphere. CON save or [5x spell mod + 24 + 5d10] light damage + prone (stunned if in center). Half damage on success."
+    "description": "15 ft radius sphere. CON save or [5x spell mod + 24 + 5d10] light damage + prone (stunned if in center). Half damage on success.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "divines-wrath",
@@ -4037,7 +4556,11 @@
         }
       }
     },
-    "description": "Channel. Each turn make ranged spell attacks equal to half AP consumed. Each hit: [5x spell mod + 37 + 5d8] spectral damage + push 10 ft."
+    "description": "Channel. Each turn make ranged spell attacks equal to half AP consumed. Each hit: [5x spell mod + 37 + 5d8] spectral damage + push 10 ft.",
+    "tags": [
+      "damage",
+      "spectral"
+    ]
   },
   {
     "id": "channeled-light",
@@ -4077,7 +4600,12 @@
         }
       }
     },
-    "description": "Channel 2 turns. 90 ft x 10 ft beam deals [28x spell mod + 400 + 28d10] light damage. If target dies, heal 20% max HP and recover mana cost. Direction chosen at cast."
+    "description": "Channel 2 turns. 90 ft x 10 ft beam deals [28x spell mod + 400 + 28d10] light damage. If target dies, heal 20% max HP and recover mana cost. Direction chosen at cast.",
+    "tags": [
+      "damage",
+      "healing",
+      "light"
+    ]
   },
   {
     "id": "final-rest",
@@ -4100,7 +4628,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a singing spectral maiden of light. Creatures starting turn within 30 ft must WILL save or fall asleep for 1 turn. Save also required on cast."
+    "description": "Create a singing spectral maiden of light. Creatures starting turn within 30 ft must WILL save or fall asleep for 1 turn. Save also required on cast.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "shield-of-divinity",
@@ -4123,7 +4654,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a floating 5 ft radius spectral shield. Blocks all projectiles/spells except light damage. Light damage spells passing through gain double range, AoE, and damage."
+    "description": "Create a floating 5 ft radius spectral shield. Blocks all projectiles/spells except light damage. Light damage spells passing through gain double range, AoE, and damage.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "impenetrable-light",
@@ -4152,7 +4687,13 @@
     "scaling": {
       "manaCostIncrease": 80
     },
-    "description": "5 ft radius light shield. Deflects ranged weapons, melee attackers take [6x spell mod] light damage. Creatures adjacent at turn start/end take same. Can absorb 350 damage. Scaling: +50 absorb, +spell mod damage."
+    "description": "5 ft radius light shield. Deflects ranged weapons, melee attackers take [6x spell mod] light damage. Creatures adjacent at turn start/end take same. Can absorb 350 damage. Scaling: +50 absorb, +spell mod damage.",
+    "tags": [
+      "damage",
+      "defense",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "piercing-light",
@@ -4192,7 +4733,11 @@
         }
       }
     },
-    "description": "Ranged spell attack. On hit: [6x spell mod + 60 + 12d12] light or piercing damage (your choice). Ignores target's armor."
+    "description": "Ranged spell attack. On hit: [6x spell mod + 60 + 12d12] light or piercing damage (your choice). Ignores target's armor.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "sense-doom",
@@ -4215,7 +4760,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Sense any unholy curse, affliction or possession on a creature/spell, and identify which overlord/archcreature it belongs to. Greater unholy creatures can stealth check to block."
+    "description": "Sense any unholy curse, affliction or possession on a creature/spell, and identify which overlord/archcreature it belongs to. Greater unholy creatures can stealth check to block.",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "sacrifice-of-the-fallen",
@@ -4238,7 +4787,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Force unholy being out of a possessed creature. WILL save or the creature dies; the being takes true damage equal to the creature's HP at death. 24hr immunity on success."
+    "description": "Force unholy being out of a possessed creature. WILL save or the creature dies; the being takes true damage equal to the creature's HP at death. 24hr immunity on success.",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "sorrow-of-the-sinners",
@@ -4261,7 +4814,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Channel. Each hostile creature in range must WILL save before casting a spell or attacking. On fail, AP and mana consumed but action does not happen."
+    "description": "Channel. Each hostile creature in range must WILL save before casting a spell or attacking. On fail, AP and mana consumed but action does not happen.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "holy-rain",
@@ -4316,7 +4872,12 @@
         }
       }
     },
-    "description": "Channel. Each turn, [AP consumed] drops land at chosen points. Healing drops heal 5 ft area for [7x spell mod + 7d6]. Scorching drops deal same as fire damage (pierces armor)."
+    "description": "Channel. Each turn, [AP consumed] drops land at chosen points. Healing drops heal 5 ft area for [7x spell mod + 7d6]. Scorching drops deal same as fire damage (pierces armor).",
+    "tags": [
+      "damage",
+      "healing",
+      "fire"
+    ]
   },
   {
     "id": "cross-of-the-divided",
@@ -4371,7 +4932,13 @@
         }
       }
     },
-    "description": "X-shaped cross, 120 ft lines, 4 quadrants (60 ft squares). Each area has a different effect: heal, light damage (CON save), blind+slow, or silence (CON save). Areas rotate clockwise each turn."
+    "description": "X-shaped cross, 120 ft lines, 4 quadrants (60 ft squares). Each area has a different effect: heal, light damage (CON save), blind+slow, or silence (CON save). Areas rotate clockwise each turn.",
+    "tags": [
+      "damage",
+      "healing",
+      "control",
+      "light"
+    ]
   },
   {
     "id": "banished-horrors",
@@ -4394,7 +4961,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Banish an unholy being. If it has 250 HP or less, it instantly dies. If might >= exorcist level, WILL save to avoid."
+    "description": "Banish an unholy being. If it has 250 HP or less, it instantly dies. If might >= exorcist level, WILL save to avoid.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "the-holy-spirit",
@@ -4424,7 +4994,11 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Giant bird of light dives in 200 ft x 50 ft line. DEX save or [16x spell mod + 216 + 16d10] light damage, half on success."
+    "description": "Giant bird of light dives in 200 ft x 50 ft line. DEX save or [16x spell mod + 216 + 16d10] light damage, half on success.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "exorcist-divine-blast",
@@ -4454,7 +5028,11 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Ranged spell attack with spectral appearance of your god. On hit: [16x spell mod + 350 + 16d12] light damage. Double and true damage against unholy beings."
+    "description": "Ranged spell attack with spectral appearance of your god. On hit: [16x spell mod + 350 + 16d12] light damage. Double and true damage against unholy beings.",
+    "tags": [
+      "damage",
+      "light"
+    ]
   },
   {
     "id": "beacon-of-hope",
@@ -4477,6 +5055,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Become crystallized and channel. Each turn all allies heal for 50% max HP, and any single-round damage exceeding 80% max HP is nullified."
+    "description": "Become crystallized and channel. Each turn all allies heal for 50% max HP, and any single-round damage exceeding 80% max HP is nullified.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   }
 ]

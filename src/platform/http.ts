@@ -563,6 +563,13 @@ export function fetchRoomDeck(room: string): Promise<DeckTemplate> {
 }
 
 /** The room's activity log, newest first — who did what, when. */
+/** The player's own combat history — combat actions only, never the rest of the table. */
+export function fetchCombatLog(playerId: string, limit = 50): Promise<AuditView[]> {
+  return getJson<AuditView[]>(
+    `/characters/${encodeURIComponent(playerId)}/log?limit=${limit}`,
+  );
+}
+
 export function fetchAudit(room: string, limit = 50): Promise<AuditView[]> {
   return getJson<AuditView[]>(`/rooms/${encodeURIComponent(room)}/audit?limit=${limit}`);
 }

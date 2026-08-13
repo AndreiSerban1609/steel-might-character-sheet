@@ -7,18 +7,33 @@
     "apCost": 3,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 1, "flat": 9, "dice": "2d12" },
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d12"
+    },
     "scaling": {
       "manaCostIncrease": 25,
-      "damageIncrease": { "modMultiplier": 1, "flat": 7, "dice": "1d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "1d12"
+      }
     },
-    "description": "You send forth the power of a chord to strike a foe. Make a ranged spell attack dealing thunder damage."
+    "description": "You send forth the power of a chord to strike a foe. Make a ranged spell attack dealing thunder damage.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "trill-of-joy",
@@ -28,18 +43,32 @@
     "apCost": 2,
     "manaCost": 10,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 1, "flat": 6, "dice": "2d8" },
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 6,
+      "dice": "2d8"
+    },
     "scaling": {
       "manaCostIncrease": 30,
-      "healingIncrease": { "modMultiplier": 1, "flat": 10, "dice": "2d8" }
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d8"
+      }
     },
-    "description": "You heal an ally for [spell modifier + 6 + 2d8]."
+    "description": "You heal an ally for [spell modifier + 6 + 2d8].",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "dissonating-song",
@@ -49,20 +78,37 @@
     "apCost": 4,
     "manaCost": 15,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": "psychic",
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "damage": { "modMultiplier": 1, "flat": 13, "dice": "1d10" },
-    "effects": ["invisibility-conditional"],
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 13,
+      "dice": "1d10"
+    },
+    "effects": [
+      "invisibility-conditional"
+    ],
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 20, "dice": "2d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 20,
+        "dice": "2d10"
+      }
     },
-    "description": "Choose up to [spell modifier] creatures and a target. The foe must make a WIS save or take psychic damage and cannot see chosen creatures until they act."
+    "description": "Choose up to [spell modifier] creatures and a target. The foe must make a WIS save or take psychic damage and cannot see chosen creatures until they act.",
+    "tags": [
+      "damage",
+      "debuff",
+      "psychic"
+    ]
   },
   {
     "id": "looks-of-the-artist",
@@ -78,7 +124,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You change your appearance. You can describe your new look or attempt to look like someone you have seen. Creatures can roll investigation vs your spell DC to uncover the disguise."
+    "description": "You change your appearance. You can describe your new look or attempt to look like someone you have seen. Creatures can roll investigation vs your spell DC to uncover the disguise.",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "fair-weather-friends",
@@ -88,14 +137,20 @@
     "apCost": 11,
     "manaCost": 10,
     "range": "30 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "You attempt to charm a foe into being friendly towards you and your party. The target must succeed on a CHA save or view you as a friendly presence. Harming the foe or its allies ends the effect."
+    "description": "You attempt to charm a foe into being friendly towards you and your party. The target must succeed on a CHA save or view you as a friendly presence. Harming the foe or its allies ends the effect.",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "forcefield-glyph",
@@ -105,14 +160,22 @@
     "apCost": 1,
     "manaCost": 11,
     "range": "10 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "str",
-    "description": "You mark the ground or an object with a magic glyph. The first time a creature comes within 5 feet, all creatures within 10 ft must make a STR save or be pushed back 20 feet."
+    "description": "You mark the ground or an object with a magic glyph. The first time a creature comes within 5 feet, all creatures within 10 ft must make a STR save or be pushed back 20 feet.",
+    "tags": [
+      "control",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "imbued-melody",
@@ -122,20 +185,38 @@
     "apCost": 3,
     "manaCost": 12,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "damage": { "modMultiplier": 1, "flat": 7, "dice": "2d10" },
-    "effects": ["disadvantage-next-attack"],
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": "2d10"
+    },
+    "effects": [
+      "disadvantage-next-attack"
+    ],
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 16, "dice": "2d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 16,
+        "dice": "2d10"
+      }
     },
-    "description": "You sing a melody to distract a foe. On a failed WIS save it takes thunder damage and has disadvantage on its first attack/ability requiring an attack roll."
+    "description": "You sing a melody to distract a foe. On a failed WIS save it takes thunder damage and has disadvantage on its first attack/ability requiring an attack roll.",
+    "tags": [
+      "damage",
+      "debuff",
+      "thunder"
+    ]
   },
   {
     "id": "enticing-voice",
@@ -145,14 +226,22 @@
     "apCost": 2,
     "manaCost": 55,
     "range": "5 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "You tempt an unsuspecting (non-combat) foe. The target must make a CHA save or feel a sudden attraction towards you. Harming the target ends the effect."
+    "description": "You tempt an unsuspecting (non-combat) foe. The target must make a CHA save or feel a sudden attraction towards you. Harming the target ends the effect.",
+    "tags": [
+      "debuff",
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "alluring-tune",
@@ -162,14 +251,20 @@
     "apCost": 1,
     "manaCost": 40,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "The target must make a CHA save. On a fail you use up to 1d4 AP worth of the target's movement and move them as you wish. Cannot move into obvious danger."
+    "description": "The target must make a CHA save. On a fail you use up to 1d4 AP worth of the target's movement and move them as you wish. Cannot move into obvious danger.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "low-tune",
@@ -179,14 +274,21 @@
     "apCost": 2,
     "manaCost": 30,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "All enemies who can hear you within range must make a WILL save or start their next turn with 2 less AP."
+    "description": "All enemies who can hear you within range must make a WILL save or start their next turn with 2 less AP.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "commanding-call",
@@ -196,14 +298,20 @@
     "apCost": 2,
     "manaCost": 60,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "You issue a word of command (drop, come, or flee). The creature must succeed on a WIS save or obey. Actions happen as part of your spell at no cost to the foe."
+    "description": "You issue a word of command (drop, come, or flee). The creature must succeed on a WIS save or obey. Actions happen as part of your spell at no cost to the foe.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "hymn-of-protection",
@@ -213,20 +321,40 @@
     "apCost": 4,
     "manaCost": 75,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 2, "flat": 29, "dice": "4d8" },
-    "effects": ["disadvantage-attacks-on-target"],
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 29,
+      "dice": "4d8"
+    },
+    "effects": [
+      "disadvantage-attacks-on-target"
+    ],
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 15, "dice": "2d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 15,
+        "dice": "2d8"
+      }
     },
-    "description": "Choose a target to protect. All enemies in range must make a WILL save or take thunder damage and have disadvantage on attacks against the protected creature until your next turn."
+    "description": "Choose a target to protect. All enemies in range must make a WILL save or take thunder damage and have disadvantage on attacks against the protected creature until your next turn.",
+    "tags": [
+      "damage",
+      "debuff",
+      "defense",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "hasting-trill",
@@ -236,18 +364,27 @@
     "apCost": 3,
     "manaCost": 50,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["haste"],
+    "effects": [
+      "haste"
+    ],
     "scaling": {
       "manaCostIncrease": 50,
       "description": "-1 AP cost"
     },
-    "description": "You sing a song hasting all allies within range who can hear you (excluding yourself) for 1 minute, hasting for +10 MS and +1 AP."
+    "description": "You sing a song hasting all allies within range who can hear you (excluding yourself) for 1 minute, hasting for +10 MS and +1 AP.",
+    "tags": [
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "mending-hums",
@@ -257,19 +394,37 @@
     "apCost": 3,
     "manaCost": 55,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 2, "flat": 22, "dice": "2d12" },
-    "effects": ["cleanse-one"],
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 22,
+      "dice": "2d12"
+    },
+    "effects": [
+      "cleanse-one"
+    ],
     "scaling": {
       "manaCostIncrease": 30,
-      "healingIncrease": { "modMultiplier": 1, "flat": 12, "dice": "1d12" }
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "1d12"
+      }
     },
-    "description": "You heal an ally and end one effect of poison, slow, prone, or charm on the target."
+    "description": "You heal an ally and end one effect of poison, slow, prone, or charm on the target.",
+    "tags": [
+      "healing",
+      "buff",
+      "control"
+    ]
   },
   {
     "id": "increasing-pitch",
@@ -279,20 +434,37 @@
     "apCost": 3,
     "manaCost": 55,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": true,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 2, "flat": 16, "dice": "4d8" },
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 16,
+      "dice": "4d8"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 8, "dice": "2d8" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "2d8"
+      },
       "description": "Initial damage increases; +1d8 per AP channelled per turn"
     },
-    "description": "You start a song that increases in power each turn. Starting damage applies to all enemies in range on a failed WILL save. Each turn the damage increases by 2d8 per AP channelled. Up to 3 turns."
+    "description": "You start a song that increases in power each turn. Starting damage applies to all enemies in range on a failed WILL save. Each turn the damage increases by 2d8 per AP channelled. Up to 3 turns.",
+    "tags": [
+      "damage",
+      "buff",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "captivating-performance",
@@ -302,14 +474,22 @@
     "apCost": 11,
     "manaCost": 40,
     "range": "100 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "You perform, and all creatures who willingly watch or fail a CHA save have their passive perception reduced by [2x spell modifier] and pay full attention to you. They can retry the save every 10 minutes."
+    "description": "You perform, and all creatures who willingly watch or fail a CHA save have their passive perception reduced by [2x spell modifier] and pay full attention to you. They can retry the save every 10 minutes.",
+    "tags": [
+      "debuff",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "calm-emotions",
@@ -319,14 +499,21 @@
     "apCost": 2,
     "manaCost": 55,
     "range": "10 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "You try to calm an aggressive/hostile target. On a failed CHA save they calm down and forget small quarrels. Does not necessarily stop the target from attacking."
+    "description": "You try to calm an aggressive/hostile target. On a failed CHA save they calm down and forget small quarrels. Does not necessarily stop the target from attacking.",
+    "tags": [
+      "debuff",
+      "ritual"
+    ]
   },
   {
     "id": "alter-self",
@@ -342,7 +529,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You change your appearance and body to match a creature you have seen (within 1 size). You gain no mechanical benefits. Physical inspection does not reveal the disguise; only investigation checks can."
+    "description": "You change your appearance and body to match a creature you have seen (within 1 size). You gain no mechanical benefits. Physical inspection does not reveal the disguise; only investigation checks can.",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "sad-story",
@@ -352,14 +542,24 @@
     "apCost": 2,
     "manaCost": 50,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["difficult-terrain", "obscured-vision"],
-    "description": "You summon rain with your song. The area around you becomes difficult terrain (halving speed) and obscures vision (ranged attacks through the area have disadvantage). Centered on you and moves with you."
+    "effects": [
+      "difficult-terrain",
+      "obscured-vision"
+    ],
+    "description": "You summon rain with your song. The area around you becomes difficult terrain (halving speed) and obscures vision (ranged attacks through the area have disadvantage). Centered on you and moves with you.",
+    "tags": [
+      "debuff",
+      "summon"
+    ]
   },
   {
     "id": "burning-ambition",
@@ -369,19 +569,34 @@
     "apCost": 3,
     "manaCost": 50,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 2, "flat": 36, "dice": "4d12" },
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 36,
+      "dice": "4d12"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 18, "dice": "2d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 18,
+        "dice": "2d12"
+      }
     },
-    "description": "You force a hostile creature to make a WILL save. On a fail they take fire damage."
+    "description": "You force a hostile creature to make a WILL save. On a fail they take fire damage.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "call-to-battle",
@@ -391,7 +606,10 @@
     "apCost": 5,
     "manaCost": 160,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
@@ -401,7 +619,10 @@
       "manaCostIncrease": 80,
       "description": "4th level: +1 ally; 5th level: allies can use one spell (up to 3 AP) instead of a weapon attack (still consumes mana)"
     },
-    "description": "Choose an enemy. Two allies can make a weapon attack against it if they are in range. You choose the two allies if more than 2 are eligible."
+    "description": "Choose an enemy. Two allies can make a weapon attack against it if they are in range. You choose the two allies if more than 2 are eligible.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "heckling-song",
@@ -411,14 +632,20 @@
     "apCost": 0,
     "manaCost": 130,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "Reaction. You attempt to interrupt a creature. If moving, it is pushed back 30 feet and its current AP is wasted. If attacking/casting, it must succeed on a WILL save or have the action interrupted and resources consumed."
+    "description": "Reaction. You attempt to interrupt a creature. If moving, it is pushed back 30 feet and its current AP is wasted. If attacking/casting, it must succeed on a WILL save or have the action interrupted and resources consumed.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "dance-frenzy",
@@ -428,14 +655,21 @@
     "apCost": 2,
     "manaCost": 120,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": true,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "Channel. Turn 1: enemies make a WILL save or have MS halved and disadvantage on saves. Turn 2: WILL save or be silenced and MS reduced to 0. Turn 3: WILL save or drop weapons and dance (stunned)."
+    "description": "Channel. Turn 1: enemies make a WILL save or have MS halved and disadvantage on saves. Turn 2: WILL save or be silenced and MS reduced to 0. Turn 3: WILL save or drop weapons and dance (stunned).",
+    "tags": [
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "maddening-chord",
@@ -445,14 +679,20 @@
     "apCost": 3,
     "manaCost": 115,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "The creature must make a WIS save or become mad, attacking the nearest creature on the upcoming turn. If multiple creatures are equidistant, the target is random."
+    "description": "The creature must make a WIS save or become mad, attacking the nearest creature on the upcoming turn. If multiple creatures are equidistant, the target is random.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "ballad-of-heroism",
@@ -462,18 +702,32 @@
     "apCost": 2,
     "manaCost": 85,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 turn",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "damage": { "modMultiplier": 3, "flat": 0, "dice": "3d12" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 0,
+      "dice": "3d12"
+    },
     "scaling": {
       "manaCostIncrease": 30,
-      "damageIncrease": { "modMultiplier": 1, "flat": 0, "dice": "1d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d12"
+      }
     },
-    "description": "Allies (including you) that can hear you deal bonus damage on every attack and spell until the end of your next turn. Damage type matches the attack or spell."
+    "description": "Allies (including you) that can hear you deal bonus damage on every attack and spell until the end of your next turn. Damage type matches the attack or spell.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "pocket-ear",
@@ -483,13 +737,19 @@
     "apCost": 1,
     "manaCost": 100,
     "range": "500 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You place a magical glyph on an object that serves as a magical ear. You can hear all that it hears for the duration. Excessively loud noise deals 4d10 thunder damage (pierces armor) and ends the effect."
+    "description": "You place a magical glyph on an object that serves as a magical ear. You can hear all that it hears for the duration. Excessively loud noise deals 4d10 thunder damage (pierces armor) and ends the effect.",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "stunning-echoes",
@@ -499,15 +759,25 @@
     "apCost": 4,
     "manaCost": 150,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "const",
-    "effects": ["stunned"],
-    "description": "You let out a chord that echoes from wall-like surfaces. All creatures within 10 feet of such a surface must make a CONST save or be stunned for a turn."
+    "effects": [
+      "stunned"
+    ],
+    "description": "You let out a chord that echoes from wall-like surfaces. All creatures within 10 feet of such a surface must make a CONST save or be stunned for a turn.",
+    "tags": [
+      "debuff",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "song-of-woe",
@@ -517,18 +787,33 @@
     "apCost": 3,
     "manaCost": 100,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "psychic",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 3, "flat": 27, "dice": "10d12" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 27,
+      "dice": "10d12"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 11, "dice": "3d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 11,
+        "dice": "3d12"
+      }
     },
-    "description": "Make a ranged spell attack to deal psychic damage."
+    "description": "Make a ranged spell attack to deal psychic damage.",
+    "tags": [
+      "damage",
+      "psychic"
+    ]
   },
   {
     "id": "anthem-of-translation",
@@ -538,13 +823,19 @@
     "apCost": 2,
     "manaCost": 100,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": true,
     "damageType": null,
     "attackType": null,
-    "description": "While you sing you can understand a creature's words if it is trying to communicate, but only if you speak the name of the language it is speaking."
+    "description": "While you sing you can understand a creature's words if it is trying to communicate, but only if you speak the name of the language it is speaking.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "hymn-of-the-free",
@@ -554,18 +845,33 @@
     "apCost": 4,
     "manaCost": 140,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 3, "flat": 12, "dice": "3d4" },
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 12,
+      "dice": "3d4"
+    },
     "scaling": {
       "manaCostIncrease": 15,
-      "healingIncrease": { "modMultiplier": 1, "flat": 5, "dice": "1d4" }
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "1d4"
+      }
     },
-    "description": "You end up to 2 effects on up to 3 creatures in range, healing each for [3x spell mod + 12 + 3d4] per effect ended. Higher level spells' effects remain."
+    "description": "You end up to 2 effects on up to 3 creatures in range, healing each for [3x spell mod + 12 + 3d4] per effect ended. Higher level spells' effects remain.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "anthem-of-shelter",
@@ -575,14 +881,22 @@
     "apCost": 4,
     "manaCost": 230,
     "range": "15 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "str",
-    "description": "You summon a protective aura centered on you. Hostile creatures make a STR save or are pushed outside. No attacks can pass through the walls in either direction. Enemies must succeed on a WILL save to enter (once per turn)."
+    "description": "You summon a protective aura centered on you. Hostile creatures make a STR save or are pushed outside. No attacks can pass through the walls in either direction. Enemies must succeed on a WILL save to enter (once per turn).",
+    "tags": [
+      "control",
+      "defense",
+      "summon"
+    ]
   },
   {
     "id": "fairytale",
@@ -592,15 +906,28 @@
     "apCost": 6,
     "manaCost": 200,
     "range": "90 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": true,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "dex",
-    "effects": ["difficult-terrain", "obscured-vision", "advantage-allies"],
-    "description": "You modify terrain to match an epic tale. Ground becomes difficult terrain (DEX save or knocked prone). Storm obscures vision (ranged attacks at disadvantage). Allies are immune to all effects and have advantage on attacks and saves."
+    "effects": [
+      "difficult-terrain",
+      "obscured-vision",
+      "advantage-allies"
+    ],
+    "description": "You modify terrain to match an epic tale. Ground becomes difficult terrain (DEX save or knocked prone). Storm obscures vision (ranged attacks at disadvantage). Allies are immune to all effects and have advantage on attacks and saves.",
+    "tags": [
+      "buff",
+      "debuff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "tales-to-come",
@@ -610,13 +937,19 @@
     "apCost": 6,
     "manaCost": 150,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Cast when facing a decision. You sing about one possible choice. The DM secretly rolls a d10 determining accuracy of the vision: 1 = compelled to follow, 2-3 = false vision, 4-6 = general fortune/guidance/danger/loss/death keyword, 7-9 = detailed story stopping at a key point, 10 = perfect foresight."
+    "description": "Cast when facing a decision. You sing about one possible choice. The DM secretly rolls a d10 determining accuracy of the vision: 1 = compelled to follow, 2-3 = false vision, 4-6 = general fortune/guidance/danger/loss/death keyword, 7-9 = detailed story stopping at a key point, 10 = perfect foresight.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "mind-taking-poem",
@@ -626,14 +959,21 @@
     "apCost": 4,
     "manaCost": 170,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "8 hours",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "Target must succeed on a CHA save or fall madly in love with you. Out of combat: lasts 8 hours, creature tries to please you. In combat: lasts 1 turn, creature follows your instructions. Ends if you harm the creature."
+    "description": "Target must succeed on a CHA save or fall madly in love with you. Out of combat: lasts 8 hours, creature tries to please you. In combat: lasts 1 turn, creature follows your instructions. Ends if you harm the creature.",
+    "tags": [
+      "debuff",
+      "ritual"
+    ]
   },
   {
     "id": "inevitable-fate",
@@ -643,14 +983,25 @@
     "apCost": 5,
     "manaCost": 270,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": null,
-    "damage": { "modMultiplier": 4, "flat": 145, "dice": "4d12" },
-    "description": "A target takes thunder damage. If the target is severely injured and no allies are injured, the target dies (even if it became severely injured from this damage)."
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 145,
+      "dice": "4d12"
+    },
+    "description": "A target takes thunder damage. If the target is severely injured and no allies are injured, the target dies (even if it became severely injured from this damage).",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "war-cry",
@@ -660,13 +1011,21 @@
     "apCost": 5,
     "manaCost": 250,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "All allies can use one attack/spell/ability against a foe within range at no cost. Allies not in range can move up to 2 AP of movement toward the enemy if it gets them in attack range."
+    "description": "All allies can use one attack/spell/ability against a foe within range at no cost. Allies not in range can move up to 2 AP of movement toward the enemy if it gets them in attack range.",
+    "tags": [
+      "defense",
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "final-chapter",
@@ -676,15 +1035,28 @@
     "apCost": 6,
     "manaCost": 500,
     "range": "200 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "5 turns",
     "concentration": false,
     "channeling": true,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "damage": { "modMultiplier": 5, "flat": 175, "dice": "10d8" },
-    "description": "5-turn channel. Turn 1: CHA save or thunder damage, enemies trapped. Turn 2: INT save, disadvantage on saves/attacks, psychic damage. Turn 3: CONST save or rooted, pure damage. Turn 4: WILL save or silenced/snared, true damage. Turn 5: WIS save or enemies of might <20 die; others take massive vulnerable-type damage."
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 175,
+      "dice": "10d8"
+    },
+    "description": "5-turn channel. Turn 1: CHA save or thunder damage, enemies trapped. Turn 2: INT save, disadvantage on saves/attacks, psychic damage. Turn 3: CONST save or rooted, pure damage. Turn 4: WILL save or silenced/snared, true damage. Turn 5: WIS save or enemies of might <20 die; others take massive vulnerable-type damage.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "thunder"
+    ]
   },
   {
     "id": "hail-the-champions",
@@ -694,15 +1066,30 @@
     "apCost": 4,
     "manaCost": 450,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 5, "flat": 105, "dice": "10d12" },
-    "effects": ["attack-bonus-5", "crit-chance-5"],
-    "description": "You praise your allies. All allies in range are healed and gain +5 attack roll and +5 (25%) crit chance for 3 turns."
+    "healing": {
+      "modMultiplier": 5,
+      "flat": 105,
+      "dice": "10d12"
+    },
+    "effects": [
+      "attack-bonus-5",
+      "crit-chance-5"
+    ],
+    "description": "You praise your allies. All allies in range are healed and gain +5 attack roll and +5 (25%) crit chance for 3 turns.",
+    "tags": [
+      "healing",
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "otherworldly-artist",
@@ -712,14 +1099,21 @@
     "apCost": 6,
     "manaCost": 500,
     "range": "200 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 day",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "All who hear you must fail a CHA save or become charmed. Non-hostile creatures are affected for 1 day and obey almost like slaves. Hostile/in-combat creatures fight for you for 1 minute."
+    "description": "All who hear you must fail a CHA save or become charmed. Non-hostile creatures are affected for 1 day and obey almost like slaves. Hostile/in-combat creatures fight for you for 1 minute.",
+    "tags": [
+      "control",
+      "ritual"
+    ]
   },
   {
     "id": "damaging-chord",
@@ -729,18 +1123,32 @@
     "apCost": 3,
     "manaCost": 5,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 1, "flat": 10, "dice": "2d8" },
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 10,
+      "dice": "2d8"
+    },
     "scaling": {
       "manaCostIncrease": 25,
-      "damageIncrease": { "modMultiplier": 1, "flat": 6, "dice": "1d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "1d8"
+      }
     },
-    "description": "You play a chord that damages a target. Make a ranged spell attack dealing thunder damage."
+    "description": "You play a chord that damages a target. Make a ranged spell attack dealing thunder damage.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "melody-of-dormant-revenge",
@@ -750,20 +1158,40 @@
     "apCost": 4,
     "manaCost": 16,
     "range": "15 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 1, "flat": 9, "dice": "2d6" },
-    "effects": ["stun-on-retaliation"],
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "2d6"
+    },
+    "effects": [
+      "stun-on-retaliation"
+    ],
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 10, "dice": "2d6" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "2d6"
+      }
     },
-    "description": "All enemies in range must make a WILL save. On fail, they take thunder damage and if they damage you before your next turn they become stunned. Must use higher level each subsequent cast on same target."
+    "description": "All enemies in range must make a WILL save. On fail, they take thunder damage and if they damage you before your next turn they become stunned. Must use higher level each subsequent cast on same target.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "lullaby",
@@ -773,15 +1201,24 @@
     "apCost": 2,
     "manaCost": 10,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "effects": ["sleep"],
-    "description": "You play a calm melody. The target must succeed on a WILL save or fall asleep until the start of your next turn."
+    "effects": [
+      "sleep"
+    ],
+    "description": "You play a calm melody. The target must succeed on a WILL save or fall asleep until the start of your next turn.",
+    "tags": [
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "true-poetry",
@@ -791,19 +1228,34 @@
     "apCost": 3,
     "manaCost": 15,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "int",
-    "damage": { "modMultiplier": 1, "flat": 7, "dice": "1d12" },
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 7,
+      "dice": "1d12"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "1d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d12"
+      }
     },
-    "description": "Target must make an INT save. On a fail, takes thunder damage. Choose an ally in range; they recover HP equal to the damage dealt."
+    "description": "Target must make an INT save. On a fail, takes thunder damage. Choose an ally in range; they recover HP equal to the damage dealt.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "burning-spirit",
@@ -813,14 +1265,19 @@
     "apCost": 1,
     "manaCost": 10,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "A target must make a CHA save or feel a sudden urge to argue and be aggressive."
+    "description": "A target must make a CHA save or feel a sudden urge to argue and be aggressive.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "sonata-of-dreams",
@@ -830,14 +1287,22 @@
     "apCost": 2,
     "manaCost": 12,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": false,
     "channeling": true,
     "damageType": null,
     "attackType": null,
-    "effects": ["sleep"],
-    "description": "You start playing a soft, pleasant melody. Targets that listen for an entire minute fall asleep for the duration."
+    "effects": [
+      "sleep"
+    ],
+    "description": "You start playing a soft, pleasant melody. Targets that listen for an entire minute fall asleep for the duration.",
+    "tags": [
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "song-of-sorrow",
@@ -847,15 +1312,24 @@
     "apCost": 11,
     "manaCost": 13,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "effects": ["prone", "sorrow"],
-    "description": "Enemies in range must succeed on a WILL save or be filled with sorrow. They start crying and fall prone."
+    "effects": [
+      "prone",
+      "sorrow"
+    ],
+    "description": "Enemies in range must succeed on a WILL save or be filled with sorrow. They start crying and fall prone.",
+    "tags": [
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "lead-note",
@@ -865,14 +1339,20 @@
     "apCost": 1,
     "manaCost": 50,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "str",
-    "description": "You sing a note that breaks the ground in a 60 ft long 5 ft wide line. The first foe hit must succeed on a STR save or be pushed to the end of the hole. Other targets are pushed aside. Creatures crossing must make a DEX save or be pushed to the end."
+    "description": "You sing a note that breaks the ground in a 60 ft long 5 ft wide line. The first foe hit must succeed on a STR save or be pushed to the end of the hole. Other targets are pushed aside. Creatures crossing must make a DEX save or be pushed to the end.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "ravaging-chord",
@@ -882,19 +1362,34 @@
     "apCost": 4,
     "manaCost": 75,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 2, "flat": 18, "dice": "4d6" },
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 18,
+      "dice": "4d6"
+    },
     "scaling": {
       "manaCostIncrease": 70,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "2d6" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "2d6"
+      },
       "description": "+[spell mod + 10 + 1d12] additional delayed psychic damage"
     },
-    "description": "Make a ranged spell attack dealing thunder damage. If the target does not damage you until the end of your next turn, it takes additional [2x spell mod + 32 + 3d12] psychic damage."
+    "description": "Make a ranged spell attack dealing thunder damage. If the target does not damage you until the end of your next turn, it takes additional [2x spell mod + 32 + 3d12] psychic damage.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "tragic-song",
@@ -904,14 +1399,19 @@
     "apCost": 2,
     "manaCost": 35,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "Target must succeed on a WILL save or lose hope. For the duration, the target rolls 1d4 at the start of each turn and subtracts that from their AP pool. Can repeat the save at end of each turn."
+    "description": "Target must succeed on a WILL save or lose hope. For the duration, the target rolls 1d4 at the start of each turn and subtracts that from their AP pool. Can repeat the save at end of each turn.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "deflecting-note",
@@ -921,7 +1421,9 @@
     "apCost": 0,
     "manaCost": 50,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
@@ -931,7 +1433,10 @@
       "manaCostIncrease": 50,
       "description": "+spell level for contesting spells"
     },
-    "description": "Reaction. Deflect an incoming ranged attack. Weapon attacks auto-fail (double mana to return the attack). Spell attacks require a WILL save vs DC [11 + 5*(enemy spell level - this spell level)] to cancel."
+    "description": "Reaction. Deflect an incoming ranged attack. Weapon attacks auto-fail (double mana to return the attack). Spell attacks require a WILL save vs DC [11 + 5*(enemy spell level - this spell level)] to cancel.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "hymn-of-devastation",
@@ -941,18 +1446,32 @@
     "apCost": 5,
     "manaCost": 85,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "force",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 4, "flat": 22, "dice": "10d10" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 22,
+      "dice": "10d10"
+    },
     "scaling": {
       "manaCostIncrease": 80,
-      "damageIncrease": { "modMultiplier": 2, "flat": 10, "dice": "3d10" }
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 10,
+        "dice": "3d10"
+      }
     },
-    "description": "Make a ranged spell attack dealing force damage."
+    "description": "Make a ranged spell attack dealing force damage.",
+    "tags": [
+      "damage",
+      "force"
+    ]
   },
   {
     "id": "enchanted-whisper",
@@ -962,13 +1481,20 @@
     "apCost": 2,
     "manaCost": 50,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You secretly choose a creature. The first time any creature attacks, casts a spell, or interacts with the chosen person, the action fails. AoE effects only fail on the protected creature."
+    "description": "You secretly choose a creature. The first time any creature attacks, casts a spell, or interacts with the chosen person, the action fails. AoE effects only fail on the protected creature.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "brutal-sonata",
@@ -978,20 +1504,35 @@
     "apCost": 3,
     "manaCost": 55,
     "range": "60 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "const",
-    "damage": { "modMultiplier": 2, "flat": 9, "dice": "4d6" },
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 9,
+      "dice": "4d6"
+    },
     "scaling": {
       "manaCostIncrease": 80,
-      "damageIncrease": { "modMultiplier": 1, "flat": 0, "dice": "1d6" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d6"
+      },
       "description": "+1d6 damage on AP consumed"
     },
-    "description": "All enemies in range must succeed on a CONST save or take thunder damage. At the end of their next turn they take 1d6 thunder damage for every AP they consumed."
+    "description": "All enemies in range must succeed on a CONST save or take thunder damage. At the end of their next turn they take 1d6 thunder damage for every AP they consumed.",
+    "tags": [
+      "damage",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "a-tear-in-the-veil",
@@ -1001,15 +1542,25 @@
     "apCost": 2,
     "manaCost": 100,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "effects": ["caged", "disadvantage-attacks"],
-    "description": "Unseen forces strike in a 10-ft radius sphere on a point in range. All creatures must succeed on a WILL save or be caged 20 feet above ground until end of your next turn, unable to move and with disadvantage on attacks."
+    "effects": [
+      "caged",
+      "disadvantage-attacks"
+    ],
+    "description": "Unseen forces strike in a 10-ft radius sphere on a point in range. All creatures must succeed on a WILL save or be caged 20 feet above ground until end of your next turn, unable to move and with disadvantage on attacks.",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "arcing-veil",
@@ -1019,19 +1570,34 @@
     "apCost": 3,
     "manaCost": 110,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 3, "flat": 36, "dice": "4d10" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 36,
+      "dice": "4d10"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "1d10" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d10"
+      },
       "description": "+[3 + 1d10] damage per enemy passed through"
     },
-    "description": "A magic arc describes a semicircle from you to the target. Make a ranged spell attack dealing thunder damage plus [9 + 2d10] per creature the arc passes through."
+    "description": "A magic arc describes a semicircle from you to the target. Make a ranged spell attack dealing thunder damage plus [9 + 2d10] per creature the arc passes through.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "tale-of-good-and-evil",
@@ -1041,21 +1607,46 @@
     "apCost": 5,
     "manaCost": 170,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "psychic",
     "attackType": "savingThrow",
     "saveStat": "int",
-    "damage": { "modMultiplier": 3, "flat": 30, "dice": "6d8" },
-    "healing": { "modMultiplier": 3, "flat": 30, "dice": "6d8" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 30,
+      "dice": "6d8"
+    },
+    "healing": {
+      "modMultiplier": 3,
+      "flat": 30,
+      "dice": "6d8"
+    },
     "scaling": {
       "manaCostIncrease": 80,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "2d8" },
-      "healingIncrease": { "modMultiplier": 1, "flat": 4, "dice": "2d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "2d8"
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "2d8"
+      }
     },
-    "description": "Choose a target (ally or foe). Allies are healed, enemies make an INT save for psychic damage. The spell bounces between ally and enemy targets within 20 ft, reducing by 10 each bounce until it deals/heals 0."
+    "description": "Choose a target (ally or foe). Allies are healed, enemies make an INT save for psychic damage. The spell bounces between ally and enemy targets within 20 ft, reducing by 10 each bounce until it deals/heals 0.",
+    "tags": [
+      "damage",
+      "healing",
+      "aoe",
+      "psychic"
+    ]
   },
   {
     "id": "song-of-veil-travelling",
@@ -1065,13 +1656,20 @@
     "apCost": 1,
     "manaCost": 100,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Choose a point in range. The first time you take damage you are teleported to that point (unless restrained/rooted). You can consume 1 more AP to travel instantly."
+    "description": "Choose a point in range. The first time you take damage you are teleported to that point (unless restrained/rooted). You can consume 1 more AP to travel instantly.",
+    "tags": [
+      "control",
+      "movement"
+    ]
   },
   {
     "id": "triad-of-woe",
@@ -1081,18 +1679,34 @@
     "apCost": 3,
     "manaCost": 110,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 1, "flat": 18, "dice": "2d10" },
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 18,
+      "dice": "2d10"
+    },
     "scaling": {
       "manaCostIncrease": 35,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "1d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d10"
+      }
     },
-    "description": "Make three ranged spell attacks distributed as you wish. Each deals thunder damage. Effects based on hits on same target: 1 hit = CONST save or rooted, 2 hits = snared, 3 hits = stunned."
+    "description": "Make three ranged spell attacks distributed as you wish. Each deals thunder damage. Effects based on hits on same target: 1 hit = CONST save or rooted, 2 hits = snared, 3 hits = stunned.",
+    "tags": [
+      "damage",
+      "control",
+      "thunder"
+    ]
   },
   {
     "id": "tales-of-horror",
@@ -1102,18 +1716,34 @@
     "apCost": 0,
     "manaCost": 80,
     "range": "200 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": true,
     "damageType": "psychic",
     "attackType": null,
-    "damage": { "modMultiplier": 6, "flat": 66, "dice": "6d20" },
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 66,
+      "dice": "6d20"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 2, "flat": 10, "dice": "2d20" }
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 10,
+        "dice": "2d20"
+      }
     },
-    "description": "1-minute channel. Creatures that listen become paranoid. The first time they fall asleep they have nightmares and cannot wake until long rest or taking damage, then they take psychic damage (ignores armor). If channel is interrupted, the spell affects you instead."
+    "description": "1-minute channel. Creatures that listen become paranoid. The first time they fall asleep they have nightmares and cannot wake until long rest or taking damage, then they take psychic damage (ignores armor). If channel is interrupted, the spell affects you instead.",
+    "tags": [
+      "damage",
+      "control",
+      "psychic"
+    ]
   },
   {
     "id": "trilling-bridge",
@@ -1123,13 +1753,19 @@
     "apCost": 1,
     "manaCost": 150,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You create a magic platform up to 300 ft long and 50 ft wide centered on a point in range. You choose if it looks ghostly or normal. You can dismiss it at any time at no cost."
+    "description": "You create a magic platform up to 300 ft long and 50 ft wide centered on a point in range. You choose if it looks ghostly or normal. You can dismiss it at any time at no cost.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "ricochet",
@@ -1139,19 +1775,35 @@
     "apCost": 3,
     "manaCost": 155,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "dex",
-    "damage": { "modMultiplier": 4, "flat": 41, "dice": "4d12" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 41,
+      "dice": "4d12"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 6, "dice": "1d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 6,
+        "dice": "1d12"
+      }
     },
-    "description": "A magical arc springs from your instrument in a semicircle to a point exactly 30 ft away. Creatures hit make a DEX save: full damage on fail, half on success. The arc restarts from hit creatures in the same direction, bouncing up to 100 times."
+    "description": "A magical arc springs from your instrument in a semicircle to a point exactly 30 ft away. Creatures hit make a DEX save: full damage on fail, half on success. The arc restarts from hit creatures in the same direction, bouncing up to 100 times.",
+    "tags": [
+      "damage",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "lift-spirit",
@@ -1161,19 +1813,34 @@
     "apCost": 3,
     "manaCost": 160,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "crushing",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 4, "flat": 30, "dice": "4d10" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 30,
+      "dice": "4d10"
+    },
     "scaling": {
       "manaCostIncrease": 30,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "1d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "1d10"
+      }
     },
-    "description": "The foe must make a WILL save or be crystallised 20 ft above ground until end of your next turn. On your next turn you can recast (AP only) to drop the target for crushing damage and knock it prone."
+    "description": "The foe must make a WILL save or be crystallised 20 ft above ground until end of your next turn. On your next turn you can recast (AP only) to drop the target for crushing damage and knock it prone.",
+    "tags": [
+      "damage",
+      "control"
+    ]
   },
   {
     "id": "adventure-melody",
@@ -1183,19 +1850,34 @@
     "apCost": 4,
     "manaCost": 225,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": true,
     "channeling": false,
     "damageType": "true",
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "damage": { "modMultiplier": 4, "flat": 0, "dice": "4d8" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": "4d8"
+    },
     "scaling": {
       "manaCostIncrease": 30,
-      "damageIncrease": { "modMultiplier": 1, "flat": 0, "dice": "1d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d8"
+      }
     },
-    "description": "Create 2 portals in range. Party members can enter one and exit the other. Usable [2x spell modifier] times. Hostile creatures must succeed on a CHA save to use a portal; on fail they take true damage."
+    "description": "Create 2 portals in range. Party members can enter one and exit the other. Usable [2x spell modifier] times. Hostile creatures must succeed on a CHA save to use a portal; on fail they take true damage.",
+    "tags": [
+      "damage",
+      "ritual"
+    ]
   },
   {
     "id": "waves-of-sadness",
@@ -1205,19 +1887,35 @@
     "apCost": 4,
     "manaCost": 220,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "psychic",
     "attackType": "savingThrow",
     "saveStat": "const",
-    "damage": { "modMultiplier": 4, "flat": 49, "dice": "8d6" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 49,
+      "dice": "8d6"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 4, "dice": "2d6" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 4,
+        "dice": "2d6"
+      }
     },
-    "description": "Different effects by range band: 0-30 ft CONST save or crystallized, 30-60 ft WILL save or asleep, 60-120 ft WIS save or psychic damage. All effects last until end of your next turn."
+    "description": "Different effects by range band: 0-30 ft CONST save or crystallized, 30-60 ft WILL save or asleep, 60-120 ft WIS save or psychic damage. All effects last until end of your next turn.",
+    "tags": [
+      "damage",
+      "control",
+      "psychic"
+    ]
   },
   {
     "id": "anthem-of-the-cursed",
@@ -1227,19 +1925,35 @@
     "apCost": 6,
     "manaCost": 300,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": true,
     "damageType": "shadow",
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "damage": { "modMultiplier": 8, "flat": 40, "dice": "16d10" },
+    "damage": {
+      "modMultiplier": 8,
+      "flat": 40,
+      "dice": "16d10"
+    },
     "scaling": {
       "manaCostIncrease": 100,
-      "damageIncrease": { "modMultiplier": 2, "flat": 2, "dice": "4d10" }
+      "damageIncrease": {
+        "modMultiplier": 2,
+        "flat": 2,
+        "dice": "4d10"
+      }
     },
-    "description": "Channel. One creature must succeed on a CHA save or be unable to leave your range. At the end of each channel turn it takes shadow damage. On a success it still takes half damage."
+    "description": "Channel. One creature must succeed on a CHA save or be unable to leave your range. At the end of each channel turn it takes shadow damage. On a success it still takes half damage.",
+    "tags": [
+      "damage",
+      "debuff",
+      "shadow"
+    ]
   },
   {
     "id": "concert-seats",
@@ -1249,7 +1963,10 @@
     "apCost": 2,
     "manaCost": 200,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
@@ -1259,7 +1976,12 @@
       "manaCostIncrease": 50,
       "description": "+[spell modifier] bonus damage/heal"
     },
-    "description": "Create 3 areas (10-ft radius spheres) within range. Allies in these areas are healed for [5x spell modifier] more from your spells and enemies take [5x spell modifier] additional damage from your spells."
+    "description": "Create 3 areas (10-ft radius spheres) within range. Allies in these areas are healed for [5x spell modifier] more from your spells and enemies take [5x spell modifier] additional damage from your spells.",
+    "tags": [
+      "healing",
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "tales-of-darkness",
@@ -1269,15 +1991,25 @@
     "apCost": 5,
     "manaCost": 300,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "effects": ["terrified"],
-    "description": "All enemies in range must succeed on a WILL save or be terrified for the duration. Each creature can repeat the save at end of each turn. Counts towards resetting Unexpected Symphony."
+    "effects": [
+      "terrified"
+    ],
+    "description": "All enemies in range must succeed on a WILL save or be terrified for the duration. Each creature can repeat the save at end of each turn. Counts towards resetting Unexpected Symphony.",
+    "tags": [
+      "debuff",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "thundering-vocals",
@@ -1287,20 +2019,39 @@
     "apCost": 3,
     "manaCost": 210,
     "range": "30 ft",
-    "components": ["S"],
+    "components": [
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "const",
-    "damage": { "modMultiplier": 5, "flat": 26, "dice": "8d10" },
-    "effects": ["prone", "pushback"],
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 26,
+      "dice": "8d10"
+    },
+    "effects": [
+      "prone",
+      "pushback"
+    ],
     "scaling": {
       "manaCostIncrease": 25,
-      "damageIncrease": { "modMultiplier": 1, "flat": 3, "dice": "1d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 3,
+        "dice": "1d10"
+      }
     },
-    "description": "Target must make a CONST save or take thunder damage, be pushed back 1d4x10 ft, and knocked prone. You can alternatively make a ranged spell attack or change the save stat, but then only damage applies."
+    "description": "Target must make a CONST save or take thunder damage, be pushed back 1d4x10 ft, and knocked prone. You can alternatively make a ranged spell attack or change the save stat, but then only damage applies.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "thunder"
+    ]
   },
   {
     "id": "cradle-song",
@@ -1310,14 +2061,24 @@
     "apCost": 0,
     "manaCost": 150,
     "range": "90 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["sleep"],
-    "description": "For the duration, all creatures within range who end their turn not having taken or dealt damage since the end of their last turn fall asleep for 1 minute or until you lose concentration."
+    "effects": [
+      "sleep"
+    ],
+    "description": "For the duration, all creatures within range who end their turn not having taken or dealt damage since the end of their last turn fall asleep for 1 minute or until you lose concentration.",
+    "tags": [
+      "debuff",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "tales-of-duels",
@@ -1327,19 +2088,35 @@
     "apCost": 4,
     "manaCost": 250,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "psychic",
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "damage": { "modMultiplier": 5, "flat": 80, "dice": "10d6" },
+    "damage": {
+      "modMultiplier": 5,
+      "flat": 80,
+      "dice": "10d6"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 7, "dice": "2d6" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 7,
+        "dice": "2d6"
+      }
     },
-    "description": "All enemies in range must succeed on a WIS save or take psychic damage. On their next turn they deal half damage to all creatures except the closest one to them."
+    "description": "All enemies in range must succeed on a WIS save or take psychic damage. On their next turn they deal half damage to all creatures except the closest one to them.",
+    "tags": [
+      "damage",
+      "aoe",
+      "psychic"
+    ]
   },
   {
     "id": "grand-illusions",
@@ -1349,14 +2126,22 @@
     "apCost": 4,
     "manaCost": 220,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 hour",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "All creatures in range must succeed on a WIS save or you create an illusory environment they perceive instead of reality. The environment holds to physical inspection. Creatures cannot take damage from illusions."
+    "description": "All creatures in range must succeed on a WIS save or you create an illusory environment they perceive instead of reality. The environment holds to physical inspection. Creatures cannot take damage from illusions.",
+    "tags": [
+      "debuff",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "veil-barrier",
@@ -1366,14 +2151,22 @@
     "apCost": 3,
     "manaCost": 280,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "Summon a transparent spectral wall up to 50 ft high and 500 ft wide. You choose for each of spells (requiring saves), ranged attacks, and creatures whether they are: blocked entirely, require a CHA save to pass, or pass freely."
+    "description": "Summon a transparent spectral wall up to 50 ft high and 500 ft wide. You choose for each of spells (requiring saves), ranged attacks, and creatures whether they are: blocked entirely, require a CHA save to pass, or pass freely.",
+    "tags": [
+      "debuff",
+      "defense",
+      "summon"
+    ]
   },
   {
     "id": "veil-shift",
@@ -1383,14 +2176,21 @@
     "apCost": 3,
     "manaCost": 280,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "Transport up to [spell modifier] creatures through the veil. Willing creatures teleport to a point in range or a previously seen location (WILL save vs summed opponent might + 5 in combat). Unwilling creatures can only be transported within range on a failed WILL save."
+    "description": "Transport up to [spell modifier] creatures through the veil. Willing creatures teleport to a point in range or a previously seen location (WILL save vs summed opponent might + 5 in combat). Unwilling creatures can only be transported within range on a failed WILL save.",
+    "tags": [
+      "debuff",
+      "movement"
+    ]
   },
   {
     "id": "song-of-oblivion",
@@ -1400,19 +2200,37 @@
     "apCost": 4,
     "manaCost": 330,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 6, "flat": 63, "dice": "12d10" },
-    "effects": ["will-save-reduction"],
+    "damage": {
+      "modMultiplier": 6,
+      "flat": 63,
+      "dice": "12d10"
+    },
+    "effects": [
+      "will-save-reduction"
+    ],
     "scaling": {
       "manaCostIncrease": 65,
-      "damageIncrease": { "modMultiplier": 1, "flat": 5, "dice": "2d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 5,
+        "dice": "2d10"
+      }
     },
-    "description": "Make a ranged spell attack. On a hit, deal thunder damage and reduce the target's WILL saves and checks by [spell modifier]. Cannot stack."
+    "description": "Make a ranged spell attack. On a hit, deal thunder damage and reduce the target's WILL saves and checks by [spell modifier]. Cannot stack.",
+    "tags": [
+      "damage",
+      "debuff",
+      "thunder"
+    ]
   },
   {
     "id": "liberating-music",
@@ -1422,13 +2240,19 @@
     "apCost": 3,
     "manaCost": 250,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You end all negative effects on allied creatures, as long as they are not cast by spells of higher level than this one. You can only end effects you know of."
+    "description": "You end all negative effects on allied creatures, as long as they are not cast by spells of higher level than this one. You can only end effects you know of.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "courtin-fall",
@@ -1438,14 +2262,21 @@
     "apCost": 6,
     "manaCost": 600,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "description": "All enemies in range must succeed on a WILL save or be destroyed if their might is lower than [your level / 4]."
+    "description": "All enemies in range must succeed on a WILL save or be destroyed if their might is lower than [your level / 4].",
+    "tags": [
+      "debuff",
+      "aoe"
+    ]
   },
   {
     "id": "banish-the-dormant",
@@ -1455,13 +2286,20 @@
     "apCost": 6,
     "manaCost": 700,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You banish all sleeping creatures into the veil for the duration. Only you can strike them there. If awakened from sleep they can roll an INT save at the start of each turn to return. Magic damage spells can pierce the veil."
+    "description": "You banish all sleeping creatures into the veil for the duration. Only you can strike them there. If awakened from sleep they can roll an INT save at the start of each turn to return. Magic damage spells can pierce the veil.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "sound-of-the-veil",
@@ -1471,18 +2309,34 @@
     "apCost": 6,
     "manaCost": 500,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "4 turns",
     "concentration": false,
     "channeling": true,
     "damageType": "thunder",
     "attackType": null,
-    "damage": { "modMultiplier": 7, "flat": 145, "dice": "14d12" },
+    "damage": {
+      "modMultiplier": 7,
+      "flat": 145,
+      "dice": "14d12"
+    },
     "scaling": {
       "manaCostIncrease": 80,
-      "damageIncrease": { "modMultiplier": 1, "flat": 14, "dice": "2d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "2d12"
+      }
     },
-    "description": "4-turn channel. The veil circles around you. Turn 1: enemies within 30 ft. Turn 2: 30-60 ft. Turn 3: 60-120 ft. Turn 4: returns, hitting all enemies <120 ft for double damage as true damage. Each of the first 3 turns deals thunder damage."
+    "description": "4-turn channel. The veil circles around you. Turn 1: enemies within 30 ft. Turn 2: 30-60 ft. Turn 3: 60-120 ft. Turn 4: returns, hitting all enemies <120 ft for double damage as true damage. Each of the first 3 turns deals thunder damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "the-final-act",
@@ -1492,14 +2346,20 @@
     "apCost": 1,
     "manaCost": 300,
     "range": "120 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "description": "You and the target both roll a CHA save. If target has over 1000 HP you fall unconscious for 1 minute. If it has less and you win, it dies. If you lose, you are banished into nothingness and reborn after 1d4 weeks at your last safe location."
+    "description": "You and the target both roll a CHA save. If target has over 1000 HP you fall unconscious for 1 minute. If it has less and you win, it dies. If you lose, you are banished into nothingness and reborn after 1d4 weeks at your last safe location.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "tales-of-grandest-heroes",
@@ -1509,13 +2369,19 @@
     "apCost": 4,
     "manaCost": 500,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Roll 1d6 to determine a class (1=musician, 2=disciple, 3=wildborn, 4=corruptor, 5=wizard, 6=battlemage). You can cast any spell of any subclass from the rolled class for the duration. Does not stack."
+    "description": "Roll 1d6 to determine a class (1=musician, 2=disciple, 3=wildborn, 4=corruptor, 5=wizard, 6=battlemage). You can cast any spell of any subclass from the rolled class for the duration. Does not stack.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "land-of-the-veil",
@@ -1525,13 +2391,20 @@
     "apCost": 2,
     "manaCost": 300,
     "range": "200 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You transport all creatures in range into a veil-created space of similar size. You design every detail. While in the veil your range is doubled, MS tripled, and you have advantage on saving throws. No additional creatures can be added."
+    "description": "You transport all creatures in range into a veil-created space of similar size. You design every detail. While in the veil your range is doubled, MS tripled, and you have advantage on saving throws. No additional creatures can be added.",
+    "tags": [
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "sacrifice-of-the-veiled-virtuoso",
@@ -1547,7 +2420,10 @@
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You turn back time to a point of your choice. All things are as they were. You are the only person aware of this. After casting, roll 1d4. On a 1, you are obliterated and your mind and soul are absorbed by the veil."
+    "description": "You turn back time to a point of your choice. All things are as they were. You are the only person aware of this. After casting, roll 1d4. On a 1, you are obliterated and your mind and soul are absorbed by the veil.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "vibrant-pierce",
@@ -1557,18 +2433,33 @@
     "apCost": 3,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 1, "flat": 12, "dice": "2d10" },
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 12,
+      "dice": "2d10"
+    },
     "scaling": {
       "manaCostIncrease": 25,
-      "damageIncrease": { "modMultiplier": 1, "flat": 14, "dice": "3d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "3d10"
+      }
     },
-    "description": "You pluck a focused note that strikes like a sharpened chord. Make a ranged spell attack dealing thunder damage. Can be recast on the same turn."
+    "description": "You pluck a focused note that strikes like a sharpened chord. Make a ranged spell attack dealing thunder damage. Can be recast on the same turn.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "protective-mantra",
@@ -1578,18 +2469,28 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["temporary-hp"],
+    "effects": [
+      "temporary-hp"
+    ],
     "scaling": {
       "manaCostIncrease": 0,
       "description": "Auto-cast at highest level: +[3x spell modifier] temporary HP"
     },
-    "description": "Mantra. While concentrating, allies within range who do not already have your temporary HP gain [2x spell modifier] temporary HP. Refreshes at end of each turn. If concentration breaks, temp HP is removed."
+    "description": "Mantra. While concentrating, allies within range who do not already have your temporary HP gain [2x spell modifier] temporary HP. Refreshes at end of each turn. If concentration breaks, temp HP is removed.",
+    "tags": [
+      "buff",
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "swiftstep-mantra",
@@ -1599,14 +2500,23 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["ms-bonus"],
-    "description": "Mantra. While concentrating, allies who start their turn within range or pass through it gain +15 MS for the rest of their turn."
+    "effects": [
+      "ms-bonus"
+    ],
+    "description": "Mantra. While concentrating, allies who start their turn within range or pass through it gain +15 MS for the rest of their turn.",
+    "tags": [
+      "buff",
+      "movement"
+    ]
   },
   {
     "id": "precision-mantra",
@@ -1616,14 +2526,23 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["attack-bonus"],
-    "description": "Mantra. While concentrating, allies within range gain +2 bonus to attack rolls (physical and magical)."
+    "effects": [
+      "attack-bonus"
+    ],
+    "description": "Mantra. While concentrating, allies within range gain +2 bonus to attack rolls (physical and magical).",
+    "tags": [
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "hasting-song",
@@ -1633,14 +2552,22 @@
     "apCost": 2,
     "manaCost": 5,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["haste"],
-    "description": "Grant an ally the Hasted condition: +1 AP recovery and +10 MS. Removes slow effects."
+    "effects": [
+      "haste"
+    ],
+    "description": "Grant an ally the Hasted condition: +1 AP recovery and +10 MS. Removes slow effects.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "healing-cadence",
@@ -1650,19 +2577,36 @@
     "apCost": 3,
     "manaCost": 5,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 1, "flat": 4, "dice": "1d10" },
-    "effects": ["regenerating"],
+    "healing": {
+      "modMultiplier": 1,
+      "flat": 4,
+      "dice": "1d10"
+    },
+    "effects": [
+      "regenerating"
+    ],
     "scaling": {
       "manaCostIncrease": 40,
-      "healingIncrease": { "modMultiplier": 1, "flat": 14, "dice": "3d10" }
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 14,
+        "dice": "3d10"
+      }
     },
-    "description": "Heal an ally and grant Regenerating for the same amount for 3 turns. You may double AP and mana cost to forgo Regenerating and instead heal for four times the rolled amount instantly."
+    "description": "Heal an ally and grant Regenerating for the same amount for 3 turns. You may double AP and mana cost to forgo Regenerating and instead heal for four times the rolled amount instantly.",
+    "tags": [
+      "healing",
+      "buff"
+    ]
   },
   {
     "id": "guiding-chorus",
@@ -1672,14 +2616,22 @@
     "apCost": 2,
     "manaCost": 10,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["sharp"],
-    "description": "Grant an ally advantage on attack rolls (Sharp buff) until the end of their next turn."
+    "effects": [
+      "sharp"
+    ],
+    "description": "Grant an ally advantage on attack rolls (Sharp buff) until the end of their next turn.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "rhythmic-laceration",
@@ -1689,21 +2641,39 @@
     "apCost": 4,
     "manaCost": 10,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "cha",
-    "damage": { "modMultiplier": 1, "flat": 9, "dice": "1d8" },
-    "effects": ["wounded"],
+    "damage": {
+      "modMultiplier": 1,
+      "flat": 9,
+      "dice": "1d8"
+    },
+    "effects": [
+      "wounded"
+    ],
     "scaling": {
       "manaCostIncrease": 55,
-      "damageIncrease": { "modMultiplier": 1, "flat": 19, "dice": "2d8" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 19,
+        "dice": "2d8"
+      },
       "description": "+[2x spell modifier + 9] wound effect"
     },
-    "description": "Force a creature to make a CHA save. On a fail, it takes thunder damage and gains Wounded [spell modifier + 4] for the duration. You may forgo the damage to apply Wounded without a save."
+    "description": "Force a creature to make a CHA save. On a fail, it takes thunder damage and gains Wounded [spell modifier + 4] for the duration. You may forgo the damage to apply Wounded without a save.",
+    "tags": [
+      "damage",
+      "debuff",
+      "thunder"
+    ]
   },
   {
     "id": "stark-lyric",
@@ -1713,7 +2683,10 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
@@ -1723,7 +2696,10 @@
       "manaCostIncrease": 15,
       "description": "+[spell modifier] to the check"
     },
-    "description": "Choose an ally within range. For the duration, the ally gains +[spell modifier] to their next Athletics, Reflex, or Lifting check. The effect ends once the bonus is applied."
+    "description": "Choose an ally within range. For the duration, the ally gains +[spell modifier] to their next Athletics, Reflex, or Lifting check. The effect ends once the bonus is applied.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "regeneration-mantra",
@@ -1733,18 +2709,33 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 2, "flat": 0, "dice": "4d12" },
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 0,
+      "dice": "4d12"
+    },
     "scaling": {
       "manaCostIncrease": 0,
-      "healingIncrease": { "modMultiplier": 1, "flat": 0, "dice": "3d12" }
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "3d12"
+      }
     },
-    "description": "Mantra. At the end of each of their turns, allied creatures within range heal for [2x spell modifier + 4d12]."
+    "description": "Mantra. At the end of each of their turns, allied creatures within range heal for [2x spell modifier + 4d12].",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "evasive-mantra",
@@ -1754,14 +2745,23 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["ac-bonus"],
-    "description": "Mantra. Allied creatures within range gain +1 AC. If their AC is still below 20 after the increase, they get +2 instead."
+    "effects": [
+      "ac-bonus"
+    ],
+    "description": "Mantra. Allied creatures within range gain +1 AC. If their AC is still below 20 after the increase, they get +2 instead.",
+    "tags": [
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "casting-mantra",
@@ -1771,18 +2771,27 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["mana-cost-reduction"],
+    "effects": [
+      "mana-cost-reduction"
+    ],
     "scaling": {
       "manaCostIncrease": 0,
       "description": "+10 mana cost reduction"
     },
-    "description": "Mantra. Allied creatures within range reduce mana cost of their spells by 10. Cannot reduce below 0."
+    "description": "Mantra. Allied creatures within range reduce mana cost of their spells by 10. Cannot reduce below 0.",
+    "tags": [
+      "buff",
+      "aoe"
+    ]
   },
   {
     "id": "mind-shield",
@@ -1792,18 +2801,29 @@
     "apCost": 2,
     "manaCost": 30,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["magic-shield", "charm-immunity"],
+    "effects": [
+      "magic-shield",
+      "charm-immunity"
+    ],
     "scaling": {
       "manaCostIncrease": 30,
       "description": "+[spell modifier + 40] shield + 1 effect nullified"
     },
-    "description": "Grant an ally a magic shield equal to [2x spell modifier + 50]. While it remains, the first mind-altering or charm effect is nullified."
+    "description": "Grant an ally a magic shield equal to [2x spell modifier + 50]. While it remains, the first mind-altering or charm effect is nullified.",
+    "tags": [
+      "buff",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "hymn-of-valour",
@@ -1813,21 +2833,45 @@
     "apCost": 4,
     "manaCost": 60,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "dex",
-    "damage": { "modMultiplier": 2, "flat": 50, "dice": "8d8" },
-    "healing": { "modMultiplier": 2, "flat": 50, "dice": "8d8" },
+    "damage": {
+      "modMultiplier": 2,
+      "flat": 50,
+      "dice": "8d8"
+    },
+    "healing": {
+      "modMultiplier": 2,
+      "flat": 50,
+      "dice": "8d8"
+    },
     "scaling": {
       "manaCostIncrease": 55,
-      "damageIncrease": { "modMultiplier": 1, "flat": 45, "dice": "4d8" },
-      "healingIncrease": { "modMultiplier": 1, "flat": 45, "dice": "4d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 45,
+        "dice": "4d8"
+      },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 45,
+        "dice": "4d8"
+      }
     },
-    "description": "Cast a magic chord in a 60 ft long 10 ft wide line. Allies in the line are healed. Enemies must make a DEX save or take thunder damage."
+    "description": "Cast a magic chord in a 60 ft long 10 ft wide line. Allies in the line are healed. Enemies must make a DEX save or take thunder damage.",
+    "tags": [
+      "damage",
+      "healing",
+      "thunder"
+    ]
   },
   {
     "id": "all-eyes-on-the-artist",
@@ -1837,14 +2881,21 @@
     "apCost": 2,
     "manaCost": 30,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "10 minutes",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "Choose any number of creatures in range. Each must succeed on a WIS save or become blinded to all creatures except you. They are not blinded to the environment. Ends for a creature if it damages you. Not perceived as hostile by neutral creatures."
+    "description": "Choose any number of creatures in range. Each must succeed on a WIS save or become blinded to all creatures except you. They are not blinded to the environment. Ends for a creature if it damages you. Not perceived as hostile by neutral creatures.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "rushing-trill",
@@ -1854,13 +2905,19 @@
     "apCost": 1,
     "manaCost": 20,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Choose an ally and roll 1d4. The ally may shift their initiative order by up to that amount. Can be recast on the same turn but only at a higher level."
+    "description": "Choose an ally and roll 1d4. The ally may shift their initiative order by up to that amount. Can be recast on the same turn but only at a higher level.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "blade-haste",
@@ -1870,14 +2927,22 @@
     "apCost": 3,
     "manaCost": 45,
     "range": "90 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["reduced-weapon-ap-cost"],
-    "description": "Choose an ally. For the duration, their weapon attacks cost 1 less AP. If dual wielding, the reduction applies only to attacks using both weapons."
+    "effects": [
+      "reduced-weapon-ap-cost"
+    ],
+    "description": "Choose an ally. For the duration, their weapon attacks cost 1 less AP. If dual wielding, the reduction applies only to attacks using both weapons.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "reinforcing-anthem",
@@ -1887,14 +2952,24 @@
     "apCost": 2,
     "manaCost": 45,
     "range": "90 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["physical-resistance"],
-    "description": "Grant a target physical resistance. If the target was vulnerable to any physical damage type, that vulnerability is removed and treated as normal damage."
+    "effects": [
+      "physical-resistance"
+    ],
+    "description": "Grant a target physical resistance. If the target was vulnerable to any physical damage type, that vulnerability is removed and treated as normal damage.",
+    "tags": [
+      "buff",
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "mortal-crescendo",
@@ -1904,13 +2979,19 @@
     "apCost": 1,
     "manaCost": 30,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "4 turns",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Choose an ally. They gain a damage modifier starting at x1 that doubles at the end of each turn (up to x8). The first time the ally deals damage, it is multiplied by the current modifier and the spell ends."
+    "description": "Choose an ally. They gain a damage modifier starting at x1 that doubles at the end of each turn (up to x8). The first time the ally deals damage, it is multiplied by the current modifier and the spell ends.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "critical-mantra",
@@ -1920,14 +3001,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["crit-bonus"],
-    "description": "Mantra. Allies have their critical chance increased by 2 (dice values)."
+    "effects": [
+      "crit-bonus"
+    ],
+    "description": "Mantra. Allies have their critical chance increased by 2 (dice values).",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "steadfast-mantra",
@@ -1937,14 +3026,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["save-bonus"],
-    "description": "Mantra. Allies have their saving throws and ability checks increased by 2."
+    "effects": [
+      "save-bonus"
+    ],
+    "description": "Mantra. Allies have their saving throws and ability checks increased by 2.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "energise-mantra",
@@ -1954,14 +3051,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["ap-bonus"],
-    "description": "Mantra. Allies have their starting AP and AP recovery increased by 1."
+    "effects": [
+      "ap-bonus"
+    ],
+    "description": "Mantra. Allies have their starting AP and AP recovery increased by 1.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "twin-song",
@@ -1971,19 +3076,36 @@
     "apCost": 3,
     "manaCost": 120,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "str",
-    "damage": { "modMultiplier": 3, "flat": 27, "dice": "3d10" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 27,
+      "dice": "3d10"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 10, "dice": "1d10" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 10,
+        "dice": "1d10"
+      }
     },
-    "description": "Two foes must make a collective STR save (average). On a fail they take thunder damage and are pulled together toward the center point between them."
+    "description": "Two foes must make a collective STR save (average). On a fail they take thunder damage and are pulled together toward the center point between them.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "thunder"
+    ]
   },
   {
     "id": "reversify",
@@ -1993,13 +3115,19 @@
     "apCost": 4,
     "manaCost": 115,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "You inverse gravity for the duration. You can turn it back to normal free of cost during your turn or at the end of another creature's turn. Only works indoors."
+    "description": "You inverse gravity for the duration. You can turn it back to normal free of cost during your turn or at the end of another creature's turn. Only works indoors.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "crystalize",
@@ -2009,15 +3137,23 @@
     "apCost": 2,
     "manaCost": 120,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 round",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "will",
-    "effects": ["crystallised"],
-    "description": "A creature (ally or foe) must succeed on a WILL save or be crystallised until the end of your next turn."
+    "effects": [
+      "crystallised"
+    ],
+    "description": "A creature (ally or foe) must succeed on a WILL save or be crystallised until the end of your next turn.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "anthem-of-the-brave",
@@ -2027,18 +3163,29 @@
     "apCost": 4,
     "manaCost": 135,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["temporary-hp", "attack-bonus", "damage-bonus"],
+    "effects": [
+      "temporary-hp",
+      "attack-bonus",
+      "damage-bonus"
+    ],
     "scaling": {
       "manaCostIncrease": 70,
       "description": "+20 temporary HP, +2 to damage rolls"
     },
-    "description": "Give up to [spell modifier] allies 50 temporary HP, +4 to attack rolls, and +5 to all direct damage rolls while they have temporary HP or until duration expires. If only targeting yourself, AP cost is halved."
+    "description": "Give up to [spell modifier] allies 50 temporary HP, +4 to attack rolls, and +5 to all direct damage rolls while they have temporary HP or until duration expires. If only targeting yourself, AP cost is halved.",
+    "tags": [
+      "buff",
+      "defense"
+    ]
   },
   {
     "id": "shattering-notes",
@@ -2048,19 +3195,35 @@
     "apCost": 3,
     "manaCost": 105,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "will",
-    "damage": { "modMultiplier": 3, "flat": 25, "dice": "3d8" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 25,
+      "dice": "3d8"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 8, "dice": "1d8" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 8,
+        "dice": "1d8"
+      }
     },
-    "description": "All enemies in range must succeed on a WILL save or take thunder damage, half on a success."
+    "description": "All enemies in range must succeed on a WILL save or take thunder damage, half on a success.",
+    "tags": [
+      "damage",
+      "aoe",
+      "thunder"
+    ]
   },
   {
     "id": "sound-implosion",
@@ -2070,19 +3233,34 @@
     "apCost": 3,
     "manaCost": 110,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "int",
-    "damage": { "modMultiplier": 3, "flat": 49, "dice": "6d12" },
+    "damage": {
+      "modMultiplier": 3,
+      "flat": 49,
+      "dice": "6d12"
+    },
     "scaling": {
       "manaCostIncrease": 50,
-      "damageIncrease": { "modMultiplier": 1, "flat": 17, "dice": "2d12" }
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 17,
+        "dice": "2d12"
+      }
     },
-    "description": "A creature must succeed on an INT save or take thunder damage. You choose the damage type of the next spell you cast on that enemy (must be magical)."
+    "description": "A creature must succeed on an INT save or take thunder damage. You choose the damage type of the next spell you cast on that enemy (must be magical).",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "lucky-mantra",
@@ -2092,14 +3270,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["reroll-ones"],
-    "description": "Mantra. When an ally rolls a 1, they can reroll and must use the new dice. Applies to all dice. Cannot be doubled."
+    "effects": [
+      "reroll-ones"
+    ],
+    "description": "Mantra. When an ally rolls a 1, they can reroll and must use the new dice. Applies to all dice. Cannot be doubled.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "voicing-mantra",
@@ -2109,14 +3295,23 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["telepathy", "no-verbal-components"],
-    "description": "Mantra. Allies can telepathically communicate without talking. They do not require verbal components for spells or abilities."
+    "effects": [
+      "telepathy",
+      "no-verbal-components"
+    ],
+    "description": "Mantra. Allies can telepathically communicate without talking. They do not require verbal components for spells or abilities.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "gripping-mantra",
@@ -2126,14 +3321,24 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["disarm-immunity", "grapple-advantage"],
-    "description": "Mantra. Allies cannot be disarmed and have advantage on saves against being grappled, shoved, or snared."
+    "effects": [
+      "disarm-immunity",
+      "grapple-advantage"
+    ],
+    "description": "Mantra. Allies cannot be disarmed and have advantage on saves against being grappled, shoved, or snared.",
+    "tags": [
+      "buff",
+      "control"
+    ]
   },
   {
     "id": "crescendo",
@@ -2143,15 +3348,24 @@
     "apCost": 4,
     "manaCost": 215,
     "range": "self",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "3 turns",
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "const",
-    "effects": ["stunned"],
-    "description": "Send forth a wave in a 30 ft long 5 ft wide line. Creatures hit must succeed on a CONST save or be stunned for the duration."
+    "effects": [
+      "stunned"
+    ],
+    "description": "Send forth a wave in a 30 ft long 5 ft wide line. Creatures hit must succeed on a CONST save or be stunned for the duration.",
+    "tags": [
+      "debuff",
+      "control"
+    ]
   },
   {
     "id": "levitation",
@@ -2161,13 +3375,20 @@
     "apCost": 2,
     "manaCost": 150,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Give up to 3 allies the power to levitate. Moving upwards costs double movement. Moving downwards is at normal pace without fall damage."
+    "description": "Give up to 3 allies the power to levitate. Moving upwards costs double movement. Moving downwards is at normal pace without fall damage.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "melody-of-perseverance",
@@ -2177,19 +3398,34 @@
     "apCost": 6,
     "manaCost": 250,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": "1 minute",
     "concentration": false,
     "channeling": true,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 4, "flat": 48, "dice": "8d8" },
+    "healing": {
+      "modMultiplier": 4,
+      "flat": 48,
+      "dice": "8d8"
+    },
     "scaling": {
       "manaCostIncrease": 75,
-      "healingIncrease": { "modMultiplier": 1, "flat": 12, "dice": "2d8" },
+      "healingIncrease": {
+        "modMultiplier": 1,
+        "flat": 12,
+        "dice": "2d8"
+      },
       "description": "+[spell modifier + 6 + 1d8] heal increase per consecutive turn"
     },
-    "description": "Channel. At end of each turn, allies in range are healed. Healing increases by [2x spell modifier + 24 + 4d8] for every consecutive turn of channelling."
+    "description": "Channel. At end of each turn, allies in range are healed. Healing increases by [2x spell modifier + 24 + 4d8] for every consecutive turn of channelling.",
+    "tags": [
+      "healing",
+      "buff"
+    ]
   },
   {
     "id": "engrossing-chord",
@@ -2199,19 +3435,34 @@
     "apCost": 0,
     "manaCost": 50,
     "range": "90 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": "thunder",
     "attackType": "rangedSpellAttack",
-    "damage": { "modMultiplier": 4, "flat": 0, "dice": "5d12" },
+    "damage": {
+      "modMultiplier": 4,
+      "flat": 0,
+      "dice": "5d12"
+    },
     "scaling": {
       "manaCostIncrease": 15,
-      "damageIncrease": { "modMultiplier": 1, "flat": 0, "dice": "1d12" },
+      "damageIncrease": {
+        "modMultiplier": 1,
+        "flat": 0,
+        "dice": "1d12"
+      },
       "description": "Mana cost and damage are per AP consumed"
     },
-    "description": "Make a ranged spell attack. You choose how much AP to consume. The target takes [4x spell modifier + 5d12] thunder damage per AP consumed (in one big bulk). Mana is 50 per AP consumed."
+    "description": "Make a ranged spell attack. You choose how much AP to consume. The target takes [4x spell modifier + 5d12] thunder damage per AP consumed (in one big bulk). Mana is 50 per AP consumed.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "magic-mantra",
@@ -2221,14 +3472,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["spell-dc-bonus"],
-    "description": "Mantra (not affected by Legendary Song). When an ally casts a spell requiring a save, the DC is increased by 3."
+    "effects": [
+      "spell-dc-bonus"
+    ],
+    "description": "Mantra (not affected by Legendary Song). When an ally casts a spell requiring a save, the DC is increased by 3.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "true-attacks-mantra",
@@ -2238,14 +3497,24 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["ignore-resistance-vulnerability"],
-    "description": "Mantra (not affected by Legendary Song). Allies ignore resistances and vulnerabilities (not immunities, frail, or absorptions) when dealing physical weapon damage. Cannot be doubled."
+    "effects": [
+      "ignore-resistance-vulnerability"
+    ],
+    "description": "Mantra (not affected by Legendary Song). Allies ignore resistances and vulnerabilities (not immunities, frail, or absorptions) when dealing physical weapon damage. Cannot be doubled.",
+    "tags": [
+      "buff",
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "undying-mantra",
@@ -2255,14 +3524,22 @@
     "apCost": 1,
     "manaCost": 5,
     "range": "30 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": true,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "effects": ["damage-cap"],
-    "description": "Mantra (not affected by Legendary Song). Allies cannot take more than 60% of their max HP as damage in a round. The attack that would exceed this and all subsequent attacks until their next turn deal no damage. Cannot be doubled."
+    "effects": [
+      "damage-cap"
+    ],
+    "description": "Mantra (not affected by Legendary Song). Allies cannot take more than 60% of their max HP as damage in a round. The attack that would exceed this and all subsequent attacks until their next turn deal no damage. Cannot be doubled.",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "song-of-the-everliving",
@@ -2272,14 +3549,25 @@
     "apCost": 6,
     "manaCost": 700,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "healing": { "modMultiplier": 10, "flat": 150, "dice": "20d8" },
-    "description": "Revive up to [spell modifier] targets (with 0 HP) and heal all allies in range. Once per combat. In combat: no death stack. Out of combat: only on creatures dead within the last day that did not lose the fight with death."
+    "healing": {
+      "modMultiplier": 10,
+      "flat": 150,
+      "dice": "20d8"
+    },
+    "description": "Revive up to [spell modifier] targets (with 0 HP) and heal all allies in range. Once per combat. In combat: no death stack. Out of combat: only on creatures dead within the last day that did not lose the fight with death.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "song-of-the-chosen-one",
@@ -2289,13 +3577,19 @@
     "apCost": 1,
     "manaCost": 250,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": null,
-    "description": "Choose a creature. All buffs (not heals) you cast on it this turn cost no mana and cost 1 AP if they would cost 2 or more, or 0 AP if they would cost 1."
+    "description": "Choose a creature. All buffs (not heals) you cast on it this turn cost no mana and cost 1 AP if they would cost 2 or more, or 0 AP if they would cost 1.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "ballad-of-oblivion",
@@ -2305,13 +3599,19 @@
     "apCost": 6,
     "manaCost": 800,
     "range": "60 ft",
-    "components": ["V", "S"],
+    "components": [
+      "V",
+      "S"
+    ],
     "duration": null,
     "concentration": false,
     "channeling": false,
     "damageType": null,
     "attackType": "savingThrow",
     "saveStat": "wis",
-    "description": "A creature must make a WIS save. On a fail, roll 6d4. All allied attacks and spells on the target cost 1 AP, but the spell cannot save more than the rolled total AP. Does not stack; only one creature at a time."
+    "description": "A creature must make a WIS save. On a fail, roll 6d4. All allied attacks and spells on the target cost 1 AP, but the spell cannot save more than the rolled total AP. Does not stack; only one creature at a time.",
+    "tags": [
+      "debuff"
+    ]
   }
 ]

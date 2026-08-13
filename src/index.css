@@ -2569,6 +2569,40 @@ body {
   color: var(--gold-dim);
 }
 
+/* Animated d20 sitting beside the attack-roll breakdown. */
+.cast-roll-die {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+/* ── Spell tags ── */
+.spell-tags {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.spell-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.spell-tag-filter {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 3px 6px;
+}
+
 .cast-roll-dice {
   display: flex;
   gap: 4px;

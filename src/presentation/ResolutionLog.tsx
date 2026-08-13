@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import type { ResolutionResult, RollBreakdown } from '../platform/types';
 import { effectName } from '../domain/combatCatalog';
 import { useCharacterStore } from '../application/characterStore';
+import { DiceRoll } from './DiceRoll';
 
 /** Step-by-step action resolution + cast payload (dice, DC, pending effects). */
 export function ResolutionLog({
@@ -15,6 +17,13 @@ export function ResolutionLog({
 }) {
   const roster = useCharacterStore((s) => s.roster);
   const payload = resolution.payload;
+  const natural = payload?.attackRoll?.roll ?? null;
+  // Animate once per resolution: keying the die on the resolution object means a
+  // re-render (roster arriving, parent state) doesn't re-roll a settled attack.
+  const [rolling, setRolling] = useState(false);
+  useEffect(() => {
+    setRolling(natural != null);
+  }, [resolution, natural]);
   // The server reports raw player ids — show the character's name when we know it.
   const appliedToName =
     payload?.effectsAppliedTo &&
@@ -50,6 +59,17 @@ export function ResolutionLog({
                 <span className="cast-warn">stacked disadvantage — automatic miss</span>
               ) : (
                 <>
+                  {natural != null && (
+                    <span className="cast-roll-die">
+                      <DiceRoll
+                        result={natural}
+                        rolling={rolling}
+                        sides={20}
+                        size={54}
+                        onRollComplete={() => setRolling(false)}
+                      />
+                    </span>
+                  )}
                   <span className="cast-roll-dice">
                     {(payload.attackRoll.rolls ?? [payload.attackRoll.roll ?? 0]).map((r, i) => (
                       <span

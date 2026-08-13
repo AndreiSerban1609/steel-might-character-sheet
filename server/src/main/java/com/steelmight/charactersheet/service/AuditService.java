@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -51,6 +52,28 @@ public class AuditService {
         if (count > CAP) {
             repo.deleteAll(repo.findByRoomNameOrderByIdAsc(room, PageRequest.of(0, (int) (count - KEEP))));
         }
+    }
+
+    /**
+     * Actions a player may see in their own combat log (demo feedback #22, ruled
+     * 2026-08-13: combat only, self only, always on). Deliberately an allowlist, not a
+     * denylist — a new action type defaults to private rather than leaking gold, shopping
+     * or bio edits into a log that's meant to be a fight recap.
+     */
+    private static final Set<String> COMBAT_ACTIONS = Set.of(
+            "damage", "heal", "weapon-attack", "use-ability", "cast", "use-consumable",
+            "apply-effect", "remove-effect", "revive", "rest",
+            "spend-resource", "gain-resource", "skill-check");
+
+    /** One character's own combat history, newest first. */
+    @Transactional(readOnly = true)
+    public List<AuditView> combatLogFor(String playerId, int limit) {
+        int capped = Math.max(1, Math.min(limit, 200));
+        return repo.findByPlayerIdAndActionInOrderByIdDesc(playerId, COMBAT_ACTIONS,
+                        PageRequest.of(0, capped)).stream()
+                .map(e -> new AuditView(e.getCreatedAt(), e.getPlayerId(), e.getCharacterName(),
+                        e.getAction(), e.getSummary()))
+                .toList();
     }
 
     @Transactional(readOnly = true)

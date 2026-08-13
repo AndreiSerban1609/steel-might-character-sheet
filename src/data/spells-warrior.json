@@ -22,7 +22,10 @@
     "scaling": {
       "manaCostIncrease": 10
     },
-    "description": "You unleash a focused surge of hostile intent, magically locking the creature’s attention onto you and daring it to strike. You apply [1 taunted stack] to a creature within range. This spell can be recast on the same turn on targets that are not Taunted / do not have enough stacks to become taunted at the start of their turn."
+    "description": "You unleash a focused surge of hostile intent, magically locking the creature’s attention onto you and daring it to strike. You apply [1 taunted stack] to a creature within range. This spell can be recast on the same turn on targets that are not Taunted / do not have enough stacks to become taunted at the start of their turn.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "thunderclap",
@@ -55,7 +58,11 @@
         "dice": "4d6"
       }
     },
-    "description": "You slam your weapon into the ground, releasing a concussive burst of thunder that rattles enemies and hardens your stance against retaliation. You smash your weapon on the ground. All foes within range must succeed on a Wis saving throw or take [spell modifier + 3 + 2d6] thunder damage. Until the start of your next turn, when an affected creature attacks you your armor is doubled against their attacks."
+    "description": "You slam your weapon into the ground, releasing a concussive burst of thunder that rattles enemies and hardens your stance against retaliation. You smash your weapon on the ground. All foes within range must succeed on a Wis saving throw or take [spell modifier + 3 + 2d6] thunder damage. Until the start of your next turn, when an affected creature attacks you your armor is doubled against their attacks.",
+    "tags": [
+      "damage",
+      "thunder"
+    ]
   },
   {
     "id": "charging-bolt",
@@ -88,7 +95,12 @@
         "dice": "4d4"
       }
     },
-    "description": "You fire a crackling bolt of lightning that binds your momentum to the target, drawing you forward with unnatural speed as long as your focus holds. Make a ranged spell attack against a creature within range. On a hit, the target takes [spell modifier + 2 + 2d4] lightning damage. Until the end of your next turn, your MS is doubled when moving toward that creature, regardless of whether the attack hits. You may instead choose one of the following when casting this spell: ● Spend 2 ap to deal t..."
+    "description": "You fire a crackling bolt of lightning that binds your momentum to the target, drawing you forward with unnatural speed as long as your focus holds. Make a ranged spell attack against a creature within range. On a hit, the target takes [spell modifier + 2 + 2d4] lightning damage. Until the end of your next turn, your MS is doubled when moving toward that creature, regardless of whether the attack hits. You may instead choose one of the following when casting this spell: ● Spend 2 ap to deal t...",
+    "tags": [
+      "damage",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "renewal-membrane",
@@ -122,7 +134,11 @@
         "dice": "2d4"
       }
     },
-    "description": "You wrap yourself in a living barrier of magic that absorbs harm and continuously knits your wounds as long as it remains intact. You gain [spell modifier + 10] temporary HP. At the end of each of your turns, if you still have any of this temporary HP, you heal for [spell modifier + 2 + 2d4]."
+    "description": "You wrap yourself in a living barrier of magic that absorbs harm and continuously knits your wounds as long as it remains intact. You gain [spell modifier + 10] temporary HP. At the end of each of your turns, if you still have any of this temporary HP, you heal for [spell modifier + 2 + 2d4].",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "thorny-shell",
@@ -155,7 +171,11 @@
         "dice": "2d12"
       }
     },
-    "description": "You coat your armor in biting magical thorns, punishing any foe reckless enough to strike you in close combat. You enhance your armor with magical thorns. Whenever a melee attack targeting you hits, the attacker takes [1d12] piercing damage that ignores armor. Damage you take does not break this spell’s concentration. The spell ends only if you cast another concentration spell or choose to end it."
+    "description": "You coat your armor in biting magical thorns, punishing any foe reckless enough to strike you in close combat. You enhance your armor with magical thorns. Whenever a melee attack targeting you hits, the attacker takes [1d12] piercing damage that ignores armor. Damage you take does not break this spell’s concentration. The spell ends only if you cast another concentration spell or choose to end it.",
+    "tags": [
+      "damage",
+      "buff"
+    ]
   },
   {
     "id": "marking-strike",
@@ -188,7 +208,12 @@
         "dice": "10d4"
       }
     },
-    "description": "You brand your enemy with a visible combat mark, exposing an opening that allies can exploit to either strike harder or draw strength from the blow. When you make an attack, you may apply Marking Strike after rolling and knowing the outcome. The target becomes marked. When an ally other than you makes a weapon attack against the marked target, they may consume the mark to either heal themselves for [5d4] or deal [5d4] additional damage of the weapon’s type. The mark expires at the end of the ..."
+    "description": "You brand your enemy with a visible combat mark, exposing an opening that allies can exploit to either strike harder or draw strength from the blow. When you make an attack, you may apply Marking Strike after rolling and knowing the outcome. The target becomes marked. When an ally other than you makes a weapon attack against the marked target, they may consume the mark to either heal themselves for [5d4] or deal [5d4] additional damage of the weapon’s type. The mark expires at the end of the ...",
+    "tags": [
+      "damage",
+      "healing",
+      "buff"
+    ]
   },
   {
     "id": "warding-omen",
@@ -212,7 +237,11 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "You inscribe a fleeting arcane warning upon the battlefield, compelling a foe to keep their distance or suffer momentary paralysis. You force a creature within range to make a Will saving throw. On a failure, choose a creature to ward. If the target ends their next turn closer to the warded creature than they were at the start of that turn, they receive [1 stunned stack]."
+    "description": "You inscribe a fleeting arcane warning upon the battlefield, compelling a foe to keep their distance or suffer momentary paralysis. You force a creature within range to make a Will saving throw. On a failure, choose a creature to ward. If the target ends their next turn closer to the warded creature than they were at the start of that turn, they receive [1 stunned stack].",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "intercept",
@@ -234,7 +263,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "When an ally within [5] ft of you is targeted by a projectile attack, you may redirect the attack to yourself, becoming the new target. The attack is resolved normally against you. This spell cannot be triggered by another instance of Intercept (chain redirection is not allowed). A projectile attack is any ranged weapon attack or spell attack that travels through space and targets a creature directly."
+    "description": "When an ally within [5] ft of you is targeted by a projectile attack, you may redirect the attack to yourself, becoming the new target. The attack is resolved normally against you. This spell cannot be triggered by another instance of Intercept (chain redirection is not allowed). A projectile attack is any ranged weapon attack or spell attack that travels through space and targets a creature directly.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "mend-metal",
@@ -256,7 +288,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You channel restorative magic through your hands, bending and sealing damaged materials back into functional shape. You repair an object made of metal or wood that fits within a 4 ft side cube."
+    "description": "You channel restorative magic through your hands, bending and sealing damaged materials back into functional shape. You repair an object made of metal or wood that fits within a 4 ft side cube.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "phoenix-dive",
@@ -278,7 +313,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You cloak yourself in the fire of rebirth and hurl yourself skyward, sheer resolve keeping you alive as you crash back down with relentless force, clearing the battlefield around you. You leap and land at an unoccupied point within range, gaining Perseverance for one round, causing you to remain at 1 HP the first time you would die during that round. The impact clears all standard surfaces within 10 ft of the landing point. You may instead choose to only perform the leap for 1 AP, or only gai..."
+    "description": "You cloak yourself in the fire of rebirth and hurl yourself skyward, sheer resolve keeping you alive as you crash back down with relentless force, clearing the battlefield around you. You leap and land at an unoccupied point within range, gaining Perseverance for one round, causing you to remain at 1 HP the first time you would die during that round. The impact clears all standard surfaces within 10 ft of the landing point. You may instead choose to only perform the leap for 1 AP, or only gai...",
+    "tags": [
+      "defense",
+      "movement"
+    ]
   },
   {
     "id": "knight-s-vow",
@@ -301,7 +340,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You swear a binding vow of protection, placing yourself between danger and your charge no matter the cost. Choose a creature within range. For the duration, whenever that creature would take damage, you take the damage instead. You may end this effect at any time after any creature’s action (not in the middle of an attack after damage is revealed). Damage transferred through this spell: ● Is reduced using the original target’s armor and resistances ● Is then applied to you without using your ..."
+    "description": "You swear a binding vow of protection, placing yourself between danger and your charge no matter the cost. Choose a creature within range. For the duration, whenever that creature would take damage, you take the damage instead. You may end this effect at any time after any creature’s action (not in the middle of an attack after damage is revealed). Damage transferred through this spell: ● Is reduced using the original target’s armor and resistances ● Is then applied to you without using your ...",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "inspiring-courage",
@@ -324,7 +366,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Your presence steels the resolve of those around you, driving fear from their hearts. You end the terrified effect on up to [spell modifier] creatures within range. You may choose yourself as a target, in which case all terrified stacks affecting you are removed. Alternatively, instead of affecting other creatures, you may remove all stacks of one chosen negative effect affecting yourself. If you do so, you are immune to gaining new stacks of that effect for 1 round"
+    "description": "Your presence steels the resolve of those around you, driving fear from their hearts. You end the terrified effect on up to [spell modifier] creatures within range. You may choose yourself as a target, in which case all terrified stacks affecting you are removed. Alternatively, instead of affecting other creatures, you may remove all stacks of one chosen negative effect affecting yourself. If you do so, you are immune to gaining new stacks of that effect for 1 round",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "guarding-dome",
@@ -353,7 +399,11 @@
         "dice": "4d12"
       }
     },
-    "description": "You project a protective barrier, absorbing devastation so those within may endure. Create a magical dome with a 15 ft radius centered on you. When the dome is created, choose whether it guards against physical or magical damage. All creatures within the dome take only half damage from the chosen damage type. The remaining damage is absorbed by the dome. The dome can absorb up to [4 x spell modifier + 45 + 8d12] total damage before dispersing."
+    "description": "You project a protective barrier, absorbing devastation so those within may endure. Create a magical dome with a 15 ft radius centered on you. When the dome is created, choose whether it guards against physical or magical damage. All creatures within the dome take only half damage from the chosen damage type. The remaining damage is absorbed by the dome. The dome can absorb up to [4 x spell modifier + 45 + 8d12] total damage before dispersing.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "commanding-halt",
@@ -376,7 +426,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You bellow a command that locks enemies in place through sheer force of presence. Force a creature within range to make a Constitution saving throw. On a failure, it gains [4 rooted stacks]. On a success, it gains [2 rooted stacks]. You may spend 1 additional AP to affect all enemies within range instead. Alternatively, you may spend 2 additional AP to apply [disarmed stacks] instead of rooted stacks."
+    "description": "You bellow a command that locks enemies in place through sheer force of presence. Force a creature within range to make a Constitution saving throw. On a failure, it gains [4 rooted stacks]. On a success, it gains [2 rooted stacks]. You may spend 1 additional AP to affect all enemies within range instead. Alternatively, you may spend 2 additional AP to apply [disarmed stacks] instead of rooted stacks.",
+    "tags": [
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "fracture",
@@ -400,7 +454,10 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "You strike with calculated force, breaking defenses or corroding resilience through repeated blows. When a weapon attack you make hits, you may apply Shatter to that attack. Choose one: ● Apply [3 weakened stacks] to the target ● Apply [3 corroded stacks] to the target This spell may be recast on the same turn and on the same attack, but you cannot apply the same type of stacks more than once per turn. You may apply both weakened and corroded in a single cast. If you do, apply the same number..."
+    "description": "You strike with calculated force, breaking defenses or corroding resilience through repeated blows. When a weapon attack you make hits, you may apply Shatter to that attack. Choose one: ● Apply [3 weakened stacks] to the target ● Apply [3 corroded stacks] to the target This spell may be recast on the same turn and on the same attack, but you cannot apply the same type of stacks more than once per turn. You may apply both weakened and corroded in a single cast. If you do, apply the same number...",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "warden-s-fortitude",
@@ -433,7 +490,11 @@
         "dice": "1d10"
       }
     },
-    "description": "You draw strength from discipline and calm, knitting wounds through sheer resilience and even acting as a shield against oncoming harm. Heal yourself for [2 x spell modifier + 32 + 3d10]. You may cast this spell as a reaction when you would receive damage. If you do, the mana cost is doubled and you become crystallized until the end of your next turn. The crystallization takes effect before the damage is received, fully blocking it."
+    "description": "You draw strength from discipline and calm, knitting wounds through sheer resilience and even acting as a shield against oncoming harm. Heal yourself for [2 x spell modifier + 32 + 3d10]. You may cast this spell as a reaction when you would receive damage. If you do, the mana cost is doubled and you become crystallized until the end of your next turn. The crystallization takes effect before the damage is received, fully blocking it.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "shield-bash-lv2",
@@ -457,7 +518,11 @@
     "scaling": {
       "manaCostIncrease": 55
     },
-    "description": "You slam your shield forward with brutal momentum, rattling both body and mind. Force a creature within range to make a Constitution saving throw. On a failure, it gains [3 stunned stacks]."
+    "description": "You slam your shield forward with brutal momentum, rattling both body and mind. Force a creature within range to make a Constitution saving throw. On a failure, it gains [3 stunned stacks].",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "spectral-prison",
@@ -479,7 +544,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You conjure an unyielding confinement, trapping a creature within manifested restraint. After 1 minute of channeling, you create a cage of solid spectral metal bars sized to contain a creature of Large size or smaller. You choose the cage’s exact dimensions."
+    "description": "You conjure an unyielding confinement, trapping a creature within manifested restraint. After 1 minute of channeling, you create a cage of solid spectral metal bars sized to contain a creature of Large size or smaller. You choose the cage’s exact dimensions.",
+    "tags": [
+      "damage",
+      "control",
+      "summon",
+      "spectral"
+    ]
   },
   {
     "id": "guard-s-grasp",
@@ -508,7 +579,11 @@
         "dice": "1d4"
       }
     },
-    "description": "You extend your will through your weapon, dragging enemies into your reach. Force a creature or object within range to make a Strength saving throw. On a failure, it is pulled toward you by [1d4 × 5] ft. You may double the spell’s range. If you do, you begin your next turn Dazed."
+    "description": "You extend your will through your weapon, dragging enemies into your reach. Force a creature or object within range to make a Strength saving throw. On a failure, it is pulled toward you by [1d4 × 5] ft. You may double the spell’s range. If you do, you begin your next turn Dazed.",
+    "tags": [
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "castle-wall",
@@ -532,7 +607,10 @@
     "scaling": {
       "manaCostIncrease": 70
     },
-    "description": "You create a 90 ft long 30 ft tall wall centered on a point within range (the wall stops in walls/surfaces etc, making it smaller, depending on the space). The wall absorbs all projectile attacks (from both sides). The wall disperses after the duration or after absorbing [300] damage."
+    "description": "You create a 90 ft long 30 ft tall wall centered on a point within range (the wall stops in walls/surfaces etc, making it smaller, depending on the space). The wall absorbs all projectile attacks (from both sides). The wall disperses after the duration or after absorbing [300] damage.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "aggravating-shout",
@@ -557,7 +635,10 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "You force a creature within range to make a Wis saving throw. On a fail, the target must deal [300] damage to you before it is able to damage other creatures (after the duration expires or after dealing said amount of damage the spell ends on the creature)"
+    "description": "You force a creature within range to make a Wis saving throw. On a fail, the target must deal [300] damage to you before it is able to damage other creatures (after the duration expires or after dealing said amount of damage the spell ends on the creature)",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "protective-thorns",
@@ -590,7 +671,11 @@
         "dice": "2d12"
       }
     },
-    "description": "You create a layer of thorns on your armor that help protect you. You gain a physical shield of [3 x spell modifier + 91 + 6d12]. Whenever a weapon melee attack against you is made, the target takes [3 x spell modifier] piercing damage (that pierces armor) if the attack hits."
+    "description": "You create a layer of thorns on your armor that help protect you. You gain a physical shield of [3 x spell modifier + 91 + 6d12]. Whenever a weapon melee attack against you is made, the target takes [3 x spell modifier] piercing damage (that pierces armor) if the attack hits.",
+    "tags": [
+      "damage",
+      "defense"
+    ]
   },
   {
     "id": "chains-of-sacrifice",
@@ -612,7 +697,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You force all enemy creatures within range to roll a cha saving throw. On a fail a magical, spectral chain binds them to you. If there are any creatures that fail the saving throw, a number of chains also bind you to the ground, rooting you. The bound creatures cannot go further than 30 ft away from you. You can choose to end the spell early at any point during your turn. Targets CANNOT repeat the saving throw."
+    "description": "You force all enemy creatures within range to roll a cha saving throw. On a fail a magical, spectral chain binds them to you. If there are any creatures that fail the saving throw, a number of chains also bind you to the ground, rooting you. The bound creatures cannot go further than 30 ft away from you. You can choose to end the spell early at any point during your turn. Targets CANNOT repeat the saving throw.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "ice"
+    ]
   },
   {
     "id": "elusive-skin",
@@ -641,7 +732,11 @@
         "dice": "2d8"
       }
     },
-    "description": "You give a creature within melee range a special resistance to magic. The creature gains a magic shield of [3 x spell modifier + 62 + 6d8]. While the magic shield is active the target has advantage on saving throws against spells."
+    "description": "You give a creature within melee range a special resistance to magic. The creature gains a magic shield of [3 x spell modifier + 62 + 6d8]. While the magic shield is active the target has advantage on saving throws against spells.",
+    "tags": [
+      "buff",
+      "defense"
+    ]
   },
   {
     "id": "shield-bash-lv3",
@@ -674,7 +769,12 @@
         "dice": "2d6"
       }
     },
-    "description": "Make a melee spell attack against a foe. On a hit, the target takes [3 x spell modifier + 24 + 6d6] crushing damage and must roll a const saving throw. On a fail the target is stunned for 1 turn. If the target succeeds, but does roll within 5 (5 included) of DC they are knocked prone instead."
+    "description": "Make a melee spell attack against a foe. On a hit, the target takes [3 x spell modifier + 24 + 6d6] crushing damage and must roll a const saving throw. On a fail the target is stunned for 1 turn. If the target succeeds, but does roll within 5 (5 included) of DC they are knocked prone instead.",
+    "tags": [
+      "damage",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "shatter-armor",
@@ -707,7 +807,12 @@
         "dice": "4d4"
       }
     },
-    "description": "Make a melee spell attack against a foe. On a hit the target takes [3 x spell modifier + 40 + 10d4] crushing damage and has their PA reduced by [your PA / 5] for the duration. This effect cannot stack."
+    "description": "Make a melee spell attack against a foe. On a hit the target takes [3 x spell modifier + 40 + 10d4] crushing damage and has their PA reduced by [your PA / 5] for the duration. This effect cannot stack.",
+    "tags": [
+      "damage",
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "bond-of-the-protector",
@@ -729,7 +834,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You bond with a creature for the duration. The creature receives all healing you receive for the duration (no similar effect can be cast from the other creature to you, for example 2 guardians casting bond of the protector on each other). If at any point you and the creature are more than [distance] away the bond breaks."
+    "description": "You bond with a creature for the duration. The creature receives all healing you receive for the duration (no similar effect can be cast from the other creature to you, for example 2 guardians casting bond of the protector on each other). If at any point you and the creature are more than [distance] away the bond breaks.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "fraction-time",
@@ -753,7 +862,10 @@
     "scaling": {
       "manaCostIncrease": 20
     },
-    "description": "You break the fabric of time for a second. You regain 1d4 * 25% of the damage you have taken since the end of your last turn. Cannot be cast more than once per turn."
+    "description": "You break the fabric of time for a second. You regain 1d4 * 25% of the damage you have taken since the end of your last turn. Cannot be cast more than once per turn.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "reconstruct",
@@ -777,7 +889,13 @@
     "scaling": {
       "manaCostIncrease": 100
     },
-    "description": "You attempt to reconstruct your body. You are stunned for the duration, but regain 40% of your max HP at the end of every turn. You can end the effect early (at the start of one of your turns). Every time you cast this spell the percentage regained decreases by 5%. Resets on long rests."
+    "description": "You attempt to reconstruct your body. You are stunned for the duration, but regain 40% of your max HP at the end of every turn. You can end the effect early (at the start of one of your turns). Every time you cast this spell the percentage regained decreases by 5%. Resets on long rests.",
+    "tags": [
+      "healing",
+      "debuff",
+      "control",
+      "summon"
+    ]
   },
   {
     "id": "steward-s-duty",
@@ -799,7 +917,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You ward a creature within range. Whenever another creature attacks them you can use your reaction to make 1 free attack against them. If they are outside your range you throw your shield (and it automatically bounces back to you)."
+    "description": "You ward a creature within range. Whenever another creature attacks them you can use your reaction to make 1 free attack against them. If they are outside your range you throw your shield (and it automatically bounces back to you).",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "commanding-shout",
@@ -822,7 +943,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You let out a battlecry. All enemy creatures within range must succeed on a Wis saving throw, or spend their next turn moving towards you (until they are in melee range), and then attacking you in any way."
+    "description": "You let out a battlecry. All enemy creatures within range must succeed on a Wis saving throw, or spend their next turn moving towards you (until they are in melee range), and then attacking you in any way.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "glacial-armor",
@@ -851,7 +976,11 @@
         "dice": "2d12"
       }
     },
-    "description": "You gain [4 x spell modifier + 105 + 8d12] temporary HP. Half of all the damage you deal recovers the temporary HP (the initial value cannot be exceeded, and the effect does end if the temporary HP reaches 0, but you can “heal” the temporary hp with the damage dealt). The concentration on this spell cannot be broken by damage received, only by casting another concentration spell."
+    "description": "You gain [4 x spell modifier + 105 + 8d12] temporary HP. Half of all the damage you deal recovers the temporary HP (the initial value cannot be exceeded, and the effect does end if the temporary HP reaches 0, but you can “heal” the temporary hp with the damage dealt). The concentration on this spell cannot be broken by damage received, only by casting another concentration spell.",
+    "tags": [
+      "healing",
+      "defense"
+    ]
   },
   {
     "id": "cosmic-shield",
@@ -873,7 +1002,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "After channelling for 3 turns (at the end of your third turn, so after 2 rounds), you and allies that were within range at the start of the channel become invulnerable for 3 turns. You can only cast this while in combat, and the effect instantly ends if combat ends."
+    "description": "After channelling for 3 turns (at the end of your third turn, so after 2 rounds), you and allies that were within range at the start of the channel become invulnerable for 3 turns. You can only cast this while in combat, and the effect instantly ends if combat ends.",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "rallying-strike",
@@ -895,7 +1028,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You can add this spell to an attack (before or after bla bla), marking the target. Until the start of your next turn, allies can make weapon attacks from up to 90 ft away on the marked target and the attacks teleport them next to the marked target (closest unoccupied space). Your allies do not have to use the range and teleportation, but if they do use the range increase the teleportation happens."
+    "description": "You can add this spell to an attack (before or after bla bla), marking the target. Until the start of your next turn, allies can make weapon attacks from up to 90 ft away on the marked target and the attacks teleport them next to the marked target (closest unoccupied space). Your allies do not have to use the range and teleportation, but if they do use the range increase the teleportation happens.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "crystallize",
@@ -917,7 +1053,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You crystallize a creature within range for up to [duration]. You can end the effect early during your turns (no cost). An unwilling creature must succeed on a Str saving throw to avoid the effect (a creature that failed cannot repeat the saving throw to end the effect early)."
+    "description": "You crystallize a creature within range for up to [duration]. You can end the effect early during your turns (no cost). An unwilling creature must succeed on a Str saving throw to avoid the effect (a creature that failed cannot repeat the saving throw to end the effect early).",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "raise-fortress",
@@ -939,7 +1078,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "After 1 minute of channel you make a fortress appear in an unoccupied space that you can see (the space must be able to support a fortress, you cannot create it on water for example etc.). The fortress can occupy up to 2500 ft square, and you choose all the details regarding its design (within reasonable limits)."
+    "description": "After 1 minute of channel you make a fortress appear in an unoccupied space that you can see (the space must be able to support a fortress, you cannot create it on water for example etc.). The fortress can occupy up to 2500 ft square, and you choose all the details regarding its design (within reasonable limits).",
+    "tags": [
+      "ritual"
+    ]
   },
   {
     "id": "spectral-charge",
@@ -965,6 +1107,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "You take the form of a huge spectral animal, like a bull, a ram or a rhino. You charge in a 100 ft long 20 ft wide line. All creatures in the line must succeed on a const saving throw or take [5 x spell modifier + 75 + 10d8] spectral damage and be pushed back to the end of the line where they are knocked prone. If you hit a surface like a wall or building that is made of a sturdy enough material for you not to break you stop in the surface, and the creatures are pushed into it and stunned ins..."
+    "description": "You take the form of a huge spectral animal, like a bull, a ram or a rhino. You charge in a 100 ft long 20 ft wide line. All creatures in the line must succeed on a const saving throw or take [5 x spell modifier + 75 + 10d8] spectral damage and be pushed back to the end of the line where they are knocked prone. If you hit a surface like a wall or building that is made of a sturdy enough material for you not to break you stop in the surface, and the creatures are pushed into it and stunned ins...",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "spectral"
+    ]
   }
 ]

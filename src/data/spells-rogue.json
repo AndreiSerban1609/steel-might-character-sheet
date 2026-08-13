@@ -30,7 +30,11 @@
         "dice": "1d10"
       }
     },
-    "description": "You throw a shadow shuriken in a direction. It travels 20 ft. All targets in its path must succeed on a dex saving throw or take [spell modifier + 9 + 1d10] slashing damage. The damage is halved for every consecutive creature hit."
+    "description": "You throw a shadow shuriken in a direction. It travels 20 ft. All targets in its path must succeed on a dex saving throw or take [spell modifier + 9 + 1d10] slashing damage. The damage is halved for every consecutive creature hit.",
+    "tags": [
+      "damage",
+      "aoe"
+    ]
   },
   {
     "id": "shadow-s-mark",
@@ -63,7 +67,11 @@
         "dice": "1d6"
       }
     },
-    "description": "Apply: You mark a creature within range. Prock condition: The first time you damage the creature (any amount). Prock effect: the triggering ability deals an additional [spell modifier + 4 + 1d6] shadow damage"
+    "description": "Apply: You mark a creature within range. Prock condition: The first time you damage the creature (any amount). Prock effect: the triggering ability deals an additional [spell modifier + 4 + 1d6] shadow damage",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-slash",
@@ -85,7 +93,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You enhance your next ability that deals damage. If it is a weapon attack, it deals shadow damage instead of the weapon’s damage type. If it is a spell that deals shadow damage, it ignores shadow resistance. Can only apply to spells of a level equal or lower to the cast level of this spell"
+    "description": "You enhance your next ability that deals damage. If it is a weapon attack, it deals shadow damage instead of the weapon’s damage type. If it is a spell that deals shadow damage, it ignores shadow resistance. Can only apply to spells of a level equal or lower to the cast level of this spell",
+    "tags": [
+      "damage",
+      "buff",
+      "defense",
+      "shadow"
+    ]
   },
   {
     "id": "shiv-throw",
@@ -118,7 +132,10 @@
         "dice": "2d12"
       }
     },
-    "description": "You throw a shadow shiv in a direction. Make a ranged spell attack against the first target in its path (within range). On a hit the target takes [spell modifier + 15 + 2d12] piercing damage."
+    "description": "You throw a shadow shiv in a direction. Make a ranged spell attack against the first target in its path (within range). On a hit the target takes [spell modifier + 15 + 2d12] piercing damage.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "mark-of-the-cornered",
@@ -140,7 +157,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Apply: You mark a creature within melee range if you are holding a melee weapon and have the possibility of making an attack of opportunity (you are not snared, paralysed, etc.). Prock condition: The creature attempts to move out of your space Prock effect: You can use your reaction to make an attack of opportunity, even if the target disengages.If the attack hits - or in case of dual wielding if either weapon attack hits , the target must succeed on a Const saving throw or become rooted for ..."
+    "description": "Apply: You mark a creature within melee range if you are holding a melee weapon and have the possibility of making an attack of opportunity (you are not snared, paralysed, etc.). Prock condition: The creature attempts to move out of your space Prock effect: You can use your reaction to make an attack of opportunity, even if the target disengages.If the attack hits - or in case of dual wielding if either weapon attack hits , the target must succeed on a Const saving throw or become rooted for ...",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "glyph-of-danger",
@@ -164,7 +184,11 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "You place a magical glyph on the ground (5 ft diameter) and choose a X-th level spell from the shadow trickster list (X being the level of this spell when you cast it). You cannot place the glyph directly underneath a creature (or in any way that would instantly trigger it). The first time a hostile creature steps on the glyph, it is activated and you (and your shadow) cast the spell (free of ap and mana cost) on the target. You have advantage on the attack roll/ the creature has disadvantage..."
+    "description": "You place a magical glyph on the ground (5 ft diameter) and choose a X-th level spell from the shadow trickster list (X being the level of this spell when you cast it). You cannot place the glyph directly underneath a creature (or in any way that would instantly trigger it). The first time a hostile creature steps on the glyph, it is activated and you (and your shadow) cast the spell (free of ap and mana cost) on the target. You have advantage on the attack roll/ the creature has disadvantage...",
+    "tags": [
+      "debuff",
+      "movement"
+    ]
   },
   {
     "id": "readied-strike",
@@ -187,7 +211,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You prepare for the next attack to come. Name a creature. If the creature uses a targeted attack on you (not aoe) before you take damage from other sources you dodge the attack by teleporting behind the target. This spell can only trigger until the start of your next turn, after that the effect is gone and the spell wasted. The creature is aware you cast this spell on them (although low intelligence creatures might not understand fully what that means)."
+    "description": "You prepare for the next attack to come. Name a creature. If the creature uses a targeted attack on you (not aoe) before you take damage from other sources you dodge the attack by teleporting behind the target. This spell can only trigger until the start of your next turn, after that the effect is gone and the spell wasted. The creature is aware you cast this spell on them (although low intelligence creatures might not understand fully what that means).",
+    "tags": [
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "mysterious-charm",
@@ -207,7 +235,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration you can add [2 * proficiency] to any CHA using checks. This effect ends before the duration expires if it is used for [3] effects."
+    "description": "For the duration you can add [2 * proficiency] to any CHA using checks. This effect ends before the duration expires if it is used for [3] effects.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "shadow-walk-mark",
@@ -229,7 +260,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Apply: You mark a 10 ft side square on the ground in an area covered in darkness centered on a point within range. Prock condition: Whenever a creature walks in or within the square you can choose to consume the mark to prock the effect. Prock effect: you teleport to any point within the square and consume the mark"
+    "description": "Apply: You mark a 10 ft side square on the ground in an area covered in darkness centered on a point within range. Prock condition: Whenever a creature walks in or within the square you can choose to consume the mark to prock the effect. Prock effect: you teleport to any point within the square and consume the mark",
+    "tags": [
+      "damage",
+      "movement",
+      "shadow"
+    ]
   },
   {
     "id": "three-fold-shadow",
@@ -262,7 +298,11 @@
         "dice": "3d12"
       }
     },
-    "description": "You throw a shadow arc in a direction that travels up to 30 ft. Two additional arcs are launched at 90 degrees from the hit point of the first one (one left one right). Make a ranged spell attack for the first creature hit by each bolt. On a hit a target takes [2 x spell modifier + 39 + 6d12] shadow damage. (vel'koz from league of legends q)"
+    "description": "You throw a shadow arc in a direction that travels up to 30 ft. Two additional arcs are launched at 90 degrees from the hit point of the first one (one left one right). Make a ranged spell attack for the first creature hit by each bolt. On a hit a target takes [2 x spell modifier + 39 + 6d12] shadow damage. (vel'koz from league of legends q)",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-lunge",
@@ -284,7 +324,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Your next attack teleports you to the target if it is within range (you begin the attack at range, you are teleported and then attack, the teleport triggers regardless of whether the attack hits or misses). This can only occur if both you and your target are in shadows/darkness."
+    "description": "Your next attack teleports you to the target if it is within range (you begin the attack at range, you are teleported and then attack, the teleport triggers regardless of whether the attack hits or misses). This can only occur if both you and your target are in shadows/darkness.",
+    "tags": [
+      "damage",
+      "movement",
+      "shadow"
+    ]
   },
   {
     "id": "jack-in-the-box",
@@ -306,7 +351,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You place down a box (cube with side of 1 ft), you choose how it looks. You can choose to make the box invisible (is detected by investigation against your spell DC). The first time a creature comes within 5 ft of the box a shadowy figure appears from it and all creatures within 10 ft of it must succeed on a will saving throw or be frightened for the duration (can repeat the saving throw at the end of each turn). Attacking a frightened creature deals an additional dice damage. If the frighten..."
+    "description": "You place down a box (cube with side of 1 ft), you choose how it looks. You can choose to make the box invisible (is detected by investigation against your spell DC). The first time a creature comes within 5 ft of the box a shadowy figure appears from it and all creatures within 10 ft of it must succeed on a will saving throw or be frightened for the duration (can repeat the saving throw at the end of each turn). Attacking a frightened creature deals an additional dice damage. If the frighten...",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "ice"
+    ]
   },
   {
     "id": "throw-shadow-orb",
@@ -328,7 +379,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You throw a shadow orb at exactly [range] distance in a direction. At the start of every round the orb extends 10 ft radius (initially neglectable in size). The area of the orb is considered shadow/darkness."
+    "description": "You throw a shadow orb at exactly [range] distance in a direction. At the start of every round the orb extends 10 ft radius (initially neglectable in size). The area of the orb is considered shadow/darkness.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-claw",
@@ -361,7 +417,12 @@
         "dice": "2d10"
       }
     },
-    "description": "You cast a 5 ft wide shadow claw in a direction (20 ft long line). All creatures in its path must succeed on a dex saving throw or take [2 x spell modifier + 29 + 4d10] shadow damage, be covered in a 5 ft radius shadow (that moves with them), and have their MS halved while walking away from you until the end of your next turn."
+    "description": "You cast a 5 ft wide shadow claw in a direction (20 ft long line). All creatures in its path must succeed on a dex saving throw or take [2 x spell modifier + 29 + 4d10] shadow damage, be covered in a 5 ft radius shadow (that moves with them), and have their MS halved while walking away from you until the end of your next turn.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "spotlight",
@@ -386,7 +447,13 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "You force all creatures within range to make an int saving throw. On a fail they have an urge to look at you / away from you (you choose). People do not realise this is magic. If it makes sense for them to keep looking at/away from you they will up to the duration (if you are giving a speech they might continue looking at you, but if you are standing still and in silence they will look at you at cast and then go on minding their business."
+    "description": "You force all creatures within range to make an int saving throw. On a fail they have an urge to look at you / away from you (you choose). People do not realise this is magic. If it makes sense for them to keep looking at/away from you they will up to the duration (if you are giving a speech they might continue looking at you, but if you are standing still and in silence they will look at you at cast and then go on minding their business.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "light"
+    ]
   },
   {
     "id": "mark-of-vengeance",
@@ -419,7 +486,11 @@
         "dice": "2d20"
       }
     },
-    "description": "Apply: You mark a creature within range that has damaged you the previous round. Prock condition: The creature damages you for at least 50% of your total hp in a single round Prock effect: the creature takes [4 x spell modifier + 76 + 4d20] true damage Secondary prock condition: The creature kills you Prock effect: the damage is increased by your maximum hp"
+    "description": "Apply: You mark a creature within range that has damaged you the previous round. Prock condition: The creature damages you for at least 50% of your total hp in a single round Prock effect: the creature takes [4 x spell modifier + 76 + 4d20] true damage Secondary prock condition: The creature kills you Prock effect: the damage is increased by your maximum hp",
+    "tags": [
+      "damage",
+      "buff"
+    ]
   },
   {
     "id": "mark-of-elemental-destruction",
@@ -441,7 +512,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Apply: You mark a creature within range that is able to cast magic. Prock condition: The creatures deals 3 different types of damage (to any creature, at any point after the mark was set) Prock effect: the target gains the vulnerable status to the 3 types of damage for 3 turns //add mark that allows you to listen for specific trigger (what corrupted tiefling used)"
+    "description": "Apply: You mark a creature within range that is able to cast magic. Prock condition: The creatures deals 3 different types of damage (to any creature, at any point after the mark was set) Prock effect: the target gains the vulnerable status to the 3 types of damage for 3 turns //add mark that allows you to listen for specific trigger (what corrupted tiefling used)",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "ambush",
@@ -474,7 +548,12 @@
         "dice": "2d12"
       }
     },
-    "description": "You dash to a creature within range. If the target is in shadow it must succeed on a dex saving throw or take [3 x spell modifier + 28 + 6d12] weapon type damage. If you were hiding/invisible/etc. The target must succeed on a const saving throw or be stunned for 1 turn."
+    "description": "You dash to a creature within range. If the target is in shadow it must succeed on a dex saving throw or take [3 x spell modifier + 28 + 6d12] weapon type damage. If you were hiding/invisible/etc. The target must succeed on a const saving throw or be stunned for 1 turn.",
+    "tags": [
+      "damage",
+      "control",
+      "movement"
+    ]
   },
   {
     "id": "shadow-illusions",
@@ -498,7 +577,12 @@
     "scaling": {
       "manaCostIncrease": 80
     },
-    "description": "You create 3 copies of you around you that mimic your actions (but deal no damage). Whenever a creature targets you with an attack they must roll a 1d(1 + nr of copies_) and only on a 1 do they hit you, otherwise they hit a clone. If the attack does hit the copy is dispelled. Aoes only damage you and do not reveal who the real one is."
+    "description": "You create 3 copies of you around you that mimic your actions (but deal no damage). Whenever a creature targets you with an attack they must roll a 1d(1 + nr of copies_) and only on a 1 do they hit you, otherwise they hit a clone. If the attack does hit the copy is dispelled. Aoes only damage you and do not reveal who the real one is.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-devastation",
@@ -520,7 +604,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the remainder of the turn your attacks that hit while both you and your target are in the shadows deal critical hits, but only double the dice damage. (on an actual crit the damage is still doubled)."
+    "description": "For the remainder of the turn your attacks that hit while both you and your target are in the shadows deal critical hits, but only double the dice damage. (on an actual crit the damage is still doubled).",
+    "tags": [
+      "damage",
+      "ice"
+    ]
   },
   {
     "id": "shadow-shield",
@@ -542,7 +630,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You protect yourself against magic for up to [duration]. The first magic spell of a level equal or lower to this cast on you is cancelled. If you are in the shadows the spell is instead deflected back to the attacker."
+    "description": "You protect yourself against magic for up to [duration]. The first magic spell of a level equal or lower to this cast on you is cancelled. If you are in the shadows the spell is instead deflected back to the attacker.",
+    "tags": [
+      "damage",
+      "defense",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-spear",
@@ -575,7 +668,10 @@
         "dice": "3d12"
       }
     },
-    "description": "You launch a shadowy spear in a direction. Make a ranged spell attack against the first creature in its path. On a hit the target takes [3 x spell modifier + 60 + 10d12] piercing damage."
+    "description": "You launch a shadowy spear in a direction. Make a ranged spell attack against the first creature in its path. On a hit the target takes [3 x spell modifier + 60 + 10d12] piercing damage.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "adaptation-mark",
@@ -597,7 +693,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Apply: You mark a type of damage (specific, like slashing from simple weapons) Prock condition: You take damage of said type 3 consecutive times (no other damage in between) Prock effect: you become resistant to the type of damage for 3 turns Alternative prock effect: you can instead choose to become immune to the type of damage, but only for 1 turn"
+    "description": "Apply: You mark a type of damage (specific, like slashing from simple weapons) Prock condition: You take damage of said type 3 consecutive times (no other damage in between) Prock effect: you become resistant to the type of damage for 3 turns Alternative prock effect: you can instead choose to become immune to the type of damage, but only for 1 turn",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "shadowed-mind",
@@ -622,7 +721,11 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "You force a creature within range to make an int saving throw or forget an event (you choose) that just happened."
+    "description": "You force a creature within range to make an int saving throw or forget an event (you choose) that just happened.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "chains-of-fear",
@@ -655,7 +758,12 @@
         "dice": "5d10"
       }
     },
-    "description": "You bind yourself to a creature within range. After 2 combat rounds (the one of the cast included), the bind penetrates the foe’s mind and terrifies them for the duration also dealing [8 x spell modifier + 150 + 20d10] psychic damage. The target must stay within 30 ft of you or the link breaks and the spell is wasted. While terrified your attacks against the foe have advantage and they have disadvantage on saving throws against you. While they are under this spell’s effect and in the shadow: ..."
+    "description": "You bind yourself to a creature within range. After 2 combat rounds (the one of the cast included), the bind penetrates the foe’s mind and terrifies them for the duration also dealing [8 x spell modifier + 150 + 20d10] psychic damage. The target must stay within 30 ft of you or the link breaks and the spell is wasted. While terrified your attacks against the foe have advantage and they have disadvantage on saving throws against you. While they are under this spell’s effect and in the shadow: ...",
+    "tags": [
+      "damage",
+      "debuff",
+      "psychic"
+    ]
   },
   {
     "id": "shadow-realm",
@@ -677,7 +785,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You cover all terrain within range in shadows for the duration."
+    "description": "You cover all terrain within range in shadows for the duration.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-dive",
@@ -710,7 +822,12 @@
         "dice": "2d8"
       }
     },
-    "description": "You become a shadow and go into the sky. You can, at any point until the start of your next turn (when this is recast automatically), choose a point within range and dive there. All creatures within 10 ft of the landing spot must roll a dex saving throw, taking [4 x spell modifier + 31 + 6d8] shadow damage on a fail, or half as much on a success. Shadow diving on a creature doing an interruptible attack will interrupt the attack if they fail the saving throw."
+    "description": "You become a shadow and go into the sky. You can, at any point until the start of your next turn (when this is recast automatically), choose a point within range and dive there. All creatures within 10 ft of the landing spot must roll a dex saving throw, taking [4 x spell modifier + 31 + 6d8] shadow damage on a fail, or half as much on a success. Shadow diving on a creature doing an interruptible attack will interrupt the attack if they fail the saving throw.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "mark-of-darkness",
@@ -743,7 +860,11 @@
         "dice": "3d12"
       }
     },
-    "description": "Apply: You mark an object within range that noone is holding, or a spot on the ground within range that noone is occupying. Prock condition: The first time a creature touches it. Prock effect: the creature takes [4 x spell modifier + 102 + 12d12] shadow damage and the creature is always considered to be in shadows for up to 1 hour."
+    "description": "Apply: You mark an object within range that noone is holding, or a spot on the ground within range that noone is occupying. Prock condition: The first time a creature touches it. Prock effect: the creature takes [4 x spell modifier + 102 + 12d12] shadow damage and the creature is always considered to be in shadows for up to 1 hour.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "mark-of-the-titan",
@@ -765,7 +886,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Apply: You mark a creature within range with PA AND MA higher than your weapon’s avg damage attack. Prock condition: You deal 150 damage to the creature in a single round. Prock effect: you ignore the creature’s PA and MA for the next 3 rounds"
+    "description": "Apply: You mark a creature within range with PA AND MA higher than your weapon’s avg damage attack. Prock condition: You deal 150 damage to the creature in a single round. Prock effect: you ignore the creature’s PA and MA for the next 3 rounds",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "orb-of-darkness",
@@ -798,7 +922,12 @@
         "dice": "4d10"
       }
     },
-    "description": "You throw an orb in a direction by exactly [range] ft. At the start of your next turn the orb explodes dealing [4 x spell modifier + 98 + 14d10] shadow damage to all creatures within 15 ft of it."
+    "description": "You throw an orb in a direction by exactly [range] ft. At the start of your next turn the orb explodes dealing [4 x spell modifier + 98 + 14d10] shadow damage to all creatures within 15 ft of it.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-suggestion",
@@ -821,7 +950,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You try to use your magical powers and charisma to force a target’s mind into submission. You ask the creature a question, or tell them to do an action. If the question is sensible and not something the target would particularly try to hide or lie about, or if the action is something normal, that does not directly harm the target, or contradict its will (for example a soldier that was given orders), they must succeed on a will saving throw or answer the question/follow your command. If the qu..."
+    "description": "You try to use your magical powers and charisma to force a target’s mind into submission. You ask the creature a question, or tell them to do an action. If the question is sensible and not something the target would particularly try to hide or lie about, or if the action is something normal, that does not directly harm the target, or contradict its will (for example a soldier that was given orders), they must succeed on a will saving throw or answer the question/follow your command. If the qu...",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-assault",
@@ -843,7 +976,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You dash to a creature within range and mark them. This spell casts dark assault (see level 20 feature) instead of having one shadow for one round. If you already have dark assault, all the damage from the shadows is doubled. At the end of the turn all the damage dealt to the target by your shadows (not you) during this turn is tripled (if your shadows already dealt X damage to the target this turn, the target takes additional 2 * X damage at the end of the turn)."
+    "description": "You dash to a creature within range and mark them. This spell casts dark assault (see level 20 feature) instead of having one shadow for one round. If you already have dark assault, all the damage from the shadows is doubled. At the end of the turn all the damage dealt to the target by your shadows (not you) during this turn is tripled (if your shadows already dealt X damage to the target this turn, the target takes additional 2 * X damage at the end of the turn).",
+    "tags": [
+      "damage",
+      "movement",
+      "shadow"
+    ]
   },
   {
     "id": "shadow-explosion",
@@ -865,7 +1003,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You consume all the shadow within range (all shadows become dim light after being consumed) to create a sudden explosion of darkness. All creatures standing in consumed shadow except for you must roll a Const saving throw, taking [5 x spell modifier + 170 + 10d12] shadow damage on a fail, or half as much on a success."
+    "description": "You consume all the shadow within range (all shadows become dim light after being consumed) to create a sudden explosion of darkness. All creatures standing in consumed shadow except for you must roll a Const saving throw, taking [5 x spell modifier + 170 + 10d12] shadow damage on a fail, or half as much on a success.",
+    "tags": [
+      "damage",
+      "aoe",
+      "shadow"
+    ]
   },
   {
     "id": "one-with-the-shadows",
@@ -887,6 +1030,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "While in the shadows, you gain the following benefits: moving costs no ap, you cannot take surface damage, you halve all incoming damage, have advantage on saving throws against spells that would CC you and you crit on 15 or above attack rolls."
+    "description": "While in the shadows, you gain the following benefits: moving costs no ap, you cannot take surface damage, you halve all incoming damage, have advantage on saving throws against spells that would CC you and you crit on 15 or above attack rolls.",
+    "tags": [
+      "damage",
+      "shadow"
+    ]
   }
 ]

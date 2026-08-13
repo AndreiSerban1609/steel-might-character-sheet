@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import type { DamageTypeId, PoolView } from '../platform/types';
+import type { AuditView, DamageTypeId, PoolView } from '../platform/types';
 import { DAMAGE_TYPE_OPTIONS, EFFECT_OPTIONS, effectName, effectOption } from '../domain/combatCatalog';
+import { fetchCombatLog } from '../platform/http';
 import { itemName } from '../domain/itemCatalog';
 import { camelToWords } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
@@ -478,7 +479,69 @@ export function CombatPanel() {
           onClose={clearResolution}
         />
       )}
+
+      <CombatLog resolutionKey={lastResolution} />
     </>
+  );
+}
+
+/**
+ * The player's own combat history (demo feedback #22). Self-scoped and combat-only by
+ * construction — this is the fight recap you scroll back through when the table asks
+ * "wait, how much did that hit me for?", not a table-wide feed.
+ */
+function CombatLog({ resolutionKey }: { resolutionKey: unknown }) {
+  const playerId = useCharacterStore((s) => s.selectedPlayerId);
+  const [open, setOpen] = useState(false);
+  const [entries, setEntries] = useState<AuditView[] | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  const refresh = useCallback(async () => {
+    if (!playerId) return;
+    try {
+      setFailed(false);
+      setEntries(await fetchCombatLog(playerId));
+    } catch {
+      setFailed(true);
+    }
+  }, [playerId]);
+
+  // Reload on open, on character switch, and whenever an action resolves — a log that
+  // goes stale the moment you act is worse than no log.
+  useEffect(() => {
+    if (open) void refresh();
+  }, [open, refresh, resolutionKey]);
+
+  if (!playerId) return null;
+
+  return (
+    <div className="audit">
+      <div className="audit-head">
+        <button className="btn btn--ghost" onClick={() => setOpen(!open)}>
+          {open ? '▾ My combat log' : '▸ My combat log'}
+        </button>
+        {open && (
+          <button className="btn btn--ghost" onClick={() => void refresh()}>
+            Refresh
+          </button>
+        )}
+      </div>
+      {open && failed && <p className="inline-error">Could not load your combat log.</p>}
+      {open && entries && entries.length === 0 && <p className="deck-empty">Nothing yet.</p>}
+      {open && entries && entries.length > 0 && (
+        <div className="audit-list">
+          {entries.map((e, i) => (
+            <div className="audit-row" key={i}>
+              <span className="audit-time">
+                {new Date(e.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+              <span className="audit-summary">{e.summary}</span>
+              <span className="audit-action">{e.action}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

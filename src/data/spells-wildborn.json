@@ -40,7 +40,12 @@
         "dice": "4d8"
       }
     },
-    "description": "Unleash nature's power at a target. Choose: deal poison damage (attack roll), apply 1 poisoned stack (auto), apply 1 corroded stack (auto), or heal (no roll). Can be cast multiple times per turn."
+    "description": "Unleash nature's power at a target. Choose: deal poison damage (attack roll), apply 1 poisoned stack (auto), apply 1 corroded stack (auto), or heal (no roll). Can be cast multiple times per turn.",
+    "tags": [
+      "damage",
+      "healing",
+      "poison"
+    ]
   },
   {
     "id": "natures-touch",
@@ -74,7 +79,10 @@
         "dice": "10d6"
       }
     },
-    "description": "Heal an ally in melee range. May spend 1 additional AP to end 1 Envenomed effect. Can be cast multiple times per turn."
+    "description": "Heal an ally in melee range. May spend 1 additional AP to end 1 Envenomed effect. Can be cast multiple times per turn.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "grasping-vine",
@@ -99,7 +107,10 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "Call upon nearby vegetation to lash out. If a tree or bush is within 15 ft of the target, it must succeed on a STR save or receive 1 Disarmed stack."
+    "description": "Call upon nearby vegetation to lash out. If a tree or bush is within 15 ft of the target, it must succeed on a STR save or receive 1 Disarmed stack.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "sudden-growth",
@@ -124,7 +135,10 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "Force nature to erupt from the ground. A massive plant grows at a point within range forming a 5 ft radius base rising 20 ft high. Creatures on the area are lifted. Climbing costs 1 AP per 20 ft."
+    "description": "Force nature to erupt from the ground. A massive plant grows at a point within range forming a 5 ft radius base rising 20 ft high. Creatures on the area are lifted. Climbing costs 1 AP per 20 ft.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "toxic-spore",
@@ -158,7 +172,12 @@
         "dice": "4d12"
       }
     },
-    "description": "Plant a volatile spore in target. CON save or take poison damage. If target is Envenomed, infection spreads to all creatures within 5 ft (same save/damage). Does not chain further."
+    "description": "Plant a volatile spore in target. CON save or take poison damage. If target is Envenomed, infection spreads to all creatures within 5 ft (same save/damage). Does not chain further.",
+    "tags": [
+      "damage",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "hardened-skin",
@@ -183,7 +202,10 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "Reaction. When an attack hits you, gain 8 PA until the end of the current creature's turn."
+    "description": "Reaction. When an attack hits you, gain 8 PA until the end of the current creature's turn.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "acid-spatter",
@@ -208,7 +230,12 @@
     "scaling": {
       "manaCostIncrease": 80
     },
-    "description": "Unleash a corrosive wave in a 15 ft cone. All creatures gain 1 Corroded stack and receive an Envenomed effect of [spell modifier + 5 + 4d4] lasting 3 rounds."
+    "description": "Unleash a corrosive wave in a 15 ft cone. All creatures gain 1 Corroded stack and receive an Envenomed effect of [spell modifier + 5 + 4d4] lasting 3 rounds.",
+    "tags": [
+      "damage",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "speak-with-animals",
@@ -233,7 +260,10 @@
     "scaling": {
       "manaCostIncrease": 10
     },
-    "description": "Understand and communicate with animals for the duration. Animals regard you as friendly when Animal Protector is active."
+    "description": "Understand and communicate with animals for the duration. Animals regard you as friendly when Animal Protector is active.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "hidden-message",
@@ -256,7 +286,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Inscribe a message onto natural elements. Druids and designated creatures perceive it automatically. Others need Investigation check vs spell DC or magic to detect. Dispelled by certain spells or Arcana check vs 5x spell save DC."
+    "description": "Inscribe a message onto natural elements. Druids and designated creatures perceive it automatically. Others need Investigation check vs spell DC or magic to detect. Dispelled by certain spells or Arcana check vs 5x spell save DC.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "summon-sapling",
@@ -281,7 +314,11 @@
     "scaling": {
       "manaCostIncrease": 10
     },
-    "description": "Summon a sapling that obeys your commands. AC equal to yours, 1 HP (takes max 1 damage per instance), 30 ft MS. Acts before your turn. Counts as a tree for spells/abilities. Leaves a trail of natural ground."
+    "description": "Summon a sapling that obeys your commands. AC equal to yours, 1 HP (takes max 1 damage per instance), 30 ft MS. Acts before your turn. Counts as a tree for spells/abilities. Leaves a trail of natural ground.",
+    "tags": [
+      "summon",
+      "ritual"
+    ]
   },
   {
     "id": "wall-of-trees",
@@ -306,7 +343,10 @@
     "scaling": {
       "manaCostIncrease": 30
     },
-    "description": "Choose 2 trees within range. A wall of wood forms between them with HP equal to half your max HP, AC 1, and treant resistances. No creature or attack can pass through."
+    "description": "Choose 2 trees within range. A wall of wood forms between them with HP equal to half your max HP, AC 1, and treant resistances. No creature or attack can pass through.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "one-with-nature",
@@ -328,7 +368,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Become invisible in nature as long as you don't attack. Investigation check exceeding your spell DC reveals you. You can move but are not invisible while moving."
+    "description": "Become invisible in nature as long as you don't attack. Investigation check exceeding your spell DC reveals you. You can move but are not invisible while moving.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "thornbark",
@@ -353,7 +396,12 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Reaction. Protect a creature with thick bark providing [6x spell modifier + 70 + 10d12] temp HP and stunning them. Melee attackers take [2x spell modifier] piercing damage (ignores armor) while temp HP is active. Unwilling targets get a WILL save."
+    "description": "Reaction. Protect a creature with thick bark providing [6x spell modifier + 70 + 10d12] temp HP and stunning them. Melee attackers take [2x spell modifier] piercing damage (ignores armor) while temp HP is active. Unwilling targets get a WILL save.",
+    "tags": [
+      "damage",
+      "control",
+      "defense"
+    ]
   },
   {
     "id": "grasping-roots",
@@ -387,7 +435,12 @@
         "dice": "2d8"
       }
     },
-    "description": "Vines strike all enemies in a 30 ft long 5 ft wide line. CON save or take piercing damage and be rooted for the duration."
+    "description": "Vines strike all enemies in a 30 ft long 5 ft wide line. CON save or take piercing damage and be rooted for the duration.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "acid-ray",
@@ -421,7 +474,12 @@
         "dice": "2d10"
       }
     },
-    "description": "Ranged spell attack. On hit, deal poison damage and reduce target's PA for the duration: -4 PA if wearing armor, -8 PA if wearing heavy armor."
+    "description": "Ranged spell attack. On hit, deal poison damage and reduce target's PA for the duration: -4 PA if wearing armor, -8 PA if wearing heavy armor.",
+    "tags": [
+      "damage",
+      "defense",
+      "poison"
+    ]
   },
   {
     "id": "suffocating-cloud",
@@ -444,7 +502,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a suffocating cloud (20 ft radius, 50 ft high) centered on a point. Area is semi-obscured (attacks through/in have disadvantage). Creatures starting turn inside are silenced and suffer drowning effects."
+    "description": "Create a suffocating cloud (20 ft radius, 50 ft high) centered on a point. Area is semi-obscured (attacks through/in have disadvantage). Creatures starting turn inside are silenced and suffer drowning effects.",
+    "tags": [
+      "debuff",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "seed-of-the-seeker",
@@ -467,7 +530,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create a magical seed. Know its exact location always (unless blocked by lvl 4+ spells or MATERIAL). If carried by a creature, sense their basic strong emotions."
+    "description": "Create a magical seed. Know its exact location always (unless blocked by lvl 4+ spells or MATERIAL). If carried by a creature, sense their basic strong emotions.",
+    "tags": [
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "seed-of-replenishment",
@@ -501,7 +568,10 @@
         "dice": "2d6"
       }
     },
-    "description": "Plant a seed that grows each turn. Designated creatures can eat it (must be adjacent). Heals [2x spell mod + 18 + 4d6], increasing by the same each turn up to 2 turns max."
+    "description": "Plant a seed that grows each turn. Designated creatures can eat it (must be adjacent). Heals [2x spell mod + 18 + 4d6], increasing by the same each turn up to 2 turns max.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "spiked-weapons",
@@ -535,7 +605,10 @@
         "dice": "1d4"
       }
     },
-    "description": "Grow spikes on an ally's weapon. Their weapon attacks deal additional piercing damage for the duration. Cannot affect more than 1 weapon at once."
+    "description": "Grow spikes on an ally's weapon. Their weapon attacks deal additional piercing damage for the duration. Cannot affect more than 1 weapon at once.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "sprung-vines",
@@ -569,7 +642,11 @@
         "dice": "2d4"
       }
     },
-    "description": "Spawn vines in 30 ft radius area. Creatures walking through take piercing damage (ignores armor) per AP spent moving. Vines destroyed by fire and slashing. Vines on burning surfaces are instantly destroyed."
+    "description": "Spawn vines in 30 ft radius area. Creatures walking through take piercing damage (ignores armor) per AP spent moving. Vines destroyed by fire and slashing. Vines on burning surfaces are instantly destroyed.",
+    "tags": [
+      "damage",
+      "aoe"
+    ]
   },
   {
     "id": "sudden-winds",
@@ -592,7 +669,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Reaction. Invoke a sudden breeze as a reaction to an enemy's ranged attack. They have disadvantage on the roll."
+    "description": "Reaction. Invoke a sudden breeze as a reaction to an enemy's ranged attack. They have disadvantage on the roll.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "winds-of-the-wild",
@@ -615,7 +695,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Summon strong winds in one direction in a 300 ft long 100 ft wide line. Creatures moving with the wind have doubled MS, against it halved MS. Ranged attacks with the wind have advantage, others disadvantage."
+    "description": "Summon strong winds in one direction in a 300 ft long 100 ft wide line. Creatures moving with the wind have doubled MS, against it halved MS. Ranged attacks with the wind have advantage, others disadvantage.",
+    "tags": [
+      "debuff",
+      "summon"
+    ]
   },
   {
     "id": "grappling-plant",
@@ -649,7 +733,11 @@
         "dice": "1d4"
       }
     },
-    "description": "Enchant a plant within range (secret choice). First creature within 5 ft must STR save or be grappled (lose one limb, rooted). At end of each turn while grappled, take piercing damage (ignores armor), then repeat save."
+    "description": "Enchant a plant within range (secret choice). First creature within 5 ft must STR save or be grappled (lose one limb, rooted). At end of each turn while grappled, take piercing damage (ignores armor), then repeat save.",
+    "tags": [
+      "damage",
+      "control"
+    ]
   },
   {
     "id": "vine-transport",
@@ -672,7 +760,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "A vine sprouts and transports you to another unoccupied location within range. Cannot sprout through solid thick cement or floor."
+    "description": "A vine sprouts and transports you to another unoccupied location within range. Cannot sprout through solid thick cement or floor.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "boulder-strike",
@@ -706,7 +797,12 @@
         "dice": "2d12"
       }
     },
-    "description": "Launch a giant boulder (15 ft radius sphere) at a point. Creatures must CON save, taking crushing damage and being knocked prone on fail, or half damage on success."
+    "description": "Launch a giant boulder (15 ft radius sphere) at a point. Creatures must CON save, taking crushing damage and being knocked prone on fail, or half damage on success.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe"
+    ]
   },
   {
     "id": "shield-of-anger",
@@ -729,7 +825,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "All damage you deal until end of turn is also added as temporary HP. The shield lasts for the duration."
+    "description": "All damage you deal until end of turn is also added as temporary HP. The shield lasts for the duration.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "druidic-poison",
@@ -762,7 +861,12 @@
         "dice": "1d10"
       }
     },
-    "description": "Enhance your weapon with poison. Weapon attacks deal [3x spell mod + 3/level + 3d10] poison damage (NOT bonus damage). Each attack adds a toxicity stack to the foe."
+    "description": "Enhance your weapon with poison. Weapon attacks deal [3x spell mod + 3/level + 3d10] poison damage (NOT bonus damage). Each attack adds a toxicity stack to the foe.",
+    "tags": [
+      "damage",
+      "buff",
+      "poison"
+    ]
   },
   {
     "id": "enraging-venom",
@@ -796,7 +900,12 @@
         "dice": "2d12"
       }
     },
-    "description": "Target makes WIS save. On fail takes poison damage and you pick an ally within 30 ft; target is taunted by that ally until end of their next turn."
+    "description": "Target makes WIS save. On fail takes poison damage and you pick an ally within 30 ft; target is taunted by that ally until end of their next turn.",
+    "tags": [
+      "damage",
+      "control",
+      "poison"
+    ]
   },
   {
     "id": "green-regeneration",
@@ -830,7 +939,10 @@
         "dice": "1d6"
       }
     },
-    "description": "Target is instantly healed for [3x spell mod + 18 + 3d6] and heals at start of each of their turns for [3x spell mod + 10 + 3d6] for the duration."
+    "description": "Target is instantly healed for [3x spell mod + 18 + 3d6] and heals at start of each of their turns for [3x spell mod + 10 + 3d6] for the duration.",
+    "tags": [
+      "healing"
+    ]
   },
   {
     "id": "earth-travel",
@@ -853,7 +965,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "After 1 minute of channelling, you and up to 10 willing creatures are absorbed by the earth and travel to a place within range via an uninterrupted natural route. Must have seen the place or know the location."
+    "description": "After 1 minute of channelling, you and up to 10 willing creatures are absorbed by the earth and travel to a place within range via an uninterrupted natural route. Must have seen the place or know the location.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "skyfall",
@@ -887,7 +1002,11 @@
         "dice": "1d4"
       }
     },
-    "description": "5 star-like flares strike from the sky, distributed as you choose. Ranged spell attack for each; on hit deals fire damage per flare. Double damage at nighttime."
+    "description": "5 star-like flares strike from the sky, distributed as you choose. Ranged spell attack for each; on hit deals fire damage per flare. Double damage at nighttime.",
+    "tags": [
+      "damage",
+      "fire"
+    ]
   },
   {
     "id": "acid-rain",
@@ -910,7 +1029,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Create acid rain in 40 ft radius. Creatures starting turn there lose 10 PA and gain 2 toxicity (stacks each turn). Lose 1 stack per turn outside. PA reduction is permanent for metal armor. Protect up to [spell mod] creatures."
+    "description": "Create acid rain in 40 ft radius. Creatures starting turn there lose 10 PA and gain 2 toxicity (stacks each turn). Lose 1 stack per turn outside. PA reduction is permanent for metal armor. Protect up to [spell mod] creatures.",
+    "tags": [
+      "defense",
+      "aoe"
+    ]
   },
   {
     "id": "living-spores",
@@ -944,7 +1067,13 @@
         "dice": "5d20"
       }
     },
-    "description": "Spores cover all enemies within range (CON save, no repeat). While covered: speed drops 10/turn, disadvantage on attacks. After 3 rounds spores explode for massive poison damage. Spores dispel on caster death."
+    "description": "Spores cover all enemies within range (CON save, no repeat). While covered: speed drops 10/turn, disadvantage on attacks. After 3 rounds spores explode for massive poison damage. Spores dispel on caster death.",
+    "tags": [
+      "damage",
+      "debuff",
+      "aoe",
+      "poison"
+    ]
   },
   {
     "id": "lashing-thorns",
@@ -978,7 +1107,12 @@
         "dice": "2d8"
       }
     },
-    "description": "Summon thorns in 20 ft radius centered on a point. All creatures DEX save; on fail take piercing damage and are snared. Half damage and no snare on success."
+    "description": "Summon thorns in 20 ft radius centered on a point. All creatures DEX save; on fail take piercing damage and are snared. Half damage and no snare on success.",
+    "tags": [
+      "damage",
+      "summon",
+      "aoe"
+    ]
   },
   {
     "id": "toxic-infection",
@@ -1000,7 +1134,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Melee spell attack. On hit target gains 4 toxicity levels and becomes weakened (half damage) for the duration. CON save to end the weakened effect."
+    "description": "Melee spell attack. On hit target gains 4 toxicity levels and becomes weakened (half damage) for the duration. CON save to end the weakened effect.",
+    "tags": [
+      "debuff"
+    ]
   },
   {
     "id": "healing-wave",
@@ -1034,7 +1171,11 @@
         "dice": "2d6"
       }
     },
-    "description": "Heal up to [spell modifier] creatures within range."
+    "description": "Heal up to [spell modifier] creatures within range.",
+    "tags": [
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "force-of-nature",
@@ -1065,7 +1206,12 @@
       "dice": "10d8"
     },
     "scaling": null,
-    "description": "Unleash nature's force in 100 ft radius. Enemies DEX save: on fail take piercing damage + 20d8 poison at start of turn; half piercing on success. Clears all surfaces/clouds. Allies healed and poison/burning effects end."
+    "description": "Unleash nature's force in 100 ft radius. Enemies DEX save: on fail take piercing damage + 20d8 poison at start of turn; half piercing on success. Clears all surfaces/clouds. Allies healed and poison/burning effects end.",
+    "tags": [
+      "damage",
+      "healing",
+      "aoe"
+    ]
   },
   {
     "id": "druidic-overcharge",
@@ -1088,7 +1234,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Cast 3 different spells with no AP cost this turn. The 3 spells must be different. Cannot be cast twice on the same turn."
+    "description": "Cast 3 different spells with no AP cost this turn. The 3 spells must be different. Cannot be cast twice on the same turn.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "flowers-of-the-sky",
@@ -1111,7 +1260,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Summon up to [spell modifier] gigantic plants as 15 ft radius platforms. All creatures on them when spawned are raised 10,000 ft above the ground."
+    "description": "Summon up to [spell modifier] gigantic plants as 15 ft radius platforms. All creatures on them when spawned are raised 10,000 ft above the ground.",
+    "tags": [
+      "debuff",
+      "summon",
+      "aoe"
+    ]
   },
   {
     "id": "natures-promise",
@@ -1134,7 +1288,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "For the duration all your spells cost 0 mana and half AP (rounded down, min 1). When the duration ends, your spirit leaves your body, which disintegrates. Only godly magic can bring you back."
+    "description": "For the duration all your spells cost 0 mana and half AP (rounded down, min 1). When the duration ends, your spirit leaves your body, which disintegrates. Only godly magic can bring you back.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "lightning-bolt",
@@ -1168,7 +1325,11 @@
         "dice": "1d10"
       }
     },
-    "description": "Ranged spell attack dealing lightning damage to a single target."
+    "description": "Ranged spell attack dealing lightning damage to a single target.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "rain",
@@ -1193,7 +1354,10 @@
     "scaling": {
       "manaCostIncrease": 15
     },
-    "description": "Create a rain cloud (30 ft radius) centered on a point. All creatures become wet, fire surfaces extinguished, empty/poison surfaces become water. Wet creatures are automatically electrified when damaged by your spells (no extra mana)."
+    "description": "Create a rain cloud (30 ft radius) centered on a point. All creatures become wet, fire surfaces extinguished, empty/poison surfaces become water. Wet creatures are automatically electrified when damaged by your spells (no extra mana).",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "lightning-hammer",
@@ -1226,7 +1390,12 @@
         "dice": "1d12"
       }
     },
-    "description": "Force a creature to make a STR save. On fail takes lightning damage. Electrified bonus: target is pushed back 20 ft."
+    "description": "Force a creature to make a STR save. On fail takes lightning damage. Electrified bonus: target is pushed back 20 ft.",
+    "tags": [
+      "damage",
+      "control",
+      "lightning"
+    ]
   },
   {
     "id": "lightning-orb",
@@ -1251,7 +1420,11 @@
     "scaling": {
       "manaCostIncrease": 25
     },
-    "description": "Spawn a floating orb at a point within range. It takes a turn after each of yours, casting Lightning Bolt at the closest hostile creature within 30 ft. Orb has 13 AC and 5 HP per your level."
+    "description": "Spawn a floating orb at a point within range. It takes a turn after each of yours, casting Lightning Bolt at the closest hostile creature within 30 ft. Orb has 13 AC and 5 HP per your level.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "lightning-ray",
@@ -1285,7 +1458,12 @@
         "dice": "1d8"
       }
     },
-    "description": "Shoot a lightning ray in a 90 ft long 5 ft wide line. All creatures hit must DEX save or take lightning damage. Electrified bonus: affected targets' weapon attacks cost 1 more AP next round."
+    "description": "Shoot a lightning ray in a 90 ft long 5 ft wide line. All creatures hit must DEX save or take lightning damage. Electrified bonus: affected targets' weapon attacks cost 1 more AP next round.",
+    "tags": [
+      "damage",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "wrathful-guardian",
@@ -1308,7 +1486,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Cause environmental effects: slam doors open/shut, extinguish or light candles/torches, amplify your voice up to 10x with thunderous tones, make your eyes appear electrified."
+    "description": "Cause environmental effects: slam doors open/shut, extinguish or light candles/torches, amplify your voice up to 10x with thunderous tones, make your eyes appear electrified.",
+    "tags": [
+      "defense"
+    ]
   },
   {
     "id": "lightning-swap",
@@ -1342,7 +1523,11 @@
         "dice": "1d8"
       }
     },
-    "description": "Ranged spell attack. On hit deals lightning damage. If you hit another target with this spell same turn, targets swap positions. Can recast same turn at no extra mana. Electrified bonus: can swap target with ally/object (CHA save)."
+    "description": "Ranged spell attack. On hit deals lightning damage. If you hit another target with this spell same turn, targets swap positions. Can recast same turn at no extra mana. Electrified bonus: can swap target with ally/object (CHA save).",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "ceaseless-storm",
@@ -1376,7 +1561,13 @@
         "dice": "1d10"
       }
     },
-    "description": "Mark a spot within range. At end of each of your turns, lightning strikes 10 ft radius around the spot. DEX save or take lightning damage. Can move the spot for 3 AP."
+    "description": "Mark a spot within range. At end of each of your turns, lightning strikes 10 ft radius around the spot. DEX save or take lightning damage. Can move the spot for 3 AP.",
+    "tags": [
+      "damage",
+      "movement",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "continuous-electricity",
@@ -1410,7 +1601,12 @@
         "dice": "2d12"
       }
     },
-    "description": "Channel. A ray of electricity strikes in a 60 ft long 10 ft wide line at end of every channelling turn. DEX save, full or half damage. You choose direction each turn. Electrified bonus: disadvantage on saves vs lightning until end of your next turn."
+    "description": "Channel. A ray of electricity strikes in a 60 ft long 10 ft wide line at end of every channelling turn. DEX save, full or half damage. You choose direction each turn. Electrified bonus: disadvantage on saves vs lightning until end of your next turn.",
+    "tags": [
+      "damage",
+      "debuff",
+      "lightning"
+    ]
   },
   {
     "id": "bolt-of-fright",
@@ -1444,7 +1640,11 @@
         "dice": "1d10"
       }
     },
-    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: target must WILL save or run 2 AP worth of MS away from you."
+    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: target must WILL save or run 2 AP worth of MS away from you.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "magic-absorption",
@@ -1469,7 +1669,11 @@
     "scaling": {
       "manaCostIncrease": 20
     },
-    "description": "Force a creature to make an INT save. On fail, reduce their MA by 7 and increase yours by the same for the duration. Cannot reduce below 0. Cannot affect more than 1 creature at a time, does not stack."
+    "description": "Force a creature to make an INT save. On fail, reduce their MA by 7 and increase yours by the same for the duration. Cannot reduce below 0. Cannot affect more than 1 creature at a time, does not stack.",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "staggering-bolt",
@@ -1503,7 +1707,12 @@
         "dice": "1d12"
       }
     },
-    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: if target moves next turn, must CON save or fall prone, ending turn early."
+    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: if target moves next turn, must CON save or fall prone, ending turn early.",
+    "tags": [
+      "damage",
+      "control",
+      "lightning"
+    ]
   },
   {
     "id": "disruptive-lightning",
@@ -1537,7 +1746,11 @@
         "dice": "1d8"
       }
     },
-    "description": "Reaction. When a target casts channelling or concentration spell, strike with lightning. WILL save or take lightning damage (ALWAYS ignores armor) and break channel/concentration. Auto-fail if spell was 2nd level or lower."
+    "description": "Reaction. When a target casts channelling or concentration spell, strike with lightning. WILL save or take lightning damage (ALWAYS ignores armor) and break channel/concentration. Auto-fail if spell was 2nd level or lower.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "wonderous-lightning",
@@ -1571,7 +1784,11 @@
         "dice": "2d12"
       }
     },
-    "description": "Force an enemy to DEX save. On fail takes lightning damage, half on success. Electrified bonus: you choose damage type between fire, lightning, and light."
+    "description": "Force an enemy to DEX save. On fail takes lightning damage, half on success. Electrified bonus: you choose damage type between fire, lightning, and light.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "chain-lightning",
@@ -1605,7 +1822,12 @@
         "dice": "1d10"
       }
     },
-    "description": "STR save. On fail takes lightning damage and is pushed back 10 ft. Lightning bounces to nearest target (repeat save/damage), pushing them from direction it came. Chains until hitting a target twice. Can hit allies. Electrified bonus: halve or double push distance."
+    "description": "STR save. On fail takes lightning damage and is pushed back 10 ft. Lightning bounces to nearest target (repeat save/damage), pushing them from direction it came. Chains until hitting a target twice. Can hit allies. Electrified bonus: halve or double push distance.",
+    "tags": [
+      "damage",
+      "control",
+      "lightning"
+    ]
   },
   {
     "id": "stunning-mark",
@@ -1628,7 +1850,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Mark a target. If you deal lightning damage 5 times to it by end of your next turn, target is stunned for 3 turns (CON save). If done same turn, cannot repeat save at end of first turn."
+    "description": "Mark a target. If you deal lightning damage 5 times to it by end of your next turn, target is stunned for 3 turns (CON save). If done same turn, cannot repeat save at end of first turn.",
+    "tags": [
+      "control"
+    ]
   },
   {
     "id": "dazing-blast",
@@ -1662,7 +1887,13 @@
         "dice": "1d8"
       }
     },
-    "description": "Blast of lightning in 10 ft radius area. All enemies CON save; on fail take lightning damage, half on success. Electrified bonus: targets are also blinded on failed save."
+    "description": "Blast of lightning in 10 ft radius area. All enemies CON save; on fail take lightning damage, half on success. Electrified bonus: targets are also blinded on failed save.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "quickened-lightning",
@@ -1696,7 +1927,11 @@
         "dice": "1d10"
       }
     },
-    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: also instantly cast a 1st level spell on the target, free of AP and mana (must be in range). Scaling: bonus spell level = this spell's cast level / 2 (rounded down)."
+    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: also instantly cast a 1st level spell on the target, free of AP and mana (must be in range). Scaling: bonus spell level = this spell's cast level / 2 (rounded down).",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "electroreceptors",
@@ -1719,7 +1954,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Give a creature a new sense: feel anything within 10 ft as if touching it, regardless of light/blindness. Touching a wall reveals thickness and what's within 5 ft on the other side."
+    "description": "Give a creature a new sense: feel anything within 10 ft as if touching it, regardless of light/blindness. Touching a wall reveals thickness and what's within 5 ft on the other side.",
+    "tags": [
+      "control",
+      "ritual"
+    ]
   },
   {
     "id": "lightning-assault",
@@ -1753,7 +1992,12 @@
         "dice": "1d10"
       }
     },
-    "description": "Channel. At end of each turn, lightning bolts equal to AP consumed channelling that turn strike targets. Each target DEX save or take lightning damage."
+    "description": "Channel. At end of each turn, lightning bolts equal to AP consumed channelling that turn strike targets. Each target DEX save or take lightning damage.",
+    "tags": [
+      "damage",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "precise-shock",
@@ -1787,7 +2031,12 @@
         "dice": "2d10"
       }
     },
-    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: choose the value of each die, and optionally decrease your spell modifier value. Can choose 0 for dice."
+    "description": "Ranged spell attack dealing lightning damage. Electrified bonus: choose the value of each die, and optionally decrease your spell modifier value. Can choose 0 for dice.",
+    "tags": [
+      "damage",
+      "debuff",
+      "lightning"
+    ]
   },
   {
     "id": "staff-of-valor",
@@ -1821,7 +2070,11 @@
         "dice": "1d10"
       }
     },
-    "description": "Your staff gets hit by lightning. For the duration, make ranged spell attacks (basic attacks, not weapon) with 60 ft range dealing lightning damage."
+    "description": "Your staff gets hit by lightning. For the duration, make ranged spell attacks (basic attacks, not weapon) with 60 ft range dealing lightning damage.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "wall-of-lightning",
@@ -1855,7 +2108,13 @@
         "dice": "1d10"
       }
     },
-    "description": "Create a wall of lightning up to 200 ft long. Creatures passing through must WILL save. On fail: full damage, pushed back, knocked prone, turn ends. On success: half damage, can pass. Lightning-immune creatures unaffected. Electrified bonus: stunned instead of prone."
+    "description": "Create a wall of lightning up to 200 ft long. Creatures passing through must WILL save. On fail: full damage, pushed back, knocked prone, turn ends. On success: half damage, can pass. Lightning-immune creatures unaffected. Electrified bonus: stunned instead of prone.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "silencing-current",
@@ -1889,7 +2148,12 @@
         "dice": "1d10"
       }
     },
-    "description": "Force a creature to CON save. On fail takes lightning damage. Electrified bonus: target is also silenced until end of your next turn."
+    "description": "Force a creature to CON save. On fail takes lightning damage. Electrified bonus: target is also silenced until end of your next turn.",
+    "tags": [
+      "damage",
+      "control",
+      "lightning"
+    ]
   },
   {
     "id": "stacking-shock",
@@ -1923,7 +2187,14 @@
         "dice": "1d6"
       }
     },
-    "description": "Wave of electricity in 15 ft radius area. All creatures STR save or take lightning damage. Electrified bonus: target is pulled towards center of area."
+    "description": "Wave of electricity in 15 ft radius area. All creatures STR save or take lightning damage. Electrified bonus: target is pulled towards center of area.",
+    "tags": [
+      "damage",
+      "control",
+      "defense",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "flash",
@@ -1946,7 +2217,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Mark an unoccupied space you can see within range. The first time you deal lightning damage, you are teleported there."
+    "description": "Mark an unoccupied space you can see within range. The first time you deal lightning damage, you are teleported there.",
+    "tags": [
+      "movement"
+    ]
   },
   {
     "id": "lightning-of-oblivion",
@@ -1980,7 +2254,13 @@
         "dice": "1d10"
       }
     },
-    "description": "Channel. At end of every channelling turn, strike a 10 ft radius area with a fist of lightning. CON save or take lightning damage and be rooted until end of your next turn. Half damage and no root on success. Electrified bonus: snared instead of rooted."
+    "description": "Channel. At end of every channelling turn, strike a 10 ft radius area with a fist of lightning. CON save or take lightning damage and be rooted until end of your next turn. Half damage and no root on success. Electrified bonus: snared instead of rooted.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "lightning-shield",
@@ -2005,7 +2285,12 @@
     "scaling": {
       "manaCostIncrease": 35
     },
-    "description": "Shield a creature, increasing their MA by 20. Weapon attacks against the target cause the attacker to be struck by a lightning bolt (piercing armor)."
+    "description": "Shield a creature, increasing their MA by 20. Weapon attacks against the target cause the attacker to be struck by a lightning bolt (piercing armor).",
+    "tags": [
+      "damage",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "tracking-lightning",
@@ -2039,7 +2324,12 @@
         "dice": "1d10"
       }
     },
-    "description": "INT save. On fail takes lightning damage and a halo of electricity appears. If target tries to hide/go invisible, halo shines, deals [5x spell mod] lightning (pierces armor) and the effect fails. Half damage on success. Electrified bonus: also prevents teleportation."
+    "description": "INT save. On fail takes lightning damage and a halo of electricity appears. If target tries to hide/go invisible, halo shines, deals [5x spell mod] lightning (pierces armor) and the effect fails. Half damage on success. Electrified bonus: also prevents teleportation.",
+    "tags": [
+      "damage",
+      "movement",
+      "lightning"
+    ]
   },
   {
     "id": "lightning-cage",
@@ -2073,7 +2363,12 @@
         "dice": "1d6"
       }
     },
-    "description": "CHA save. On fail takes [5x spell mod + 19 + 56] lightning damage and a circular wall of lightning surrounds the target (20 ft tall, no roof). Nothing can pass through. Electrified bonus: target cannot fly out."
+    "description": "CHA save. On fail takes [5x spell mod + 19 + 56] lightning damage and a circular wall of lightning surrounds the target (20 ft tall, no roof). Nothing can pass through. Electrified bonus: target cannot fly out.",
+    "tags": [
+      "damage",
+      "movement",
+      "lightning"
+    ]
   },
   {
     "id": "shock-wave",
@@ -2107,7 +2402,13 @@
         "dice": "1d10"
       }
     },
-    "description": "Channel. At end of each channelling turn, emit a shock wave. All creatures within range CON save or take lightning damage and be knocked prone."
+    "description": "Channel. At end of each channelling turn, emit a shock wave. All creatures within range CON save or take lightning damage and be knocked prone.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "warding-shock",
@@ -2141,7 +2442,12 @@
         "dice": "1d10"
       }
     },
-    "description": "INT save. On fail takes lightning damage; on success half. If failed, choose a creature to ward: enemy has doubled AP cost on attacks/spells targeting the warded creature and moving toward them. Electrified bonus: duration increased to 3 turns."
+    "description": "INT save. On fail takes lightning damage; on success half. If failed, choose a creature to ward: enemy has doubled AP cost on attacks/spells targeting the warded creature and moving toward them. Electrified bonus: duration increased to 3 turns.",
+    "tags": [
+      "damage",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "repulse",
@@ -2175,7 +2481,13 @@
         "dice": "1d6"
       }
     },
-    "description": "Strike the ground, creating an impact wave. All creatures within range STR save or be pushed back 3d4 x 10 ft. All targets take force damage regardless of save. Electrified bonus: halved MS until end of your next turn."
+    "description": "Strike the ground, creating an impact wave. All creatures within range STR save or be pushed back 3d4 x 10 ft. All targets take force damage regardless of save. Electrified bonus: halved MS until end of your next turn.",
+    "tags": [
+      "damage",
+      "control",
+      "aoe",
+      "force"
+    ]
   },
   {
     "id": "discharge",
@@ -2200,7 +2512,12 @@
     "scaling": {
       "manaCostIncrease": 50
     },
-    "description": "Place a lightning pulse in a target with trigger value [5x spell mod + 150 + 5d10]. Lightning damage adds to pulse. Under trigger: half pulse as damage. Exact trigger: 2x pulse as true damage. Over trigger: heals target. Electrified bonus: trigger tolerance of +/-5."
+    "description": "Place a lightning pulse in a target with trigger value [5x spell mod + 150 + 5d10]. Lightning damage adds to pulse. Under trigger: half pulse as damage. Exact trigger: 2x pulse as true damage. Over trigger: heals target. Electrified bonus: trigger tolerance of +/-5.",
+    "tags": [
+      "damage",
+      "healing",
+      "lightning"
+    ]
   },
   {
     "id": "versatile-nature",
@@ -2222,7 +2539,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Choose a damage type between light, fire, and shadow. Deal that type instead of lightning for the duration, but spells no longer apply electrify."
+    "description": "Choose a damage type between light, fire, and shadow. Deal that type instead of lightning for the duration, but spells no longer apply electrify.",
+    "tags": [
+      "utility"
+    ]
   },
   {
     "id": "lightning-barrage",
@@ -2256,7 +2576,13 @@
         "dice": "1d10"
       }
     },
-    "description": "Channel. Throw staff into sky and levitate 20 ft. A storm conjured above; at end of every turn all enemies in range DEX save or take lightning damage, half on success. Electrified bonus: target cannot leave storm range while channelling."
+    "description": "Channel. Throw staff into sky and levitate 20 ft. A storm conjured above; at end of every turn all enemies in range DEX save or take lightning damage, half on success. Electrified bonus: target cannot leave storm range while channelling.",
+    "tags": [
+      "damage",
+      "summon",
+      "aoe",
+      "lightning"
+    ]
   },
   {
     "id": "storm-of-shades",
@@ -2299,7 +2625,14 @@
         "dice": "1d10"
       }
     },
-    "description": "Channel a multi-colored storm. Each turn summon [AP consumed / 3] bolts. Roll 1d4 per bolt: 1=green (heals), 2=blue (CON save or stunned), 3=red (DEX save, fire damage), 4=yellow (petrified 1 turn)."
+    "description": "Channel a multi-colored storm. Each turn summon [AP consumed / 3] bolts. Roll 1d4 per bolt: 1=green (heals), 2=blue (CON save or stunned), 3=red (DEX save, fire damage), 4=yellow (petrified 1 turn).",
+    "tags": [
+      "damage",
+      "healing",
+      "control",
+      "summon",
+      "fire"
+    ]
   },
   {
     "id": "shock-duality",
@@ -2322,7 +2655,11 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "CON save. On fail, target alternates between lightning immunity (1 round) and double lightning damage (1 round), starting with immune. Cannot repeat save; spells can end the effect."
+    "description": "CON save. On fail, target alternates between lightning immunity (1 round) and double lightning damage (1 round), starting with immune. Cannot repeat save; spells can end the effect.",
+    "tags": [
+      "debuff",
+      "defense"
+    ]
   },
   {
     "id": "high-voltage",
@@ -2356,7 +2693,11 @@
         "dice": "1d12"
       }
     },
-    "description": "WILL save. On fail takes lightning damage and 1 positive effect on them ends. Half damage and no dispel on success. Electrified bonus: choose which effect ends (some are non-dispellable)."
+    "description": "WILL save. On fail takes lightning damage and 1 positive effect on them ends. Half damage and no dispel on success. Electrified bonus: choose which effect ends (some are non-dispellable).",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "prophecy-of-woe",
@@ -2383,7 +2724,10 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Choose a target and secretly name an act against nature. If the target does it within a week, takes 600 true damage. The act must be specific (burn a tree, kill an animal, etc.). Does not take effect if forced, mind-controlled, or in self-defense."
+    "description": "Choose a target and secretly name an act against nature. If the target does it within a week, takes 600 true damage. The act must be specific (burn a tree, kill an animal, etc.). Does not take effect if forced, mind-controlled, or in self-defense.",
+    "tags": [
+      "damage"
+    ]
   },
   {
     "id": "lightning-shift",
@@ -2406,7 +2750,13 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Launch up to [spell modifier] lightning bolts. Each target must CHA save or be teleported to an adjacent plane (random). If willingly failing, you choose the plane. Success grants 24-hour immunity."
+    "description": "Launch up to [spell modifier] lightning bolts. Each target must CHA save or be teleported to an adjacent plane (random). If willingly failing, you choose the plane. Success grants 24-hour immunity.",
+    "tags": [
+      "debuff",
+      "defense",
+      "movement",
+      "aoe"
+    ]
   },
   {
     "id": "judgementbringer",
@@ -2440,7 +2790,11 @@
         "dice": "3d12"
       }
     },
-    "description": "Channel. At end of your next turn (having channelled), strike a foe with a lightning spear of Valor. Electrified bonus: roll 1d12; if target's might is <= the roll, instant kill."
+    "description": "Channel. At end of your next turn (having channelled), strike a foe with a lightning spear of Valor. Electrified bonus: roll 1d12; if target's might is <= the roll, instant kill.",
+    "tags": [
+      "damage",
+      "lightning"
+    ]
   },
   {
     "id": "winds-of-the-apocalypse",
@@ -2467,7 +2821,15 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "After 3 turns channelling, summon apocalyptic winds. CON save or be pulled into the tornado. Creatures in the way take crushing damage every turn (ignores armor). Airborne creatures can attack/cast with disadvantage. Tornado moves 1d10 x 10 ft your chosen direction each turn."
+    "description": "After 3 turns channelling, summon apocalyptic winds. CON save or be pulled into the tornado. Creatures in the way take crushing damage every turn (ignores armor). Airborne creatures can attack/cast with disadvantage. Tornado moves 1d10 x 10 ft your chosen direction each turn.",
+    "tags": [
+      "damage",
+      "debuff",
+      "control",
+      "summon",
+      "ritual",
+      "aoe"
+    ]
   },
   {
     "id": "natures-power",
@@ -2490,7 +2852,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Draw power from surrounding nature. For the duration, AP recovery increases by 1 for each natural element present in range: trees, animals, lakes/rivers, caves/tunnels/terrain surfaces (max +4)."
+    "description": "Draw power from surrounding nature. For the duration, AP recovery increases by 1 for each natural element present in range: trees, animals, lakes/rivers, caves/tunnels/terrain surfaces (max +4).",
+    "tags": [
+      "buff"
+    ]
   },
   {
     "id": "storm-of-fate",
@@ -2517,7 +2882,12 @@
     },
     "healing": null,
     "scaling": null,
-    "description": "Channel a cosmic storm. All marked creatures (you choose who to protect) take lightning damage at end of each channelling turn, no matter where they are. Pierces armor and almost all protective effects. Electrified bonus: target's location is revealed."
+    "description": "Channel a cosmic storm. All marked creatures (you choose who to protect) take lightning damage at end of each channelling turn, no matter where they are. Pierces armor and almost all protective effects. Electrified bonus: target's location is revealed.",
+    "tags": [
+      "damage",
+      "defense",
+      "lightning"
+    ]
   },
   {
     "id": "lightning-mastery",
@@ -2540,7 +2910,10 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Overload for the duration. Lightning damage you deal is doubled. All spells electrify all targets hit (no cost). Electrify standard damage becomes 5d10 instead of 1d10."
+    "description": "Overload for the duration. Lightning damage you deal is doubled. All spells electrify all targets hit (no cost). Electrify standard damage becomes 5d10 instead of 1d10.",
+    "tags": [
+      "aoe"
+    ]
   },
   {
     "id": "natures-voice",
@@ -2560,7 +2933,12 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "You and up to [spell modifier] creatures become immune to silence for the duration (silenced effect ends on them). Cannot be overwritten by anything short of god powers."
+    "description": "You and up to [spell modifier] creatures become immune to silence for the duration (silenced effect ends on them). Cannot be overwritten by anything short of god powers.",
+    "tags": [
+      "control",
+      "defense",
+      "ritual"
+    ]
   },
   {
     "id": "ascension",
@@ -2583,6 +2961,9 @@
     "damage": null,
     "healing": null,
     "scaling": null,
-    "description": "Ascend 10,000 ft into the sky until end of your next turn. Can still take damage if creatures have means. Casting ranges increased by 20,000 ft. Return to ground at end of next turn."
+    "description": "Ascend 10,000 ft into the sky until end of your next turn. Can still take damage if creatures have means. Casting ranges increased by 20,000 ft. Return to ground at end of next turn.",
+    "tags": [
+      "buff"
+    ]
   }
 ]

@@ -97,6 +97,36 @@ class AuditTrailTest {
     }
 
     @Test
+    void playerCombatLogIsSelfScopedAndCombatOnly() {
+        var other = new GameCharacter("p2");
+        other.setName("Someone Else");
+        other.setRoomName("audit-room");
+        other.setLevel(5);
+        other.setPathId("musician");
+        other.setClassId("bard");
+        other.setStats(new Stats(10, 10, 10, 10, 10, 10, 10));
+        other.setHp(new HitPoints(100, 125, 0));
+        other.setMana(new ManaPool(0, 0));
+        other.setAp(new ActionPoints(6, 6, 10));
+        repo.save(other);
+
+        service.damage("p1", new DamageRequest(10, DamageType.FIRE, null, false, null, false, null));
+        service.damage("p2", new DamageRequest(7, DamageType.FIRE, null, false, null, false, null));
+        var c = repo.findById("p1").orElseThrow();
+        audit.log(c, "purchase", "Bought a very expensive hat"); // shopping is not combat
+        audit.log(c, "inventory-edit", "GM set gold");
+
+        var log = audit.combatLogFor("p1", 20);
+        assertThat(log).allMatch(e -> e.playerId().equals("p1"));
+        assertThat(log).extracting(a -> a.action())
+                .containsExactly("damage")
+                .doesNotContain("purchase", "inventory-edit");
+
+        // The room feed still sees everything — this filter is the player's view only.
+        assertThat(audit.recent("audit-room", 20)).hasSize(4);
+    }
+
+    @Test
     void feedIsPrunedOncePastTheCap() {
         var c = repo.findById("p1").orElseThrow();
         for (int i = 0; i < 500; i++) {

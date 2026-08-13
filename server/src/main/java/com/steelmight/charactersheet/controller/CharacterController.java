@@ -1,6 +1,7 @@
 package com.steelmight.charactersheet.controller;
 
 import com.steelmight.charactersheet.dto.*;
+import com.steelmight.charactersheet.service.AuditService;
 import com.steelmight.charactersheet.service.CharacterService;
 import com.steelmight.charactersheet.service.DeckTemplateService;
 import com.steelmight.charactersheet.service.EquipmentService;
@@ -24,16 +25,19 @@ public class CharacterController {
     private final ShopService shopService;
     private final EquipmentService equipmentService;
     private final ProgressionService progressionService;
+    private final AuditService auditService;
 
     public CharacterController(CharacterService service, SkillCheckService skillCheckService,
                               DeckTemplateService deckService, ShopService shopService,
-                              EquipmentService equipmentService, ProgressionService progressionService) {
+                              EquipmentService equipmentService, ProgressionService progressionService,
+                              AuditService auditService) {
         this.service = service;
         this.skillCheckService = skillCheckService;
         this.deckService = deckService;
         this.shopService = shopService;
         this.equipmentService = equipmentService;
         this.progressionService = progressionService;
+        this.auditService = auditService;
     }
 
     // --- Queries ---
@@ -43,6 +47,16 @@ public class CharacterController {
         return service.getAllCharacters().stream()
                 .map(c -> service.getCombatSnapshot(c.getPlayerId()))
                 .toList();
+    }
+
+    /**
+     * The player's own combat history, newest first (demo feedback #22). Self-scoped and
+     * combat-only by construction — there is no room-wide variant and no GM toggle.
+     */
+    @GetMapping("/{playerId}/log")
+    public List<AuditView> combatLog(@PathVariable String playerId,
+                                     @RequestParam(defaultValue = "50") int limit) {
+        return auditService.combatLogFor(playerId, limit);
     }
 
     @GetMapping("/roster")
