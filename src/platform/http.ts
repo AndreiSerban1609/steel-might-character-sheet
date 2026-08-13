@@ -166,6 +166,8 @@ async function trackedFetch(input: string, init?: RequestInit): Promise<Response
 export interface VitalsPatch {
   currentHp?: number;
   tempHp?: number;
+  tempShieldPhysical?: number;
+  tempShieldMagical?: number;
   currentAp?: number;
   currentMana?: number;
 }
@@ -256,6 +258,18 @@ export function updateStats(
 
 export function updateVitals(playerId: string, patch: VitalsPatch): Promise<CombatSnapshot> {
   return sendJson<CombatSnapshot>('PUT', `/characters/${encodeURIComponent(playerId)}/vitals`, patch);
+}
+
+/** Full replacement: a key left out returns that stat to normal derivation. */
+export function updateStatOverrides(
+  playerId: string,
+  overrides: Record<string, number>,
+): Promise<CombatSnapshot> {
+  return sendJson<CombatSnapshot>(
+    'PUT',
+    `/characters/${encodeURIComponent(playerId)}/stat-overrides`,
+    { overrides },
+  );
 }
 
 export function updateIdentity(playerId: string, patch: IdentityPatch): Promise<CombatSnapshot> {

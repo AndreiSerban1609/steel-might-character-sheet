@@ -87,7 +87,7 @@ class CharacterServiceTest {
     @Test
     void updateVitalsClampsCurrentHpToDerivedMax() {
         // p1: bard L5, CON 10 (+0) -> maxHP = (25 + 0) * 5 = 125
-        var snap = service.updateVitals("p1", new VitalsRequest(9999, 7, 3, null));
+        var snap = service.updateVitals("p1", new VitalsRequest(9999, 7, null, null, 3, null));
         assertThat(snap.hp().current()).isEqualTo(125);
         assertThat(snap.hp().temp()).isEqualTo(7);
         assertThat(snap.ap().current()).isEqualTo(3);
@@ -95,8 +95,92 @@ class CharacterServiceTest {
 
     @Test
     void updateVitalsRejectsNegative() {
-        assertThatThrownBy(() -> service.updateVitals("p1", new VitalsRequest(-1, null, null, null)))
+        assertThatThrownBy(() -> service.updateVitals("p1", new VitalsRequest(-1, null, null, null, null, null)))
                 .isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
+    void statOverridesReplaceTheFormulaAndClampCurrentValues() {
+        // p1: bard L5, CON 10 → derived maxHP 125.
+        service.updateVitals("p1", new VitalsRequest(125, null, null, null, null, null));
+
+        var snap = service.updateStatOverrides("p1",
+                new StatOverridesRequest(Map.of("maxHp", 60, "speed", 45, "carryCapacity", 30)));
+        assertThat(snap.hp().max()).isEqualTo(60);
+        assertThat(snap.hp().current()).isEqualTo(60); // re-clamped down from 125
+        assertThat(snap.speed()).isEqualTo(45);
+        assertThat(snap.statOverrides()).containsEntry("maxHp", 60);
+
+        // Clearing returns to derivation; current HP stays where it was.
+        var cleared = service.updateStatOverrides("p1", new StatOverridesRequest(Map.of()));
+        assertThat(cleared.hp().max()).isEqualTo(125);
+        assertThat(cleared.hp().current()).isEqualTo(60);
+        assertThat(cleared.statOverrides()).isEmpty();
+    }
+
+    @Test
+    void statOverridesPinManaOnANonCasterAndRejectJunk() {
+        var snap = service.updateStatOverrides("p1", new StatOverridesRequest(Map.of("maxMana", 40)));
+        assertThat(snap.mana().max()).isEqualTo(40);
+
+        assertThatThrownBy(() -> service.updateStatOverrides("p1",
+                new StatOverridesRequest(Map.of("bogusStat", 5))))
+                .isInstanceOf(ResponseStatusException.class);
+        assertThatThrownBy(() -> service.updateStatOverrides("p1",
+                new StatOverridesRequest(Map.of("ac", -3))))
+                .isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
+    void statOverrideIsStillModifiedByActiveEffects() {
+        // A pinned AC replaces the formula, not the live combat layer.
+        var pinned = service.updateStatOverrides("p1", new StatOverridesRequest(Map.of("ac", 18)));
+        assertThat(pinned.ac()).isEqualTo(18);
+
+        // ac-bonus is an AC statModifier — the pin must not swallow it.
+        var buffed = service.applyEffect("p1", new ApplyEffectRequest(
+                "ac-bonus", 1, 2, null, "test", false, false, false, null)).snapshot();
+        assertThat(buffed.ac()).isGreaterThan(18);
+    }
+
+    @Test
+    void effectViewExposesThresholdDormancy() {
+        // p1 is level 5 → stack threshold 3. Dazed is a gated negative stack effect.
+        var dormant = service.applyEffect("p1", new ApplyEffectRequest(
+                "dazed", 2, null, null, "test", false, false, false, null)).snapshot();
+        var dazed = dormant.activeEffects().stream()
+                .filter(e -> e.id().equals("dazed")).findFirst().orElseThrow();
+        assertThat(dazed.threshold()).isEqualTo(3);
+        assertThat(dazed.active()).isFalse();
+        assertThat(dazed.stacks()).isEqualTo(2);
+
+        var fired = service.applyEffect("p1", new ApplyEffectRequest(
+                "dazed", 1, null, null, "test", false, false, false, null)).snapshot();
+        assertThat(fired.activeEffects().stream()
+                .filter(e -> e.id().equals("dazed")).findFirst().orElseThrow().active()).isTrue();
+    }
+
+    @Test
+    void effectViewLeavesThresholdNullForUngatedEffects() {
+        var snap = service.updateVitals("p1", new VitalsRequest(null, 10, null, null, null, null));
+        var temp = snap.activeEffects().stream()
+                .filter(e -> e.id().equals("temporary-hp")).findFirst().orElseThrow();
+        assertThat(temp.threshold()).isNull();
+        assertThat(temp.active()).isTrue();
+        assertThat(temp.name()).isEqualTo("Temporary HP");
+    }
+
+    @Test
+    void updateVitalsSetsAndClearsTypedShields() {
+        var snap = service.updateVitals("p1", new VitalsRequest(null, null, 12, 8, null, null));
+        assertThat(snap.tempShieldPhysical()).isEqualTo(12);
+        assertThat(snap.tempShieldMagical()).isEqualTo(8);
+
+        // set semantics, not accumulation — and 0 takes the shield down entirely
+        var reset = service.updateVitals("p1", new VitalsRequest(null, null, 5, 0, null, null));
+        assertThat(reset.tempShieldPhysical()).isEqualTo(5);
+        assertThat(reset.tempShieldMagical()).isZero();
+        assertThat(reset.activeEffects()).noneMatch(e -> e.id().equals("magic-shield"));
     }
 
     @Test

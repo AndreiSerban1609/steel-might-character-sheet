@@ -1109,7 +1109,7 @@ public class CharacterService {
     private void gainAny(GameCharacter c, String resource, int amount, ResolutionResult result) {
         switch (resource) {
             case "ap" -> gainInto(result, "ap", amount,
-                    c.getAp().getCurrent(), c.getAp().getMax(), v -> c.getAp().setCurrent(v));
+                    c.getAp().getCurrent(), statEngine.computeMaxAP(c), v -> c.getAp().setCurrent(v));
             case "mana" -> gainInto(result, "mana", amount,
                     c.getMana().getCurrent(), statEngine.computeMaxMana(c), v -> c.getMana().setCurrent(v));
             default -> {
@@ -1237,7 +1237,7 @@ public class CharacterService {
                             + "') — DM adjudicates; spend AP via spend-resource");
         }
         int apCost = statEngine.resolveModifiedStat(c, ModifiableStat.SPELL_AP_COST,
-                spell.apCost().resolve(c.getAp().getMax()));
+                spell.apCost().resolve(statEngine.computeMaxAP(c)));
         requireSufficient("ap", c.getAp().getCurrent(), apCost);
         // Percent costs (paladin auras: "10%") resolve against the derived max mana.
         // Q23: flat reductions then percent multipliers, floored at 0 (resolveModifiedStat).
@@ -1731,7 +1731,7 @@ public class CharacterService {
 
         switch (req.resource()) {
             case "ap" -> gainInto(result, "ap", req.amount(),
-                    c.getAp().getCurrent(), c.getAp().getMax(), v -> c.getAp().setCurrent(v));
+                    c.getAp().getCurrent(), statEngine.computeMaxAP(c), v -> c.getAp().setCurrent(v));
             case "mana" -> gainInto(result, "mana", req.amount(),
                     c.getMana().getCurrent(), statEngine.computeMaxMana(c), v -> c.getMana().setCurrent(v));
             default -> {
@@ -1869,7 +1869,7 @@ public class CharacterService {
         var c = getCharacter(playerId);
         var result = new ResolutionResult();
 
-        int startingAp = Math.min(c.getAp().getMax(), c.getAp().getRecovery());
+        int startingAp = Math.min(statEngine.computeMaxAP(c), c.getAp().getRecovery());
         int before = c.getAp().getCurrent();
         if (before != startingAp) {
             c.getAp().setCurrent(startingAp);
@@ -2176,11 +2176,15 @@ public class CharacterService {
                         "temporary-hp", "dm-override", 1, req.tempHp(), null, false, true, false));
             }
         }
+        // Typed shields, same set semantics as temp HP above (demo feedback #14). Q08
+        // exclusivity means re-applying replaces rather than stacks.
+        applyShieldOverride(c, "physical-shield", req.tempShieldPhysical(), "tempShieldPhysical");
+        applyShieldOverride(c, "magic-shield", req.tempShieldMagical(), "tempShieldMagical");
         if (req.currentAp() != null) {
             if (req.currentAp() < 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "currentAp must be >= 0");
             }
-            c.getAp().setCurrent(Math.min(req.currentAp(), c.getAp().getMax()));
+            c.getAp().setCurrent(Math.min(req.currentAp(), statEngine.computeMaxAP(c)));
         }
         if (req.currentMana() != null) {
             if (req.currentMana() < 0) {
@@ -2192,8 +2196,65 @@ public class CharacterService {
         audit.log(c, "vitals-edit", "Vitals override"
                 + (req.currentHp() != null ? " HP=" + req.currentHp() : "")
                 + (req.tempHp() != null ? " temp=" + req.tempHp() : "")
+                + (req.tempShieldPhysical() != null ? " physShield=" + req.tempShieldPhysical() : "")
+                + (req.tempShieldMagical() != null ? " magShield=" + req.tempShieldMagical() : "")
                 + (req.currentAp() != null ? " AP=" + req.currentAp() : "")
                 + (req.currentMana() != null ? " mana=" + req.currentMana() : ""));
+        return buildCombatSnapshot(c);
+    }
+
+    /** Set-semantics write of a typed shield pool: remove the effect, re-apply when > 0. */
+    private void applyShieldOverride(GameCharacter c, String effectId, Integer value, String field) {
+        if (value == null) return;
+        if (value < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must be >= 0");
+        }
+        effectEngine.remove(c, effectId);
+        if (value > 0) {
+            effectEngine.apply(c, new EffectApplication(
+                    effectId, "dm-override", 1, value, null, false, true, false));
+        }
+    }
+
+    /**
+     * Replace the pinned-stat map wholesale (demo feedback #11/#12). Unknown keys 400
+     * rather than being dropped — a silently ignored override is worse than an error.
+     * Current HP/mana/AP are re-clamped, so lowering a pinned max doesn't leave a
+     * character sitting above it.
+     */
+    public CombatSnapshot updateStatOverrides(String playerId, StatOverridesRequest req) {
+        var c = getCharacter(playerId);
+        var next = new java.util.HashMap<String, Integer>();
+        if (req.overrides() != null) {
+            for (var entry : req.overrides().entrySet()) {
+                if (entry.getValue() == null) continue; // null = "back to derived"
+                OverridableStat stat;
+                try {
+                    stat = OverridableStat.fromKey(entry.getKey());
+                } catch (IllegalArgumentException e) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Unknown overridable stat '" + entry.getKey() + "'");
+                }
+                if (entry.getValue() < 0) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            stat.getKey() + " override must be >= 0");
+                }
+                next.put(stat.getKey(), entry.getValue());
+            }
+        }
+
+        var overrides = c.getStatOverrides();
+        overrides.clear();
+        overrides.putAll(next);
+
+        c.getHp().setCurrent(Math.min(c.getHp().getCurrent(), statEngine.computeMaxHP(c)));
+        c.getMana().setCurrent(Math.min(c.getMana().getCurrent(), statEngine.computeMaxMana(c)));
+        c.getAp().setCurrent(Math.min(c.getAp().getCurrent(), statEngine.computeMaxAP(c)));
+        clampPoolsToMax(c);
+        repo.save(c);
+        audit.log(c, "stat-overrides", next.isEmpty()
+                ? "Cleared all stat overrides"
+                : "Stat overrides set: " + next);
         return buildCombatSnapshot(c);
     }
 
@@ -2311,10 +2372,18 @@ public class CharacterService {
     }
 
     private CombatSnapshot buildCombatSnapshot(GameCharacter c) {
+        int stackThreshold = statEngine.computeStackThreshold(c);
         var effectViews = c.getActiveEffects().stream()
-                .map(e -> new CombatSnapshot.EffectView(
-                        e.getEffectId(), e.getEffectId(), e.getStacks(),
-                        e.getValue(), e.getRemainingRounds()))
+                .map(e -> {
+                    var def = gameData.getEffect(e.getEffectId());
+                    boolean gated = EffectActivity.isThresholdGated(def);
+                    return new CombatSnapshot.EffectView(
+                            e.getEffectId(),
+                            def != null && def.name() != null ? def.name() : e.getEffectId(),
+                            e.getStacks(), e.getValue(), e.getRemainingRounds(),
+                            EffectActivity.isActive(def, e, stackThreshold),
+                            gated ? stackThreshold : null);
+                })
                 .toList();
 
         List<String> conditions = deriveConditions(c);
@@ -2354,7 +2423,9 @@ public class CharacterService {
                 statEngine.computeAC(c),
                 statEngine.computePA(c),
                 statEngine.computeMA(c),
-                new CombatSnapshot.ApView(c.getAp().getCurrent(), statEngine.computeAPRecovery(c), c.getAp().getMax()),
+                shieldPool(c, "physical-shield"),
+                shieldPool(c, "magic-shield"),
+                new CombatSnapshot.ApView(c.getAp().getCurrent(), statEngine.computeAPRecovery(c), statEngine.computeMaxAP(c)),
                 new CombatSnapshot.ManaView(c.getMana().getCurrent(), statEngine.computeMaxMana(c)),
                 resourceView,
                 poolViews,
@@ -2380,8 +2451,20 @@ public class CharacterService {
                 conditions,
                 deriveProficiencyPenalties(c),
                 List.copyOf(c.getTalents()),
-                List.copyOf(c.getSpecFeats())
+                List.copyOf(c.getSpecFeats()),
+                Map.copyOf(c.getStatOverrides())
         );
+    }
+
+    /**
+     * Remaining absorption in a typed shield effect, summed across instances (the Q08
+     * exclusivity rule keeps that at one in practice). 0 when no shield is up.
+     */
+    private int shieldPool(GameCharacter c, String effectId) {
+        return c.getActiveEffects().stream()
+                .filter(e -> effectId.equals(e.getEffectId()))
+                .mapToInt(e -> e.getValue() != null ? e.getValue() : 0)
+                .sum();
     }
 
     /** Q30 (M5-B): equipped items the character isn't proficient with, plus consequences. */

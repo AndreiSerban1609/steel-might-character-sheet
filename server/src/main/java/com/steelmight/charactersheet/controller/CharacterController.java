@@ -238,6 +238,12 @@ public class CharacterController {
         return service.updateVitals(playerId, req);
     }
 
+    @PutMapping("/{playerId}/stat-overrides")
+    public CombatSnapshot updateStatOverrides(@PathVariable String playerId,
+                                              @RequestBody StatOverridesRequest req) {
+        return service.updateStatOverrides(playerId, req);
+    }
+
     @PutMapping("/{playerId}/identity")
     public CombatSnapshot updateIdentity(@PathVariable String playerId,
                                          @RequestBody IdentityRequest req) {

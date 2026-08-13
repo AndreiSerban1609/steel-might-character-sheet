@@ -68,6 +68,7 @@ import {
   updatePlayerDeck,
   updateProficiencies,
   updateRoomDeck,
+  updateStatOverrides,
   updateStats,
   updateVitals,
   upgradeItem,
@@ -150,6 +151,7 @@ export interface CharacterState {
   back: () => void;
   saveStats: (stats: Record<AbilityScore, number>) => Promise<void>;
   saveVitals: (patch: VitalsPatch) => Promise<void>;
+  saveStatOverrides: (overrides: Record<string, number>) => Promise<void>;
   saveIdentity: (patch: IdentityPatch) => Promise<void>;
   saveProficiencies: (skillIds: string[]) => Promise<void>;
   drawSkill: (skillId: string, advantage?: 'advantage' | 'disadvantage') => Promise<void>;
@@ -338,6 +340,17 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     set({ saving: true, error: null });
     try {
       set({ snapshot: await updateVitals(id, patch), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  saveStatOverrides: async (overrides) => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ saving: true, error: null });
+    try {
+      set({ snapshot: await updateStatOverrides(id, overrides), saving: false });
     } catch (e) {
       set({ error: msg(e), saving: false });
     }

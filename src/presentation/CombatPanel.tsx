@@ -431,12 +431,31 @@ export function CombatPanel() {
         {snapshot.activeEffects.length === 0 && <p className="deck-empty">None.</p>}
         <div className="combat-effect-list">
           {snapshot.activeEffects.map((e, i) => (
-            <span className="combat-effect" key={`${e.id}-${i}`}>
+            <span
+              className={e.active ? 'combat-effect' : 'combat-effect combat-effect--dormant'}
+              key={`${e.id}-${i}`}
+              title={
+                e.threshold == null
+                  ? undefined
+                  : e.active
+                    ? `Firing — ${e.threshold} stacks are consumed at the end of this turn`
+                    : `Dormant — ${e.threshold - e.stacks} more stack(s) to reach the threshold of ${e.threshold}`
+              }
+            >
               <HoverInfo info={effectOption(e.id)?.description}>
                 <span className="combat-effect-name">{effectName(e.id)}</span>
               </HoverInfo>
-              {e.stacks > 1 && <span className="combat-effect-meta">×{e.stacks}</span>}
-              {e.stacks === 1 && <span className="combat-effect-meta">×1</span>}
+              {/* Threshold-gated effects show stacks against the bar they must clear. */}
+              {e.threshold != null ? (
+                <span className="combat-effect-meta">
+                  {e.stacks}/{e.threshold}
+                </span>
+              ) : (
+                <span className="combat-effect-meta">×{e.stacks}</span>
+              )}
+              {e.threshold != null && !e.active && (
+                <span className="combat-effect-meta combat-effect-meta--dormant">dormant</span>
+              )}
               {e.value != null && <span className="combat-effect-meta">({e.value})</span>}
               {e.rounds != null && <span className="combat-effect-meta">{e.rounds}r</span>}
               <button

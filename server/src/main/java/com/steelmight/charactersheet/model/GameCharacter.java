@@ -2,7 +2,9 @@ package com.steelmight.charactersheet.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "characters")
@@ -165,6 +167,18 @@ public class GameCharacter {
     @CollectionTable(name = "character_ability_uses", joinColumns = @JoinColumn(name = "player_id"))
     private List<AbilityUse> abilityUses = new ArrayList<>();
 
+    /**
+     * Table escape hatch (demo feedback #11/#12): a derived stat the GM has pinned to a
+     * literal value because the character has something the formulas don't model. Keyed
+     * by {@link OverridableStat#getKey()}. The override replaces the FORMULA only —
+     * active effects still modify the result — and clearing the key returns to derivation.
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_stat_overrides", joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "stat")
+    @Column(name = "override_value") // "value" is reserved in H2
+    private Map<String, Integer> statOverrides = new HashMap<>();
+
     protected GameCharacter() {}
 
     public GameCharacter(String playerId) {
@@ -317,6 +331,17 @@ public class GameCharacter {
     public List<CustomAbility> getCustomAbilities() { return customAbilities; }
 
     public List<AbilityUse> getAbilityUses() { return abilityUses; }
+
+    /** Null-safe: legacy rows persisted before the column existed come back null. */
+    public Map<String, Integer> getStatOverrides() {
+        if (statOverrides == null) statOverrides = new HashMap<>();
+        return statOverrides;
+    }
+
+    /** The pinned value for a stat, or null when it should be derived normally. */
+    public Integer overrideFor(OverridableStat stat) {
+        return getStatOverrides().get(stat.getKey());
+    }
 
     /** Use counter for one ability, created on first use. */
     public AbilityUse abilityUse(String abilityId) {

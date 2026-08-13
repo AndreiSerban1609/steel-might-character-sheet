@@ -17,12 +17,19 @@ public final class EffectActivity {
 
     public static boolean isActive(EffectDefinition def, ActiveEffect effect, int threshold) {
         if (def == null) return true; // unknown definition — don't silently mute the effect
-        // Multi-instance effects (burning, envenomed, wounded) are the Guide's explicit
-        // exceptions to the stacking system — each instance fires immediately.
-        if (def.stackBased() && !def.multiInstance() && def.isNegative()) {
+        if (isThresholdGated(def)) {
             return effect.getStacks() >= threshold || hasOpenWindow(effect);
         }
         return true;
+    }
+
+    /**
+     * Whether the threshold system governs this effect at all. Multi-instance effects
+     * (burning, envenomed, wounded) are the Guide's explicit exceptions to the stacking
+     * system — each instance fires immediately — as are positives.
+     */
+    public static boolean isThresholdGated(EffectDefinition def) {
+        return def != null && def.stackBased() && !def.multiInstance() && def.isNegative();
     }
 
     public static boolean hasOpenWindow(ActiveEffect effect) {

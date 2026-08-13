@@ -41,6 +41,10 @@ export interface EffectView {
   stacks: number;
   value: number | null;
   rounds: number | null;
+  /** false → accumulating dormant stacks; the effect is doing nothing yet. */
+  active: boolean;
+  /** Stacks needed to fire; null for effects the threshold system doesn't gate. */
+  threshold: number | null;
 }
 
 /** Compact GM-roster row (server: dto.RosterEntry). */
@@ -419,6 +423,9 @@ export interface CombatSnapshot {
   ac: number;
   pa: number;
   ma: number;
+  /** Remaining typed-shield absorption, mirrored out of the shield effects. 0 = none up. */
+  tempShieldPhysical: number;
+  tempShieldMagical: number;
   ap: ApView;
   mana: ManaView;
   /** Class resource (chakra/rages/energy/focus/…) — null when the class has none. */
@@ -447,4 +454,6 @@ export interface CombatSnapshot {
   /** M6-C progression state — drives the level-up UI's choice pools. */
   talents: string[];
   specFeats: string[];
+  /** Derived stats the GM pinned to a literal value; keys are OverridableStat keys. */
+  statOverrides: Record<string, number>;
 }

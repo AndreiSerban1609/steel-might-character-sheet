@@ -382,7 +382,7 @@ public class ShopService {
                             + "') — DM adjudicates; spend AP via spend-resource");
         }
         int apCost = statEngine.resolveModifiedStat(c, ModifiableStat.SPELL_AP_COST,
-                spell.apCost().resolve(c.getAp().getMax()));
+                spell.apCost().resolve(statEngine.computeMaxAP(c)));
         if (c.getAp().getCurrent() < apCost) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Insufficient ap: have " + c.getAp().getCurrent() + ", need " + apCost);

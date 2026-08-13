@@ -69,7 +69,7 @@ public class TurnTickService {
         if (apRecovery) {
             int recovery = statEngine.computeAPRecovery(character);
             int before = character.getAp().getCurrent();
-            int after = Math.min(character.getAp().getMax(), before + recovery);
+            int after = Math.min(statEngine.computeMaxAP(character), before + recovery);
             if (after != before) {
                 character.getAp().setCurrent(after);
                 result.addStep("ap-recovery", "Recovered " + (after - before) + " AP", before, after);

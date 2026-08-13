@@ -16,6 +16,10 @@ public record CombatSnapshot(
         int ac,
         int pa,
         int ma,
+        // Typed absorption pools mirrored out of their effects, so the sheet can show and
+        // edit them like temp HP (demo feedback #14). 0 = no shield up.
+        int tempShieldPhysical,
+        int tempShieldMagical,
         ApView ap,
         ManaView mana,
         // Class resource (M3 Part A): chakra/rages/energy/focus/… — null when the class has none.
@@ -43,7 +47,10 @@ public record CombatSnapshot(
         List<PenaltyView> proficiencyPenalties,
         // M6-C progression state — drives the level-up UI's choice pools.
         List<String> talents,
-        List<String> specFeats
+        List<String> specFeats,
+        // Derived stats the GM has pinned (demo feedback #11/#12) — so the sheet can mark
+        // them as manual rather than leaving the player guessing why the formula "lies".
+        Map<String, Integer> statOverrides
 ) {
     public record HpView(int current, int max, int temp) {}
     public record ApView(int current, int recovery, int max) {}
@@ -52,6 +59,13 @@ public record CombatSnapshot(
     public record ResourceView(String type, int current, Integer max) {}
     /** Sub-resource pool row; current can be negative (fury disaster rule). */
     public record PoolView(String id, String name, int current, Integer max) {}
-    public record EffectView(String id, String name, int stacks, Integer value, Integer rounds) {}
+    /**
+     * {@code active} is the threshold-system dormancy answer (Guide pp.8-9): a negative
+     * stack-based effect does nothing until its stacks reach the character's threshold.
+     * {@code threshold} is that number, and is null for effects the system doesn't gate
+     * (positives, multi-instance DoTs) — the UI shows "n/threshold" only when it's set.
+     */
+    public record EffectView(String id, String name, int stacks, Integer value, Integer rounds,
+                             boolean active, Integer threshold) {}
     public record PenaltyView(String itemId, String penalty) {}
 }

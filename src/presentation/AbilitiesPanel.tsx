@@ -29,6 +29,8 @@ export function AbilitiesPanel() {
 
   const [draft, setDraft] = useState<Set<string> | null>(null);
   const [customDraft, setCustomDraft] = useState<CustomAbilityView[] | null>(null);
+  // Rows collapse to name + cost + Use; one open at a time (demo feedback #20).
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     void loadAbilities();
@@ -246,10 +248,20 @@ export function AbilitiesPanel() {
                   : entry.resolution === 'auto'
                     ? 'The server rolls and applies this'
                     : 'Spends the costs; the rules text lands in the log for the table';
+              const expanded = expandedId === entry.id;
               return (
-                <div className="ability-row" key={entry.id}>
+                <div className={expanded ? 'ability-row ability-row--open' : 'ability-row'} key={entry.id}>
                   <div className="ability-row-head">
-                    <span className="ability-name">{entry.name}</span>
+                    <button
+                      className="ability-name ability-name--toggle"
+                      title={expanded ? 'Collapse' : entry.description}
+                      onClick={() => setExpandedId(expanded ? null : entry.id)}
+                    >
+                      <span className="ability-caret" aria-hidden="true">
+                        {expanded ? '▾' : '▸'}
+                      </span>
+                      {entry.name}
+                    </button>
                     <span className="ability-cost">
                       {costs.length === 0 && 'free'}
                       {costs.map((p, i) => (
@@ -290,7 +302,7 @@ export function AbilitiesPanel() {
                       </button>
                     )}
                   </div>
-                  <div className="ability-desc">{entry.description}</div>
+                  {expanded && <div className="ability-desc">{entry.description}</div>}
                   {short && !outOfUses && !usedThisTurn && (
                     <div className="ability-short-note">Not enough resources right now — highlighted costs exceed what you have.</div>
                   )}
@@ -309,10 +321,21 @@ export function AbilitiesPanel() {
           {custom.map((entry) => {
             const apCost = entry.apCost ?? 0;
             const short = apCost > 0 && apCost > snapshot.ap.current;
+            const customKey = `custom:${entry.name}`;
+            const expanded = expandedId === customKey;
             return (
-              <div className="ability-row" key={entry.name}>
+              <div className={expanded ? 'ability-row ability-row--open' : 'ability-row'} key={entry.name}>
                 <div className="ability-row-head">
-                  <span className="ability-name">{entry.name}</span>
+                  <button
+                    className="ability-name ability-name--toggle"
+                    title={expanded ? 'Collapse' : entry.text}
+                    onClick={() => setExpandedId(expanded ? null : customKey)}
+                  >
+                    <span className="ability-caret" aria-hidden="true">
+                      {expanded ? '▾' : '▸'}
+                    </span>
+                    {entry.name}
+                  </button>
                   <span className="ability-cost">
                     {apCost > 0 ? (
                       <span
@@ -338,7 +361,7 @@ export function AbilitiesPanel() {
                     Use
                   </button>
                 </div>
-                <div className="ability-desc">{entry.text}</div>
+                {expanded && <div className="ability-desc">{entry.text}</div>}
                 {short && (
                   <div className="ability-short-note">Not enough AP right now — the server will reject the spend.</div>
                 )}

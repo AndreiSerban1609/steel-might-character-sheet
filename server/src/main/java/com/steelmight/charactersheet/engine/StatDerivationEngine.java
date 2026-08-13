@@ -6,6 +6,7 @@ import com.steelmight.charactersheet.model.AbilityScore;
 import com.steelmight.charactersheet.model.ActiveEffect;
 import com.steelmight.charactersheet.model.CasterType;
 import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.OverridableStat;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,6 +19,18 @@ public class StatDerivationEngine {
 
     public StatDerivationEngine(GameDataProvider gameData) {
         this.gameData = gameData;
+    }
+
+    // ---- GM stat overrides (demo feedback #11/#12) ----
+
+    /**
+     * The GM's pinned value for a stat, or {@code derived} when none is set. Call this on
+     * the FORMULA result and before effect modifiers, so an override swaps out the rules
+     * the app doesn't model while the live combat layer keeps working on top.
+     */
+    private int overrideOr(GameCharacter character, OverridableStat stat, int derived) {
+        Integer pinned = character.overrideFor(stat);
+        return pinned != null ? pinned : derived;
     }
 
     // ---- Core modifier resolution ----
@@ -253,7 +266,8 @@ public class StatDerivationEngine {
             baseAC += shield.path("ac").path("base").asInt(0);
         }
 
-        return resolveModifiedStat(character, ModifiableStat.AC, baseAC);
+        return resolveModifiedStat(character, ModifiableStat.AC,
+                overrideOr(character, OverridableStat.AC, baseAC));
     }
 
     public int computePA(GameCharacter character) {
@@ -264,7 +278,8 @@ public class StatDerivationEngine {
             int scaling = bodyArmor.path("paScaling").asInt(0);
             basePA = pa + scaling * (character.getLevel() - 1);
         }
-        return resolveModifiedStat(character, ModifiableStat.PA, basePA);
+        return resolveModifiedStat(character, ModifiableStat.PA,
+                overrideOr(character, OverridableStat.PA, basePA));
     }
 
     public int computeMA(GameCharacter character) {
@@ -275,7 +290,8 @@ public class StatDerivationEngine {
             int scaling = bodyArmor.path("maScaling").asInt(0);
             baseMA = ma + scaling * (character.getLevel() - 1);
         }
-        return resolveModifiedStat(character, ModifiableStat.MA, baseMA);
+        return resolveModifiedStat(character, ModifiableStat.MA,
+                overrideOr(character, OverridableStat.MA, baseMA));
     }
 
     // ---- HP / Mana ----
@@ -286,10 +302,16 @@ public class StatDerivationEngine {
         int hpPerLevel = (classData != null && classData.has("hpPerLevel"))
                 ? classData.path("hpPerLevel").asInt(20) : 20;
         int conMod = character.getStats().modifier(AbilityScore.CON);
-        return (hpPerLevel + 3 * conMod) * character.getLevel();
+        return overrideOr(character, OverridableStat.MAX_HP,
+                (hpPerLevel + 3 * conMod) * character.getLevel());
     }
 
     public int computeMaxMana(GameCharacter character) {
+        // Checked before the non-caster early-returns: pinning mana onto a class that has
+        // none is exactly the case the escape hatch exists for.
+        Integer pinned = character.overrideFor(OverridableStat.MAX_MANA);
+        if (pinned != null) return pinned;
+
         var classData = getClassData(character);
         if (classData == null) return 0;
         int manaPerLevel = classData.path("manaPerLevel").asInt(0);
@@ -313,12 +335,18 @@ public class StatDerivationEngine {
     // ---- Movement / AP ----
 
     public int computeSpeed(GameCharacter character) {
-        return resolveModifiedStat(character, ModifiableStat.SPEED, character.getSpeed());
+        return resolveModifiedStat(character, ModifiableStat.SPEED,
+                overrideOr(character, OverridableStat.SPEED, character.getSpeed()));
     }
 
     public int computeAPRecovery(GameCharacter character) {
         return resolveModifiedStat(character, ModifiableStat.AP_RECOVERY,
-                character.getAp().getRecovery());
+                overrideOr(character, OverridableStat.AP_RECOVERY, character.getAp().getRecovery()));
+    }
+
+    /** AP ceiling; the model stores it, so the override simply replaces the stored value. */
+    public int computeMaxAP(GameCharacter character) {
+        return overrideOr(character, OverridableStat.MAX_AP, character.getAp().getMax());
     }
 
     // ---- Proficiency ----
@@ -435,7 +463,8 @@ public class StatDerivationEngine {
 
     // Q33: carrying capacity, in inventory-space slots, = 10 + 2 * STR modifier.
     public int computeCarryCapacity(GameCharacter character) {
-        return 10 + 2 * character.getStats().modifier(AbilityScore.STR);
+        return overrideOr(character, OverridableStat.CARRY_CAPACITY,
+                10 + 2 * character.getStats().modifier(AbilityScore.STR));
     }
 
     /** Sum of inventorySpace * quantity across every carried item (rounded to 2 dp). */

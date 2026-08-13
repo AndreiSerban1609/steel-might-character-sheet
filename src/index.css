@@ -96,10 +96,58 @@ body {
   color: var(--text-dim);
 }
 
+.vital-pin {
+  margin-left: 4px;
+  font-size: 0.62rem;
+  opacity: 0.85;
+}
+
 .vital-value {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text);
+}
+
+/* ── Manual stat overrides (escape hatch for rules the engine doesn't model) ── */
+.override-note {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  margin: 0 0 10px;
+  max-width: 62ch;
+}
+
+.override-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.override-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.override-label {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.override-input {
+  width: 72px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  padding: 3px 6px;
+  font: inherit;
+  font-size: 0.85rem;
+  text-align: right;
 }
 
 /* ── Section title ── */
@@ -1055,6 +1103,35 @@ body {
 .ability-name {
   font-weight: 700;
   flex: 1;
+}
+
+/* Collapsed by default: the name is the disclosure control for the rules text. */
+.ability-name--toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ability-name--toggle:hover {
+  color: var(--gold);
+}
+
+.ability-caret {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.ability-row--open {
+  border-color: var(--border-bright);
 }
 
 .ability-cost {
@@ -2156,13 +2233,29 @@ body {
   font-size: 0.84rem;
 }
 
+/* Threshold system: dormant stacks are accumulating but doing nothing yet. */
+.combat-effect--dormant {
+  border-style: dashed;
+  opacity: 0.62;
+}
+
 .combat-effect-name {
   font-weight: 600;
+}
+
+.combat-effect--dormant .combat-effect-name {
+  font-weight: 500;
 }
 
 .combat-effect-meta {
   color: var(--text-dim);
   font-size: 0.78rem;
+}
+
+.combat-effect-meta--dormant {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.66rem;
 }
 
 .combat-effect-remove {
