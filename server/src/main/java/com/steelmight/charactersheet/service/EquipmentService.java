@@ -47,7 +47,7 @@ public class EquipmentService {
     public ActionResponse<CombatSnapshot> equip(String playerId, EquipRequest req) {
         var c = characterService.getCharacter(playerId);
         var entry = findEntry(c, req);
-        var item = gameData.findItem(entry.getItemId());
+        var item = statEngine.resolveItem(c, entry.getItemId());
         var result = new ResolutionResult();
 
         if (entry.isEquipped()) {
@@ -62,10 +62,10 @@ public class EquipmentService {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                                 "a two-handed weapon is equipped — it blocks a shield");
                     }
-                    unequipWhere(c, result, e -> isShield(gameData.findItem(e.getItemId())));
+                    unequipWhere(c, result, e -> isShield(statEngine.resolveItem(c, e.getItemId())));
                 } else {
                     unequipWhere(c, result, e -> {
-                        var other = gameData.findItem(e.getItemId());
+                        var other = statEngine.resolveItem(c, e.getItemId());
                         return other != null && other.kind() == ItemKind.ARMOR && !isShield(other);
                     });
                 }
@@ -78,14 +78,14 @@ public class EquipmentService {
                 var set = equippedWeaponSet(c);
                 boolean dualWield = hasProperty(item, "light")
                         && set.size() == 1
-                        && isLightWeapon(gameData.findItem(set.get(0).getItemId()));
+                        && isLightWeapon(statEngine.resolveItem(c, set.get(0).getItemId()));
                 if (!dualWield) {
                     // the new weapon replaces the whole set (light+non-light never coexist, Q29)
-                    unequipWhere(c, result, e -> weaponSetMember(gameData.findItem(e.getItemId())));
+                    unequipWhere(c, result, e -> weaponSetMember(statEngine.resolveItem(c, e.getItemId())));
                 }
             }
             case CASTER_WEAPON ->
-                    unequipWhere(c, result, e -> weaponSetMember(gameData.findItem(e.getItemId())));
+                    unequipWhere(c, result, e -> weaponSetMember(statEngine.resolveItem(c, e.getItemId())));
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     item.id() + " is not equippable");
         }
@@ -128,7 +128,7 @@ public class EquipmentService {
         if (req.itemId() == null || req.itemId().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "itemId is required");
         }
-        var item = gameData.findItem(req.itemId());
+        var item = statEngine.resolveItem(c, req.itemId());
         if (item == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "unknown item: " + req.itemId());
         }
@@ -160,14 +160,14 @@ public class EquipmentService {
     private List<InventoryEntry> equippedWeaponSet(GameCharacter c) {
         return c.getInventory().stream()
                 .filter(InventoryEntry::isEquipped)
-                .filter(e -> weaponSetMember(gameData.findItem(e.getItemId())))
+                .filter(e -> weaponSetMember(statEngine.resolveItem(c, e.getItemId())))
                 .toList();
     }
 
     private InventoryEntry equippedShield(GameCharacter c) {
         return c.getInventory().stream()
                 .filter(InventoryEntry::isEquipped)
-                .filter(e -> isShield(gameData.findItem(e.getItemId())))
+                .filter(e -> isShield(statEngine.resolveItem(c, e.getItemId())))
                 .findFirst().orElse(null);
     }
 
@@ -175,7 +175,7 @@ public class EquipmentService {
         return c.getInventory().stream()
                 .filter(InventoryEntry::isEquipped)
                 .filter(e -> {
-                    var item = gameData.findItem(e.getItemId());
+                    var item = statEngine.resolveItem(c, e.getItemId());
                     return item != null && item.kind() == ItemKind.WEAPON
                             && hasProperty(item, "two-handed");
                 })

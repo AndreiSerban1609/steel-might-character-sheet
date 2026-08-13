@@ -209,6 +209,33 @@ export interface EncounterEntryView {
   surprised: boolean;
 }
 
+/**
+ * A player/GM-defined weapon or armor (server: dto.CustomItemView). `id` is server-assigned
+ * and stable across edits; send null to create. Weapon fields are ignored for ARMOR and
+ * vice versa, so one flat shape covers both.
+ */
+export interface CustomItemView {
+  id: string | null;
+  name: string;
+  kind: 'WEAPON' | 'ARMOR';
+  inventorySpace: number | null;
+  properties: string | null;
+  proficient: boolean | null;
+  damageDice: string | null;
+  damageFlat: number | null;
+  damageType: string | null;
+  damageScaling: number | null;
+  weaponStat: string | null;
+  apCost: number | null;
+  armorType: string | null;
+  acBase: number | null;
+  acDexMod: boolean | null;
+  pa: number | null;
+  ma: number | null;
+  paScaling: number | null;
+  maScaling: number | null;
+}
+
 /** One line of the room's activity log (newest first): who did what, when. */
 export interface AuditView {
   time: string;

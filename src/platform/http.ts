@@ -3,6 +3,7 @@ import type {
   AbilityScore,
   ActionResponse,
   AuditView,
+  CustomItemView,
   BioPatch,
   BioSnapshot,
   CharacterCreatedResponse,
@@ -563,6 +564,22 @@ export function fetchRoomDeck(room: string): Promise<DeckTemplate> {
 }
 
 /** The room's activity log, newest first — who did what, when. */
+export function fetchCustomItems(playerId: string): Promise<CustomItemView[]> {
+  return getJson<CustomItemView[]>(`/characters/${encodeURIComponent(playerId)}/custom-items`);
+}
+
+/** Full replacement — the client sends the whole list back, like custom abilities. */
+export function updateCustomItems(
+  playerId: string,
+  items: CustomItemView[],
+): Promise<CustomItemView[]> {
+  return sendJson<CustomItemView[]>(
+    'PUT',
+    `/characters/${encodeURIComponent(playerId)}/custom-items`,
+    { items },
+  );
+}
+
 /** The player's own combat history — combat actions only, never the rest of the table. */
 export function fetchCombatLog(playerId: string, limit = 50): Promise<AuditView[]> {
   return getJson<AuditView[]>(

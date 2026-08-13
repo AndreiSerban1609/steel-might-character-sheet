@@ -2575,6 +2575,64 @@ body {
   flex: 0 0 auto;
 }
 
+/* ── Custom gear editor ── */
+.custom-gear-count {
+  color: var(--gold-dim);
+}
+
+.inv-custom-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.inv-custom-name {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  padding: 4px 8px;
+}
+
+.inv-custom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.inv-custom-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.inv-custom-field input[type='text'],
+.inv-custom-field input[type='number'],
+.inv-custom-field input:not([type]),
+.inv-custom-field select {
+  width: 76px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 2px 5px;
+  text-align: right;
+}
+
+.inv-custom-field select {
+  text-align: left;
+}
+
 /* ── Spell tags ── */
 .spell-tags {
   display: inline-flex;

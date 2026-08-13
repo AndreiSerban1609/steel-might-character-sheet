@@ -3,7 +3,7 @@ import { useCharacterStore } from '../application/characterStore';
 import type { AuditView, DamageTypeId, PoolView } from '../platform/types';
 import { DAMAGE_TYPE_OPTIONS, EFFECT_OPTIONS, effectName, effectOption } from '../domain/combatCatalog';
 import { fetchCombatLog } from '../platform/http';
-import { itemName } from '../domain/itemCatalog';
+import { itemLabel } from '../domain/itemCatalog';
 import { camelToWords } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
 import { HoverInfo } from './HoverInfo';
@@ -29,6 +29,7 @@ export function CombatPanel() {
   const doSpendResource = useCharacterStore((s) => s.doSpendResource);
   const doGainResource = useCharacterStore((s) => s.doGainResource);
   const encounter = useCharacterStore((s) => s.encounter);
+  const customItems = useCharacterStore((s) => s.customItems);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
   const role = useCharacterStore((s) => s.role);
   const doRemoveEffect = useCharacterStore((s) => s.doRemoveEffect);
@@ -211,7 +212,7 @@ export function CombatPanel() {
                 <option value="">Choose a weapon…</option>
                 {snapshot.equippedWeapons.map((id) => (
                   <option key={id} value={id}>
-                    {itemName(id)}
+                    {itemLabel(id, customItems)}
                   </option>
                 ))}
               </select>
@@ -227,7 +228,7 @@ export function CombatPanel() {
               disabled={acting || (snapshot.equippedWeapons.length > 1 && !attackWeapon)}
             >
               {snapshot.equippedWeapons.length === 1
-                ? `Attack (${itemName(snapshot.equippedWeapons[0])})`
+                ? `Attack (${itemLabel(snapshot.equippedWeapons[0], customItems)})`
                 : 'Attack'}
             </button>
           </div>

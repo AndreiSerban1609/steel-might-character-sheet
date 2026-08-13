@@ -252,6 +252,17 @@ public class CharacterController {
         return service.updateVitals(playerId, req);
     }
 
+    @GetMapping("/{playerId}/custom-items")
+    public List<CustomItemView> getCustomItems(@PathVariable String playerId) {
+        return service.getCustomItems(playerId);
+    }
+
+    @PutMapping("/{playerId}/custom-items")
+    public List<CustomItemView> updateCustomItems(@PathVariable String playerId,
+                                                  @RequestBody UpdateCustomItemsRequest req) {
+        return service.updateCustomItems(playerId, req);
+    }
+
     @PutMapping("/{playerId}/stat-overrides")
     public CombatSnapshot updateStatOverrides(@PathVariable String playerId,
                                               @RequestBody StatOverridesRequest req) {

@@ -1,7 +1,10 @@
 package com.steelmight.charactersheet.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.steelmight.charactersheet.gamedata.CustomItemNodes;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
+import com.steelmight.charactersheet.gamedata.ItemKind;
+import com.steelmight.charactersheet.gamedata.ResolvedItem;
 import com.steelmight.charactersheet.model.AbilityScore;
 import com.steelmight.charactersheet.model.ActiveEffect;
 import com.steelmight.charactersheet.model.CasterType;
@@ -123,46 +126,49 @@ public class StatDerivationEngine {
 
     // ---- Equipment lookups ----
 
-    private JsonNode findEquippedBodyArmor(GameCharacter character) {
-        var armor = gameData.getArmor();
-        if (armor == null || !armor.isArray()) return null;
+    /**
+     * Catalog node for an item id, or the character's own custom item rendered into the
+     * same shape (demo feedback #19). Every equipment lookup goes through here, so custom
+     * gear participates in AC/PA/MA, attacks and penalties without any downstream branch.
+     */
+    public JsonNode itemNode(GameCharacter character, String itemId) {
+        var custom = character.customItem(itemId);
+        if (custom != null) return CustomItemNodes.toNode(custom);
+        var resolved = gameData.findItem(itemId);
+        return resolved != null ? resolved.node() : null;
+    }
+
+    /** Resolved entry (kind + pricing + node) honoring the character's custom items. */
+    public ResolvedItem resolveItem(GameCharacter character, String itemId) {
+        var custom = character.customItem(itemId);
+        if (custom != null) return CustomItemNodes.resolve(custom);
+        return gameData.findItem(itemId);
+    }
+
+    private JsonNode findEquippedArmorNode(GameCharacter character, boolean wantShield) {
         for (var item : character.getInventory()) {
             if (!item.isEquipped()) continue;
-            for (var entry : armor) {
-                if (entry.path("id").asText().equals(item.getItemId())
-                        && !"shield".equals(entry.path("type").asText())) {
-                    return entry;
-                }
-            }
+            var resolved = resolveItem(character, item.getItemId());
+            if (resolved == null || resolved.kind() != ItemKind.ARMOR) continue;
+            boolean isShield = "shield".equals(resolved.node().path("type").asText());
+            if (isShield == wantShield) return resolved.node();
         }
         return null;
+    }
+
+    private JsonNode findEquippedBodyArmor(GameCharacter character) {
+        return findEquippedArmorNode(character, false);
     }
 
     private JsonNode findEquippedShield(GameCharacter character) {
-        var armor = gameData.getArmor();
-        if (armor == null || !armor.isArray()) return null;
-        for (var item : character.getInventory()) {
-            if (!item.isEquipped()) continue;
-            for (var entry : armor) {
-                if (entry.path("id").asText().equals(item.getItemId())
-                        && "shield".equals(entry.path("type").asText())) {
-                    return entry;
-                }
-            }
-        }
-        return null;
+        return findEquippedArmorNode(character, true);
     }
 
     public JsonNode findEquippedWeapon(GameCharacter character) {
-        var weapons = gameData.getWeapons();
-        if (weapons == null || !weapons.isArray()) return null;
         for (var item : character.getInventory()) {
             if (!item.isEquipped()) continue;
-            for (var entry : weapons) {
-                if (entry.path("id").asText().equals(item.getItemId())) {
-                    return entry;
-                }
-            }
+            var resolved = resolveItem(character, item.getItemId());
+            if (resolved != null && resolved.kind() == ItemKind.WEAPON) return resolved.node();
         }
         return null;
     }
@@ -224,8 +230,8 @@ public class StatDerivationEngine {
     public boolean hasNonProficientArmorEquipped(GameCharacter character) {
         for (var entry : character.getInventory()) {
             if (!entry.isEquipped()) continue;
-            var item = gameData.findItem(entry.getItemId());
-            if (item == null || item.kind() != com.steelmight.charactersheet.gamedata.ItemKind.ARMOR) continue;
+            var item = resolveItem(character, entry.getItemId());
+            if (item == null || item.kind() != ItemKind.ARMOR) continue;
             if (!isProficientWith(character, item)) return true;
         }
         return false;
@@ -467,11 +473,17 @@ public class StatDerivationEngine {
                 10 + 2 * character.getStats().modifier(AbilityScore.STR));
     }
 
+    /** inventorySpace for an id, honoring the character's own custom gear. */
+    public double itemSpace(GameCharacter character, String itemId) {
+        var custom = character.customItem(itemId);
+        return custom != null ? custom.getInventorySpace() : gameData.getItemSpace(itemId);
+    }
+
     /** Sum of inventorySpace * quantity across every carried item (rounded to 2 dp). */
     public double computeCarriedSpace(GameCharacter character) {
         double total = 0;
         for (var item : character.getInventory()) {
-            total += gameData.getItemSpace(item.getItemId()) * item.getQuantity();
+            total += itemSpace(character, item.getItemId()) * item.getQuantity();
         }
         return Math.round(total * 100.0) / 100.0;
     }

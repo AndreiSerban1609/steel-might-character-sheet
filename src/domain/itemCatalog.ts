@@ -191,6 +191,17 @@ export function itemName(id: string): string {
   return byId.get(id)?.name ?? id;
 }
 
+/**
+ * Display name honoring the character's homebrew gear (demo feedback #19). Custom items
+ * live on the character, not in the bundled catalog, so `itemName` alone would render a
+ * player's own sword as "custom-thunderaxe". Callers pass the store's list; domain stays
+ * pure by taking it as an argument rather than reaching for the store.
+ */
+export function itemLabel(id: string, customItems?: { id: string | null; name: string }[]): string {
+  const custom = customItems?.find((i) => i.id === id);
+  return custom ? custom.name : itemName(id);
+}
+
 export const KIND_LABEL: Record<ItemKind, string> = {
   weapon: 'Weapon',
   armor: 'Armor',

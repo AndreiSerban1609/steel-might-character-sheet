@@ -432,7 +432,7 @@ public class CharacterService {
         var items = c.getInventory().stream()
                 .map(e -> new InventorySnapshot.ItemView(
                         e.getItemId(), e.getQuantity(), e.getUpgradeTier(), e.isEquipped(),
-                        e.isSilvered(), gameData.getItemSpace(e.getItemId()),
+                        e.isSilvered(), statEngine.itemSpace(c, e.getItemId()),
                         e.getChargesRemaining(), e.getStoredSpellId()))
                 .toList();
         return new InventorySnapshot(items, c.getGold(),
@@ -448,7 +448,7 @@ public class CharacterService {
             if (in.itemId() == null || in.itemId().isBlank()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "item is missing an id");
             }
-            if (!gameData.isKnownItem(in.itemId())) {
+            if (!gameData.isKnownItem(in.itemId()) && c.customItem(in.itemId()) == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unknown item: " + in.itemId());
             }
             int qty = in.quantity() != null ? in.quantity() : 1;
@@ -469,7 +469,7 @@ public class CharacterService {
                 }
                 ShopService.validateScrollSpell(gameData, item, in.spellId());
             }
-            totalSpace += gameData.getItemSpace(in.itemId()) * qty;
+            totalSpace += statEngine.itemSpace(c, in.itemId()) * qty;
         }
 
         // Q33: hard-prevent carrying more than capacity.
@@ -720,6 +720,132 @@ public class CharacterService {
      * is resolved, players write the unresolved ones here verbatim. Replace-list
      * semantics like the picker; the table adjudicates what they do.
      */
+    /** This character's custom weapon/armor definitions (demo feedback #19). */
+    public List<CustomItemView> getCustomItems(String playerId) {
+        return getCharacter(playerId).getCustomItems().stream().map(CharacterService::toView).toList();
+    }
+
+    /**
+     * Replace the custom item list wholesale, mirroring the custom-abilities editor.
+     *
+     * Ids are server-assigned and STABLE: an item keeps its id across edits so inventory
+     * rows that reference it don't dangle. Deleting a definition that is still carried is
+     * rejected rather than silently orphaning the inventory row — a sheet holding an item
+     * the server can't resolve is exactly the state that breaks equip and attack.
+     */
+    public List<CustomItemView> updateCustomItems(String playerId, UpdateCustomItemsRequest req) {
+        var c = getCharacter(playerId);
+        var entries = req.items() != null ? req.items() : List.<CustomItemView>of();
+        if (entries.size() > 40) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "too many custom items (max 40)");
+        }
+
+        var usedIds = new java.util.HashSet<String>();
+        var built = new java.util.ArrayList<CustomItem>();
+        for (var view : entries) built.add(buildCustomItem(c, view, usedIds));
+
+        var keptIds = built.stream().map(CustomItem::getItemId).collect(java.util.stream.Collectors.toSet());
+        for (var existing : c.getCustomItems()) {
+            if (keptIds.contains(existing.getItemId())) continue;
+            boolean carried = c.getInventory().stream()
+                    .anyMatch(e -> existing.getItemId().equals(e.getItemId()));
+            if (carried) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "\"" + existing.getName() + "\" is still in the inventory — drop it before deleting the definition");
+            }
+        }
+
+        c.getCustomItems().clear();
+        c.getCustomItems().addAll(built);
+        repo.save(c);
+        audit.log(c, "custom-items", "Custom gear updated (" + built.size() + " defined)");
+        return built.stream().map(CharacterService::toView).toList();
+    }
+
+    private CustomItem buildCustomItem(GameCharacter c, CustomItemView view, java.util.Set<String> usedIds) {
+        if (view.name() == null || view.name().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "every custom item needs a name");
+        }
+        String name = view.name().trim();
+        if (name.length() > 100) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "custom item name too long (max 100)");
+        }
+        String kind = view.kind() != null ? view.kind().toUpperCase() : "";
+        if (!kind.equals("WEAPON") && !kind.equals("ARMOR")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "custom item kind must be WEAPON or ARMOR: " + name);
+        }
+
+        String id = view.id() != null && !view.id().isBlank()
+                ? view.id().trim()
+                : nextCustomItemId(c, name, usedIds);
+        if (!usedIds.add(id)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "duplicate custom item id: " + id);
+        }
+
+        var item = new CustomItem(id, name, kind);
+        item.setInventorySpace(view.inventorySpace() != null ? view.inventorySpace() : 1.0);
+        item.setProperties(view.properties());
+        item.setProficient(view.proficient());
+
+        if (kind.equals("WEAPON")) {
+            item.setDamageDice(view.damageDice());
+            item.setDamageFlat(view.damageFlat());
+            item.setDamageType(view.damageType());
+            item.setDamageScaling(view.damageScaling());
+            item.setWeaponStat(view.weaponStat());
+            item.setApCost(view.apCost());
+            if (view.apCost() != null && (view.apCost() < 0 || view.apCost() > 30)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "AP cost out of range (0-30): " + name);
+            }
+            if (item.getDamageType() != null && !item.getDamageType().isBlank()) {
+                try {
+                    DamageType.valueOf(item.getDamageType().toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "unknown damage type \"" + item.getDamageType() + "\" on " + name);
+                }
+            }
+        } else {
+            String type = view.armorType() != null ? view.armorType().toLowerCase() : "light";
+            if (!List.of("light", "medium", "heavy", "shield").contains(type)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "armor type must be light/medium/heavy/shield: " + name);
+            }
+            item.setArmorType(type);
+            item.setAcBase(view.acBase());
+            item.setAcDexMod(view.acDexMod());
+            item.setPa(view.pa());
+            item.setMa(view.ma());
+            item.setPaScaling(view.paScaling());
+            item.setMaScaling(view.maScaling());
+        }
+        return item;
+    }
+
+    /** custom-&lt;slug&gt;, suffixed until it collides with neither the catalog nor a sibling. */
+    private String nextCustomItemId(GameCharacter c, String name, java.util.Set<String> usedIds) {
+        String slug = name.toLowerCase().replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+        if (slug.isBlank()) slug = "item";
+        String base = CustomItem.ID_PREFIX + slug;
+        String id = base;
+        int n = 2;
+        while (gameData.isKnownItem(id) || usedIds.contains(id)) {
+            id = base + "-" + n++;
+        }
+        return id;
+    }
+
+    private static CustomItemView toView(CustomItem i) {
+        return new CustomItemView(i.getItemId(), i.getName(), i.getKind(),
+                i.getInventorySpace(), i.getProperties(), i.isProficient(),
+                i.getDamageDice(), i.getDamageFlat(), i.getDamageType(), i.getDamageScaling(),
+                i.getWeaponStat(), i.getApCost(),
+                i.getArmorType(), i.getAcBase(), i.isAcDexMod(),
+                i.getPa(), i.getMa(), i.getPaScaling(), i.getMaScaling());
+    }
+
     public AbilitiesSnapshot updateCustomAbilities(String playerId, UpdateCustomAbilitiesRequest req) {
         var c = getCharacter(playerId);
         var entries = req.abilities() != null ? req.abilities() : List.<AbilitiesSnapshot.CustomAbilityView>of();
@@ -1554,7 +1680,7 @@ public class CharacterService {
         var equippedWeapons = c.getInventory().stream()
                 .filter(InventoryEntry::isEquipped)
                 .filter(e -> {
-                    var it = gameData.findItem(e.getItemId());
+                    var it = statEngine.resolveItem(c, e.getItemId());
                     return it != null && it.kind() == ItemKind.WEAPON;
                 })
                 .toList();
@@ -1574,7 +1700,7 @@ public class CharacterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "dual-wielding — specify which weapon attacks (itemId)");
         }
-        var item = gameData.findItem(entry.getItemId());
+        var item = statEngine.resolveItem(c, entry.getItemId());
         var node = item.node();
 
         int threshold = statEngine.computeStackThreshold(c);
@@ -2004,7 +2130,7 @@ public class CharacterService {
         // 9. M5-C: usesPerLongRest item charges restore with the same floor+probability
         //    treatment as charge-style class resources at partial tiers.
         for (var entry : c.getInventory()) {
-            var item = gameData.findItem(entry.getItemId());
+            var item = statEngine.resolveItem(c, entry.getItemId());
             if (item == null || !item.node().path("usesPerLongRest").isInt()) continue;
             int max = item.node().path("usesPerLongRest").asInt();
             int before = entry.getChargesRemaining() != null ? entry.getChargesRemaining() : max;
@@ -2442,7 +2568,7 @@ public class CharacterService {
                 c.getInventory().stream()
                         .filter(InventoryEntry::isEquipped)
                         .filter(e -> {
-                            var it = gameData.findItem(e.getItemId());
+                            var it = statEngine.resolveItem(c, e.getItemId());
                             return it != null && it.kind() == ItemKind.WEAPON;
                         })
                         .map(InventoryEntry::getItemId)
@@ -2472,7 +2598,7 @@ public class CharacterService {
         var penalties = new java.util.ArrayList<CombatSnapshot.PenaltyView>();
         for (var entry : c.getInventory()) {
             if (!entry.isEquipped()) continue;
-            var item = gameData.findItem(entry.getItemId());
+            var item = statEngine.resolveItem(c, entry.getItemId());
             if (item == null) continue;
             var kind = item.kind();
             if (kind != com.steelmight.charactersheet.gamedata.ItemKind.WEAPON

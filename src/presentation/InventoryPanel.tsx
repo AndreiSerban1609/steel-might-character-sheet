@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCharacterStore } from '../application/characterStore';
-import type { InventoryItemInput, InventoryItemView } from '../platform/types';
+import type { CustomItemView, InventoryItemInput, InventoryItemView } from '../platform/types';
 import {
   ITEM_CATALOG,
   KIND_LABEL,
@@ -11,21 +11,24 @@ import {
   isProficientWithItem,
   isUsable,
   itemById,
-  itemName,
+  itemLabel,
   proficiencyPenalty,
   usesTierPricing,
   type CatalogItem,
   type ItemKind,
 } from '../domain/itemCatalog';
 import { spellName, spellsForScroll } from '../domain/spellCatalog';
+import { CustomGearEditor } from './CustomGearEditor';
 import { ResolutionLog } from './ResolutionLog';
 
 /** Scrolls carry a specific spell — show them as "Scroll of X". */
-function displayName(itemId: string, spellId?: string | null): string {
-  return spellId ? `Scroll of ${spellName(spellId)}` : itemName(itemId);
+function displayName(itemId: string, spellId?: string | null, custom?: CustomItemView[]): string {
+  return spellId ? `Scroll of ${spellName(spellId)}` : itemLabel(itemId, custom);
 }
 
-function spaceOf(itemId: string): number {
+function spaceOf(itemId: string, custom?: CustomItemView[]): number {
+  const homebrew = custom?.find((c) => c.id === itemId);
+  if (homebrew) return homebrew.inventorySpace ?? 1;
   return itemById(itemId)?.space ?? 1;
 }
 
@@ -49,6 +52,7 @@ export function InventoryPanel() {
   const doUseConsumable = useCharacterStore((s) => s.doUseConsumable);
   const clearResolution = useCharacterStore((s) => s.clearResolution);
 
+  const customItems = useCharacterStore((s) => s.customItems);
   const [draft, setDraft] = useState<{ items: InventoryItemInput[]; gold: number } | null>(null);
   const [pick, setPick] = useState('');
   const [readingScroll, setReadingScroll] = useState<string | null>(null);
@@ -63,8 +67,10 @@ export function InventoryPanel() {
 
   const projected = useMemo(() => {
     if (!draft) return 0;
-    return round1(draft.items.reduce((sum, it) => sum + spaceOf(it.itemId) * it.quantity, 0));
-  }, [draft]);
+    return round1(
+      draft.items.reduce((sum, it) => sum + spaceOf(it.itemId, customItems) * it.quantity, 0),
+    );
+  }, [draft, customItems]);
 
   if (!inventory) return <div className="panel-msg">Loading inventory…</div>;
 
@@ -272,7 +278,7 @@ export function InventoryPanel() {
               return (
                 <div className="inv-row inv-row--edit" key={`${it.itemId}-${i}`}>
                   <div className="inv-name">
-                    <span>{itemName(it.itemId)}</span>
+                    <span>{itemLabel(it.itemId, customItems)}</span>
                     {cat && <span className="inv-kind">{KIND_LABEL[cat.kind]}</span>}
                   </div>
                   <label className="inv-equip">
@@ -303,8 +309,8 @@ export function InventoryPanel() {
                 <div key={`${it.itemId}-${it.upgradeTier}-${it.spellId ?? ''}-${i}`}>
                   <div className="inv-row">
                     <div className="inv-name">
-                      <span title={it.spellId ? itemName(it.itemId) : undefined}>
-                        {displayName(it.itemId, it.spellId)}
+                      <span title={it.spellId ? itemLabel(it.itemId, customItems) : undefined}>
+                        {displayName(it.itemId, it.spellId, customItems)}
                       </span>
                       {it.upgradeTier > 0 && <span className="inv-kind">L{it.upgradeTier}</span>}
                       {cat && <span className="inv-kind">{KIND_LABEL[cat.kind]}</span>}
@@ -338,6 +344,8 @@ export function InventoryPanel() {
               );
             })}
       </div>
+
+      <CustomGearEditor />
 
       {!editing && (
         <Shop

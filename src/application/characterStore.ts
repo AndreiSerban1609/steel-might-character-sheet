@@ -7,6 +7,7 @@ import type {
   BioSnapshot,
   CombatSnapshot,
   CustomAbilityView,
+  CustomItemView,
   DamageTypeId,
   DeckTemplate,
   EncounterView,
@@ -68,6 +69,8 @@ import {
   updatePlayerDeck,
   updateProficiencies,
   updateRoomDeck,
+  fetchCustomItems,
+  updateCustomItems,
   updateStatOverrides,
   updateStats,
   updateVitals,
@@ -152,6 +155,10 @@ export interface CharacterState {
   saveStats: (stats: Record<AbilityScore, number>) => Promise<void>;
   saveVitals: (patch: VitalsPatch) => Promise<void>;
   saveStatOverrides: (overrides: Record<string, number>) => Promise<void>;
+  /** This character's homebrew weapons/armor (demo feedback #19). */
+  customItems: CustomItemView[];
+  loadCustomItems: () => Promise<void>;
+  saveCustomItems: (items: CustomItemView[]) => Promise<void>;
   saveIdentity: (patch: IdentityPatch) => Promise<void>;
   saveProficiencies: (skillIds: string[]) => Promise<void>;
   drawSkill: (skillId: string, advantage?: 'advantage' | 'disadvantage') => Promise<void>;
@@ -305,9 +312,12 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   },
 
   selectPlayer: async (playerId) => {
-    set({ selectedPlayerId: playerId, view: 'sheet', snapshot: null, loading: true, error: null, drawResult: null, playerDeck: null, inventory: null, bio: null, spellbook: null, abilities: null });
+    set({ selectedPlayerId: playerId, view: 'sheet', snapshot: null, loading: true, error: null, drawResult: null, playerDeck: null, inventory: null, bio: null, spellbook: null, abilities: null, customItems: [] });
     try {
       set({ snapshot: await fetchCombatSnapshot(playerId), loading: false });
+      // Homebrew gear names are needed on the Combat tab too, not just Inventory —
+      // without this an equipped custom weapon renders as its raw id.
+      void get().loadCustomItems();
     } catch (e) {
       set({ error: msg(e), loading: false });
     }
@@ -340,6 +350,32 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     set({ saving: true, error: null });
     try {
       set({ snapshot: await updateVitals(id, patch), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  customItems: [],
+
+  loadCustomItems: async () => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    try {
+      set({ customItems: await fetchCustomItems(id) });
+    } catch {
+      // An older backend has no such endpoint — homebrew gear is simply unavailable,
+      // which must not take the inventory tab down with it.
+      set({ customItems: [] });
+    }
+  },
+
+  saveCustomItems: async (items) => {
+    const id = get().selectedPlayerId;
+    if (!id) return;
+    set({ saving: true, error: null });
+    try {
+      set({ customItems: await updateCustomItems(id, items), saving: false });
+      await get().loadInventory();
     } catch (e) {
       set({ error: msg(e), saving: false });
     }

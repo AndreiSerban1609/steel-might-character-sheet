@@ -167,6 +167,11 @@ public class GameCharacter {
     @CollectionTable(name = "character_ability_uses", joinColumns = @JoinColumn(name = "player_id"))
     private List<AbilityUse> abilityUses = new ArrayList<>();
 
+    /** Player/GM-defined weapons and armor (demo feedback #19), owned by this sheet. */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_custom_items", joinColumns = @JoinColumn(name = "player_id"))
+    private List<CustomItem> customItems = new ArrayList<>();
+
     /**
      * Table escape hatch (demo feedback #11/#12): a derived stat the GM has pinned to a
      * literal value because the character has something the formulas don't model. Keyed
@@ -331,6 +336,20 @@ public class GameCharacter {
     public List<CustomAbility> getCustomAbilities() { return customAbilities; }
 
     public List<AbilityUse> getAbilityUses() { return abilityUses; }
+
+    /** Null-safe: legacy rows predate the table. */
+    public List<CustomItem> getCustomItems() {
+        if (customItems == null) customItems = new ArrayList<>();
+        return customItems;
+    }
+
+    /** This sheet's custom weapon/armor by id, or null when the id isn't one of theirs. */
+    public CustomItem customItem(String itemId) {
+        if (itemId == null) return null;
+        return getCustomItems().stream()
+                .filter(i -> itemId.equals(i.getItemId()))
+                .findFirst().orElse(null);
+    }
 
     /** Null-safe: legacy rows persisted before the column existed come back null. */
     public Map<String, Integer> getStatOverrides() {
