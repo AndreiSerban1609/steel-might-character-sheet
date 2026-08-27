@@ -27,6 +27,10 @@ public record SpellDefinition(
         String damageType,
         String attackType,
         String saveStat,
+        // Save outcome (ruled 2026-08-27): a successful save = no damage, no effects — unless
+        // the description says the target still takes half. Generated from the description by
+        // scripts/flag-half-on-save.ts; absent in the JSON → false.
+        boolean halfDamageOnSave,
         DiceFormula damage,
         DiceFormula healing,
         List<String> effects,

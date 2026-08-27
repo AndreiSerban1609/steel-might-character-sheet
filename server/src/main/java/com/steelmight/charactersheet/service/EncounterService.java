@@ -328,12 +328,16 @@ public class EncounterService {
                     var combatant = lookup.find(null, e.getCombatantId()).orElse(null);
                     String status = combatant != null ? combatant.getLifeStatus().name() : null;
                     Integer hp = null, maxHp = null;
+                    List<String> prepared = List.of();
                     if (combatant instanceof MonsterInstance m) {
                         hp = m.getHp().getCurrent();
                         maxHp = m.getHp().getMax();
+                    } else if (combatant instanceof GameCharacter gc) {
+                        // Readied reactions ride in the mirror so the GM sees who is set up.
+                        prepared = gc.getPreparedReactions().stream().map(r -> r.getNote()).toList();
                     }
                     return new EncounterView.Entry(e.getCombatantId(), e.getName(), e.getInitiative(),
-                            status, e.isSurprised(), e.getCombatantType(), hp, maxHp);
+                            status, e.isSurprised(), e.getCombatantType(), hp, maxHp, prepared);
                 })
                 .toList();
         var current = enc.current();

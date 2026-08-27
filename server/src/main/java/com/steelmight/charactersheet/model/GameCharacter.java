@@ -163,6 +163,12 @@ public class GameCharacter implements Combatant {
     @OrderColumn(name = "idx")
     private List<CustomAbility> customAbilities = new ArrayList<>();
 
+    /** Reactions readied this turn (2026-08-27) — AP already paid; lapse when the next turn starts. */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "character_prepared_reactions", joinColumns = @JoinColumn(name = "player_id"))
+    @OrderColumn(name = "idx")
+    private List<PreparedReaction> preparedReactions = new ArrayList<>();
+
     /** Use counters for limit-bearing abilities (Story 1.4). */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "character_ability_uses", joinColumns = @JoinColumn(name = "player_id"))
@@ -343,6 +349,7 @@ public class GameCharacter implements Combatant {
     public List<InventoryEntry> getInventory() { return inventory; }
     public List<String> getKnownSpells() { return knownSpells; }
     public List<String> getPreparedSpells() { return preparedSpells; }
+    public List<PreparedReaction> getPreparedReactions() { return preparedReactions; }
     public List<String> getProficiencies() { return proficiencies; }
     public List<String> getTalents() { return talents; }
     public List<String> getSpecFeats() { return specFeats; }

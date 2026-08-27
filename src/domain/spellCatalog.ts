@@ -44,6 +44,8 @@ export interface SpellEntry {
   damageType: string | null;
   attackType: string | null;
   saveStat: string | null;
+  /** True when a successful save still deals half damage (ruling 2026-08-27; else a save = 0). */
+  halfDamageOnSave?: boolean | null;
   damage?: SpellDiceFormula | null;
   healing?: SpellDiceFormula | null;
   effects?: string[] | null;

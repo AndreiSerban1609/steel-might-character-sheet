@@ -192,6 +192,20 @@ public class CharacterController {
         return service.spendResource(playerId, req);
     }
 
+    /** Ready a custom reaction, paying its AP now (2026-08-27). */
+    @PostMapping("/{playerId}/actions/prepare-reaction")
+    public ActionResponse<CombatSnapshot> prepareReaction(@PathVariable String playerId,
+                                                           @Valid @RequestBody PrepareReactionRequest req) {
+        return service.prepareReaction(playerId, req);
+    }
+
+    /** A prepared reaction triggered (used) or was called off — removes it, no refund. */
+    @PostMapping("/{playerId}/actions/resolve-reaction")
+    public ActionResponse<CombatSnapshot> resolveReaction(@PathVariable String playerId,
+                                                           @Valid @RequestBody ResolveReactionRequest req) {
+        return service.resolveReaction(playerId, req);
+    }
+
     @PostMapping("/{playerId}/actions/gain-resource")
     public ActionResponse<CombatSnapshot> gainResource(@PathVariable String playerId,
                                                         @Valid @RequestBody GainResourceRequest req) {

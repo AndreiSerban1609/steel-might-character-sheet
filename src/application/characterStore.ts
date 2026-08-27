@@ -80,6 +80,8 @@ import {
   skillCheckAccept,
   skillCheckRedraw,
   spendResource,
+  prepareReaction,
+  resolveReaction,
   turnEnd,
   turnStart,
   unequipItem,
@@ -233,8 +235,11 @@ export interface CharacterState {
   doTargetedApplyEffect: (targetId: string, body: ApplyEffectBody) => Promise<void>;
   doTurnStart: () => Promise<void>;
   doTurnEnd: () => Promise<void>;
-  doSpendResource: (resource: string, amount: number) => Promise<void>;
+  doSpendResource: (resource: string, amount: number, note?: string) => Promise<void>;
   doGainResource: (resource: string, amount: number) => Promise<void>;
+  /** Ready a custom reaction (2026-08-27), paying its AP now; refreshes the encounter so the ⚑ chip mirrors. */
+  doPrepareReaction: (note: string, apCost: number) => Promise<void>;
+  doResolveReaction: (index: number, used: boolean) => Promise<void>;
   loadAbilities: () => Promise<void>;
   saveAbilities: (abilityIds: string[]) => Promise<void>;
   saveCustomAbilities: (abilities: CustomAbilityView[]) => Promise<void>;
@@ -815,10 +820,20 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     await runCombatAction(set, get, (id) => turnEnd(id));
     if (get().encounter?.active) await get().loadEncounter();
   },
-  doSpendResource: (resource, amount) =>
-    runCombatAction(set, get, (id) => spendResource(id, resource, amount)),
+  doSpendResource: (resource, amount, note) =>
+    runCombatAction(set, get, (id) => spendResource(id, resource, amount, note)),
   doGainResource: (resource, amount) =>
     runCombatAction(set, get, (id) => gainResource(id, resource, amount)),
+  // The readied note rides in the encounter entry (mirrored to the table), so re-adopt
+  // the encounter after a change — same shape as turn end.
+  doPrepareReaction: async (note, apCost) => {
+    await runCombatAction(set, get, (id) => prepareReaction(id, note, apCost));
+    if (!get().error && get().encounter?.active) await get().loadEncounter();
+  },
+  doResolveReaction: async (index, used) => {
+    await runCombatAction(set, get, (id) => resolveReaction(id, index, used));
+    if (!get().error && get().encounter?.active) await get().loadEncounter();
+  },
 
   loadAbilities: async () => {
     const id = get().selectedPlayerId;

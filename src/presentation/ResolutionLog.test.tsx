@@ -77,7 +77,7 @@ describe('ResolutionLog with a named target', () => {
       <ResolutionLog
         resolution={resolution({
           saveDC: 14,
-          save: { stat: 'DEX', dc: 14, success: true },
+          save: { stat: 'DEX', dc: 14, success: true, halfDamage: true },
           damage: { rolls: [8, 8, 8], flat: 8, modifier: 3, total: 35 },
           effectsAppliedTo: 'monster:1',
         })}
@@ -89,5 +89,20 @@ describe('ResolutionLog with a named target', () => {
     expect(screen.getByText(/saved \(half damage, no effects\)/)).toBeTruthy();
     // effectsAppliedTo carries the raw combatant id — the log shows the monster's name.
     expect(screen.getByText('Goblin')).toBeTruthy();
+  });
+
+  it('reads a save without the half-damage flag as no damage (ruling 2026-08-27)', () => {
+    render(
+      <ResolutionLog
+        resolution={resolution({
+          saveDC: 14,
+          save: { stat: 'DEX', dc: 14, success: true },
+          damage: { rolls: [8, 8, 8], flat: 8, modifier: 3, total: 35 },
+        })}
+        onClose={() => undefined}
+      />,
+    );
+
+    expect(screen.getByText(/saved \(no damage, no effects\)/)).toBeTruthy();
   });
 });

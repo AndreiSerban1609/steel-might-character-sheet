@@ -606,6 +606,7 @@
     "channeling": false,
     "damageType": "fire",
     "attackType": "spiritAttack",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 23,
@@ -798,6 +799,7 @@
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 170,
@@ -1253,6 +1255,7 @@
     "damageType": "force",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 2,
       "flat": 21,
@@ -1635,6 +1638,7 @@
     "channeling": false,
     "damageType": "spectral",
     "attackType": null,
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 44,
@@ -1952,6 +1956,7 @@
     "damageType": "shadow",
     "attackType": "savingThrow",
     "saveStat": "wis",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 65,
@@ -2816,6 +2821,7 @@
     "damageType": "shadow",
     "attackType": "savingThrow",
     "saveStat": "cha",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 23,
@@ -3172,6 +3178,7 @@
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 2,
       "flat": 36,
@@ -3236,6 +3243,7 @@
     "damageType": "piercing",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 0,
@@ -3310,6 +3318,7 @@
     "damageType": "spectral",
     "attackType": "savingThrow",
     "saveStat": "str",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 80,

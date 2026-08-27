@@ -29,6 +29,8 @@ export function CombatPanel() {
   const doTurnEnd = useCharacterStore((s) => s.doTurnEnd);
   const doSpendResource = useCharacterStore((s) => s.doSpendResource);
   const doGainResource = useCharacterStore((s) => s.doGainResource);
+  const doPrepareReaction = useCharacterStore((s) => s.doPrepareReaction);
+  const doResolveReaction = useCharacterStore((s) => s.doResolveReaction);
   const encounter = useCharacterStore((s) => s.encounter);
   const customItems = useCharacterStore((s) => s.customItems);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
@@ -54,6 +56,11 @@ export function CombatPanel() {
   const [restTier, setRestTier] = useState('100');
   const [resAmount, setResAmount] = useState('1');
   const [targetId, setTargetId] = useState('');
+  // Free-form AP spend + prepared reactions (2026-08-27 — custom reactions cost AP on the prep turn).
+  const [apSpend, setApSpend] = useState('1');
+  const [apNote, setApNote] = useState('');
+  const [prepCost, setPrepCost] = useState('1');
+  const [prepNote, setPrepNote] = useState('');
 
   if (!snapshot) return <div className="panel-msg">No character loaded.</div>;
 
@@ -330,6 +337,106 @@ export function CombatPanel() {
             Apply
           </button>
         </div>
+
+        <div className="combat-form">
+          <span className="combat-form-label">AP</span>
+          <span className="combat-resource-val" title="Current / max AP (recovery at turn start)">
+            {snapshot.ap.current} / {snapshot.ap.max}
+          </span>
+          <input
+            className="combat-num"
+            type="number"
+            min={1}
+            value={apSpend}
+            onChange={(e) => setApSpend(e.target.value)}
+          />
+          <input
+            className="combat-text"
+            type="text"
+            maxLength={120}
+            placeholder="on what? (optional — e.g. moved 20 ft)"
+            value={apNote}
+            onChange={(e) => setApNote(e.target.value)}
+          />
+          <button
+            className="btn btn--ghost"
+            title="Validated: rejects if you have less AP than the amount"
+            onClick={() => {
+              const v = parsePositive(apSpend);
+              if (!v) return;
+              void doSpendResource('ap', v, apNote.trim() || undefined);
+              setApNote('');
+            }}
+            disabled={acting}
+          >
+            Spend
+          </button>
+        </div>
+
+        <div className="combat-form">
+          <span className="combat-form-label">Prepare</span>
+          <input
+            className="combat-num"
+            type="number"
+            min={0}
+            title="AP paid now, on this turn — the prep IS the cost (0 = free by ruling)"
+            value={prepCost}
+            onChange={(e) => setPrepCost(e.target.value)}
+          />
+          <input
+            className="combat-text"
+            type="text"
+            maxLength={120}
+            placeholder="reaction — e.g. roll out of the way when the ogre swings"
+            value={prepNote}
+            onChange={(e) => setPrepNote(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && prepNote.trim() && !acting) {
+                void doPrepareReaction(prepNote.trim(), Math.max(0, Number.parseInt(prepCost, 10) || 0));
+                setPrepNote('');
+              }
+            }}
+          />
+          <button
+            className="btn btn--gold"
+            title="Ready a custom reaction: the AP is spent now; the table sees it (⚑ in the tracker) until it triggers, you cancel it, or your next turn starts"
+            onClick={() => {
+              const note = prepNote.trim();
+              if (!note) return;
+              void doPrepareReaction(note, Math.max(0, Number.parseInt(prepCost, 10) || 0));
+              setPrepNote('');
+            }}
+            disabled={acting || !prepNote.trim()}
+          >
+            Prepare
+          </button>
+        </div>
+        {snapshot.preparedReactions.length > 0 && (
+          <div className="combat-effect-list combat-prepared-list">
+            {snapshot.preparedReactions.map((r, i) => (
+              <span className="combat-effect combat-prepared" key={`${r.note}-${i}`}>
+                <span className="combat-effect-name">⚑ {r.note}</span>
+                <span className="combat-effect-meta">{r.apCost > 0 ? `${r.apCost} AP` : 'free'}</span>
+                <button
+                  className="combat-effect-remove combat-prepared-used"
+                  title="It triggered — resolve the outcome at the table (no refund)"
+                  onClick={() => void doResolveReaction(i, true)}
+                  disabled={acting}
+                >
+                  used
+                </button>
+                <button
+                  className="combat-effect-remove"
+                  title="Call it off — the AP stays spent"
+                  onClick={() => void doResolveReaction(i, false)}
+                  disabled={acting}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
 
         {snapshot.pools.map((pool) => (
           <PoolRow

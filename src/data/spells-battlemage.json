@@ -796,6 +796,7 @@
     "damageType": "force",
     "attackType": "savingThrow",
     "saveStat": "str",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 63,
@@ -1571,6 +1572,7 @@
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 47,
@@ -1860,6 +1862,7 @@
     "damageType": "ice",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 47,
@@ -1935,6 +1938,7 @@
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 42,
@@ -2101,6 +2105,7 @@
     "damageType": "fire",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 70,
@@ -2132,6 +2137,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 0,

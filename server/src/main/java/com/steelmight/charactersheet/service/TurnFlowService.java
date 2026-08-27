@@ -1,5 +1,6 @@
 package com.steelmight.charactersheet.service;
 
+import com.steelmight.charactersheet.engine.PlayerTurnResets;
 import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.TurnTickService;
 import com.steelmight.charactersheet.model.Combatant;
@@ -52,11 +53,11 @@ public class TurnFlowService {
         if (c == null || c.getLifeStatus() == LifeStatus.DEAD) return;
 
         boolean apRecovery = encounters.validateAndMarkTurnStart(c);
-        if (c instanceof GameCharacter character) {
-            // Per-turn ability budgets reset at turn start (Story 1.4) — players only.
-            character.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
-        }
         var started = ticks.turnStart(c, apRecovery);
+        if (c instanceof GameCharacter character) {
+            // Ability budgets + prepared-reaction expiry (players only; shared with CharacterService.turnStart).
+            PlayerTurnResets.atTurnStart(character, started);
+        }
         if (prefix != null) {
             started.getSteps().forEach(s ->
                     into.addStep(prefix + ":" + s.rule(), s.note(), s.valueBefore(), s.valueAfter()));

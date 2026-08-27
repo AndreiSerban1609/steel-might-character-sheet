@@ -388,13 +388,28 @@ export function useCustomAbility(playerId: string, name: string): Promise<Combat
 }
 
 /** Validated spend (M0-D): resource is 'ap' | 'mana' | the class resource type. 400 when insufficient. */
-export function spendResource(playerId: string, resource: string, amount: number): Promise<CombatAction> {
-  return combatAction(playerId, 'spend-resource', { resource, amount });
+export function spendResource(
+  playerId: string,
+  resource: string,
+  amount: number,
+  note?: string,
+): Promise<CombatAction> {
+  return combatAction(playerId, 'spend-resource', note ? { resource, amount, note } : { resource, amount });
 }
 
 /** Capped gain (M0-D): resource is 'ap' | 'mana' | the class resource type. */
 export function gainResource(playerId: string, resource: string, amount: number): Promise<CombatAction> {
   return combatAction(playerId, 'gain-resource', { resource, amount });
+}
+
+/** Ready a custom reaction, paying its AP now (2026-08-27); it lapses at the start of your next turn. */
+export function prepareReaction(playerId: string, note: string, apCost: number): Promise<CombatAction> {
+  return combatAction(playerId, 'prepare-reaction', { note, apCost });
+}
+
+/** A prepared reaction triggered (used) or was called off — removed either way, AP stays spent. */
+export function resolveReaction(playerId: string, index: number, used: boolean): Promise<CombatAction> {
+  return combatAction(playerId, 'resolve-reaction', { index, used });
 }
 
 export function turnStart(playerId: string): Promise<CombatAction> {

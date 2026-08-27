@@ -783,6 +783,7 @@
     "damageType": "crushing",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 19,
@@ -1093,6 +1094,7 @@
     "damageType": "piercing",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 56,
@@ -1195,6 +1197,7 @@
     "damageType": "piercing",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 10,
       "flat": 150,
@@ -1587,6 +1590,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 49,
@@ -1770,6 +1774,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 2,
       "flat": 12,
@@ -1873,6 +1878,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 38,
@@ -2094,6 +2100,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 52,
@@ -2240,6 +2247,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 90,
@@ -2310,6 +2318,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "int",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 46,
@@ -2428,6 +2437,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "int",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 49,
@@ -2562,6 +2572,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 6,
       "flat": 140,
@@ -2679,6 +2690,7 @@
     "damageType": "lightning",
     "attackType": "savingThrow",
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 6,
       "flat": 113,

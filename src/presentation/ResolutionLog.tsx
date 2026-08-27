@@ -149,7 +149,11 @@ export function ResolutionLog({
         <p className="cast-numbers">
           {payload.save.stat} save vs DC {payload.save.dc}:{' '}
           <strong className={payload.save.success ? 'cast-warn' : 'cast-crit'}>
-            {payload.save.success ? 'saved (half damage, no effects)' : 'failed'}
+            {payload.save.success
+              ? payload.save.halfDamage
+                ? 'saved (half damage, no effects)'
+                : 'saved (no damage, no effects)'
+              : 'failed'}
           </strong>
         </p>
       )}

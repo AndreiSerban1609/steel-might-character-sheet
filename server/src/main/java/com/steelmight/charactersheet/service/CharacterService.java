@@ -571,12 +571,14 @@ public class CharacterService {
         var result = new ResolutionResult();
 
         // Validated spending (M0-D): insufficient → 400, no partial spend, never clamp.
+        // An optional note ("moved 20 ft") rides along in the step and the audit (2026-08-27).
+        String noteSuffix = req.note() != null && !req.note().isBlank() ? " — " + req.note().trim() : "";
         switch (req.resource()) {
             case "ap" -> {
                 int before = c.getAp().getCurrent();
                 requireSufficient("ap", before, req.amount());
                 c.getAp().setCurrent(before - req.amount());
-                result.addStep("spend-ap", "Spent " + req.amount() + " AP", before, before - req.amount());
+                result.addStep("spend-ap", "Spent " + req.amount() + " AP" + noteSuffix, before, before - req.amount());
             }
             case "mana" -> {
                 int before = c.getMana().getCurrent();
@@ -598,7 +600,55 @@ public class CharacterService {
         }
 
         repo.save(c);
-        audit.log(c, "spend-resource", "Spent " + req.amount() + " " + req.resource());
+        audit.log(c, "spend-resource", "Spent " + req.amount() + " " + req.resource() + noteSuffix);
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
+    }
+
+    /**
+     * Ready a reaction for later in the round (2026-08-27 Game Owner: custom reactions —
+     * "roll out of the way", "extinguish my torch when X" — cost AP on the turn they are
+     * prepared). The AP is paid now and stays paid; the declaration is shown to the table
+     * (snapshot + encounter mirror) until it is resolved or lapses at the start of the
+     * preparer's next turn. What triggers it, and its outcome, stay with the GM — the
+     * reaction-window state machine (ADR-001 §8) is deliberately not built.
+     */
+    public ActionResponse<CombatSnapshot> prepareReaction(String playerId, PrepareReactionRequest req) {
+        var c = getCharacter(playerId);
+        var result = new ResolutionResult();
+        String note = req.note().trim();
+
+        int before = c.getAp().getCurrent();
+        if (req.apCost() > 0) {
+            requireSufficient("ap", before, req.apCost());
+            c.getAp().setCurrent(before - req.apCost());
+            result.addStep("spend-ap", "Spent " + req.apCost() + " AP to prepare a reaction", before, before - req.apCost());
+        }
+        c.getPreparedReactions().add(new PreparedReaction(note, req.apCost()));
+        result.addStep("prepare-reaction",
+                "Prepared: " + note + (req.apCost() > 0 ? " (" + req.apCost() + " AP)" : " (free)")
+                        + " — lasts until the start of your next turn", 0, 0);
+
+        repo.save(c);
+        audit.log(c, "prepare-reaction", "Prepared reaction: " + note + " (" + req.apCost() + " AP)");
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
+    }
+
+    /** Close out a prepared reaction — it triggered ({@code used}) or was called off. No refund either way. */
+    public ActionResponse<CombatSnapshot> resolveReaction(String playerId, ResolveReactionRequest req) {
+        var c = getCharacter(playerId);
+        if (req.index() >= c.getPreparedReactions().size()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "no prepared reaction at index " + req.index() + " (have " + c.getPreparedReactions().size() + ")");
+        }
+        var reaction = c.getPreparedReactions().remove(req.index());
+        var result = new ResolutionResult();
+        String verb = req.used() ? "used" : "cancelled";
+        result.addStep("prepared-reaction", "Prepared reaction " + verb + ": " + reaction.getNote()
+                + (req.used() ? " — resolve the outcome at the table" : " — the " + reaction.getApCost() + " AP stays spent"),
+                0, 0);
+
+        repo.save(c);
+        audit.log(c, "resolve-reaction", "Prepared reaction " + verb + ": " + reaction.getNote());
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1532,11 +1582,13 @@ public class CharacterService {
         }
 
         // Save-type spells roll the target's save against the DC (E6: monsters save like
-        // players). A save halves the damage and shrugs off the spell's effects.
+        // players). Ruled 2026-08-27: a save shrugs off the spell's effects AND its damage —
+        // unless the spell says the target still takes half (SpellDefinition.halfDamageOnSave).
         if (spell.saveStat() != null && combatTarget != null && landed) {
             var stat = parseAbility(spell.saveStat());
             saved = combatActions.rollSave(combatTarget, stat, saveDC, result);
-            result.putPayload("save", Map.of("stat", stat.name(), "dc", saveDC, "success", saved));
+            result.putPayload("save", Map.of("stat", stat.name(), "dc", saveDC, "success", saved,
+                    "halfDamage", spell.halfDamageOnSave()));
         }
 
         // Self/party effects (M4-C): the target's own protections resolve in apply().
@@ -1593,11 +1645,18 @@ public class CharacterService {
             if (combatTarget != null) {
                 if (!landed) {
                     result.addStep("target", combatTarget.getName() + " is unharmed — the spell missed", 0, 0);
+                } else if (saved && !spell.halfDamageOnSave()) {
+                    // Ruled 2026-08-27: a successful save means no damage unless the spell
+                    // says half — nothing enters the target's pipeline (no triggers, no audit).
+                    int amount = (Integer) damage.get("total");
+                    result.addStep("save", combatTarget.getName() + " saved — no damage", amount, 0);
+                    result.addStep("target", combatTarget.getName() + " is unharmed — the save negates the damage", 0, 0);
                 } else {
                     int amount = (Integer) damage.get("total");
                     if (saved) {
                         int halved = amount / 2;
-                        result.addStep("save", "Damage halved by the save", amount, halved);
+                        result.addStep("save", "Damage halved by the save (" + spell.name() + " deals half on a success)",
+                                amount, halved);
                         amount = halved;
                     }
                     landDamage(c, combatTarget, amount,
@@ -2005,10 +2064,10 @@ public class CharacterService {
         // and only once (strict start → end alternation). Free ticking outside encounters.
         // A participant's FIRST turn of the combat gets no AP recovery (2026-07-16 ruling).
         boolean apRecovery = encounters.validateAndMarkTurnStart(c);
-        // Per-turn ability budgets reset at turn start (Story 1.4).
-        c.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
         // M2-B: DoT ticks (Q13: before AP recovery) → AP recovery → startOfTurn triggers.
         var result = turnTickService.turnStart(c, apRecovery);
+        // Ability budgets + prepared-reaction expiry (shared with TurnFlowService.startTurn).
+        PlayerTurnResets.atTurnStart(c, result);
         repo.save(c);
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
@@ -2093,6 +2152,7 @@ public class CharacterService {
                     c.getDownsThisCombat(), 0);
             c.setDownsThisCombat(0);
         }
+        PlayerTurnResets.expirePreparedReactions(c, result, "cleared at combat start");
 
         repo.save(c);
         return new ActionResponse<>(result, buildCombatSnapshot(c));
@@ -2173,6 +2233,8 @@ public class CharacterService {
             result.addStep("rest-spells", "Prepared spells cleared", c.getPreparedSpells().size(), 0);
             c.getPreparedSpells().clear();
         }
+        // 6b. Readied reactions are combat-scoped — a rest ends the round they were set up for.
+        PlayerTurnResets.expirePreparedReactions(c, result, "cleared by the rest");
 
         // 7. Deck of Fates consume cards return on any rest (burned cards are gone forever).
         int cardsRestored = deckTemplates.restoreConsumedCards(playerId);
@@ -2684,7 +2746,10 @@ public class CharacterService {
                 deriveProficiencyPenalties(c),
                 List.copyOf(c.getTalents()),
                 List.copyOf(c.getSpecFeats()),
-                Map.copyOf(c.getStatOverrides())
+                Map.copyOf(c.getStatOverrides()),
+                c.getPreparedReactions().stream()
+                        .map(r -> new CombatSnapshot.PreparedReactionView(r.getNote(), r.getApCost()))
+                        .toList()
         );
     }
 

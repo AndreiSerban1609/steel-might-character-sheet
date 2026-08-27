@@ -162,6 +162,11 @@ export function EncounterTracker() {
                   {e.hp}/{e.maxHp}
                 </span>
               )}
+              {(e.prepared ?? []).map((note, i) => (
+                <span className="encounter-prepared" key={i} title={`Prepared reaction: ${note}`}>
+                  ⚑ {note}
+                </span>
+              ))}
               {isGm && editing === e.playerId ? (
                 <input
                   className="encounter-init-input"

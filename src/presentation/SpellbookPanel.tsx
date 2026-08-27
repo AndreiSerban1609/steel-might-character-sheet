@@ -129,7 +129,12 @@ export function SpellbookPanel() {
                 </span>
               )}
               {spell.healing && <span>Healing {formatDice(spell.healing)}</span>}
-              {spell.saveStat && <span>Save {spell.saveStat.toUpperCase()}</span>}
+              {spell.saveStat && (
+                <span>
+                  Save {spell.saveStat.toUpperCase()}
+                  {spell.halfDamageOnSave ? ' (half on save)' : ''}
+                </span>
+              )}
               {spell.effects && spell.effects.length > 0 && (
                 <span>Applies {spell.effects.map(effectName).join(', ')}</span>
               )}

@@ -24,8 +24,9 @@ public record EncounterView(
      * metadata keys); {@code hp}/{@code maxHp} are null for players, whose vitals live
      * in their own mirrored sheet slices.
      */
+    /** {@code prepared}: the notes of a player's readied reactions (2026-08-27); empty for monsters. */
     public record Entry(String playerId, String name, int initiative, String status, boolean surprised,
-                        CombatantType combatantType, Integer hp, Integer maxHp) {}
+                        CombatantType combatantType, Integer hp, Integer maxHp, List<String> prepared) {}
 
     public static EncounterView inactive() {
         return new EncounterView(false, 0, null, false, List.of());

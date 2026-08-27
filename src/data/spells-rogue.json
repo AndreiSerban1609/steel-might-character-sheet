@@ -808,6 +808,7 @@
     "damageType": "shadow",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 31,
@@ -1000,6 +1001,7 @@
     "damageType": "shadow",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": null,
     "healing": null,
     "scaling": null,

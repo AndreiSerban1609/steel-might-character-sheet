@@ -1785,6 +1785,7 @@
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 41,
@@ -1935,6 +1936,7 @@
     "damageType": "shadow",
     "attackType": "savingThrow",
     "saveStat": "cha",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 8,
       "flat": 40,
@@ -3205,6 +3207,7 @@
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 25,

@@ -853,6 +853,7 @@
     "damageType": "pure",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 21,
@@ -958,6 +959,7 @@
     "damageType": "force",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 22,
@@ -997,6 +999,7 @@
     "damageType": "pure",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 46,
@@ -1178,6 +1181,7 @@
     "damageType": "pure",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 37,
@@ -1272,6 +1276,7 @@
     "damageType": "pure",
     "attackType": null,
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 6,
       "flat": 60,
@@ -1433,6 +1438,7 @@
     "damageType": "pure",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 6,
       "flat": 72,
@@ -3870,6 +3876,7 @@
     "damageType": "poison",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 24,
@@ -4015,6 +4022,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 39,
@@ -4093,6 +4101,7 @@
     "damageType": "poison",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 26,
@@ -4252,6 +4261,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 20,
@@ -4288,6 +4298,7 @@
     "damageType": "ice",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 0,
@@ -4325,6 +4336,7 @@
     "damageType": "poison",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 16,
@@ -4362,6 +4374,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 13,
@@ -4452,6 +4465,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 25,
@@ -4488,6 +4502,7 @@
     "damageType": "ice",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 39,
@@ -4524,6 +4539,7 @@
     "damageType": "ice",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 36,
@@ -4560,6 +4576,7 @@
     "damageType": "poison",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 44,

@@ -1241,6 +1241,7 @@
     "damageType": "true",
     "attackType": "savingThrow",
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 245,
@@ -2630,6 +2631,7 @@
     "damageType": "thunder",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 60,
@@ -3137,6 +3139,7 @@
     "damageType": "light",
     "attackType": "savingThrow",
     "saveStat": "will",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 7,
       "flat": 0,
@@ -3451,6 +3454,7 @@
     "damageType": "light",
     "attackType": "savingThrow",
     "saveStat": "str",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 1,
       "flat": 17,
@@ -3670,6 +3674,7 @@
     "damageType": "light",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 2,
       "flat": 21,
@@ -4159,6 +4164,7 @@
     "damageType": "spectral",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 31,
@@ -4403,6 +4409,7 @@
     "damageType": "pure",
     "attackType": "savingThrow",
     "saveStat": "cha",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 10,
@@ -4490,6 +4497,7 @@
     "damageType": "light",
     "attackType": "savingThrow",
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 5,
       "flat": 24,
@@ -4984,6 +4992,7 @@
     "damageType": "light",
     "attackType": "savingThrow",
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 16,
       "flat": 216,

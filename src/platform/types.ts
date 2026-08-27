@@ -219,6 +219,8 @@ export interface EncounterEntryView {
   /** Monster vitals ride inline in the encounter (ADR-001 §6); null for players. */
   hp: number | null;
   maxHp: number | null;
+  /** Notes of the player's readied reactions (2026-08-27) — shown as ⚑ chips; empty for monsters. */
+  prepared: string[];
 }
 
 /** A live monster in the room's fight (server: dto.MonsterView). */
@@ -384,7 +386,8 @@ export interface ResolutionPayload {
   effectsOnHit?: EffectOnHitView[];
   effectsAppliedTo?: string;
   /** Story 2.3 last mile: the target's save against a save-type spell. */
-  save?: { stat: string; dc: number; success: boolean };
+  /** halfDamage: a successful save still deals half (ruling 2026-08-27); otherwise a save = no damage. */
+  save?: { stat: string; dc: number; success: boolean; halfDamage?: boolean };
   /** Story 2.3 last mile: what landed on the named target (hpAfter absent when it missed). */
   target?: {
     combatantId: string;
@@ -573,4 +576,11 @@ export interface CombatSnapshot {
   specFeats: string[];
   /** Derived stats the GM pinned to a literal value; keys are OverridableStat keys. */
   statOverrides: Record<string, number>;
+  /** Reactions readied this turn (2026-08-27) — AP already paid; the index is what resolve-reaction takes. */
+  preparedReactions: PreparedReactionView[];
+}
+
+export interface PreparedReactionView {
+  note: string;
+  apCost: number;
 }

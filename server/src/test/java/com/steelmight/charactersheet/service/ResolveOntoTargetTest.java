@@ -119,10 +119,34 @@ class ResolveOntoTargetTest {
         return characterRepo.save(c);
     }
 
+    /**
+     * Level-5 exorcist, WILL 16 (+3): spear-of-illumination (STR save, light, flagged
+     * halfDamageOnSave — "Half damage on success, no push").
+     */
+    private GameCharacter exorcist() {
+        var c = new GameCharacter("exo");
+        c.setName("Exo");
+        c.setRoomName(ROOM);
+        c.setLevel(5);
+        c.setPathId("disciple");
+        c.setClassId("exorcist");
+        c.setStats(new Stats(10, 10, 10, 10, 10, 16, 10));
+        c.setHp(new HitPoints(100, 100, 0));
+        c.setMana(new ManaPool(100, 100));
+        c.setAp(new ActionPoints(6, 6, 10));
+        c.getKnownSpells().add("spear-of-illumination");
+        return characterRepo.save(c);
+    }
+
     /** Level 4, 40 HP, AC 13, PA 2, MA 0. DEX as given (+10 at 30 makes any save succeed). */
     private MonsterView goblin(int dex) {
+        return goblin(Map.of(AbilityScore.DEX, dex, AbilityScore.WILL, 8));
+    }
+
+    /** Same goblin with any stat block (a +10 stat makes that save succeed against any level-5 DC). */
+    private MonsterView goblin(Map<AbilityScore, Integer> stats) {
         var t = monsters.createTemplate(ROOM, new MonsterTemplateRequest("Goblin", 4, 40, 13, 2, 0, 30, 3, 0,
-                Map.of(AbilityScore.DEX, dex, AbilityScore.WILL, 8), List.of(), Map.of(), "Bites.", null));
+                stats, List.of(), Map.of(), "Bites.", null));
         return monsters.spawn(ROOM, new SpawnMonstersRequest(t.id(), 1)).get(0);
     }
 
@@ -226,8 +250,9 @@ class ResolveOntoTargetTest {
         assertThat(r.snapshot().mana().current()).isLessThan(100);
     }
 
+    /** Ruled 2026-08-27: a successful save means NO damage unless the spell says half. */
     @Test
-    void saveSpellRollsTheTargetsSaveAndHalvesOnSuccess() {
+    void saveSpellRollsTheTargetsSaveAndNegatesDamageOnSuccess() {
         sorcerer();
         var g = goblin(30); // DEX +10: d10 10 + 10 = 20 beats any level-5 DC
         FixedRandom.next = 9; // d10 → 10; 3d8 → 8 + 8 + 8
@@ -236,13 +261,47 @@ class ResolveOntoTargetTest {
         var save = map(r.resolution().getPayload().get("save"));
         assertThat(save.get("stat")).isEqualTo("DEX");
         assertThat(save.get("success")).isEqualTo(true);
-        // 24 (dice) + 8 (flat) + 3 (INT) = 35 → halved 17 shadow → MA 0.
+        assertThat(save.get("halfDamage")).isEqualTo(false); // nether-zone: "…or take X damage" — no half clause
+        // 24 (dice) + 8 (flat) + 3 (INT) = 35 rolled, none of it lands.
         assertThat(map(r.resolution().getPayload().get("damage")).get("total")).isEqualTo(35);
         assertThat(r.resolution().getSteps()).anySatisfy(s -> {
             assertThat(s.rule()).isEqualTo("save");
             assertThat(s.note()).contains("Goblin DEX save").contains("SAVED");
         });
-        assertThat(map(r.resolution().getPayload().get("target")).get("hpAfter")).isEqualTo(23);
+        assertThat(r.resolution().getSteps()).anySatisfy(s -> assertThat(s.note()).contains("saved — no damage"));
+        assertThat(r.resolution().getPayload()).doesNotContainKey("target"); // nothing entered the pipeline
+        assertThat(monsters.get(ROOM, g.id()).hp().current()).isEqualTo(40);
+        assertThat(r.snapshot().mana().current()).isLessThan(100); // the cast is still paid for
+    }
+
+    @Test
+    void saveSpellFlaggedHalfDamageOnSaveHalvesOnSuccess() {
+        exorcist();
+        var g = goblin(Map.of(AbilityScore.STR, 30, AbilityScore.WILL, 8)); // STR +10: 20 beats DC 14
+        FixedRandom.next = 9; // d10 → 10; 4d12 → 10 + 10 + 10 + 10
+
+        var r = service.cast("exo", new CastRequest("spear-of-illumination", null, null, null, g.combatantId(), null));
+        var save = map(r.resolution().getPayload().get("save"));
+        assertThat(save.get("stat")).isEqualTo("STR");
+        assertThat(save.get("success")).isEqualTo(true);
+        assertThat(save.get("halfDamage")).isEqualTo(true);
+        // 40 (dice) + 17 (flat) + 3 (WILL) = 60 → halved 30 light → MA 0 → 40 − 30.
+        assertThat(map(r.resolution().getPayload().get("damage")).get("total")).isEqualTo(60);
+        assertThat(r.resolution().getSteps()).anySatisfy(s -> assertThat(s.note()).contains("halved by the save"));
+        assertThat(map(r.resolution().getPayload().get("target")).get("hpAfter")).isEqualTo(10);
+        assertThat(monsters.get(ROOM, g.id()).hp().current()).isEqualTo(10);
+    }
+
+    @Test
+    void failedSaveLandsFullDamageEitherWay() {
+        sorcerer();
+        var g = goblin(1); // DEX −5: d10 10 − 5 = 5 fails DC 14
+        FixedRandom.next = 9;
+
+        var r = service.cast("sorc", new CastRequest("nether-zone", null, null, null, g.combatantId(), null));
+        assertThat(map(r.resolution().getPayload().get("save")).get("success")).isEqualTo(false);
+        // 35 shadow → MA 0 → 40 − 35.
+        assertThat(map(r.resolution().getPayload().get("target")).get("hpAfter")).isEqualTo(5);
     }
 
     // ---- Abilities ----

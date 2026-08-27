@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "validate-data": "tsx scripts/validate-data.ts",
     "tag-spells": "tsx scripts/tag-spells.ts",
+    "flag-half-on-save": "tsx scripts/flag-half-on-save.ts",
     "export-spell-tags": "tsx scripts/export-spell-tags.ts",
     "review-spells": "tsx scripts/review-spells.ts"
   },

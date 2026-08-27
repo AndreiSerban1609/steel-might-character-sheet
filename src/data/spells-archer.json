@@ -319,6 +319,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "const",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 49,
@@ -643,6 +644,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": "dex",
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 3,
       "flat": 10,
@@ -887,6 +889,7 @@
     "damageType": "fire",
     "attackType": null,
     "saveStat": null,
+    "halfDamageOnSave": true,
     "damage": {
       "modMultiplier": 4,
       "flat": 100,

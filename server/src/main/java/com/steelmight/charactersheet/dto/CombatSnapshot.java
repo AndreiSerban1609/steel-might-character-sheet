@@ -50,8 +50,12 @@ public record CombatSnapshot(
         List<String> specFeats,
         // Derived stats the GM has pinned (demo feedback #11/#12) — so the sheet can mark
         // them as manual rather than leaving the player guessing why the formula "lies".
-        Map<String, Integer> statOverrides
+        Map<String, Integer> statOverrides,
+        // Reactions readied this turn (2026-08-27) — AP already paid; the list index is
+        // what POST /actions/resolve-reaction takes.
+        List<PreparedReactionView> preparedReactions
 ) {
+    public record PreparedReactionView(String note, int apCost) {}
     public record HpView(int current, int max, int temp) {}
     public record ApView(int current, int recovery, int max) {}
     public record ManaView(int current, int max) {}
