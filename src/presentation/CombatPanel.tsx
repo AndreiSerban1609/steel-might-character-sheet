@@ -72,6 +72,8 @@ export function CombatPanel() {
       : selectedPlayerId!;
   const targetingOther = effectiveTarget !== selectedPlayerId;
   const targetingMonster = foes.some((m) => m.combatantId === effectiveTarget);
+  const targetLabel = (id: string): string =>
+    party.find((r) => r.playerId === id)?.name ?? foes.find((m) => m.combatantId === id)?.name ?? id;
 
   // Turn gating mirrors the server rules: turns begin automatically in an encounter
   // (the GM opens combat, ending a turn starts the next), so participants only ever
@@ -248,17 +250,24 @@ export function CombatPanel() {
             )}
             <button
               className="btn btn--gold"
-              title="d20 + proficiency + weapon stat (when proficient); crits double the damage"
+              title={
+                targetingOther
+                  ? 'd20 + proficiency + weapon stat vs the target’s AC; a hit lands the damage on them'
+                  : 'd20 + proficiency + weapon stat (when proficient); crits double the damage. Pick a Target above to resolve the hit on them.'
+              }
               onClick={() =>
                 void doWeaponAttack(
                   snapshot.equippedWeapons.length > 1 ? attackWeapon || undefined : undefined,
+                  targetingOther ? effectiveTarget : undefined,
                 )
               }
               disabled={acting || (snapshot.equippedWeapons.length > 1 && !attackWeapon)}
             >
-              {snapshot.equippedWeapons.length === 1
-                ? `Attack (${itemLabel(snapshot.equippedWeapons[0], customItems)})`
-                : 'Attack'}
+              {targetingOther
+                ? `Attack ${targetLabel(effectiveTarget)}`
+                : snapshot.equippedWeapons.length === 1
+                  ? `Attack (${itemLabel(snapshot.equippedWeapons[0], customItems)})`
+                  : 'Attack'}
             </button>
           </div>
         )}

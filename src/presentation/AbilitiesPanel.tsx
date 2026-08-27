@@ -31,6 +31,22 @@ export function AbilitiesPanel() {
   const [customDraft, setCustomDraft] = useState<CustomAbilityView[] | null>(null);
   // Rows collapse to name + cost + Use; one open at a time (demo feedback #20).
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  // Story 2.3: abilities with a structured target effect can land it on a named combatant.
+  const roster = useCharacterStore((s) => s.roster);
+  const monsters = useCharacterStore((s) => s.monsters);
+  const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
+  const [abilityTarget, setAbilityTarget] = useState('');
+  const party = roster.filter((r) => r.playerId !== selectedPlayerId);
+  const foes = monsters.filter((m) => m.status !== 'DEAD');
+  const targetValid =
+    abilityTarget === 'self' ||
+    party.some((r) => r.playerId === abilityTarget) ||
+    foes.some((m) => m.combatantId === abilityTarget);
+  const effectiveAbilityTarget = !targetValid
+    ? undefined
+    : abilityTarget === 'self'
+      ? (selectedPlayerId ?? undefined)
+      : abilityTarget;
 
   useEffect(() => {
     void loadAbilities();
@@ -217,6 +233,37 @@ export function AbilitiesPanel() {
       </div>
 
       {error && <p className="inline-error">{error}</p>}
+      {known.some((a) => a.targetEffect) && (party.length > 0 || foes.length > 0) && (
+        <div className="combat-form">
+          <span className="combat-form-label">Target</span>
+          <select
+            value={targetValid ? abilityTarget : ''}
+            onChange={(e) => setAbilityTarget(e.target.value)}
+            title="Abilities with a target effect land it on this combatant; leave empty to print the stacks for the table"
+          >
+            <option value="">none (print for the table)</option>
+            <option value="self">{snapshot.name} (this sheet)</option>
+            {party.length > 0 && (
+              <optgroup label="Party">
+                {party.map((r) => (
+                  <option key={r.playerId} value={r.playerId}>
+                    {r.name}
+                  </option>
+                ))}
+              </optgroup>
+            )}
+            {foes.length > 0 && (
+              <optgroup label="Monsters">
+                {foes.map((m) => (
+                  <option key={m.combatantId} value={m.combatantId}>
+                    {m.name} · {m.hp.current}/{m.hp.max} HP
+                  </option>
+                ))}
+              </optgroup>
+            )}
+          </select>
+        </div>
+      )}
       {known.length === 0 && catalog.length > 0 && (
         <p className="panel-msg">No abilities yet — pick your class choices via "Edit picks".</p>
       )}
@@ -295,7 +342,9 @@ export function AbilitiesPanel() {
                       <button
                         className="btn btn--gold ability-use"
                         title={useTitle}
-                        onClick={() => void doUseAbility(entry.id)}
+                        onClick={() =>
+                          void doUseAbility(entry.id, entry.targetEffect ? effectiveAbilityTarget : undefined)
+                        }
                         disabled={acting || outOfUses || usedThisTurn}
                       >
                         Use

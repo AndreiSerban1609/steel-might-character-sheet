@@ -16,6 +16,7 @@ export function ResolutionLog({
   onClose: () => void;
 }) {
   const roster = useCharacterStore((s) => s.roster);
+  const monsters = useCharacterStore((s) => s.monsters);
   const payload = resolution.payload;
   const natural = payload?.attackRoll?.roll ?? null;
   // Animate once per resolution: keying the die on the resolution object means a
@@ -27,7 +28,9 @@ export function ResolutionLog({
   // The server reports raw player ids — show the character's name when we know it.
   const appliedToName =
     payload?.effectsAppliedTo &&
-    (roster.find((r) => r.playerId === payload.effectsAppliedTo)?.name ?? payload.effectsAppliedTo);
+    (roster.find((r) => r.playerId === payload.effectsAppliedTo)?.name ??
+      monsters.find((m) => m.combatantId === payload.effectsAppliedTo)?.name ??
+      payload.effectsAppliedTo);
   return (
     <div className="combat-log">
       <div className="combat-log-head">
@@ -53,7 +56,8 @@ export function ResolutionLog({
               }
             >
               <span className="cast-roll-label">
-                {payload.weapon ? `${payload.weapon.name} vs AC` : 'Attack vs AC'}
+                {payload.weapon ? payload.weapon.name : 'Attack'}
+                {payload.attackRoll.targetAC != null ? ` vs AC ${payload.attackRoll.targetAC}` : ' vs AC'}
               </span>
               {payload.attackRoll.autoMiss ? (
                 <span className="cast-warn">stacked disadvantage — automatic miss</span>
@@ -90,6 +94,10 @@ export function ResolutionLog({
                   </span>
                   {payload.attackRoll.critical && <span className="cast-crit">CRIT</span>}
                   {payload.attackRoll.criticalFailure && <span className="cast-warn">nat 1</span>}
+                  {payload.attackRoll.hit === true && <span className="cast-crit">HIT</span>}
+                  {payload.attackRoll.hit === false && !payload.attackRoll.criticalFailure && (
+                    <span className="cast-warn">MISS</span>
+                  )}
                 </>
               )}
             </div>
@@ -135,6 +143,38 @@ export function ResolutionLog({
               })
               .join(', ')}
           </strong>
+        </p>
+      )}
+      {payload?.save && (
+        <p className="cast-numbers">
+          {payload.save.stat} save vs DC {payload.save.dc}:{' '}
+          <strong className={payload.save.success ? 'cast-warn' : 'cast-crit'}>
+            {payload.save.success ? 'saved (half damage, no effects)' : 'failed'}
+          </strong>
+        </p>
+      )}
+      {payload?.target && (
+        <p className="cast-numbers">
+          {payload.target.manual ? (
+            <span className="cast-warn">
+              Apply the damage to <strong>{payload.target.name}</strong> manually (damage type not machine-readable)
+            </span>
+          ) : payload.target.hpAfter != null ? (
+            <span>
+              <strong>{payload.target.name}</strong> now at{' '}
+              <strong>
+                {payload.target.hpAfter}
+                {payload.target.hpMax != null && `/${payload.target.hpMax}`} HP
+              </strong>
+              {payload.target.status && payload.target.status !== 'ALIVE' && (
+                <span className="cast-warn"> — {payload.target.status.toLowerCase()}</span>
+              )}
+            </span>
+          ) : (
+            <span>
+              <strong>{payload.target.name}</strong> unharmed
+            </span>
+          )}
         </p>
       )}
       {appliedToName && (

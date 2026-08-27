@@ -348,6 +348,9 @@ export interface RollBreakdown {
 
 /** A d20 attack roll (spell casts and weapon attacks). */
 export interface AttackRollView {
+  /** Present when the action named a target: the AC it was compared to and the outcome. */
+  targetAC?: number;
+  hit?: boolean;
   roll?: number;
   /** both dice when rolled with advantage/disadvantage */
   rolls?: number[];
@@ -380,6 +383,20 @@ export interface ResolutionPayload {
   concentrationDropped?: boolean;
   effectsOnHit?: EffectOnHitView[];
   effectsAppliedTo?: string;
+  /** Story 2.3 last mile: the target's save against a save-type spell. */
+  save?: { stat: string; dc: number; success: boolean };
+  /** Story 2.3 last mile: what landed on the named target (hpAfter absent when it missed). */
+  target?: {
+    combatantId: string;
+    name: string;
+    hpAfter?: number;
+    hpMax?: number;
+    status?: string;
+    /** The damage type isn't machine-readable — the table applies the number. */
+    manual?: boolean;
+  };
+  /** Ability target effect as computed (stacks) — applied when a target was named. */
+  targetEffect?: { effectId: string; stacks: number };
   newLevel?: number;
   newAbilities?: string[];
   /** weapon attacks */

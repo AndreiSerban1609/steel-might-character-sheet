@@ -222,7 +222,8 @@ export interface CharacterState {
   doUseConsumable: (body: { itemId: string; tier?: number }) => Promise<void>;
   doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean; targetPlayerId?: string; targetCombatantId?: string }) => Promise<void>;
   doLevelUp: (choices: LevelUpChoices) => Promise<void>;
-  doWeaponAttack: (itemId?: string) => Promise<void>;
+  /** targetId (Story 2.3): the roll meets the target's AC and a hit lands on them. */
+  doWeaponAttack: (itemId?: string, targetId?: string) => Promise<void>;
   doDamage: (value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number, attackerCombatantId?: string) => Promise<void>;
   doHeal: (value: number) => Promise<void>;
   /** Quiet room-roster refresh — feeds the target pickers without touching loading flags. */
@@ -237,7 +238,8 @@ export interface CharacterState {
   loadAbilities: () => Promise<void>;
   saveAbilities: (abilityIds: string[]) => Promise<void>;
   saveCustomAbilities: (abilities: CustomAbilityView[]) => Promise<void>;
-  doUseAbility: (abilityId: string) => Promise<void>;
+  /** targetId (Story 2.3): the ability's structured target effect lands on them. */
+  doUseAbility: (abilityId: string, targetId?: string) => Promise<void>;
   doUseCustomAbility: (name: string) => Promise<void>;
   adoptEncounter: (view: EncounterView) => void;
   /** Flush all sheet keys from OBR room metadata and re-mirror this client's slice. */
@@ -766,7 +768,11 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     if (!get().error && get().spellbook) await get().loadSpellbook();
   },
 
-  doWeaponAttack: (itemId) => runCombatAction(set, get, (id) => weaponAttack(id, itemId)),
+  doWeaponAttack: async (itemId, targetId) => {
+    await runCombatAction(set, get, (id) => weaponAttack(id, itemId, targetId));
+    // The hit landed on the target server-side — refresh their board row / mirrored sheet.
+    afterTargetedCast(set, get, targetId);
+  },
   doDamage: (value, damageType, tags, attackerMight, attackerCombatantId) =>
     runCombatAction(set, get, (id) => sendDamage(id, value, damageType, tags, attackerMight, attackerCombatantId)),
   doHeal: (value) => runCombatAction(set, get, (id) => sendHeal(id, value)),
@@ -847,10 +853,11 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
-  doUseAbility: async (abilityId) => {
-    await runCombatAction(set, get, (id) => useAbility(id, abilityId));
+  doUseAbility: async (abilityId, targetId) => {
+    await runCombatAction(set, get, (id) => useAbility(id, abilityId, targetId));
     // A use changes the per-rest/per-turn budgets the panel displays.
     if (!get().error) await get().loadAbilities();
+    afterTargetedCast(set, get, targetId);
   },
 
   doUseCustomAbility: (name) => runCombatAction(set, get, (id) => useCustomAbility(id, name)),

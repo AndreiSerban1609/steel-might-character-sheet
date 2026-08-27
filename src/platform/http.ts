@@ -371,13 +371,15 @@ export function sendHeal(playerId: string, value: number): Promise<CombatAction>
   return combatAction(playerId, 'heal', { value });
 }
 
-export function weaponAttack(playerId: string, itemId?: string): Promise<CombatAction> {
-  return combatAction(playerId, 'weapon-attack', itemId ? { itemId } : {});
+/** targetCombatantId (Story 2.3): the roll meets THEIR AC and a hit's damage lands on them. */
+export function weaponAttack(playerId: string, itemId?: string, targetCombatantId?: string): Promise<CombatAction> {
+  return combatAction(playerId, 'weapon-attack', { itemId: itemId || undefined, targetCombatantId });
 }
 
 /** Use a class ability: validate → spend costs → resolve (auto) or print the rule (manual). */
-export function useAbility(playerId: string, abilityId: string): Promise<CombatAction> {
-  return combatAction(playerId, 'use-ability', { abilityId });
+/** targetCombatantId (Story 2.3): the ability's structured target effect lands on them. */
+export function useAbility(playerId: string, abilityId: string, targetCombatantId?: string): Promise<CombatAction> {
+  return combatAction(playerId, 'use-ability', { abilityId, targetCombatantId });
 }
 
 /** Print a free-text ability into the resolution log — the table adjudicates. */

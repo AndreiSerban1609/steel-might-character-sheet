@@ -413,22 +413,22 @@ function ScrollReader({
           <select
             value={castTarget}
             onChange={(e) => setCastTarget(e.target.value)}
-            title="Who receives the scroll's effects — the scroll is consumed either way"
+            title="Who the scroll is aimed at: attack rolls meet their AC, saves roll on them, damage/healing/effects land on them"
           >
-            <option value="">effects: DM applies</option>
-            <option value="self">effects: self</option>
+            <option value="">target: none (numbers only)</option>
+            <option value="self">target: self</option>
             {roster
               .filter((r) => r.playerId !== selectedPlayerId)
               .map((r) => (
                 <option key={r.playerId} value={r.playerId}>
-                  effects: {r.name}
+                  target: {r.name}
                 </option>
               ))}
             {monsters
               .filter((m) => m.status !== 'DEAD')
               .map((m) => (
                 <option key={m.combatantId} value={m.combatantId}>
-                  effects: {m.name} (monster)
+                  target: {m.name} (monster)
                 </option>
               ))}
           </select>

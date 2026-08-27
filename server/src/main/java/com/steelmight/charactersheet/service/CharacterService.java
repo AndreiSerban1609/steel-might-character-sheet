@@ -1041,6 +1041,21 @@ public class CharacterService {
             }
         }
 
+        // Story 2.3 last mile: the structured target effect can land on a named combatant.
+        // Resolved (and taunt-checked when the effect is harmful) BEFORE spending.
+        Combatant abilityTarget = null;
+        if (req.targetCombatantId() != null && !req.targetCombatantId().isBlank()) {
+            if (ability.targetEffect() == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        ability.name() + " has no target effect to apply — use it without a target");
+            }
+            abilityTarget = combatants.require(c.getRoomName(), req.targetCombatantId());
+            var def = gameData.getEffect(ability.targetEffect().effectId());
+            if (abilityTarget != c && def != null && def.isNegative()) {
+                combatActions.enforceTaunt(c, abilityTarget);
+            }
+        }
+
         // Spend.
         if (apCost > 0) {
             int before = c.getAp().getCurrent();
@@ -1082,7 +1097,7 @@ public class CharacterService {
         // A structured self-effect is real for BOTH resolutions — a manual ability keeps
         // its narrative text, but its mechanical slice (rage's resistance) still applies.
         applySelfEffect(c, ability, result);
-        emitTargetEffect(c, ability, result);
+        emitTargetEffect(c, ability, abilityTarget, result);
         if (ability.nextTurnApPenalty() != null) {
             result.addStep("ability-note", "Start your next turn with " + ability.nextTurnApPenalty()
                     + " fewer AP (apply manually at turn start — A6 wiring pending)", 0, 0);
@@ -1173,16 +1188,34 @@ public class CharacterService {
         return total;
     }
 
-    /** Target effects are computed here, applied at the table (no targets until the encounter model). */
-    private void emitTargetEffect(GameCharacter c, AbilityDefinition ability, ResolutionResult result) {
+    /**
+     * Target effects: computed here and, when the use names a target (Story 2.3), applied
+     * through that combatant's effect engine — its protections/immunities answer as usual.
+     * Without a target the stacks are printed for the table, as before targets existed.
+     */
+    private void emitTargetEffect(GameCharacter c, AbilityDefinition ability, Combatant target,
+                                  ResolutionResult result) {
         var te = ability.targetEffect();
         if (te == null) return;
         String duration = te.durationRounds() != null ? " for " + te.durationRounds() + " round(s)" : "";
         if (te.stacks() != null) {
             int stacks = resolveStacks(te.stacks(), c.getLevel());
+            result.putPayload("targetEffect", Map.of("effectId", te.effectId(), "stacks", stacks));
+            if (target != null) {
+                var landed = combatActions.applyEffect(target, new ApplyEffectRequest(
+                        te.effectId(), stacks, null, te.durationRounds(), c.getCombatantId(),
+                        false, false, false, null));
+                CombatActionService.mergeSteps(result, target.getName(), landed.resolution());
+                if (target != c) {
+                    audit.log(target.getRoomName(), target.getCombatantId(), target.getName(), "apply-effect",
+                            landed.auditSummary() + " — from " + c.getName() + " (" + ability.name() + ")");
+                    combatants.save(target);
+                }
+                result.putPayload("effectsAppliedTo", target.getCombatantId());
+                return;
+            }
             result.addStep("ability-target", "Apply " + stacks + " " + te.effectId()
                     + " stack(s) to the target" + duration + " (DM applies)", 0, stacks);
-            result.putPayload("targetEffect", Map.of("effectId", te.effectId(), "stacks", stacks));
         } else if (te.valueFromWeaponAverageDivisor() != null) {
             result.addStep("ability-target", "Apply " + te.effectId() + " with value = your weapon's average"
                     + " damage / " + te.valueFromWeaponAverageDivisor() + " (rounded down)" + duration
@@ -1441,11 +1474,80 @@ public class CharacterService {
         }
         result.putPayload("concentrationDropped", concentrationDropped);
 
+
+        // M4-D: a staff's accuracy joins the derived DC/attack bonus (Q24).
+        int saveDC = statEngine.computeSpellSaveDC(c);
+        int attackBonus = statEngine.computeSpellAttackBonus(c);
+        if (casterWeapon != null && casterWeapon.staffAccuracy() != null) {
+            saveDC += casterWeapon.staffAccuracy().spellSaveDCBonus();
+            attackBonus += casterWeapon.staffAccuracy().spellAttackBonus();
+        }
+        result.putPayload("saveDC", saveDC);
+        result.putPayload("attackBonus", attackBonus);
+        if (spell.damageType() != null) {
+            result.putPayload("damageType", spell.damageType());
+        }
+
+        // Story 2.3 last mile: a target other than the caster is a COMBAT target — the
+        // attack roll is compared to its AC, saves are rolled on it, and damage/healing/
+        // effects land through its pipeline. Self-casts and untargeted casts print numbers.
+        Combatant combatTarget = effectsTarget != null && effectsTarget != c ? effectsTarget : null;
+        boolean landed = true;   // false after a miss against a combat target
+        boolean saved = false;   // true after a successful save against a combat target
+
+        // Attack-type spells roll their d20 as part of the cast (Guide 1.3/4.1:
+        // 1d20 + proficiency + spell stat). Nat 20 = crit, nat 1 = fumble ("cannot
+        // be changed by modifiers"); critRange effects are PERCENT chance — base 5%
+        // (the 20 face), each 5% widens the range by one face.
+        boolean criticalHit = false;
+        if ("rangedSpellAttack".equals(spell.attackType())
+                || "meleeSpellAttack".equals(spell.attackType())) {
+            int roll = 1 + randomSource.nextInt(20);
+            int critPercent = statEngine.resolveModifiedStat(c, ModifiableStat.CRIT_RANGE, 5);
+            int critFrom = Math.max(2, 21 - Math.max(1, critPercent / 5));
+            criticalHit = roll >= critFrom;
+            boolean fumble = roll == 1;
+
+            var attackRoll = new java.util.LinkedHashMap<String, Object>();
+            attackRoll.put("roll", roll);
+            attackRoll.put("bonus", attackBonus);
+            attackRoll.put("total", roll + attackBonus);
+            if (criticalHit) attackRoll.put("critical", true);
+            if (fumble) attackRoll.put("criticalFailure", true);
+            String versus = " (vs target AC)";
+            if (combatTarget != null) {
+                int targetAC = statEngine.computeAC(combatTarget);
+                landed = criticalHit || (!fumble && roll + attackBonus >= targetAC);
+                attackRoll.put("targetAC", targetAC);
+                attackRoll.put("hit", landed);
+                versus = " vs " + combatTarget.getName() + "'s AC " + targetAC + (landed ? " — HIT" : " — MISS");
+            }
+            result.putPayload("attackRoll", attackRoll);
+            result.addStep("attack-roll",
+                    "Spell attack: d20 " + roll + " + " + attackBonus + " = " + (roll + attackBonus)
+                            + (criticalHit ? " — CRITICAL" : "")
+                            + (fumble ? " — natural 1, automatic miss" : "")
+                            + versus,
+                    roll, roll + attackBonus);
+        }
+
+        // Save-type spells roll the target's save against the DC (E6: monsters save like
+        // players). A save halves the damage and shrugs off the spell's effects.
+        if (spell.saveStat() != null && combatTarget != null && landed) {
+            var stat = parseAbility(spell.saveStat());
+            saved = combatActions.rollSave(combatTarget, stat, saveDC, result);
+            result.putPayload("save", Map.of("stat", stat.name(), "dc", saveDC, "success", saved));
+        }
+
         // Self/party effects (M4-C): the target's own protections resolve in apply().
         // Without a target, the payload carries ready-to-apply details (converted
         // durations) so the table sees exactly what lands on hit.
         if (spell.effects() != null && !spell.effects().isEmpty()) {
-            if (effectsTarget != null) {
+            if (combatTarget != null && (!landed || saved)) {
+                // A miss or a successful save shrugs the spell's effects off (Story 2.3).
+                result.addStep("effects", combatTarget.getName() + (saved ? " saved — " : " was missed — ")
+                        + "no effects applied", 0, 0);
+            } else if (effectsTarget != null) {
                 for (String effectId : spell.effects()) {
                     if (gameData.getEffect(effectId) == null) {
                         // Data-driven id, not caller input — skip with a visible step.
@@ -1476,50 +1578,7 @@ public class CharacterService {
             }
         }
 
-        // M4-D: a staff's accuracy joins the derived DC/attack bonus (Q24).
-        int saveDC = statEngine.computeSpellSaveDC(c);
-        int attackBonus = statEngine.computeSpellAttackBonus(c);
-        if (casterWeapon != null && casterWeapon.staffAccuracy() != null) {
-            saveDC += casterWeapon.staffAccuracy().spellSaveDCBonus();
-            attackBonus += casterWeapon.staffAccuracy().spellAttackBonus();
-        }
-        result.putPayload("saveDC", saveDC);
-        result.putPayload("attackBonus", attackBonus);
-        if (spell.damageType() != null) {
-            result.putPayload("damageType", spell.damageType());
-        }
-
-        // Attack-type spells roll their d20 as part of the cast (Guide 1.3/4.1:
-        // 1d20 + proficiency + spell stat). Nat 20 = crit, nat 1 = fumble ("cannot
-        // be changed by modifiers"); critRange effects are PERCENT chance — base 5%
-        // (the 20 face), each 5% widens the range by one face. The DM compares the
-        // total to the target's AC until targeting exists (encounter round).
-        boolean criticalHit = false;
-        if ("rangedSpellAttack".equals(spell.attackType())
-                || "meleeSpellAttack".equals(spell.attackType())) {
-            int roll = 1 + randomSource.nextInt(20);
-            int critPercent = statEngine.resolveModifiedStat(c, ModifiableStat.CRIT_RANGE, 5);
-            int critFrom = Math.max(2, 21 - Math.max(1, critPercent / 5));
-            criticalHit = roll >= critFrom;
-            boolean fumble = roll == 1;
-
-            var attackRoll = new java.util.LinkedHashMap<String, Object>();
-            attackRoll.put("roll", roll);
-            attackRoll.put("bonus", attackBonus);
-            attackRoll.put("total", roll + attackBonus);
-            if (criticalHit) attackRoll.put("critical", true);
-            if (fumble) attackRoll.put("criticalFailure", true);
-            result.putPayload("attackRoll", attackRoll);
-            result.addStep("attack-roll",
-                    "Spell attack: d20 " + roll + " + " + attackBonus + " = " + (roll + attackBonus)
-                            + (criticalHit ? " — CRITICAL" : "")
-                            + (fumble ? " — natural 1, automatic miss" : "")
-                            + " (vs target AC)",
-                    roll, roll + attackBonus);
-        }
-
-        // M4-B: roll damage/healing at castAtLevel. Healing rolls are numbers for the
-        // DM — Cursed/Decaying only apply when healing is applied via /actions/heal.
+        // M4-B: roll damage/healing at castAtLevel.
         // M4-D (Q24, Shops p.19): the weapon's spellModifier raises the spell-modifier
         // stat inside damage formulas; spellDamage adds flat to the damage roll.
         var spellAttr = statEngine.getSpellcastingAttribute(c);
@@ -1528,19 +1587,38 @@ public class CharacterService {
             var increase = spell.scaling() != null ? spell.scaling().damageIncrease() : null;
             int damageMod = spellMod + (casterWeapon != null ? casterWeapon.spellModifier() : 0);
             int weaponFlat = casterWeapon != null ? casterWeapon.spellDamage() : 0;
-            result.putPayload("damage",
-                    rollFormula(spell.damage(), increase, upcastSteps, damageMod, weaponFlat,
-                            criticalHit, result, "damage"));
+            var damage = rollFormula(spell.damage(), increase, upcastSteps, damageMod, weaponFlat,
+                    criticalHit, result, "damage");
+            result.putPayload("damage", damage);
+            if (combatTarget != null) {
+                if (!landed) {
+                    result.addStep("target", combatTarget.getName() + " is unharmed — the spell missed", 0, 0);
+                } else {
+                    int amount = (Integer) damage.get("total");
+                    if (saved) {
+                        int halved = amount / 2;
+                        result.addStep("save", "Damage halved by the save", amount, halved);
+                        amount = halved;
+                    }
+                    landDamage(c, combatTarget, amount,
+                            CombatActionService.damageTypeOf(spell.damageType()), List.of("spell"), result);
+                }
+            }
         }
         if (spell.healing() != null) {
             var increase = spell.scaling() != null ? spell.scaling().healingIncrease() : null;
-            result.putPayload("healing",
-                    rollFormula(spell.healing(), increase, upcastSteps, spellMod, 0,
-                            false, result, "healing"));
+            var healing = rollFormula(spell.healing(), increase, upcastSteps, spellMod, 0,
+                    false, result, "healing");
+            result.putPayload("healing", healing);
+            // Healing lands on a named target (or the caster when the effects target is self);
+            // untargeted healing rolls stay numbers for the DM.
+            Combatant healTarget = combatTarget != null ? combatTarget : (effectsTarget == c ? c : null);
+            if (healTarget != null) landHealing(c, healTarget, (Integer) healing.get("total"), result);
         }
 
         repo.save(c);
-        audit.log(c, "cast", "Cast " + spell.name());
+        audit.log(c, "cast", "Cast " + spell.name()
+                + (combatTarget != null ? " at " + combatTarget.getName() : ""));
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -1704,6 +1782,17 @@ public class CharacterService {
                 node.path("apCost").asInt(3)));
         requireSufficient("ap", c.getAp().getCurrent(), apCost);
 
+        // Story 2.3 last mile: a named target is resolved (and taunt-checked) BEFORE spending —
+        // an unknown or forbidden target costs nothing.
+        Combatant target = null;
+        if (req != null && req.targetCombatantId() != null && !req.targetCombatantId().isBlank()) {
+            target = combatants.require(c.getRoomName(), req.targetCombatantId());
+            if (target == c) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "you cannot attack yourself");
+            }
+            combatActions.enforceTaunt(c, target);
+        }
+
         boolean proficient = statEngine.isProficientWith(c, item);
         // finesse weapons list several stats — the best modifier applies
         int statMod = 0;
@@ -1785,6 +1874,18 @@ public class CharacterService {
             attackRoll.put("total", natural + attackBonus);
             if (critical) attackRoll.put("critical", true);
             if (fumble) attackRoll.put("criticalFailure", true);
+
+            // Against a named target the roll is compared to THEIR AC right here: a crit
+            // always hits, a natural 1 always misses, otherwise total ≥ AC.
+            String versus = " (vs target AC)";
+            boolean hit = !fumble;
+            if (target != null) {
+                int targetAC = statEngine.computeAC(target);
+                hit = critical || (!fumble && natural + attackBonus >= targetAC);
+                attackRoll.put("targetAC", targetAC);
+                attackRoll.put("hit", hit);
+                versus = " vs " + target.getName() + "'s AC " + targetAC + (hit ? " — HIT" : " — MISS");
+            }
             result.putPayload("attackRoll", attackRoll);
             result.addStep("attack-roll",
                     "Weapon attack: d20 " + natural
@@ -1792,7 +1893,7 @@ public class CharacterService {
                             + " + " + attackBonus + " = " + (natural + attackBonus)
                             + (critical ? " — CRITICAL" : "")
                             + (fumble ? " — natural 1, automatic miss" : "")
-                            + " (vs target AC)",
+                            + versus,
                     natural, natural + attackBonus);
 
             // damage: dice + flat + per-level scaling (+ stat mod when proficient)
@@ -1803,8 +1904,19 @@ public class CharacterService {
                     damageNode.path("flat").asInt(0)
                             + node.path("scaling").asInt(0) * (weaponLevel - 1),
                     Dice.from(damageNode.path("dice")));
-            result.putPayload("damage", rollFormula(formula, null, 0,
-                    proficient ? statMod : 0, 0, critical, result, "damage"));
+            var damage = rollFormula(formula, null, 0, proficient ? statMod : 0, 0, critical, result, "damage");
+            result.putPayload("damage", damage);
+
+            // A hit lands through the target's own pipeline (resistance → armor → shields →
+            // HP → death), attributed to this attacker.
+            if (target != null && hit) {
+                landDamage(c, target, (Integer) damage.get("total"),
+                        CombatActionService.damageTypeOf(node.path("damageType").asText(null)),
+                        entry.isSilvered() ? List.of("directAttack", "weapon", "silvered") : List.of("directAttack", "weapon"),
+                        result);
+            } else if (target != null) {
+                result.addStep("target", target.getName() + " is unharmed — the attack missed", 0, 0);
+            }
         }
 
         if (!proficient) {
@@ -2168,6 +2280,55 @@ public class CharacterService {
             resource.setCurrent(after);
             result.addStep("rest-" + type, "Restored " + (after - before) + " " + type, before, after);
         }
+    }
+
+    /**
+     * Resolve-onto-target (Story 2.3 last mile): push rolled damage through the TARGET's
+     * pipeline, attributed to the attacker, merge the target's steps under its name, persist
+     * and audit it, and describe the outcome in the payload. A damage type the enum doesn't
+     * know ("?" placeholders in the data) falls back to a printed instruction.
+     */
+    private void landDamage(GameCharacter attacker, Combatant target, int amount, DamageType type,
+                            List<String> tags, ResolutionResult result) {
+        var outcome = new java.util.LinkedHashMap<String, Object>();
+        outcome.put("combatantId", target.getCombatantId());
+        outcome.put("name", target.getName());
+        if (type == null) {
+            result.addStep("target", "Apply " + amount + " damage to " + target.getName()
+                    + " manually — the damage type is not machine-readable", 0, amount);
+            outcome.put("manual", true);
+            result.putPayload("target", outcome);
+            return;
+        }
+        if (amount > 0) {
+            var landed = combatActions.damage(target, new DamageRequest(amount, type, tags, false,
+                    attacker.getCombatantId(), false, null, null));
+            CombatActionService.mergeSteps(result, target.getName(), landed.resolution());
+            audit.log(target.getRoomName(), target.getCombatantId(), target.getName(), "damage",
+                    landed.auditSummary() + " — from " + attacker.getName());
+            combatants.save(target);
+        }
+        outcome.put("hpAfter", target.getHp().getCurrent());
+        outcome.put("hpMax", statEngine.computeMaxHP(target));
+        outcome.put("status", target.getLifeStatus().name());
+        result.putPayload("target", outcome);
+    }
+
+    /** Healing lands the same way — through the target's pipeline (Cursed/Decaying apply). */
+    private void landHealing(GameCharacter healer, Combatant target, int amount, ResolutionResult result) {
+        if (amount <= 0) return;
+        var landed = combatActions.heal(target, new HealRequest(amount));
+        CombatActionService.mergeSteps(result, target.getName(), landed.resolution());
+        audit.log(target.getRoomName(), target.getCombatantId(), target.getName(), "heal",
+                landed.auditSummary() + " — from " + healer.getName());
+        combatants.save(target);
+        var outcome = new java.util.LinkedHashMap<String, Object>();
+        outcome.put("combatantId", target.getCombatantId());
+        outcome.put("name", target.getName());
+        outcome.put("hpAfter", target.getHp().getCurrent());
+        outcome.put("hpMax", statEngine.computeMaxHP(target));
+        outcome.put("status", target.getLifeStatus().name());
+        result.putPayload("target", outcome);
     }
 
     private static void mergeSteps(ResolutionResult into, String prefix, ResolutionResult from) {

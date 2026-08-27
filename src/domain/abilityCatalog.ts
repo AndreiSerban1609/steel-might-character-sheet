@@ -28,6 +28,8 @@ export interface AbilityEntry {
   resolution: 'auto' | 'manual';
   usesPerRest?: { stat?: string; min?: number; amount?: number } | null;
   usesPerTurn?: number | null;
+  /** Structured effect the ability puts on a target — lands on a named combatant (Story 2.3). */
+  targetEffect?: { effectId: string } | null;
   description: string;
 }
 
