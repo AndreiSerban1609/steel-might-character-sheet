@@ -10,9 +10,14 @@ public class ActiveEffect {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // One row type, one table, two possible parents (ADR-001 §2): exactly one of these is set.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private GameCharacter character;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "monster_id")
+    private MonsterInstance monster;
 
     private String effectId;
     private String source;
@@ -42,6 +47,8 @@ public class ActiveEffect {
 
     public GameCharacter getCharacter() { return character; }
     public void setCharacter(GameCharacter character) { this.character = character; }
+    public MonsterInstance getMonster() { return monster; }
+    public void setMonster(MonsterInstance monster) { this.monster = monster; }
 
     public String getEffectId() { return effectId; }
     public void setEffectId(String effectId) { this.effectId = effectId; }

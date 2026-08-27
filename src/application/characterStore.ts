@@ -20,11 +20,31 @@ import type {
   SkillCheckResult,
   SpellbookSnapshot,
   TableDraw,
+  MonsterTemplateRequest,
+  MonsterTemplateView,
+  MonsterView,
+  CombatantView,
 } from '../platform/types';
+import { isMonsterId } from '../platform/types';
 import {
   applyEffect,
   castScroll,
   castSpell,
+  clearMonsters,
+  combatantApplyEffect,
+  combatantDamage,
+  combatantHeal,
+  combatantRemoveEffect,
+  combatantTurnEnd,
+  createMonsterTemplate,
+  deleteMonster,
+  deleteMonsterTemplate,
+  fetchMonsterTemplates,
+  fetchMonsters,
+  importMonsterTemplates,
+  spawnMonsters,
+  templateFromCharacter,
+  updateMonsterTemplate,
   combatStart,
   fetchAbilities,
   updateAbilities,
@@ -142,6 +162,24 @@ export interface CharacterState {
   lastResolutionTarget: string | null;
   encounter: EncounterView | null;
   abilities: AbilitiesSnapshot | null;
+  /** Monsters in the room's fight (Epic 2) — every client sees them: targets for all, board for the GM. */
+  monsters: MonsterView[];
+  /** The GM's room library of monster stat blocks. */
+  monsterTemplates: MonsterTemplateView[];
+
+  loadMonsters: () => Promise<void>;
+  loadMonsterTemplates: () => Promise<void>;
+  saveMonsterTemplate: (body: MonsterTemplateRequest, id?: number) => Promise<void>;
+  deleteMonsterTemplate: (id: number) => Promise<void>;
+  importMonsterTemplates: (body: MonsterTemplateRequest[]) => Promise<void>;
+  /** Story 2.5: mirror a character into a Death-fight template. */
+  cloneCharacterAsTemplate: (playerId: string) => Promise<void>;
+  spawnMonsters: (templateId: number, count: number) => Promise<void>;
+  removeMonster: (id: number) => Promise<void>;
+  clearMonsters: () => Promise<void>;
+  /** GM: end the current monster's turn (players only ever end their own). */
+  endMonsterTurn: (combatantId: string) => Promise<void>;
+  doMonsterRemoveEffect: (combatantId: string, effectId: string) => Promise<void>;
 
   setRoom: (room: string) => void;
   setEmail: (email: string) => void;
@@ -182,14 +220,14 @@ export interface CharacterState {
   doEquip: (body: { itemId: string; tier?: number }) => Promise<void>;
   doUnequip: (body: { itemId: string; tier?: number }) => Promise<void>;
   doUseConsumable: (body: { itemId: string; tier?: number }) => Promise<void>;
-  doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean; targetPlayerId?: string }) => Promise<void>;
+  doCastScroll: (body: { itemId: string; tier?: number; spellId?: string; applyEffectsToSelf?: boolean; targetPlayerId?: string; targetCombatantId?: string }) => Promise<void>;
   doLevelUp: (choices: LevelUpChoices) => Promise<void>;
   doWeaponAttack: (itemId?: string) => Promise<void>;
-  doDamage: (value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number) => Promise<void>;
+  doDamage: (value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number, attackerCombatantId?: string) => Promise<void>;
   doHeal: (value: number) => Promise<void>;
   /** Quiet room-roster refresh — feeds the target pickers without touching loading flags. */
   refreshParty: () => Promise<void>;
-  doTargetedDamage: (targetId: string, value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number) => Promise<void>;
+  doTargetedDamage: (targetId: string, value: number, damageType: DamageTypeId, tags?: string[], attackerMight?: number, attackerCombatantId?: string) => Promise<void>;
   doTargetedHeal: (targetId: string, value: number) => Promise<void>;
   doTargetedApplyEffect: (targetId: string, body: ApplyEffectBody) => Promise<void>;
   doTurnStart: () => Promise<void>;
@@ -248,6 +286,140 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   lastResolutionTarget: null,
   encounter: null,
   abilities: null,
+  monsters: [],
+  monsterTemplates: [],
+
+  loadMonsters: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    try {
+      set({ monsters: await fetchMonsters(room) });
+    } catch {
+      /* the fight list is an enhancement — keep whatever we had */
+    }
+  },
+
+  loadMonsterTemplates: async () => {
+    const room = get().roomName;
+    if (!room.trim()) return;
+    try {
+      set({ monsterTemplates: await fetchMonsterTemplates(room), error: null });
+    } catch (e) {
+      set({ error: msg(e) });
+    }
+  },
+
+  saveMonsterTemplate: async (body, id) => {
+    const room = get().roomName;
+    set({ saving: true, error: null });
+    try {
+      if (id != null) await updateMonsterTemplate(room, id, body);
+      else await createMonsterTemplate(room, body);
+      set({ monsterTemplates: await fetchMonsterTemplates(room), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  deleteMonsterTemplate: async (id) => {
+    const room = get().roomName;
+    set({ saving: true, error: null });
+    try {
+      await deleteMonsterTemplate(room, id);
+      set({ monsterTemplates: await fetchMonsterTemplates(room), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  importMonsterTemplates: async (body) => {
+    const room = get().roomName;
+    set({ saving: true, error: null });
+    try {
+      await importMonsterTemplates(room, body);
+      set({ monsterTemplates: await fetchMonsterTemplates(room), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  cloneCharacterAsTemplate: async (playerId) => {
+    const room = get().roomName;
+    set({ saving: true, error: null });
+    try {
+      await templateFromCharacter(room, playerId);
+      set({ monsterTemplates: await fetchMonsterTemplates(room), saving: false });
+    } catch (e) {
+      set({ error: msg(e), saving: false });
+    }
+  },
+
+  spawnMonsters: async (templateId, count) => {
+    const room = get().roomName;
+    set({ acting: true, error: null });
+    try {
+      await spawnMonsters(room, templateId, count);
+      set({ monsters: await fetchMonsters(room), acting: false });
+      // Reinforcements join a running order server-side — pull the fresh view.
+      if (get().encounter?.active) await get().loadEncounter();
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  removeMonster: async (id) => {
+    const room = get().roomName;
+    set({ acting: true, error: null });
+    try {
+      await deleteMonster(room, id);
+      set({ monsters: await fetchMonsters(room), acting: false });
+      if (get().encounter?.active) await get().loadEncounter();
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  clearMonsters: async () => {
+    const room = get().roomName;
+    set({ acting: true, error: null });
+    try {
+      await clearMonsters(room);
+      set({ monsters: [], acting: false });
+      if (get().encounter?.active) await get().loadEncounter();
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  endMonsterTurn: async (combatantId) => {
+    const room = get().roomName;
+    set({ acting: true, error: null });
+    try {
+      const response = await combatantTurnEnd(room, combatantId);
+      adoptMonsterResponse(set, get, combatantId, response);
+      set({ acting: false });
+      await get().loadEncounter();
+      // The next combatant's ticks may have changed the viewed sheet or another monster.
+      await get().loadMonsters();
+      const id = get().selectedPlayerId;
+      if (id && get().encounter?.currentPlayerId === id) {
+        void fetchCombatSnapshot(id).then((snap) => set({ snapshot: snap }), () => undefined);
+      }
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
+
+  doMonsterRemoveEffect: async (combatantId, effectId) => {
+    const room = get().roomName;
+    set({ acting: true, error: null });
+    try {
+      adoptMonsterResponse(set, get, combatantId, await combatantRemoveEffect(room, combatantId, effectId));
+      set({ acting: false });
+    } catch (e) {
+      set({ error: msg(e), acting: false });
+    }
+  },
 
   setRoom: (room) => set({ roomName: room }),
   setEmail: (email) => set({ email }),
@@ -553,7 +725,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 
   doCast: async (body) => {
     await runCombatAction(set, get, (id) => castSpell(id, body));
-    afterTargetedCast(set, get, body.targetPlayerId);
+    afterTargetedCast(set, get, body.targetCombatantId ?? body.targetPlayerId);
   },
 
   doPrepareSpells: async (spellIds) => {
@@ -585,7 +757,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   doCastScroll: async (body) => {
     await runCombatAction(set, get, (id) => castScroll(id, body));
     if (get().error) return;
-    afterTargetedCast(set, get, body.targetPlayerId);
+    afterTargetedCast(set, get, body.targetCombatantId ?? body.targetPlayerId);
     await get().loadInventory();
   },
   doLevelUp: async (choices) => {
@@ -595,13 +767,14 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   },
 
   doWeaponAttack: (itemId) => runCombatAction(set, get, (id) => weaponAttack(id, itemId)),
-  doDamage: (value, damageType, tags, attackerMight) =>
-    runCombatAction(set, get, (id) => sendDamage(id, value, damageType, tags, attackerMight)),
+  doDamage: (value, damageType, tags, attackerMight, attackerCombatantId) =>
+    runCombatAction(set, get, (id) => sendDamage(id, value, damageType, tags, attackerMight, attackerCombatantId)),
   doHeal: (value) => runCombatAction(set, get, (id) => sendHeal(id, value)),
 
   refreshParty: async () => {
     const room = get().roomName;
     if (!room.trim()) return;
+    void get().loadMonsters(); // monsters are targets too (ruling E5)
     try {
       set({ roster: await fetchRoster(room) });
     } catch {
@@ -609,12 +782,24 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     }
   },
 
-  doTargetedDamage: (targetId, value, damageType, tags, attackerMight) =>
-    runTargetedCombatAction(set, get, targetId, (id) => sendDamage(id, value, damageType, tags, attackerMight)),
+  doTargetedDamage: (targetId, value, damageType, tags, attackerMight, attackerCombatantId) =>
+    runTargetedCombatAction(
+      set, get, targetId,
+      (id) => sendDamage(id, value, damageType, tags, attackerMight, attackerCombatantId),
+      (room, id) => combatantDamage(room, id, value, damageType, tags, attackerMight, attackerCombatantId),
+    ),
   doTargetedHeal: (targetId, value) =>
-    runTargetedCombatAction(set, get, targetId, (id) => sendHeal(id, value)),
+    runTargetedCombatAction(
+      set, get, targetId,
+      (id) => sendHeal(id, value),
+      (room, id) => combatantHeal(room, id, value),
+    ),
   doTargetedApplyEffect: (targetId, body) =>
-    runTargetedCombatAction(set, get, targetId, (id) => applyEffect(id, body)),
+    runTargetedCombatAction(
+      set, get, targetId,
+      (id) => applyEffect(id, body),
+      (room, id) => combatantApplyEffect(room, id, body),
+    ),
   // turn actions move the room's turn order — refresh it alongside the snapshot
   doTurnStart: async () => {
     await runCombatAction(set, get, (id) => turnStart(id));
@@ -673,6 +858,11 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   adoptEncounter: (view) => {
     const prev = get().encounter;
     set({ encounter: view });
+    // A turn changed hands (or combat opened/closed): monster ticks may have landed —
+    // refresh the fight list so board rows and target pickers stay honest.
+    if (view.active !== prev?.active || view.currentPlayerId !== prev?.currentPlayerId) {
+      void get().loadMonsters();
+    }
     // Turns auto-start server-side — when the order just reached the viewed character,
     // their sheet already ticked (DoTs, AP recovery, per-turn budgets): pull it fresh.
     const id = get().selectedPlayerId;
@@ -835,6 +1025,13 @@ function afterTargetedCast(
   targetId: string | undefined,
 ): void {
   if (!targetId || get().error || targetId === get().selectedPlayerId) return;
+  if (isMonsterId(targetId)) {
+    // The monster took the spell's effects server-side — refresh its board row.
+    const name = get().monsters.find((m) => m.combatantId === targetId)?.name;
+    set({ lastResolutionTarget: name ?? targetId });
+    void get().loadMonsters();
+    return;
+  }
   const target = get().roster.find((r) => r.playerId === targetId);
   set({ lastResolutionTarget: target?.name ?? targetId });
   void fetchCombatSnapshot(targetId).then(
@@ -854,10 +1051,19 @@ async function runTargetedCombatAction(
   get: () => CharacterState,
   targetId: string,
   action: (playerId: string) => Promise<ActionResponse<CombatSnapshot>>,
+  monsterAction?: (room: string, combatantId: string) => Promise<ActionResponse<CombatantView>>,
 ): Promise<void> {
   if (targetId === get().selectedPlayerId) return runCombatAction(set, get, action);
   set({ acting: true, error: null });
   try {
+    if (isMonsterId(targetId)) {
+      // Monsters answer on the combatant routes (Story 2.3); their snapshot is a MonsterView
+      // that replaces the board row — no OBR sheet slice exists for a monster.
+      if (!monsterAction) throw new Error('This action cannot target a monster.');
+      adoptMonsterResponse(set, get, targetId, await monsterAction(get().roomName, targetId));
+      set({ acting: false });
+      return;
+    }
     const response = await action(targetId);
     const target = get().roster.find((r) => r.playerId === targetId);
     set({
@@ -869,6 +1075,28 @@ async function runTargetedCombatAction(
   } catch (e) {
     set({ error: msg(e), acting: false });
   }
+}
+
+/** A combatant-route response for a monster: show the log, refresh that board row. */
+function adoptMonsterResponse(
+  set: (partial: Partial<CharacterState>) => void,
+  get: () => CharacterState,
+  combatantId: string,
+  response: ActionResponse<CombatantView>,
+): void {
+  const monster = response.snapshot.monster;
+  const monsters = monster
+    ? get().monsters.some((m) => m.combatantId === combatantId)
+      ? get().monsters.map((m) => (m.combatantId === combatantId ? monster : m))
+      : [...get().monsters, monster]
+    : get().monsters;
+  set({
+    lastResolution: response.resolution,
+    lastResolutionTarget: response.snapshot.name ?? combatantId,
+    monsters,
+  });
+  // Monster vitals ride inside the encounter view — keep the tracker's chip current.
+  if (get().encounter?.active) void get().loadEncounter();
 }
 
 /** Shop actions return the inventory snapshot instead of the combat one. */

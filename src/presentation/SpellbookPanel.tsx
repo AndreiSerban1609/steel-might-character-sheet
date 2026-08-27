@@ -31,6 +31,7 @@ export function SpellbookPanel() {
   const [prepDraft, setPrepDraft] = useState<string[] | null>(null);
   const [tagFilter, setTagFilter] = useState('');
   const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
+  const monsters = useCharacterStore((s) => s.monsters);
   const roster = useCharacterStore((s) => s.roster);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
 
@@ -73,7 +74,7 @@ export function SpellbookPanel() {
       spellId: spell.id,
       castAtLevel: castLevel ?? undefined,
       applyEffectsToSelf: castTarget === 'self' || undefined,
-      targetPlayerId: castTarget && castTarget !== 'self' ? castTarget : undefined,
+      targetCombatantId: castTarget && castTarget !== 'self' ? castTarget : undefined,
     });
   }
 
@@ -160,6 +161,13 @@ export function SpellbookPanel() {
                     .map((r) => (
                       <option key={r.playerId} value={r.playerId}>
                         effects: {r.name}
+                      </option>
+                    ))}
+                  {monsters
+                    .filter((m) => m.status !== 'DEAD')
+                    .map((m) => (
+                      <option key={m.combatantId} value={m.combatantId}>
+                        effects: {m.name} (monster)
                       </option>
                     ))}
                 </select>

@@ -393,7 +393,7 @@ public class ShopService {
 
         // No mana (Shops p.17); the scroll casts at the spell's own level (no upcast).
         return characterService.resolveCast(playerId, c, spell, spell.level(), apCost, 0,
-                req.targetPlayerId(), req.applyEffectsToSelf(), result);
+                req.effectsTargetId(), req.applyEffectsToSelf(), result);
     }
 
     /** usesPerLongRest (rest-restored) or charges (permanent pool); null = untracked. */

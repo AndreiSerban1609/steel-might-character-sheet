@@ -2,7 +2,7 @@ package com.steelmight.charactersheet.engine;
 
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.ActiveEffect;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import com.steelmight.charactersheet.model.LifeStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class EffectApplicationEngine {
 
     // ---- Apply ----
 
-    public ResolutionResult apply(GameCharacter target, EffectApplication app) {
+    public ResolutionResult apply(Combatant target, EffectApplication app) {
         var def = gameData.getEffect(app.effectId());
         if (def == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unknown effect: " + app.effectId());
@@ -84,13 +84,13 @@ public class EffectApplicationEngine {
 
     /** DEATH mechanic wiring (M2-D): an active DEATH mechanic — exhaustion tier 6 —
      *  kills outright; the Death fight is pending after the current combat (N11a). */
-    private void checkDeathMechanic(GameCharacter target, ResolutionResult result) {
+    private void checkDeathMechanic(Combatant target, ResolutionResult result) {
         if (target.getLifeStatus() == LifeStatus.DEAD) return;
         int threshold = statEngine.computeStackThreshold(target);
         for (var hit : ActiveMechanics.collect(target, gameData, threshold, MechanicType.DEATH)) {
             target.setLifeStatus(LifeStatus.DEAD);
             target.setDownedRoundsRemaining(null);
-            target.setPendingDeathFight(true);
+            if (target.usesDeathRules()) target.setPendingDeathFight(true); // monsters just die (E4)
             result.addStep("death",
                     hit.def().id() + " reaches its lethal tier — " + target.getName() + " dies", 0, 0);
             result.addTriggeredEffect("death");
@@ -102,7 +102,7 @@ public class EffectApplicationEngine {
      *  tier count, capped at maxApplications; every application (including past the cap)
      *  refreshes the duration of all acquired tiers (M2-C — corroded's "1 round" per
      *  application; exhaustion has no durations and persists until removed). */
-    private void applyApplicationLadder(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyApplicationLadder(Combatant target, EffectDefinition def, EffectApplication app,
                                         int stacks, ResolutionResult result) {
         int cap = def.maxApplications() != null ? def.maxApplications() : Integer.MAX_VALUE;
         var existing = findFirst(target, def.id());
@@ -141,7 +141,7 @@ public class EffectApplicationEngine {
     // ---- Protections (M2-A) ----
 
     /** @return true when the application was negated/rejected (steps already recorded). */
-    private boolean checkProtections(GameCharacter target, EffectDefinition def,
+    private boolean checkProtections(Combatant target, EffectDefinition def,
                                      EffectApplication app, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(target);
 
@@ -219,7 +219,7 @@ public class EffectApplicationEngine {
                         || m.mode() == AbsorbMode.TEMP_HP);
     }
 
-    private void applyNewInstance(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyNewInstance(Combatant target, EffectDefinition def, EffectApplication app,
                                   int stacks, ResolutionResult result) {
         var effect = new ActiveEffect(def.id(), app.source(), stacks, app.value(),
                 app.durationRounds(), target.getActiveEffects().size());
@@ -228,7 +228,7 @@ public class EffectApplicationEngine {
         result.addStep("apply-effect", "Applied " + def.id() + " (new instance)", 0, stacks);
     }
 
-    private void applyKeepHigher(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyKeepHigher(Combatant target, EffectDefinition def, EffectApplication app,
                                  ResolutionResult result) {
         // temporary-hp semantics: higher value replaces lower; lower or equal is ignored.
         var existing = findFirst(target, def.id());
@@ -256,7 +256,7 @@ public class EffectApplicationEngine {
         }
     }
 
-    private void applyIncrementing(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyIncrementing(Combatant target, EffectDefinition def, EffectApplication app,
                                    int stacks, ResolutionResult result) {
         // prone: re-application increments stacks (feeds the stand-up cost), never refreshes.
         var existing = findFirst(target, def.id());
@@ -272,7 +272,7 @@ public class EffectApplicationEngine {
                 before, existing.getStacks());
     }
 
-    private void applyThreshold(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyThreshold(Combatant target, EffectDefinition def, EffectApplication app,
                                 int stacks, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(target);
         var existing = findFirst(target, def.id());
@@ -312,7 +312,7 @@ public class EffectApplicationEngine {
                 before, existing.getStacks());
     }
 
-    private void applyCounter(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyCounter(Combatant target, EffectDefinition def, EffectApplication app,
                               int stacks, ResolutionResult result) {
         // Positive stack-counters (warded, block): one instance, stacks accumulate,
         // events consume them (M2-A).
@@ -330,7 +330,7 @@ public class EffectApplicationEngine {
         result.addStep("apply-effect", def.id() + " stacks added", before, existing.getStacks());
     }
 
-    private void applyRefresh(GameCharacter target, EffectDefinition def, EffectApplication app,
+    private void applyRefresh(Combatant target, EffectDefinition def, EffectApplication app,
                               int stacks, ResolutionResult result) {
         var existing = findFirst(target, def.id());
         if (existing == null) {
@@ -359,7 +359,7 @@ public class EffectApplicationEngine {
     // ---- Remove ----
 
     /** Removes ALL instances of the effect. Absent → 200 with a "not present" step (idempotent). */
-    public ResolutionResult remove(GameCharacter target, String effectId) {
+    public ResolutionResult remove(Combatant target, String effectId) {
         var result = new ResolutionResult();
         var matches = target.getActiveEffects().stream()
                 .filter(e -> e.getEffectId().equals(effectId))
@@ -376,7 +376,7 @@ public class EffectApplicationEngine {
 
     /** Removes every active effect whose source matches — a dropped concentration/
      *  channeling spell takes the effects it applied with it (M4-C). */
-    public ResolutionResult removeBySource(GameCharacter target, String source) {
+    public ResolutionResult removeBySource(Combatant target, String source) {
         var result = new ResolutionResult();
         if (source == null) return result;
         for (var effect : new ArrayList<>(target.getActiveEffects())) {
@@ -388,7 +388,7 @@ public class EffectApplicationEngine {
         return result;
     }
 
-    private void removeInstance(GameCharacter target, ActiveEffect effect,
+    private void removeInstance(Combatant target, ActiveEffect effect,
                                 ResolutionResult result, String note) {
         var def = gameData.getEffect(effect.getEffectId());
         target.removeEffect(effect);
@@ -405,7 +405,7 @@ public class EffectApplicationEngine {
      * effects with a duration tick down and expire through the removal path.
      * M0-C's turn-end endpoint delegates here and adds AP recovery on turn-start.
      */
-    public ResolutionResult tickTurnEnd(GameCharacter target) {
+    public ResolutionResult tickTurnEnd(Combatant target) {
         var result = new ResolutionResult();
         int threshold = statEngine.computeStackThreshold(target);
 
@@ -430,7 +430,7 @@ public class EffectApplicationEngine {
         return result;
     }
 
-    private void tickThresholdEffect(GameCharacter target, EffectDefinition def, ActiveEffect effect,
+    private void tickThresholdEffect(Combatant target, EffectDefinition def, ActiveEffect effect,
                                      int threshold, ResolutionResult result) {
         // N9: consume threshold-many stacks — only in full bites (8→5→2 keeps the 2).
         if (effect.getStacks() >= threshold) {
@@ -459,7 +459,7 @@ public class EffectApplicationEngine {
 
     // ---- Helpers ----
 
-    private ActiveEffect findFirst(GameCharacter target, String effectId) {
+    private ActiveEffect findFirst(Combatant target, String effectId) {
         return target.getActiveEffects().stream()
                 .filter(e -> e.getEffectId().equals(effectId))
                 .findFirst()
@@ -481,7 +481,7 @@ public class EffectApplicationEngine {
     }
 
     /** temporary-hp: the ActiveEffect.value is the source of truth; hp.temp mirrors it. */
-    private void mirrorTempHp(GameCharacter target, EffectDefinition def, int value) {
+    private void mirrorTempHp(Combatant target, EffectDefinition def, int value) {
         if (hasNoStackAbsorb(def) && target.getHp() != null) {
             target.getHp().setTemp(value);
         }

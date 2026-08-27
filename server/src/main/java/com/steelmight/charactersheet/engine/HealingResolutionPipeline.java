@@ -5,7 +5,7 @@ import com.steelmight.charactersheet.engine.rules.heal.CursedRule;
 import com.steelmight.charactersheet.engine.rules.heal.DecayingRule;
 import com.steelmight.charactersheet.engine.rules.heal.DownedHealBlockRule;
 import com.steelmight.charactersheet.engine.rules.heal.MaimedRule;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class HealingResolutionPipeline {
         this.rules = List.of(downedHealBlockRule, maimedRule, cursedRule, decayingRule, applyHealingRule);
     }
 
-    public ResolutionResult resolve(HealEvent event, GameCharacter character) {
+    public ResolutionResult resolve(HealEvent event, Combatant character) {
         var result = new ResolutionResult();
         for (var rule : rules) {
             rule.apply(event, character, result);

@@ -6,7 +6,7 @@ import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.model.DamageType;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +24,7 @@ public class ArmorRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         if (event.hasTag("dot") || event.hasTag("ignoresArmor")) return;
 
         int armor;

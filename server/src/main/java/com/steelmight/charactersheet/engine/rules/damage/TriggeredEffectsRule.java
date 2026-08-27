@@ -9,7 +9,7 @@ import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.engine.TriggerEvent;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -40,7 +40,7 @@ public class TriggeredEffectsRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(character);
         var toRemove = new HashSet<String>();
 

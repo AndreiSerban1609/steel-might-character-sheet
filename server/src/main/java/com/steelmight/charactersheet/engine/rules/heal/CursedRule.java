@@ -7,7 +7,7 @@ import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,7 +27,7 @@ public class CursedRule implements ResolutionRule<HealEvent> {
     }
 
     @Override
-    public void apply(HealEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(HealEvent event, Combatant character, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(character);
         for (var hit : ActiveMechanics.collect(character, gameData, threshold, MechanicType.HEALING_MODIFIER)) {
             var m = hit.mechanic().multiplier();

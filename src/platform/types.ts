@@ -200,13 +200,86 @@ export interface PlayerDeckView {
   cards: Card[];
 }
 
+export type CombatantType = 'PLAYER' | 'MONSTER';
+
+/** Is this combatant id a monster (`monster:{id}`) rather than a playerId? */
+export function isMonsterId(combatantId: string | null | undefined): boolean {
+  return !!combatantId && combatantId.startsWith('monster:');
+}
+
 export interface EncounterEntryView {
+  /** A COMBATANT id: a playerId or `monster:{id}` (field name kept for older clients). */
   playerId: string;
   name: string;
   initiative: number;
   status: 'ALIVE' | 'DOWNED' | 'DEAD' | null;
   /** Ambushed: auto-skipped during the surprise round (round 0). */
   surprised: boolean;
+  combatantType: CombatantType;
+  /** Monster vitals ride inline in the encounter (ADR-001 §6); null for players. */
+  hp: number | null;
+  maxHp: number | null;
+}
+
+/** A live monster in the room's fight (server: dto.MonsterView). */
+export interface MonsterView {
+  id: number;
+  /** `monster:{id}` — what every target picker and combatant action uses. */
+  combatantId: string;
+  templateId: number | null;
+  name: string;
+  level: number;
+  hp: { current: number; max: number; temp: number };
+  ac: number;
+  pa: number;
+  ma: number;
+  speed: number;
+  might: number | null;
+  stats: Record<AbilityScore, number>;
+  modifiers: Record<AbilityScore, number>;
+  /** Monsters never enter DOWNED — at 0 HP they are DEAD (ruling 2026-08-26). */
+  status: 'ALIVE' | 'DEAD';
+  stackThreshold: number;
+  savingThrowProficiencies: AbilityScore[];
+  damageTaken: Partial<Record<DamageTypeId, number>>;
+  activeEffects: EffectView[];
+  conditions: string[];
+  abilitiesText: string | null;
+}
+
+/** Create / update / import shape for a monster template (server: dto.MonsterTemplateRequest). */
+export interface MonsterTemplateRequest {
+  name: string;
+  level: number;
+  maxHp: number;
+  ac: number;
+  pa: number;
+  ma: number;
+  speed: number;
+  might: number | null;
+  initiativeBonus: number;
+  stats: Partial<Record<AbilityScore, number>>;
+  savingThrowProficiencies: AbilityScore[];
+  /** Multiplier per damage type: <1 resist, >1 vulnerable, 0 immune. */
+  damageTaken: Partial<Record<DamageTypeId, number>>;
+  abilitiesText: string | null;
+  /** Ruling E2: authored stack threshold; null = ceil(level/2). */
+  stackThreshold: number | null;
+}
+
+export interface MonsterTemplateView extends MonsterTemplateRequest {
+  id: number;
+  roomName: string;
+  stats: Record<AbilityScore, number>;
+}
+
+/** Snapshot from a combatant action route: exactly one of character/monster is set. */
+export interface CombatantView {
+  type: CombatantType;
+  combatantId: string;
+  name: string;
+  character: CombatSnapshot | null;
+  monster: MonsterView | null;
 }
 
 /**

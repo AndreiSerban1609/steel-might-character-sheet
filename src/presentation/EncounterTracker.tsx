@@ -18,6 +18,8 @@ export function EncounterTracker() {
   const endEncounter = useCharacterStore((s) => s.endEncounter);
   const skipTurn = useCharacterStore((s) => s.skipTurn);
   const overrideInitiative = useCharacterStore((s) => s.overrideInitiative);
+  const monsters = useCharacterStore((s) => s.monsters);
+  const endMonsterTurn = useCharacterStore((s) => s.endMonsterTurn);
 
   const isGm = role === 'gm';
   const [editing, setEditing] = useState<string | null>(null);
@@ -74,6 +76,18 @@ export function EncounterTracker() {
                 {r.name}
               </label>
             ))}
+            {monsters
+              .filter((m) => m.status !== 'DEAD')
+              .map((m) => (
+                <label className="encounter-surprise-pick" key={m.combatantId}>
+                  <input
+                    type="checkbox"
+                    checked={surprised.has(m.combatantId)}
+                    onChange={() => toggleSurprised(m.combatantId)}
+                  />
+                  {m.name}
+                </label>
+              ))}
           </div>
         )}
       </div>
@@ -106,6 +120,16 @@ export function EncounterTracker() {
         </span>
         {isGm && (
           <span className="encounter-actions">
+            {current?.combatantType === 'MONSTER' && (
+              <button
+                className="btn btn--gold"
+                title="End this monster's turn — the order advances and the next turn begins"
+                onClick={() => void endMonsterTurn(current.playerId)}
+                disabled={acting}
+              >
+                End {current.name}'s turn
+              </button>
+            )}
             <button className="btn btn--ghost" title="Skip the current turn (AFK)" onClick={() => void skipTurn()} disabled={acting}>
               Skip
             </button>
@@ -123,6 +147,7 @@ export function EncounterTracker() {
             'encounter-entry' +
             (isCurrent ? ' encounter-entry--current' : '') +
             (e.status === 'DEAD' ? ' encounter-entry--dead' : '') +
+            (e.combatantType === 'MONSTER' ? ' encounter-entry--monster' : '') +
             (surprisedNow ? ' encounter-entry--surprised' : '');
           return (
             <span
@@ -132,6 +157,11 @@ export function EncounterTracker() {
             >
               {isCurrent && <span className="encounter-arrow">▶</span>}
               {e.name}
+              {e.combatantType === 'MONSTER' && e.hp != null && (
+                <span className="encounter-hp" title="Monster HP (live)">
+                  {e.hp}/{e.maxHp}
+                </span>
+              )}
               {isGm && editing === e.playerId ? (
                 <input
                   className="encounter-init-input"

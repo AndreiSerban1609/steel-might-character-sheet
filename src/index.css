@@ -2783,3 +2783,315 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Monsters (Epic 2): GM board, room library, tracker chips ── */
+
+.encounter-hp {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  padding-left: 2px;
+}
+
+.encounter-entry--monster {
+  border-style: dashed;
+}
+
+.monster-board {
+  margin: 18px 0 8px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-panel);
+}
+
+.monster-board-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.monster-board-head h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: 0;
+  color: var(--gold);
+}
+
+.monster-board-head .spacer {
+  flex: 1;
+}
+
+.monster-spawn {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.monster-spawn input[type='number'] {
+  width: 56px;
+}
+
+.monster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.monster-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.monster-card--current {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+
+.monster-card--dead {
+  opacity: 0.55;
+}
+
+.monster-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.monster-card-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 14px;
+  flex: 1;
+}
+
+.monster-card-level {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.monster-status {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border-bright);
+  color: var(--text-dim);
+}
+
+.monster-status--downed {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+}
+
+.monster-status--dead {
+  color: var(--negative);
+  border-color: var(--negative);
+}
+
+.monster-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  flex-wrap: wrap;
+}
+
+.monster-stats strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.monster-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.monster-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 1px 7px;
+  border: 1px solid var(--border-bright);
+  border-radius: 10px;
+  color: var(--text);
+}
+
+.monster-chip--dormant {
+  border-style: dashed;
+  color: var(--text-dim);
+}
+
+.monster-chip button {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.monster-chip button:hover {
+  color: var(--negative);
+}
+
+.monster-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.monster-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.monster-row input[type='number'] {
+  width: 58px;
+}
+
+.monster-row select {
+  max-width: 150px;
+}
+
+.monster-abilities {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: pre-line;
+}
+
+.monster-abilities summary {
+  cursor: pointer;
+  color: var(--text);
+}
+
+.monster-library {
+  margin-top: 18px;
+}
+
+.mlib-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.mlib-row .mlib-name {
+  font-family: 'Cinzel', serif;
+  flex: 1;
+}
+
+.mlib-row .mlib-meta {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.mlib-editor {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.mlib-grid label,
+.mlib-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.mlib-grid input,
+.mlib-grid select,
+.mlib-stat input {
+  font: inherit;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.mlib-stats {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.mlib-checks {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.mlib-dt {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mlib-dt input[type='number'] {
+  width: 64px;
+}
+
+.mlib-editor textarea {
+  font: inherit;
+  font-size: 13px;
+  min-height: 70px;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.mlib-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mlib-json {
+  width: 100%;
+  min-height: 120px;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px;
+}

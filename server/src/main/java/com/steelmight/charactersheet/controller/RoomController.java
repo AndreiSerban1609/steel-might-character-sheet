@@ -5,10 +5,12 @@ import com.steelmight.charactersheet.dto.DeckTemplate;
 import com.steelmight.charactersheet.dto.EncounterView;
 import com.steelmight.charactersheet.dto.SetInitiativeRequest;
 import com.steelmight.charactersheet.dto.StartEncounterRequest;
+import com.steelmight.charactersheet.model.CombatantType;
 import com.steelmight.charactersheet.service.AuditService;
 import com.steelmight.charactersheet.service.CharacterService;
 import com.steelmight.charactersheet.service.DeckTemplateService;
 import com.steelmight.charactersheet.service.EncounterService;
+import com.steelmight.charactersheet.service.TurnFlowService;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +24,16 @@ public class RoomController {
     private final DeckTemplateService deckService;
     private final EncounterService encounterService;
     private final CharacterService characterService;
+    private final TurnFlowService turnFlow;
     private final AuditService auditService;
 
     public RoomController(DeckTemplateService deckService, EncounterService encounterService,
-                          CharacterService characterService, AuditService auditService) {
+                          CharacterService characterService, TurnFlowService turnFlow,
+                          AuditService auditService) {
         this.deckService = deckService;
         this.encounterService = encounterService;
         this.characterService = characterService;
+        this.turnFlow = turnFlow;
         this.auditService = auditService;
     }
 
@@ -56,9 +61,10 @@ public class RoomController {
         return encounterService.get(room);
     }
 
-    /** Rolls d20 + DEX mod + initiative bonus per participant and opens the turn order.
-     *  Also runs each participant's combat-start pipeline (Q18: AP → starting value),
-     *  then begins the first character's turn — players only ever END turns in combat.
+    /** Rolls d20 + DEX mod + initiative bonus per participant — every player plus every
+     *  living monster in the room — and opens the turn order. Also runs each PLAYER's
+     *  combat-start pipeline (Q18: AP → starting value; monsters have no AP), then begins
+     *  the first combatant's turn — nobody starts turns themselves in combat.
      *  Transactional: the composition is all-or-nothing (no half-started encounters). */
     @Transactional
     @PostMapping("/{room}/encounter/start")
@@ -66,9 +72,11 @@ public class RoomController {
                                         @RequestBody(required = false) StartEncounterRequest req) {
         var view = encounterService.start(room, req);
         for (var entry : view.entries()) {
-            characterService.combatStart(entry.playerId());
+            if (entry.combatantType() == CombatantType.PLAYER) {
+                characterService.combatStart(entry.playerId());
+            }
         }
-        autoStartCurrentTurn(room);
+        turnFlow.autoStartCurrent(room);
         return encounterService.get(room);
     }
 
@@ -82,23 +90,8 @@ public class RoomController {
     @PostMapping("/{room}/encounter/next")
     public EncounterView nextTurn(@PathVariable String room) {
         encounterService.forceNext(room);
-        autoStartCurrentTurn(room);
+        turnFlow.autoStartCurrent(room);
         return encounterService.get(room);
-    }
-
-    /**
-     * Turns begin automatically (players only end them). Composed here, like
-     * combat-start, to keep EncounterService free of a CharacterService cycle.
-     * Starts only characters that can act — a null status means the character
-     * row is gone (deleted mid-combat) and starting it would 404.
-     */
-    private void autoStartCurrentTurn(String room) {
-        var view = encounterService.get(room);
-        if (!view.active() || view.turnStarted() || view.currentPlayerId() == null) return;
-        boolean canAct = view.entries().stream()
-                .anyMatch(e -> e.playerId().equals(view.currentPlayerId())
-                        && e.status() != null && !"DEAD".equals(e.status()));
-        if (canAct) characterService.turnStart(view.currentPlayerId());
     }
 
     /** DM override: change a participant's initiative mid-combat. */

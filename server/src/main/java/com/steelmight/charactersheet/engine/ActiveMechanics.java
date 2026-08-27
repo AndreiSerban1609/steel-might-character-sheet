@@ -2,7 +2,7 @@ package com.steelmight.charactersheet.engine;
 
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.ActiveEffect;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +30,7 @@ public final class ActiveMechanics {
      */
     public record Hit(ActiveEffect effect, EffectDefinition def, EffectMechanic mechanic) {}
 
-    public static List<Hit> collect(GameCharacter character, GameDataProvider gameData,
+    public static List<Hit> collect(Combatant character, GameDataProvider gameData,
                                     int threshold, MechanicType type) {
         var hits = new ArrayList<Hit>();
         for (var active : character.getActiveEffects()) {

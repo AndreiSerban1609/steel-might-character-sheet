@@ -386,11 +386,13 @@ function ScrollReader({
     spellId: string;
     applyEffectsToSelf?: boolean;
     targetPlayerId?: string;
+    targetCombatantId?: string;
   }) => void;
 }) {
-  // '' = no effects target (DM applies) | 'self' | a party member's playerId
+  // '' = no effects target (DM applies) | 'self' | a party member's playerId | a monster's combatant id
   const [castTarget, setCastTarget] = useState('');
   const roster = useCharacterStore((s) => s.roster);
+  const monsters = useCharacterStore((s) => s.monsters);
   const selectedPlayerId = useCharacterStore((s) => s.selectedPlayerId);
   const spell = useMemo(
     () =>
@@ -422,6 +424,13 @@ function ScrollReader({
                   effects: {r.name}
                 </option>
               ))}
+            {monsters
+              .filter((m) => m.status !== 'DEAD')
+              .map((m) => (
+                <option key={m.combatantId} value={m.combatantId}>
+                  effects: {m.name} (monster)
+                </option>
+              ))}
           </select>
         )}
         <button
@@ -432,7 +441,7 @@ function ScrollReader({
               tier,
               spellId,
               applyEffectsToSelf: castTarget === 'self' || undefined,
-              targetPlayerId: castTarget && castTarget !== 'self' ? castTarget : undefined,
+              targetCombatantId: castTarget && castTarget !== 'self' ? castTarget : undefined,
             })
           }
           disabled={acting}

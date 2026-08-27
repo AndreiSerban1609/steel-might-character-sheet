@@ -2,7 +2,7 @@ package com.steelmight.charactersheet.engine;
 
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.DamageType;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import com.steelmight.charactersheet.model.LifeStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class TurnTickService {
 
     // ---- Turn start ----
 
-    public ResolutionResult turnStart(GameCharacter character) {
+    public ResolutionResult turnStart(Combatant character) {
         return turnStart(character, true);
     }
 
@@ -55,7 +55,7 @@ public class TurnTickService {
      * apRecovery is false on a character's FIRST turn of a combat (2026-07-16 ruling:
      * everyone opens on starting AP, recovery begins with their second turn).
      */
-    public ResolutionResult turnStart(GameCharacter character, boolean apRecovery) {
+    public ResolutionResult turnStart(Combatant character, boolean apRecovery) {
         var result = new ResolutionResult();
         int threshold = statEngine.computeStackThreshold(character);
 
@@ -66,7 +66,10 @@ public class TurnTickService {
         }
 
         // 2. AP recovery — carryover, capped at max; derivation handles dazed/stunned/haste.
-        if (apRecovery) {
+        //    Monsters have no AP economy (ruling E1): nothing to recover, no step.
+        if (character.getAp() == null) {
+            // no-op
+        } else if (apRecovery) {
             int recovery = statEngine.computeAPRecovery(character);
             int before = character.getAp().getCurrent();
             int after = Math.min(statEngine.computeMaxAP(character), before + recovery);
@@ -85,7 +88,7 @@ public class TurnTickService {
         return result;
     }
 
-    private void tickDot(GameCharacter character, ActiveMechanics.Hit hit, ResolutionResult result) {
+    private void tickDot(Combatant character, ActiveMechanics.Hit hit, ResolutionResult result) {
         int perStack = hit.mechanic().value() != null ? hit.mechanic().value() : 1;
         int value = hit.mechanic().valueFromStacks()
                 ? perStack * hit.effect().getStacks() : perStack;
@@ -109,7 +112,7 @@ public class TurnTickService {
 
     // ---- Turn end ----
 
-    public ResolutionResult turnEnd(GameCharacter character) {
+    public ResolutionResult turnEnd(Combatant character) {
         var result = new ResolutionResult();
         int threshold = statEngine.computeStackThreshold(character);
 
@@ -161,7 +164,7 @@ public class TurnTickService {
 
     // ---- Trigger dispatch ----
 
-    private void dispatchTriggers(GameCharacter character, int threshold,
+    private void dispatchTriggers(Combatant character, int threshold,
                                   TriggerEvent when, ResolutionResult result) {
         for (var hit : ActiveMechanics.collect(character, gameData, threshold, MechanicType.TRIGGER_ON_EVENT)) {
             if (hit.mechanic().event() != when) continue;

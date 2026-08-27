@@ -38,12 +38,20 @@ public class AuditService {
 
     /** No-op for characters without a room (legacy dev rows) — nothing could query them. */
     public void log(GameCharacter c, String action, String summary) {
-        if (c.getRoomName() == null || c.getRoomName().isBlank()) return;
+        log(c.getRoomName(), c.getPlayerId(), c.getName(), action, summary);
+    }
+
+    /**
+     * Room-level entry for any combatant (monsters log under their {@code monster:{id}}
+     * combatant id, so a player's own combat log — filtered by playerId — never shows them).
+     */
+    public void log(String room, String combatantId, String name, String action, String summary) {
+        if (room == null || room.isBlank()) return;
         String text = summary != null && summary.length() > MAX_SUMMARY
                 ? summary.substring(0, MAX_SUMMARY - 1) + "…" : summary;
-        repo.save(new AuditEntry(c.getRoomName(), c.getPlayerId(), c.getName(), action, text));
+        repo.save(new AuditEntry(room, combatantId, name, action, text));
         if (logCount.incrementAndGet() % PRUNE_EVERY == 0) {
-            prune(c.getRoomName());
+            prune(room);
         }
     }
 

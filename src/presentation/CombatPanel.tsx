@@ -24,6 +24,7 @@ export function CombatPanel() {
   const doTargetedApplyEffect = useCharacterStore((s) => s.doTargetedApplyEffect);
   const lastResolutionTarget = useCharacterStore((s) => s.lastResolutionTarget);
   const roster = useCharacterStore((s) => s.roster);
+  const monsters = useCharacterStore((s) => s.monsters);
   const doTurnStart = useCharacterStore((s) => s.doTurnStart);
   const doTurnEnd = useCharacterStore((s) => s.doTurnEnd);
   const doSpendResource = useCharacterStore((s) => s.doSpendResource);
@@ -42,6 +43,8 @@ export function CombatPanel() {
   const [dmgValue, setDmgValue] = useState('10');
   const [dmgType, setDmgType] = useState<DamageTypeId>('SLASHING');
   const [dmgMight, setDmgMight] = useState('');
+  /** '' = unnamed attacker; a monster's combatant id fills its might/source in server-side (Story 2.4). */
+  const [dmgAttacker, setDmgAttacker] = useState('');
   const [attackWeapon, setAttackWeapon] = useState('');
   const [healValue, setHealValue] = useState('10');
   const [fxId, setFxId] = useState(EFFECT_OPTIONS[0]?.id ?? '');
@@ -60,9 +63,15 @@ export function CombatPanel() {
   // Damage/heal/effects can target any party member (trusted table); everything
   // else (attack rolls, turns, rest, pools) stays on the viewed character.
   const party = roster.filter((r) => r.playerId !== selectedPlayerId);
+  // Monsters in the room's fight are targets for everyone (ruling E5, trusted table).
+  const foes = monsters.filter((m) => m.status !== 'DEAD');
   const effectiveTarget =
-    targetId && party.some((r) => r.playerId === targetId) ? targetId : selectedPlayerId!;
+    targetId &&
+    (party.some((r) => r.playerId === targetId) || foes.some((m) => m.combatantId === targetId))
+      ? targetId
+      : selectedPlayerId!;
   const targetingOther = effectiveTarget !== selectedPlayerId;
+  const targetingMonster = foes.some((m) => m.combatantId === effectiveTarget);
 
   // Turn gating mirrors the server rules: turns begin automatically in an encounter
   // (the GM opens combat, ending a turn starts the next), so participants only ever
@@ -76,7 +85,10 @@ export function CombatPanel() {
     const v = parsePositive(dmgValue);
     if (!v) return;
     const might = parsePositive(dmgMight);
-    void doTargetedDamage(effectiveTarget, v, dmgType, undefined, might ?? undefined);
+    // Damage dealt to someone else is attributed to this sheet unless a monster attacker is
+    // named — so taunts on this character are enforced and wounded-by is recorded.
+    const attacker = dmgAttacker || (targetingOther ? selectedPlayerId! : undefined);
+    void doTargetedDamage(effectiveTarget, v, dmgType, undefined, might ?? undefined, attacker);
   }
 
   function submitHeal() {
@@ -91,7 +103,9 @@ export function CombatPanel() {
       stacks: parsePositive(fxStacks) ?? 1,
       value: parsePositive(fxValue) ?? undefined,
       duration: parsePositive(fxDuration) ?? undefined,
-      source: 'sheet',
+      // Effects put on someone else are attributed to this sheet — that is what makes a
+      // taunt work (the effect's source IS the taunter) and what wounded-by reads.
+      source: targetingOther ? selectedPlayerId! : 'sheet',
     });
   }
 
@@ -181,24 +195,39 @@ export function CombatPanel() {
       </div>
 
       <div className="combat-actions">
-        {party.length > 0 && (
+        {(party.length > 0 || foes.length > 0) && (
           <div className={targetingOther ? 'combat-form combat-form--target' : 'combat-form'}>
             <span className="combat-form-label">Target</span>
             <select
               value={effectiveTarget === selectedPlayerId ? '' : effectiveTarget}
               onChange={(e) => setTargetId(e.target.value)}
-              title="Damage, heal, and effects below apply to this character"
+              title="Damage, heal, and effects below apply to this combatant"
             >
               <option value="">{snapshot.name} (this sheet)</option>
-              {party.map((r) => (
-                <option key={r.playerId} value={r.playerId}>
-                  {r.name}
-                </option>
-              ))}
+              {party.length > 0 && (
+                <optgroup label="Party">
+                  {party.map((r) => (
+                    <option key={r.playerId} value={r.playerId}>
+                      {r.name}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+              {foes.length > 0 && (
+                <optgroup label="Monsters">
+                  {foes.map((m) => (
+                    <option key={m.combatantId} value={m.combatantId}>
+                      {m.name} · {m.hp.current}/{m.hp.max} HP
+                    </option>
+                  ))}
+                </optgroup>
+              )}
             </select>
             {targetingOther && (
               <span className="combat-target-note">
-                Damage, heal &amp; effects hit them — their sheet updates live
+                {targetingMonster
+                  ? 'Damage, heal & effects hit the monster — the GM board and turn order update'
+                  : 'Damage, heal & effects hit them — their sheet updates live'}
               </span>
             )}
           </div>
@@ -250,11 +279,26 @@ export function CombatPanel() {
               </option>
             ))}
           </select>
+          {foes.length > 0 && (
+            <select
+              value={dmgAttacker}
+              onChange={(e) => setDmgAttacker(e.target.value)}
+              title="Who dealt it — a monster attacker supplies its might (concentration DC) and is recorded as the source"
+            >
+              <option value="">attacker: unnamed</option>
+              {foes.map((m) => (
+                <option key={m.combatantId} value={m.combatantId}>
+                  attacker: {m.name}
+                  {m.might != null ? ` (might ${m.might})` : ''}
+                </option>
+              ))}
+            </select>
+          )}
           <input
             className="combat-num"
             type="number"
             min={0}
-            title="Attacker's might — rolls the concentration-break WILL save (DC 5 + might); empty = DM resolves manually"
+            title="Attacker's might — rolls the concentration-break WILL save (DC 5 + might); empty = the named attacker's might, or the DM resolves manually"
             placeholder="might"
             value={dmgMight}
             onChange={(e) => setDmgMight(e.target.value)}

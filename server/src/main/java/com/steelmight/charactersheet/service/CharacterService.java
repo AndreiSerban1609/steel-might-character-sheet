@@ -35,6 +35,9 @@ public class CharacterService {
     private final DeckTemplateService deckTemplates;
     private final EncounterService encounters;
     private final AuditService audit;
+    private final CombatActionService combatActions;
+    private final TurnFlowService turnFlow;
+    private final CombatantLookup combatants;
 
     public CharacterService(CharacterRepository repo,
                             DamageResolutionPipeline damagePipeline,
@@ -46,7 +49,13 @@ public class CharacterService {
                             RandomSource randomSource,
                             DeckTemplateService deckTemplates,
                             EncounterService encounters,
-                            AuditService audit) {
+                            AuditService audit,
+                            CombatActionService combatActions,
+                            TurnFlowService turnFlow,
+                            CombatantLookup combatants) {
+        this.combatActions = combatActions;
+        this.turnFlow = turnFlow;
+        this.combatants = combatants;
         this.repo = repo;
         this.damagePipeline = damagePipeline;
         this.healingPipeline = healingPipeline;
@@ -524,65 +533,34 @@ public class CharacterService {
 
     // --- Actions ---
 
+    // The four plain combat actions are combatant-agnostic (ADR-001): validation, event
+    // building and the pipeline call live in CombatActionService, shared with monsters.
+    // This class only loads, saves, audits and snapshots the player.
+
     public ActionResponse<CombatSnapshot> damage(String playerId, DamageRequest req) {
         var c = getCharacter(playerId);
-        if (req.value() <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "damage value must be positive");
-        }
-        var category = gameData.getDamageCategory(req.damageType());
-        if (category == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "unknown damage type: " + req.damageType());
-        }
-        var tags = (req.tags() != null && !req.tags().isEmpty()) ? req.tags() : List.of("directAttack");
-        var event = new DamageEvent(req.value(), req.damageType(), category, tags,
-                req.ignoreResistance(), req.sourceId());
-        event.setDuringOwnTurn(req.duringOwnTurn());
-        event.setAttackerMight(req.attackerMight());
-        int hpBefore = c.getHp().getCurrent();
-        var result = damagePipeline.resolve(event, c);
-        repo.save(c);
-        int taken = hpBefore - c.getHp().getCurrent();
-        audit.log(c, "damage", req.value() + " " + req.damageType()
-                + (taken > 0 ? " — " + taken + " HP lost" : " — no HP lost (absorbed/immune)")
-                + " (HP " + hpBefore + "→" + c.getHp().getCurrent() + ")");
-        return new ActionResponse<>(result, buildCombatSnapshot(c));
+        return finish(c, "damage", combatActions.damage(c, req));
     }
 
     public ActionResponse<CombatSnapshot> heal(String playerId, HealRequest req) {
         var c = getCharacter(playerId);
-        if (req.value() <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "heal value must be positive");
-        }
-        var event = new HealEvent(req.value());
-        int hpBefore = c.getHp().getCurrent();
-        var result = healingPipeline.resolve(event, c);
-        repo.save(c);
-        audit.log(c, "heal", "Healed " + req.value() + " (HP "
-                + hpBefore + "→" + c.getHp().getCurrent() + ")");
-        return new ActionResponse<>(result, buildCombatSnapshot(c));
+        return finish(c, "heal", combatActions.heal(c, req));
     }
 
     public ActionResponse<CombatSnapshot> applyEffect(String playerId, ApplyEffectRequest req) {
         var c = getCharacter(playerId);
-        var result = effectEngine.apply(c, new EffectApplication(
-                req.effectId(), req.source(), req.stacks(), req.value(),
-                req.duration(), req.duringOwnTurn(), req.bypassImmunity(), req.replaceExistingShield(),
-                req.durationType()));
-        repo.save(c);
-        audit.log(c, "apply-effect", "Applied " + req.effectId()
-                + (req.stacks() != null && req.stacks() > 1 ? " ×" + req.stacks() : "")
-                + (req.value() != null ? " (value " + req.value() + ")" : "")
-                + (req.duration() != null ? " for " + req.duration() + "r" : ""));
-        return new ActionResponse<>(result, buildCombatSnapshot(c));
+        return finish(c, "apply-effect", combatActions.applyEffect(c, req));
     }
 
     public ActionResponse<CombatSnapshot> removeEffect(String playerId, String effectId) {
         var c = getCharacter(playerId);
-        var result = effectEngine.remove(c, effectId);
+        return finish(c, "remove-effect", combatActions.removeEffect(c, effectId));
+    }
+
+    private ActionResponse<CombatSnapshot> finish(GameCharacter c, String action, CombatActionService.Outcome out) {
         repo.save(c);
-        audit.log(c, "remove-effect", "Removed " + effectId);
-        return new ActionResponse<>(result, buildCombatSnapshot(c));
+        audit.log(c, action, out.auditSummary());
+        return new ActionResponse<>(out.resolution(), buildCombatSnapshot(c));
     }
 
     public ActionResponse<CombatSnapshot> spendResource(String playerId, SpendResourceRequest req) {
@@ -1384,7 +1362,7 @@ public class CharacterService {
         requireSufficient("mana", c.getMana().getCurrent(), manaCost);
 
         return resolveCast(playerId, c, spell, castAtLevel, apCost, manaCost,
-                req.targetPlayerId(), req.applyEffectsToSelf(), new ResolutionResult());
+                req.effectsTargetId(), req.applyEffectsToSelf(), new ResolutionResult());
     }
 
     /**
@@ -1403,12 +1381,22 @@ public class CharacterService {
         var casterWeapon = statEngine.findEquippedCasterWeapon(c);
 
         // M4-C: resolve the effects target BEFORE spending — an unknown target must
-        // not cost the caster anything (all-or-nothing).
-        GameCharacter effectsTarget = null;
+        // not cost the caster anything (all-or-nothing). Story 2.3: the target is any
+        // combatant — a party member or a monster in the caster's room.
+        Combatant effectsTarget = null;
         if (targetPlayerId != null && !targetPlayerId.isBlank()) {
-            effectsTarget = targetPlayerId.equals(playerId) ? c : getCharacter(targetPlayerId);
+            effectsTarget = targetPlayerId.equals(playerId) ? c : combatants.require(c.getRoomName(), targetPlayerId);
         } else if (Boolean.TRUE.equals(applyEffectsToSelf)) {
             effectsTarget = c;
+        }
+        // Taunt (ruling 2026-08-26): a taunted caster can only aim HARMFUL effects at the taunter.
+        // Checked before spending — refused casts cost nothing.
+        if (effectsTarget != null && effectsTarget != c && spell.effects() != null
+                && spell.effects().stream().anyMatch(id -> {
+                    var def = gameData.getEffect(id);
+                    return def != null && def.isNegative();
+                })) {
+            combatActions.enforceTaunt(c, effectsTarget);
         }
 
         int apBefore = c.getAp().getCurrent();
@@ -1470,8 +1458,8 @@ public class CharacterService {
                             false, false, false, duration.type())));
                 }
                 if (effectsTarget != c) {
-                    repo.save(effectsTarget);
-                    result.putPayload("effectsAppliedTo", effectsTarget.getPlayerId());
+                    combatants.save(effectsTarget);
+                    result.putPayload("effectsAppliedTo", effectsTarget.getCombatantId());
                 }
             } else {
                 var onHit = new java.util.ArrayList<Map<String, Object>>();
@@ -1920,22 +1908,9 @@ public class CharacterService {
         // expiry / threshold stack consumption (M0-A/N9).
         var result = turnTickService.turnEnd(c);
         repo.save(c);
-        var next = encounters.completeTurn(c);
-        if (next != null) {
-            result.addStep("turn-order", "Turn passes to " + next.name() + " (round " + next.round() + ")", 0, 0);
-            // Players never start turns themselves in combat — the next character's turn
-            // begins here (budgets reset, DoT ticks, AP recovery), merged into this log.
-            // findById, not getCharacter — a deleted character in the order must never
-            // 404 the ENDER's turn (advance() skips missing entries, but belt+braces).
-            var nextChar = next.playerId().equals(c.getPlayerId())
-                    ? c : repo.findById(next.playerId()).orElse(null);
-            if (nextChar != null && nextChar.getLifeStatus() != LifeStatus.DEAD) {
-                boolean apRecovery = encounters.validateAndMarkTurnStart(nextChar);
-                nextChar.getAbilityUses().forEach(u -> u.setUsedThisTurn(0));
-                mergeSteps(result, nextChar.getName(), turnTickService.turnStart(nextChar, apRecovery));
-                repo.save(nextChar);
-            }
-        }
+        // Nobody starts turns themselves in combat — the next combatant's turn (player OR
+        // monster) begins here, its ticks merged into this log (TurnFlowService).
+        turnFlow.autoStartNext(c.getRoomName(), encounters.completeTurn(c), result);
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -2479,40 +2454,10 @@ public class CharacterService {
     }
 
     /** HP-state condition terms (M0-B R4) — pure derivation from effects.json → conditionTerms, never stored. */
-    private List<String> deriveConditions(GameCharacter c) {
-        int current = c.getHp().getCurrent();
-        int max = statEngine.computeMaxHP(c);
-        var conditions = new java.util.ArrayList<String>();
-        if (current == 0) conditions.add("downed");
-        var terms = gameData.getConditionTerms();
-        if (terms != null && max > 0) {
-            terms.fields().forEachRemaining(entry -> {
-                double threshold = entry.getValue().path("threshold").asDouble(0);
-                String comparison = entry.getValue().path("comparison").asText("below");
-                if ("below".equals(comparison) && current < threshold * max) {
-                    conditions.add(entry.getKey());
-                }
-            });
-        }
-        return conditions;
-    }
-
     private CombatSnapshot buildCombatSnapshot(GameCharacter c) {
-        int stackThreshold = statEngine.computeStackThreshold(c);
-        var effectViews = c.getActiveEffects().stream()
-                .map(e -> {
-                    var def = gameData.getEffect(e.getEffectId());
-                    boolean gated = EffectActivity.isThresholdGated(def);
-                    return new CombatSnapshot.EffectView(
-                            e.getEffectId(),
-                            def != null && def.name() != null ? def.name() : e.getEffectId(),
-                            e.getStacks(), e.getValue(), e.getRemainingRounds(),
-                            EffectActivity.isActive(def, e, stackThreshold),
-                            gated ? stackThreshold : null);
-                })
-                .toList();
-
-        List<String> conditions = deriveConditions(c);
+        // Effect chips + HP-threshold conditions are combatant-agnostic (shared with MonsterView).
+        var effectViews = combatActions.effectViews(c);
+        List<String> conditions = combatActions.conditions(c);
 
         ensurePools(c); // materialize sub-resource pools on first sight (Story 1.2)
         var poolViews = c.getPools().stream()

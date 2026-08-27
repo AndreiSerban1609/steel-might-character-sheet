@@ -4,7 +4,7 @@ import com.steelmight.charactersheet.engine.HealEvent;
 import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +22,7 @@ public class ApplyHealingRule implements ResolutionRule<HealEvent> {
     }
 
     @Override
-    public void apply(HealEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(HealEvent event, Combatant character, ResolutionResult result) {
         int maxHp = statEngine.computeMaxHP(character);
         int before = character.getHp().getCurrent();
         int after = Math.min(maxHp, before + event.getValue());

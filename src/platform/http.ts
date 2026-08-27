@@ -20,6 +20,10 @@ import type {
   SkillCheckAccepted,
   SkillCheckResult,
   SpellbookSnapshot,
+  CombatantView,
+  MonsterTemplateRequest,
+  MonsterTemplateView,
+  MonsterView,
 } from './types';
 
 // API base resolution, in priority order:
@@ -355,10 +359,12 @@ export function sendDamage(
   damageType: DamageTypeId,
   tags?: string[],
   attackerMight?: number,
+  attackerCombatantId?: string,
 ): Promise<CombatAction> {
   // attackerMight (N2): feeds the concentration-break WILL save (DC 5 + might);
   // omitted → the server emits a resolve-manually step instead of rolling.
-  return combatAction(playerId, 'damage', { value, damageType, tags, attackerMight });
+  // attackerCombatantId (Story 2.4): a monster attacker fills might/source in server-side.
+  return combatAction(playerId, 'damage', { value, damageType, tags, attackerMight, attackerCombatantId });
 }
 
 export function sendHeal(playerId: string, value: number): Promise<CombatAction> {
@@ -448,7 +454,10 @@ export interface CastBody {
   spellId: string;
   castAtLevel?: number;
   applyEffectsToSelf?: boolean;
+  /** Legacy alias of targetCombatantId (players only). */
   targetPlayerId?: string;
+  /** Who receives the spell's effects: a playerId or `monster:{id}` (Story 2.3). */
+  targetCombatantId?: string;
   componentsAvailable?: string[];
 }
 
@@ -528,6 +537,7 @@ export function castScroll(
     spellId?: string;
     applyEffectsToSelf?: boolean;
     targetPlayerId?: string;
+    targetCombatantId?: string;
   },
 ): Promise<CombatAction> {
   return combatAction(playerId, 'cast-scroll', body);
@@ -641,4 +651,119 @@ export function fetchPlayerDeck(playerId: string): Promise<PlayerDeckView> {
 
 export function updatePlayerDeck(playerId: string, config: PlayerDeckConfig): Promise<PlayerDeckView> {
   return sendJson<PlayerDeckView>('PUT', `/characters/${encodeURIComponent(playerId)}/deck`, config);
+}
+
+// ── Monsters & combatants (Epic 2, ADR-001) ──
+
+async function deleteReq(path: string): Promise<void> {
+  const res = await trackedFetch(`${API_BASE}${path}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await errText(res, path));
+}
+
+const roomPath = (room: string) => `/rooms/${encodeURIComponent(room)}`;
+
+export function fetchMonsterTemplates(room: string): Promise<MonsterTemplateView[]> {
+  return getJson<MonsterTemplateView[]>(`${roomPath(room)}/monster-templates`);
+}
+
+export function createMonsterTemplate(room: string, body: MonsterTemplateRequest): Promise<MonsterTemplateView> {
+  return sendJson<MonsterTemplateView>('POST', `${roomPath(room)}/monster-templates`, body);
+}
+
+export function updateMonsterTemplate(
+  room: string,
+  id: number,
+  body: MonsterTemplateRequest,
+): Promise<MonsterTemplateView> {
+  return sendJson<MonsterTemplateView>('PUT', `${roomPath(room)}/monster-templates/${id}`, body);
+}
+
+export function deleteMonsterTemplate(room: string, id: number): Promise<void> {
+  return deleteReq(`${roomPath(room)}/monster-templates/${id}`);
+}
+
+/** Import: the export shape (a template view) minus id/room is exactly a request (E9). */
+export function importMonsterTemplates(
+  room: string,
+  body: MonsterTemplateRequest[],
+): Promise<MonsterTemplateView[]> {
+  return sendJson<MonsterTemplateView[]>('POST', `${roomPath(room)}/monster-templates/import`, body);
+}
+
+/** Story 2.5: a full-resource mirror of a character, ready to spawn for their Death fight. */
+export function templateFromCharacter(room: string, playerId: string): Promise<MonsterTemplateView> {
+  return sendJson<MonsterTemplateView>(
+    'POST',
+    `${roomPath(room)}/monster-templates/from-character/${encodeURIComponent(playerId)}`,
+    {},
+  );
+}
+
+export function fetchMonsters(room: string): Promise<MonsterView[]> {
+  return getJson<MonsterView[]>(`${roomPath(room)}/monsters`);
+}
+
+/** Returns only the monsters spawned by this call; a running encounter rolls them in. */
+export function spawnMonsters(room: string, templateId: number, count = 1): Promise<MonsterView[]> {
+  return sendJson<MonsterView[]>('POST', `${roomPath(room)}/monsters`, { templateId, count });
+}
+
+export function deleteMonster(room: string, id: number): Promise<void> {
+  return deleteReq(`${roomPath(room)}/monsters/${id}`);
+}
+
+export function clearMonsters(room: string): Promise<void> {
+  return deleteReq(`${roomPath(room)}/monsters`);
+}
+
+type CombatantAction = ActionResponse<CombatantView>;
+
+function combatantAction(room: string, combatantId: string, action: string, body: unknown): Promise<CombatantAction> {
+  return sendJson<CombatantAction>(
+    'POST',
+    `${roomPath(room)}/combatants/${encodeURIComponent(combatantId)}/actions/${action}`,
+    body,
+  );
+}
+
+export function combatantDamage(
+  room: string,
+  combatantId: string,
+  value: number,
+  damageType: DamageTypeId,
+  tags?: string[],
+  attackerMight?: number,
+  attackerCombatantId?: string,
+): Promise<CombatantAction> {
+  return combatantAction(room, combatantId, 'damage', { value, damageType, tags, attackerMight, attackerCombatantId });
+}
+
+export function combatantHeal(room: string, combatantId: string, value: number): Promise<CombatantAction> {
+  return combatantAction(room, combatantId, 'heal', { value });
+}
+
+export function combatantApplyEffect(
+  room: string,
+  combatantId: string,
+  body: ApplyEffectBody,
+): Promise<CombatantAction> {
+  return combatantAction(room, combatantId, 'apply-effect', body);
+}
+
+export async function combatantRemoveEffect(
+  room: string,
+  combatantId: string,
+  effectId: string,
+): Promise<CombatantAction> {
+  const res = await trackedFetch(
+    `${API_BASE}${roomPath(room)}/combatants/${encodeURIComponent(combatantId)}/actions/remove-effect?effectId=${encodeURIComponent(effectId)}`,
+    { method: 'POST' },
+  );
+  if (!res.ok) throw new Error(await errText(res, 'remove-effect'));
+  return (await res.json()) as CombatantAction;
+}
+
+/** The GM ends a monster's turn; the order advances and the next turn auto-starts. */
+export function combatantTurnEnd(room: string, combatantId: string): Promise<CombatantAction> {
+  return combatantAction(room, combatantId, 'turn-end', {});
 }

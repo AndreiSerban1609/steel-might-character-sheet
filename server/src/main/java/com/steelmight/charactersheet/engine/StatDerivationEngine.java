@@ -8,12 +8,14 @@ import com.steelmight.charactersheet.gamedata.ResolvedItem;
 import com.steelmight.charactersheet.model.AbilityScore;
 import com.steelmight.charactersheet.model.ActiveEffect;
 import com.steelmight.charactersheet.model.CasterType;
+import com.steelmight.charactersheet.model.Combatant;
 import com.steelmight.charactersheet.model.GameCharacter;
 import com.steelmight.charactersheet.model.OverridableStat;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntSupplier;
 
 @Component
 public class StatDerivationEngine {
@@ -31,14 +33,36 @@ public class StatDerivationEngine {
      * the FORMULA result and before effect modifiers, so an override swaps out the rules
      * the app doesn't model while the live combat layer keeps working on top.
      */
-    private int overrideOr(GameCharacter character, OverridableStat stat, int derived) {
-        Integer pinned = character.overrideFor(stat);
+    private int overrideOr(Combatant combatant, OverridableStat stat, int derived) {
+        Integer pinned = combatant.overrideFor(stat);
         return pinned != null ? pinned : derived;
+    }
+
+    /**
+     * Lazy twin: the derivation only runs when nothing is pinned. This is the seam that
+     * lets monsters through (ADR-001) — a monster's authored stat block answers
+     * {@code overrideFor} for every combat stat, so the class/race/equipment derivation
+     * (which only a {@link GameCharacter} can do) is never asked.
+     */
+    private int overrideOr(Combatant combatant, OverridableStat stat, IntSupplier derived) {
+        Integer pinned = combatant.overrideFor(stat);
+        return pinned != null ? pinned : derived.getAsInt();
+    }
+
+    /**
+     * The ONE place a Combatant is narrowed back to a GameCharacter: derived base stats
+     * need class/race/equipment data that only players carry. Reached only when nothing
+     * authored answered first, so a monster landing here is a data bug, not a branch.
+     */
+    private static GameCharacter asCharacter(Combatant combatant, String what) {
+        if (combatant instanceof GameCharacter character) return character;
+        throw new IllegalStateException(combatant.getCombatantId() + " has no authored "
+                + what + " and is not a character — cannot derive it");
     }
 
     // ---- Core modifier resolution ----
 
-    public int resolveModifiedStat(GameCharacter character, ModifiableStat stat, int baseValue) {
+    public int resolveModifiedStat(Combatant character, ModifiableStat stat, int baseValue) {
         var modifiers = collectStatModifiers(character, stat);
         if (modifiers.isEmpty()) return baseValue;
 
@@ -68,23 +92,26 @@ public class StatDerivationEngine {
     /** Placeholder row for talent-sourced mechanics — talents have no stacks/value. */
     private static final ActiveEffect TALENT_SOURCE = new ActiveEffect("talent", "talent", 1, null, null, 0);
 
-    private List<StatModEntry> collectStatModifiers(GameCharacter character, ModifiableStat stat) {
+    private List<StatModEntry> collectStatModifiers(Combatant combatant, ModifiableStat stat) {
         // ActiveMechanics handles dormancy (M0-A), application tiers (M2-B), and
         // composite expansion (M2-C) — a stunned character gets exposed/poisoned
         // mechanics without those rows existing.
         var result = new ArrayList<StatModEntry>();
-        int threshold = computeStackThreshold(character);
-        for (var hit : ActiveMechanics.collect(character, gameData, threshold, MechanicType.STAT_MODIFIER)) {
+        int threshold = computeStackThreshold(combatant);
+        for (var hit : ActiveMechanics.collect(combatant, gameData, threshold, MechanicType.STAT_MODIFIER)) {
             if (hit.mechanic().stat() == stat) {
                 result.add(new StatModEntry(hit.mechanic(), hit.effect()));
             }
         }
         // Mechanical talents (glass-cannon's crit/armor rules) are permanent
         // stat-modifier sources — talents.json carries their mechanics arrays.
-        for (var talentId : character.getTalents()) {
-            for (var mechanic : gameData.getTalentMechanics(talentId)) {
-                if (mechanic.type() == MechanicType.STAT_MODIFIER && mechanic.stat() == stat) {
-                    result.add(new StatModEntry(mechanic, TALENT_SOURCE));
+        // Players only: monsters have no talents (the one type check the effect layer allows).
+        if (combatant instanceof GameCharacter character) {
+            for (var talentId : character.getTalents()) {
+                for (var mechanic : gameData.getTalentMechanics(talentId)) {
+                    if (mechanic.type() == MechanicType.STAT_MODIFIER && mechanic.stat() == stat) {
+                        result.add(new StatModEntry(mechanic, TALENT_SOURCE));
+                    }
                 }
             }
         }
@@ -96,7 +123,11 @@ public class StatDerivationEngine {
     private static final String EXPECTED_THRESHOLD_FORMULA = "ceil(level / 2)";
 
     /** Stack threshold for negative effects: character-creation.json → stackThreshold.player = ceil(level/2). */
-    public int computeStackThreshold(GameCharacter character) {
+    public int computeStackThreshold(Combatant character) {
+        // Ruling E2: an authored threshold (boss stat block) replaces the formula outright.
+        Integer authored = character.authoredStackThreshold();
+        if (authored != null) return Math.max(1, authored);
+
         String formula = gameData.getCharacterCreation()
                 .path("stackThreshold").path("player").asText(EXPECTED_THRESHOLD_FORMULA);
         if (!EXPECTED_THRESHOLD_FORMULA.equals(formula)) {
@@ -244,7 +275,15 @@ public class StatDerivationEngine {
 
     // ---- AC / PA / MA ----
 
-    public int computeAC(GameCharacter character) {
+    // Combat stats take a Combatant: an authored/pinned value answers first; otherwise
+    // the derivation runs against the character's class/race/equipment (asCharacter).
+
+    public int computeAC(Combatant combatant) {
+        int baseAC = overrideOr(combatant, OverridableStat.AC, () -> deriveAC(asCharacter(combatant, "AC")));
+        return resolveModifiedStat(combatant, ModifiableStat.AC, baseAC);
+    }
+
+    private int deriveAC(GameCharacter character) {
         int dexMod = character.getStats().modifier(AbilityScore.DEX);
         int baseAC;
 
@@ -271,45 +310,48 @@ public class StatDerivationEngine {
         if (shield != null) {
             baseAC += shield.path("ac").path("base").asInt(0);
         }
-
-        return resolveModifiedStat(character, ModifiableStat.AC,
-                overrideOr(character, OverridableStat.AC, baseAC));
+        return baseAC;
     }
 
-    public int computePA(GameCharacter character) {
-        int basePA = 0;
-        var bodyArmor = findEquippedBodyArmor(character);
-        if (bodyArmor != null) {
-            int pa = bodyArmor.path("pa").asInt(0);
-            int scaling = bodyArmor.path("paScaling").asInt(0);
-            basePA = pa + scaling * (character.getLevel() - 1);
-        }
-        return resolveModifiedStat(character, ModifiableStat.PA,
-                overrideOr(character, OverridableStat.PA, basePA));
+    public int computePA(Combatant combatant) {
+        int basePA = overrideOr(combatant, OverridableStat.PA, () -> derivePA(asCharacter(combatant, "PA")));
+        return resolveModifiedStat(combatant, ModifiableStat.PA, basePA);
     }
 
-    public int computeMA(GameCharacter character) {
-        int baseMA = 0;
+    private int derivePA(GameCharacter character) {
         var bodyArmor = findEquippedBodyArmor(character);
-        if (bodyArmor != null) {
-            int ma = bodyArmor.path("ma").asInt(0);
-            int scaling = bodyArmor.path("maScaling").asInt(0);
-            baseMA = ma + scaling * (character.getLevel() - 1);
-        }
-        return resolveModifiedStat(character, ModifiableStat.MA,
-                overrideOr(character, OverridableStat.MA, baseMA));
+        if (bodyArmor == null) return 0;
+        int pa = bodyArmor.path("pa").asInt(0);
+        int scaling = bodyArmor.path("paScaling").asInt(0);
+        return pa + scaling * (character.getLevel() - 1);
+    }
+
+    public int computeMA(Combatant combatant) {
+        int baseMA = overrideOr(combatant, OverridableStat.MA, () -> deriveMA(asCharacter(combatant, "MA")));
+        return resolveModifiedStat(combatant, ModifiableStat.MA, baseMA);
+    }
+
+    private int deriveMA(GameCharacter character) {
+        var bodyArmor = findEquippedBodyArmor(character);
+        if (bodyArmor == null) return 0;
+        int ma = bodyArmor.path("ma").asInt(0);
+        int scaling = bodyArmor.path("maScaling").asInt(0);
+        return ma + scaling * (character.getLevel() - 1);
     }
 
     // ---- HP / Mana ----
 
     // (hpPerLevel + 3 * CON_mod) * level
-    public int computeMaxHP(GameCharacter character) {
+    public int computeMaxHP(Combatant combatant) {
+        return overrideOr(combatant, OverridableStat.MAX_HP, () -> deriveMaxHP(asCharacter(combatant, "max HP")));
+    }
+
+    private int deriveMaxHP(GameCharacter character) {
         var classData = getClassData(character);
         int hpPerLevel = (classData != null && classData.has("hpPerLevel"))
                 ? classData.path("hpPerLevel").asInt(20) : 20;
         int conMod = character.getStats().modifier(AbilityScore.CON);
-        return overrideOr(character, OverridableStat.MAX_HP,
-                (hpPerLevel + 3 * conMod) * character.getLevel());
+        return (hpPerLevel + 3 * conMod) * character.getLevel();
     }
 
     public int computeMaxMana(GameCharacter character) {
@@ -340,24 +382,25 @@ public class StatDerivationEngine {
 
     // ---- Movement / AP ----
 
-    public int computeSpeed(GameCharacter character) {
-        return resolveModifiedStat(character, ModifiableStat.SPEED,
-                overrideOr(character, OverridableStat.SPEED, character.getSpeed()));
+    public int computeSpeed(Combatant combatant) {
+        return resolveModifiedStat(combatant, ModifiableStat.SPEED,
+                overrideOr(combatant, OverridableStat.SPEED, combatant.getSpeed()));
     }
 
-    public int computeAPRecovery(GameCharacter character) {
-        return resolveModifiedStat(character, ModifiableStat.AP_RECOVERY,
-                overrideOr(character, OverridableStat.AP_RECOVERY, character.getAp().getRecovery()));
+    /** Requires an AP economy ({@code getAp() != null}) unless the value is pinned. */
+    public int computeAPRecovery(Combatant combatant) {
+        return resolveModifiedStat(combatant, ModifiableStat.AP_RECOVERY,
+                overrideOr(combatant, OverridableStat.AP_RECOVERY, () -> combatant.getAp().getRecovery()));
     }
 
     /** AP ceiling; the model stores it, so the override simply replaces the stored value. */
-    public int computeMaxAP(GameCharacter character) {
-        return overrideOr(character, OverridableStat.MAX_AP, character.getAp().getMax());
+    public int computeMaxAP(Combatant combatant) {
+        return overrideOr(combatant, OverridableStat.MAX_AP, () -> combatant.getAp().getMax());
     }
 
     // ---- Proficiency ----
 
-    public int computeProficiencyBonus(GameCharacter character) {
+    public int computeProficiencyBonus(Combatant character) {
         var progression = gameData.getSpellcasting().path("proficiencyProgression");
         int level = character.getLevel();
         if (progression.isArray() && level > 0 && level <= progression.size()) {

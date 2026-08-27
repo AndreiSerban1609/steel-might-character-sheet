@@ -10,7 +10,7 @@ import com.steelmight.charactersheet.engine.rules.damage.HpReductionRule;
 import com.steelmight.charactersheet.engine.rules.damage.ImmunityRule;
 import com.steelmight.charactersheet.engine.rules.damage.ResistanceVulnerabilityRule;
 import com.steelmight.charactersheet.engine.rules.damage.TriggeredEffectsRule;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class DamageResolutionPipeline {
         this.triggeredEffectsRule = triggeredEffectsRule;
     }
 
-    public ResolutionResult resolve(DamageEvent event, GameCharacter character) {
+    public ResolutionResult resolve(DamageEvent event, Combatant character) {
         var result = new ResolutionResult();
         for (var rule : rules) {
             rule.apply(event, character, result);

@@ -101,11 +101,11 @@ src/
 │   └── ResultBreakdown.jsx # Roll + card + stat + bonus = total
 ```
 
-### Pending Feedback (from FEEDBACK.md in Deck of Fates repo)
+### Deck of Fates Feedback (FEEDBACK.md in the Deck of Fates repo) — all landed here 2026-08-25
 
-- Neutral card: remove ±0 display
-- Rename completed: Energy Critical → Might Critical (already done in constants)
-- Card icon slots: bottom-left skill check type label, bottom-right redraw modifier flag on CLASS cards
+- ✅ Neutral card: no `±0` — `cardModifierDisplay` returns an empty string for a 0-modifier Neutral (symbol + label + name only)
+- ✅ Energy Critical → Might Critical: renamed, red/crimson retheme, no flavor text on either critical (server crit cards say "The GM decides the outcome."; `CardFace` never renders a crit description)
+- ✅ Card icon slots on CLASS cards: skill-restriction badge (left, `SkillIcon` + skill name) and redraw-bonus badge (right, `↻+N`) rendered by `CardFace` only when the card carries `checkType` / `redrawModifier`; thumbnails under 70 px shrink the symbol to keep the name on the card
 
 ### Style System
 

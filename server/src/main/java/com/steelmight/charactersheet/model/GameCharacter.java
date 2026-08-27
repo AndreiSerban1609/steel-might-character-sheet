@@ -1,5 +1,6 @@
 package com.steelmight.charactersheet.model;
 
+import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "characters")
-public class GameCharacter {
+public class GameCharacter implements Combatant {
 
     @Id
     private String playerId;
@@ -201,6 +202,27 @@ public class GameCharacter {
         activeEffects.remove(effect);
         effect.setCharacter(null);
     }
+
+    // --- Combatant (ADR-001): players are combatants under their playerId ---
+
+    @Override
+    public String getCombatantId() { return playerId; }
+
+    @Override
+    public int getInitiativeBonus() { return bonusInitiative; }
+
+    /** Race damageTaken multipliers from races.json (empty for an unknown/missing race). */
+    @Override
+    public Map<DamageType, Double> innateDamageTaken(GameDataProvider gameData) {
+        return gameData.getRaceDamageTaken(raceId);
+    }
+
+    @Override
+    public String innateDamageTakenSource() { return "racial: " + raceId; }
+
+    /** Players use the downed window + Medicine revival (M2-D). */
+    @Override
+    public boolean usesDeathRules() { return true; }
 
     public void addItem(InventoryEntry entry) {
         inventory.add(entry);

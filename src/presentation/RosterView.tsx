@@ -5,6 +5,8 @@ import type { AuditView } from '../platform/types';
 import { liveVitalsFromSlice } from '../domain/partyMirror';
 import { titleCase } from '../domain/stats';
 import { EncounterTracker } from './EncounterTracker';
+import { MonsterBoard } from './MonsterBoard';
+import { MonsterLibrary } from './MonsterLibrary';
 
 export function RosterView() {
   const roster = useCharacterStore((s) => s.roster);
@@ -57,6 +59,8 @@ export function RosterView() {
 
       <EncounterTracker />
 
+      <MonsterBoard />
+
       {loading && roster.length === 0 && <div className="panel-msg">Gathering the party…</div>}
       {error && <div className="panel-msg panel-msg--error">{error}</div>}
       {!loading && !error && roster.length === 0 && (
@@ -94,6 +98,8 @@ export function RosterView() {
           );
         })}
       </div>
+
+      <MonsterLibrary />
 
       <ActivityLog room={roomName} />
     </section>

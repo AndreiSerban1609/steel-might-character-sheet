@@ -1,5 +1,6 @@
 // Ported from the Deck of Fates extension (src/components/CardArt.jsx CardFace),
-// minus the class-card icon slots (our cards don't carry checkType/redrawModifier).
+// including the CLASS-card icon slots: a skill-restriction badge (left) and a
+// redraw-bonus badge (right), rendered only when the card carries them.
 import type { CSSProperties } from 'react';
 import type { Card } from '../platform/types';
 import {
@@ -7,8 +8,11 @@ import {
   resolveCardLabel,
   cardModifierDisplay,
   normalizeThemeId,
+  skillDisplayName,
 } from '../domain/cardThemes';
+import { formatModifier } from '../domain/stats';
 import { getFrameComponent } from './CardFrames';
+import { SkillIcon } from './SkillIcon';
 
 interface CardFaceProps {
   card: Card;
@@ -33,6 +37,25 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
   const isSteel = card.type === 'STEEL_CRITICAL';
   const FrameComponent = getFrameComponent(card.type, themeId);
   const glowName = isSteel ? 'pulseGlowSteel' : 'pulseGlowMight';
+
+  // Icon slots exist on CLASS cards only (base cards never carry these fields).
+  const checkType = card.type === 'CLASS' ? card.checkType || null : null;
+  const hasRedraw = card.type === 'CLASS' && card.redrawModifier != null;
+  const hasSlots = checkType !== null || hasRedraw;
+  // Gallery/toast thumbnails (56px) have no spare height: the slot row would push the
+  // name off the card, so trade symbol/modifier size for it there.
+  const squeeze = hasSlots && size < 70;
+  const slotStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 3,
+    background: `${theme.border}18`,
+    border: `1px solid ${theme.border}30`,
+    borderRadius: 4,
+    padding: compact ? '1px 3px' : '3px 6px',
+    lineHeight: 1,
+    cursor: 'help',
+  };
 
   const cardStyle: CSSProperties = {
     width: w,
@@ -117,23 +140,82 @@ export function CardFace({ card, pathId, size = 200, animating = false }: CardFa
           {label}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: compact ? 4 : 6, zIndex: 5 }}>
-          <div style={{ fontSize: isCrit ? (compact ? 30 : 48) : (compact ? 24 : 36), color: theme.accent, textShadow: `0 0 20px ${theme.glow}`, lineHeight: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: squeeze ? 2 : compact ? 4 : 6, zIndex: 5 }}>
+          <div style={{ fontSize: isCrit ? (compact ? 30 : 48) : (squeeze ? 16 : compact ? 24 : 36), color: theme.accent, textShadow: `0 0 20px ${theme.glow}`, lineHeight: 1 }}>
             {theme.symbol}
           </div>
+          {modDisplay && (
+            <div
+              style={{
+                fontSize: isCrit ? (compact ? 14 : 22) : (squeeze ? 15 : compact ? 18 : 28),
+                fontWeight: 700,
+                color: '#fff',
+                fontFamily: "'Cinzel', 'Palatino', serif",
+                textShadow: `0 0 12px ${theme.glow}`,
+                letterSpacing: isCrit ? (compact ? 1 : 3) : 1,
+              }}
+            >
+              {modDisplay}
+            </div>
+          )}
+        </div>
+
+        {hasSlots && (
           <div
             style={{
-              fontSize: isCrit ? (compact ? 14 : 22) : (compact ? 18 : 28),
-              fontWeight: 700,
-              color: '#fff',
-              fontFamily: "'Cinzel', 'Palatino', serif",
-              textShadow: `0 0 12px ${theme.glow}`,
-              letterSpacing: isCrit ? (compact ? 1 : 3) : 1,
+              display: 'flex',
+              justifyContent: checkType && hasRedraw ? 'space-between' : checkType ? 'flex-start' : 'flex-end',
+              alignItems: 'center',
+              width: '100%',
+              padding: compact ? 0 : '0 4px',
+              zIndex: 6,
             }}
           >
-            {modDisplay}
+            {checkType ? (
+              <div
+                style={{ ...slotStyle, gap: compact ? 0 : 4 }}
+                title={`Only on ${skillDisplayName(checkType)} checks — auto-passes on any other check`}
+              >
+                <SkillIcon skillId={checkType} color={theme.accent} size={compact ? 9 : 12} />
+                {!compact && (
+                  <span
+                    style={{
+                      fontSize: 7,
+                      color: theme.accent,
+                      opacity: 0.6,
+                      fontFamily: "'Cinzel', 'Palatino', serif",
+                      letterSpacing: 0.5,
+                      textTransform: 'uppercase',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {skillDisplayName(checkType)}
+                  </span>
+                )}
+              </div>
+            ) : (
+              <div />
+            )}
+            {hasRedraw && (
+              <div
+                style={slotStyle}
+                title={`Redraw bonus ${formatModifier(card.redrawModifier ?? 0)} — passed on draw; the bonus adds to the check's total`}
+              >
+                <span
+                  style={{
+                    fontSize: compact ? 7 : 10,
+                    color: theme.accent,
+                    opacity: 0.6,
+                    fontFamily: "'Cinzel', 'Palatino', serif",
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  ↻{formatModifier(card.redrawModifier ?? 0)}
+                </span>
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
         <div style={{ textAlign: 'center', zIndex: 5, maxWidth: '100%' }}>
           <div

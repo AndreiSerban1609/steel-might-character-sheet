@@ -11,7 +11,7 @@ import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.DamageType;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class DecayingRule implements ResolutionRule<HealEvent> {
     }
 
     @Override
-    public void apply(HealEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(HealEvent event, Combatant character, ResolutionResult result) {
         if (event.getValue() <= 0) return;
         int threshold = statEngine.computeStackThreshold(character);
 

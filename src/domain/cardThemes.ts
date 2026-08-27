@@ -2,6 +2,9 @@
 // Pure display data — no React, no SDK, no fetch.
 
 import type { Card, CardType } from '../platform/types';
+import skillsRaw from '../data/skills.json';
+
+const SKILL_NAME = new Map((skillsRaw as { id: string; name: string }[]).map((s) => [s.id, s.name]));
 
 export interface CardTheme {
   bg: string;
@@ -192,11 +195,20 @@ export function resolveCardLabel(card: Card, themeId?: string): string {
   return labels[card.type] ?? 'Unknown';
 }
 
-/** The card's intrinsic display (the resolved d10/total is shown separately). */
+/**
+ * The card's intrinsic display (the resolved d10/total is shown separately).
+ * Empty string = show nothing: a ±0 Neutral is just symbol + label + name
+ * (Deck of Fates feedback round 1).
+ */
 export function cardModifierDisplay(card: Card): string {
   if (card.type === 'STEEL_CRITICAL' || card.type === 'MIGHT_CRITICAL') return 'CRITICAL';
   if (card.type === 'STAT') return 'STAT';
   const m = card.modifier ?? 0;
-  if (m === 0) return '±0';
+  if (m === 0) return card.type === 'NEUTRAL' ? '' : '±0';
   return m > 0 ? `+${m}` : `${m}`;
+}
+
+/** Skill-check restriction label for a CLASS card's icon slot (id → display name). */
+export function skillDisplayName(skillId: string): string {
+  return SKILL_NAME.get(skillId) ?? skillId;
 }

@@ -8,7 +8,7 @@ import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.model.AbilityScore;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class ConcentrationCheckRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         if (!event.isHpReduced()) return;
 
         for (String markerId : MARKERS) {

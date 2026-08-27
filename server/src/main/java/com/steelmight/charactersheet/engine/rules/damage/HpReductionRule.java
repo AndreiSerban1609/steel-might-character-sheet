@@ -10,7 +10,7 @@ import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.engine.TriggerAction;
 import com.steelmight.charactersheet.engine.TriggerEvent;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,7 +33,7 @@ public class HpReductionRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         if (event.getValue() <= 0) return;
 
         int before = character.getHp().getCurrent();
@@ -51,7 +51,7 @@ public class HpReductionRule implements ResolutionRule<DamageEvent> {
     }
 
     /** @return 1 when a protection floors the hit, 0 otherwise. */
-    private int tryLethalProtections(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    private int tryLethalProtections(DamageEvent event, Combatant character, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(character);
 
         // death-resist — not consumed; only during the character's own turn (per its condition).

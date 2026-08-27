@@ -7,12 +7,12 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * tags: event tags (e.g. "dot", "ignoresArmor", "environmental"); defaults to ["directAttack"].
- * ignoreResistance: DM flag for ignore-resistance-vulnerability attackers (skips the res/vuln rule).
- * sourceId: who dealt it — matches charmed's harmedBySource removal (M2-B); optional.
- * duringOwnTurn: the damage lands during the target's own turn — death-resist floors HP at 1 (M2-D).
- * attackerMight: N2 (M4-C) — feeds the concentration-break WILL save (DC = 5 + might);
- * absent → the server emits a resolve-manually step instead of rolling.
+ * @param attackerMight       concentration-break DC = 5 + might (N2); null → the server prints
+ *                            a resolve-manually step instead of rolling
+ * @param attackerCombatantId who dealt the damage (Story 2.4): a monster's authored might fills
+ *                            {@code attackerMight} when it is not given, and the id becomes the
+ *                            event's {@code sourceId} (wounded-by / source-matched triggers)
+ *                            when none is given
  */
 public record DamageRequest(
         @Min(1) int value,
@@ -21,10 +21,17 @@ public record DamageRequest(
         boolean ignoreResistance,
         String sourceId,
         boolean duringOwnTurn,
-        Integer attackerMight
+        Integer attackerMight,
+        String attackerCombatantId
 ) {
     public DamageRequest(int value, DamageType damageType, List<String> tags,
                          boolean ignoreResistance, String sourceId, boolean duringOwnTurn) {
-        this(value, damageType, tags, ignoreResistance, sourceId, duringOwnTurn, null);
+        this(value, damageType, tags, ignoreResistance, sourceId, duringOwnTurn, null, null);
+    }
+
+    public DamageRequest(int value, DamageType damageType, List<String> tags,
+                         boolean ignoreResistance, String sourceId, boolean duringOwnTurn,
+                         Integer attackerMight) {
+        this(value, damageType, tags, ignoreResistance, sourceId, duringOwnTurn, attackerMight, null);
     }
 }

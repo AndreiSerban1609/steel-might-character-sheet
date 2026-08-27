@@ -10,7 +10,7 @@ import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
 import com.steelmight.charactersheet.model.ActiveEffect;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +36,7 @@ public class AbsorptionRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         if (event.getValue() <= 0) return;
         int threshold = statEngine.computeStackThreshold(character);
         var absorbs = ActiveMechanics.collect(character, gameData, threshold, MechanicType.DAMAGE_ABSORB);
@@ -81,7 +81,7 @@ public class AbsorptionRule implements ResolutionRule<DamageEvent> {
         }
     }
 
-    private void absorbFromPool(DamageEvent event, GameCharacter character, ActiveEffect effect,
+    private void absorbFromPool(DamageEvent event, Combatant character, ActiveEffect effect,
                                 String ruleName, boolean mirrorTempHp, ResolutionResult result) {
         int pool = effect.getValue() != null ? effect.getValue() : 0;
         if (pool <= 0) return;

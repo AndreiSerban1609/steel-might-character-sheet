@@ -8,7 +8,7 @@ import com.steelmight.charactersheet.engine.ResolutionResult;
 import com.steelmight.charactersheet.engine.ResolutionRule;
 import com.steelmight.charactersheet.engine.StatDerivationEngine;
 import com.steelmight.charactersheet.gamedata.GameDataProvider;
-import com.steelmight.charactersheet.model.GameCharacter;
+import com.steelmight.charactersheet.model.Combatant;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,7 +27,7 @@ public class DamageCapRule implements ResolutionRule<DamageEvent> {
     }
 
     @Override
-    public void apply(DamageEvent event, GameCharacter character, ResolutionResult result) {
+    public void apply(DamageEvent event, Combatant character, ResolutionResult result) {
         int threshold = statEngine.computeStackThreshold(character);
 
         for (var hit : ActiveMechanics.collect(character, gameData, threshold, MechanicType.DAMAGE_ABSORB)) {
