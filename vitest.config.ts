@@ -1,12 +1,13 @@
 import { defineConfig } from 'vitest/config';
 
-// Frontend unit tests (Story 6.1): store + domain logic. No DOM — the store is exercised
-// directly through zustand's getState/setState with the platform seams (HTTP, OBR
-// metadata) mocked per test file.
+// Frontend unit tests (Story 6.1). Store + domain tests run in node with the platform
+// seams (HTTP, OBR metadata) mocked per file; component smoke tests under
+// src/presentation run in jsdom with @testing-library/react.
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    environmentMatchGlobs: [['src/presentation/**', 'jsdom']],
+    include: ['src/**/*.test.{ts,tsx}'],
     clearMocks: true,
   },
 });
