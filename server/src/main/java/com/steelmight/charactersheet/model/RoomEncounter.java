@@ -21,6 +21,9 @@ public class RoomEncounter {
     private int roundNumber;
     private int currentIndex;
     private boolean turnStarted;
+    /** XP from creatures slain in this combat, split among the players when it ends (ruling 2026-08-27). */
+    @Column(name = "xp_pool")
+    private Integer xpPool;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "room_encounter_entries", joinColumns = @JoinColumn(name = "room_name"))
@@ -43,6 +46,8 @@ public class RoomEncounter {
     public void setCurrentIndex(int currentIndex) { this.currentIndex = currentIndex; }
 
     public boolean isTurnStarted() { return turnStarted; }
+    public int getXpPool() { return xpPool != null ? xpPool : 0; }
+    public void addXp(int amount) { this.xpPool = getXpPool() + amount; }
     public void setTurnStarted(boolean turnStarted) { this.turnStarted = turnStarted; }
 
     public List<EncounterEntry> getEntries() { return entries; }

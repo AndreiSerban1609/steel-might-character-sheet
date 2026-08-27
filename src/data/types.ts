@@ -447,3 +447,17 @@ export interface Mount {
   abilities: string[];
   stats: Partial<Record<AbilityScore, number>>;
 }
+
+// ── Experience ──
+
+/**
+ * One row of xp-table.json (Game Owner ruling 2026-08-27). `monsterXp`: what a slain creature
+ * of this might (level when might is unset) is worth to the party before the even split.
+ * `xpToNext`: LIFETIME XP at which a character of this level qualifies for the next one
+ * (cumulative — assumption pending the Game Owner); null on the last row (level cap).
+ */
+export interface XpRow {
+  level: number;
+  monsterXp: number;
+  xpToNext: number | null;
+}

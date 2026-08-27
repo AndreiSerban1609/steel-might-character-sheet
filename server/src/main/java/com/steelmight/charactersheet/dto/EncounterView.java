@@ -16,7 +16,9 @@ public record EncounterView(
         int round,
         String currentPlayerId,
         boolean turnStarted,
-        List<Entry> entries
+        List<Entry> entries,
+        /** XP banked from kills so far, split among the players when the combat ends (2026-08-27). */
+        int xpPool
 ) {
     /**
      * {@code playerId} is a combatant id. Monster entries carry their vitals inline
@@ -29,6 +31,6 @@ public record EncounterView(
                         CombatantType combatantType, Integer hp, Integer maxHp, List<String> prepared) {}
 
     public static EncounterView inactive() {
-        return new EncounterView(false, 0, null, false, List.of());
+        return new EncounterView(false, 0, null, false, List.of(), 0);
     }
 }

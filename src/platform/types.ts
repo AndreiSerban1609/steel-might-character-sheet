@@ -327,6 +327,8 @@ export interface EncounterView {
   currentPlayerId: string | null;
   turnStarted: boolean;
   entries: EncounterEntryView[];
+  /** XP banked from kills so far — split evenly among the players when the combat ends (2026-08-27). */
+  xpPool: number;
 }
 
 /** One pipeline rule's contribution to an action's resolution (server: engine.ResolutionStep). */
@@ -578,9 +580,36 @@ export interface CombatSnapshot {
   statOverrides: Record<string, number>;
   /** Reactions readied this turn (2026-08-27) — AP already paid; the index is what resolve-reaction takes. */
   preparedReactions: PreparedReactionView[];
+  /** Experience (2026-08-27): lifetime total; the total that unlocks the next level (null at the cap). */
+  xp: number;
+  xpToNext: number | null;
+  /** XP already covers the next level — the level-up flow may run (it is never automatic). */
+  levelAvailable: boolean;
 }
 
 export interface PreparedReactionView {
   note: string;
   apCost: number;
+}
+
+/** What a finished combat paid out (server: dto.XpAward) — the banked pool split evenly among the players. */
+export interface XpAwardView {
+  total: number;
+  recipients: number;
+  perPlayer: number;
+  awarded: {
+    playerId: string;
+    name: string;
+    gained: number;
+    xp: number;
+    level: number;
+    xpToNext: number | null;
+    levelAvailable: boolean;
+  }[];
+}
+
+/** POST /rooms/{room}/encounter/end */
+export interface EndEncounterResponse {
+  encounter: EncounterView;
+  xpAward: XpAwardView;
 }

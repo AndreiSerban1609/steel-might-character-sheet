@@ -3,6 +3,7 @@ package com.steelmight.charactersheet.controller;
 import com.steelmight.charactersheet.dto.AuditView;
 import com.steelmight.charactersheet.dto.DeckTemplate;
 import com.steelmight.charactersheet.dto.EncounterView;
+import com.steelmight.charactersheet.dto.EndEncounterResponse;
 import com.steelmight.charactersheet.dto.SetInitiativeRequest;
 import com.steelmight.charactersheet.dto.StartEncounterRequest;
 import com.steelmight.charactersheet.model.CombatantType;
@@ -80,9 +81,11 @@ public class RoomController {
         return encounterService.get(room);
     }
 
+    /** Ends the combat and pays out its XP pool, split evenly among the players in the order (2026-08-27). */
+    @Transactional
     @PostMapping("/{room}/encounter/end")
-    public EncounterView endEncounter(@PathVariable String room) {
-        return encounterService.end(room);
+    public EndEncounterResponse endEncounter(@PathVariable String room) {
+        return encounterService.endAndAward(room);
     }
 
     /** DM override: skip the current turn (AFK player) and advance. */

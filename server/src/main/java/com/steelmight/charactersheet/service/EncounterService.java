@@ -1,6 +1,8 @@
 package com.steelmight.charactersheet.service;
 
 import com.steelmight.charactersheet.dto.EncounterView;
+import com.steelmight.charactersheet.dto.EndEncounterResponse;
+import com.steelmight.charactersheet.dto.XpAward;
 import com.steelmight.charactersheet.dto.SetInitiativeRequest;
 import com.steelmight.charactersheet.dto.StartEncounterRequest;
 import com.steelmight.charactersheet.engine.RandomSource;
@@ -45,7 +47,8 @@ public class EncounterService {
 
     public EncounterService(RoomEncounterRepository repo, CharacterRepository characters,
                             MonsterInstanceRepository monsters, CombatantLookup lookup,
-                            RandomSource random) {
+                            RandomSource random, XpService xp) {
+        this.xp = xp;
         this.repo = repo;
         this.characters = characters;
         this.monsters = monsters;
@@ -105,6 +108,15 @@ public class EncounterService {
     public EncounterView end(String room) {
         repo.deleteById(room);
         return EncounterView.inactive();
+    }
+
+    private final XpService xp;
+
+    /** End the combat AND pay out its XP pool to the players in the order (ruling 2026-08-27). */
+    public EndEncounterResponse endAndAward(String room) {
+        var award = repo.findById(room).map(xp::award).orElse(XpAward.none());
+        repo.deleteById(room);
+        return new EndEncounterResponse(EncounterView.inactive(), award);
     }
 
     /** DM override: skip the current turn (started or not) and advance. */
@@ -343,6 +355,6 @@ public class EncounterService {
         var current = enc.current();
         return new EncounterView(true, enc.getRoundNumber(),
                 current != null ? current.getCombatantId() : null,
-                enc.isTurnStarted(), entries);
+                enc.isTurnStarted(), entries, enc.getXpPool());
     }
 }

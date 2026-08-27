@@ -23,7 +23,10 @@ public class CombatantLookup {
     private final CharacterRepository characters;
     private final MonsterInstanceRepository monsters;
 
-    public CombatantLookup(CharacterRepository characters, MonsterInstanceRepository monsters) {
+    private final XpService xp;
+
+    public CombatantLookup(CharacterRepository characters, MonsterInstanceRepository monsters, XpService xp) {
+        this.xp = xp;
         this.characters = characters;
         this.monsters = monsters;
     }
@@ -54,7 +57,10 @@ public class CombatantLookup {
 
     public void save(Combatant combatant) {
         if (combatant instanceof GameCharacter c) characters.save(c);
-        else if (combatant instanceof MonsterInstance m) monsters.save(m);
+        else if (combatant instanceof MonsterInstance m) {
+            xp.creditKill(m); // a kill from any path (targeted attack, DoT tick) banks its XP once
+            monsters.save(m);
+        }
         else throw new IllegalArgumentException("unknown combatant kind: " + combatant.getClass());
     }
 }

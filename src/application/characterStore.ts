@@ -25,6 +25,7 @@ import type {
   MonsterView,
   CombatantView,
 } from '../platform/types';
+import type { XpAwardView } from '../platform/types';
 import { isMonsterId } from '../platform/types';
 import {
   applyEffect,
@@ -82,6 +83,7 @@ import {
   spendResource,
   prepareReaction,
   resolveReaction,
+  gainXp,
   turnEnd,
   turnStart,
   unequipItem,
@@ -240,6 +242,11 @@ export interface CharacterState {
   /** Ready a custom reaction (2026-08-27), paying its AP now; refreshes the encounter so the ⚑ chip mirrors. */
   doPrepareReaction: (note: string, apCost: number) => Promise<void>;
   doResolveReaction: (index: number, used: boolean) => Promise<void>;
+  /** XP earned outside combat (2026-08-27); negative = GM correction. */
+  doGainXp: (amount: number, reason?: string) => Promise<void>;
+  /** The payout of the combat the GM just ended — shown until dismissed (null = nothing to show). */
+  lastXpAward: XpAwardView | null;
+  dismissXpAward: () => void;
   loadAbilities: () => Promise<void>;
   saveAbilities: (abilityIds: string[]) => Promise<void>;
   saveCustomAbilities: (abilities: CustomAbilityView[]) => Promise<void>;
@@ -291,6 +298,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   acting: false,
   lastResolution: null,
   lastResolutionTarget: null,
+  lastXpAward: null,
   encounter: null,
   abilities: null,
   monsters: [],
@@ -830,6 +838,9 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     await runCombatAction(set, get, (id) => prepareReaction(id, note, apCost));
     if (!get().error && get().encounter?.active) await get().loadEncounter();
   },
+  doGainXp: (amount, reason) =>
+    runCombatAction(set, get, (id) => gainXp(id, amount, reason)),
+  dismissXpAward: () => set({ lastXpAward: null }),
   doResolveReaction: async (index, used) => {
     await runCombatAction(set, get, (id) => resolveReaction(id, index, used));
     if (!get().error && get().encounter?.active) await get().loadEncounter();
@@ -945,7 +956,17 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     if (!room.trim()) return;
     set({ acting: true, error: null });
     try {
-      set({ encounter: await apiEndEncounter(room), acting: false });
+      const ended = await apiEndEncounter(room);
+      // The payout (2026-08-27) is shown until dismissed; nothing to show for an empty pool.
+      set({ encounter: ended.encounter, lastXpAward: ended.xpAward.total > 0 ? ended.xpAward : null, acting: false });
+      // The viewed sheet may have just gained XP — refresh it (best effort).
+      if (get().selectedPlayerId && ended.xpAward.total > 0) {
+        try {
+          set({ snapshot: await fetchCombatSnapshot(get().selectedPlayerId!) });
+        } catch {
+          /* keep the current snapshot */
+        }
+      }
     } catch (e) {
       set({ error: msg(e), acting: false });
     }

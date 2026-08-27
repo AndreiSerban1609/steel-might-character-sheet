@@ -50,6 +50,8 @@ public class MonsterInstance implements Combatant {
     private Integer downedRoundsRemaining;
     private Boolean pendingDeathFight;
     private Integer downsThisCombat;
+    @Column(name = "xp_credited")
+    private Boolean xpCredited;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "monster_instance_saving_throw_profs", joinColumns = @JoinColumn(name = "monster_id"))
@@ -184,6 +186,10 @@ public class MonsterInstance implements Combatant {
 
     @Override
     public void setDownsThisCombat(int downs) { this.downsThisCombat = downs; }
+
+    /** Kill credited to the encounter's XP pool (ruling 2026-08-27) — once, whichever path killed it. */
+    public boolean isXpCredited() { return xpCredited != null && xpCredited; }
+    public void setXpCredited(boolean credited) { this.xpCredited = credited; }
 
     @Override
     public boolean isPendingDeathFight() { return Boolean.TRUE.equals(pendingDeathFight); }

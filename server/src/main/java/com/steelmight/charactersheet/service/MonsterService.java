@@ -63,7 +63,9 @@ public class MonsterService {
                           GameDataProvider gameData,
                           EncounterService encounters,
                           TurnFlowService turnFlow,
-                          AuditService audit) {
+                          AuditService audit,
+                          XpService xp) {
+        this.xp = xp;
         this.templates = templates;
         this.instances = instances;
         this.characters = characters;
@@ -291,7 +293,7 @@ public class MonsterService {
         var m = requireInstance(room, id);
         encounters.validateAndMarkTurnStart(m);
         var result = turnTicks.turnStart(m, false);
-        instances.save(m);
+        persist(m);
         return new ActionResponse<>(result, toView(m));
     }
 
@@ -304,13 +306,21 @@ public class MonsterService {
         var m = requireInstance(room, id);
         encounters.validateTurnEnd(m);
         var result = turnTicks.turnEnd(m);
-        instances.save(m);
+        persist(m);
         turnFlow.autoStartNext(room, encounters.completeTurn(m), result);
         return new ActionResponse<>(result, toView(m));
     }
 
-    private ActionResponse<MonsterView> finish(MonsterInstance m, String action, CombatActionService.Outcome out) {
+    private final XpService xp;
+
+    /** Every monster write goes through here so a kill banks its XP exactly once (ruling 2026-08-27). */
+    private void persist(MonsterInstance m) {
+        xp.creditKill(m);
         instances.save(m);
+    }
+
+    private ActionResponse<MonsterView> finish(MonsterInstance m, String action, CombatActionService.Outcome out) {
+        persist(m);
         audit.log(m.getRoomName(), m.getCombatantId(), m.getDisplayName(), action, out.auditSummary());
         return new ActionResponse<>(out.resolution(), toView(m));
     }

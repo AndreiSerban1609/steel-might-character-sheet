@@ -104,8 +104,19 @@ export function LevelUpSection() {
   if (!open) {
     return (
       <div className="levelup">
-        <button className="btn btn--gold" onClick={() => setOpen(true)}>
+        <button
+          className={snapshot.levelAvailable ? 'btn btn--gold' : 'btn btn--ghost'}
+          title={
+            snapshot.levelAvailable
+              ? 'Your XP covers this level'
+              : snapshot.xpToNext != null
+                ? `${snapshot.xpToNext - snapshot.xp} XP short — the GM can still level you by hand`
+                : 'Level cap reached'
+          }
+          onClick={() => setOpen(true)}
+        >
           Level up → {newLevel}
+          {snapshot.levelAvailable ? ' ✦ unlocked' : ''}
         </button>
         {lastResolution?.payload?.newLevel != null && (
           <ResolutionLog resolution={lastResolution} onClose={clearResolution} />

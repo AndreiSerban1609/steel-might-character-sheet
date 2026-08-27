@@ -304,6 +304,24 @@ if (spellcasting) {
   }
 }
 
+// ── 11b. XP table (ruling 2026-08-27) ──
+
+const xpTable: any[] | null = loadJson('xp-table.json');
+if (xpTable) {
+  console.log(`\n── XP table: ${xpTable.length} rows ──`);
+  checkArrayLength(xpTable, 20, 'xp-table.json');
+  xpTable.forEach((row, i) => {
+    if (row.level !== i + 1) error(`xp-table.json row ${i}: level ${row.level}, expected ${i + 1}`);
+    if (!(row.monsterXp > 0)) error(`xp-table.json level ${row.level}: monsterXp must be positive`);
+    if (i > 0 && row.monsterXp <= xpTable[i - 1].monsterXp) error(`xp-table.json level ${row.level}: monsterXp must increase`);
+    const last = i === xpTable.length - 1;
+    if (last ? row.xpToNext !== null : !(row.xpToNext > 0)) {
+      error(`xp-table.json level ${row.level}: xpToNext must be ${last ? 'null on the cap row' : 'positive'}`);
+    }
+    if (i > 0 && !last && row.xpToNext <= xpTable[i - 1].xpToNext) error(`xp-table.json level ${row.level}: xpToNext must increase`);
+  });
+}
+
 // ── 12. Consumables ──
 
 if (consumables) {

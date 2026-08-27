@@ -25,6 +25,7 @@ import type {
   MonsterTemplateView,
   MonsterView,
 } from './types';
+import type { EndEncounterResponse } from './types';
 
 // API base resolution, in priority order:
 //   1. ?api=<url> query param (persisted to localStorage) — handy in the OBR popover URL
@@ -412,6 +413,11 @@ export function resolveReaction(playerId: string, index: number, used: boolean):
   return combatAction(playerId, 'resolve-reaction', { index, used });
 }
 
+/** XP earned outside combat — missions, discovery, items (2026-08-27). Negative = GM correction. */
+export function gainXp(playerId: string, amount: number, reason?: string): Promise<CombatAction> {
+  return combatAction(playerId, 'gain-xp', reason ? { amount, reason } : { amount });
+}
+
 export function turnStart(playerId: string): Promise<CombatAction> {
   return combatAction(playerId, 'turn-start', {});
 }
@@ -637,8 +643,9 @@ export function startEncounter(
   });
 }
 
-export function endEncounter(room: string): Promise<EncounterView> {
-  return sendJson<EncounterView>('POST', `/rooms/${encodeURIComponent(room)}/encounter/end`, {});
+/** Ends the combat and returns the XP payout it triggered (2026-08-27). */
+export function endEncounter(room: string): Promise<EndEncounterResponse> {
+  return sendJson<EndEncounterResponse>('POST', `/rooms/${encodeURIComponent(room)}/encounter/end`, {});
 }
 
 /** DM override: skip the current turn (AFK player). */

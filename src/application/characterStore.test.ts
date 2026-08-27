@@ -94,7 +94,7 @@ function encounter(current: string, active = true): EncounterView {
     active,
     round: 1,
     currentPlayerId: current,
-    turnStarted: true,
+    turnStarted: true, xpPool: 0,
     entries: [
       { playerId: 'p1', name: 'Alpha', initiative: 15, status: 'ALIVE', surprised: false, combatantType: 'PLAYER', hp: null, maxHp: null, prepared: [] },
       { playerId: 'monster:1', name: 'Goblin', initiative: 12, status: 'ALIVE', surprised: false, combatantType: 'MONSTER', hp: 30, maxHp: 40, prepared: [] },

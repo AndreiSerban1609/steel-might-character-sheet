@@ -34,7 +34,7 @@ beforeEach(() => {
     monsters: [goblin(1, 'Goblin', 20), goblin(2, 'Goblin 2', 40, 'DEAD')],
     monsterTemplates: [],
     encounter: {
-      active: true, round: 1, currentPlayerId: 'monster:1', turnStarted: true,
+      active: true, round: 1, currentPlayerId: 'monster:1', turnStarted: true, xpPool: 0,
       entries: [{ playerId: 'monster:1', name: 'Goblin', initiative: 12, status: 'ALIVE', surprised: false, combatantType: 'MONSTER', hp: 20, maxHp: 40, prepared: [] }],
     },
     lastResolution: null,

@@ -75,6 +75,11 @@ export function StatsPanel() {
   const saveVitals = useCharacterStore((s) => s.saveVitals);
   const saveIdentity = useCharacterStore((s) => s.saveIdentity);
   const saveStatOverrides = useCharacterStore((s) => s.saveStatOverrides);
+  const doGainXp = useCharacterStore((s) => s.doGainXp);
+  const acting = useCharacterStore((s) => s.acting);
+  // XP earned outside combat (2026-08-27): missions, discovery, items — typed in here.
+  const [xpAmount, setXpAmount] = useState('100');
+  const [xpReason, setXpReason] = useState('');
 
   const [draft, setDraft] = useState<SheetDraft | null>(null);
 
@@ -241,7 +246,53 @@ export function StatsPanel() {
         <Vital label="MA" view={`${snapshot.ma}`} pinned={pinned('ma')} />
         <Vital label="Speed" view={`${snapshot.speed} ft`} pinned={pinned('speed')} />
         {snapshot.deathStacks > 0 && <Vital label="Death Stacks" view={`☠ ${snapshot.deathStacks}`} />}
+        <Vital
+          label="XP"
+          view={snapshot.xpToNext != null ? `${snapshot.xp} / ${snapshot.xpToNext}` : `${snapshot.xp} (max level)`}
+          accent={snapshot.levelAvailable}
+          title={
+            snapshot.levelAvailable
+              ? `Level ${snapshot.level + 1} unlocked — run the level-up below`
+              : snapshot.xpToNext != null
+                ? `${snapshot.xpToNext - snapshot.xp} XP to level ${snapshot.level + 1}`
+                : 'Level cap reached'
+          }
+        />
       </div>
+
+      {!editing && (
+        <div className="combat-form xp-add">
+          <span className="combat-form-label">Add XP</span>
+          <input
+            className="combat-num"
+            type="number"
+            title="XP earned outside combat — missions, discovery, items. Negative = correction."
+            value={xpAmount}
+            onChange={(e) => setXpAmount(e.target.value)}
+          />
+          <input
+            className="combat-text"
+            type="text"
+            maxLength={120}
+            placeholder="for what? (optional — e.g. found the lost shrine)"
+            value={xpReason}
+            onChange={(e) => setXpReason(e.target.value)}
+          />
+          <button
+            className="btn btn--ghost"
+            title="Combat XP arrives on its own when the GM ends a fight; this is for everything else"
+            onClick={() => {
+              const v = Number.parseInt(xpAmount, 10);
+              if (Number.isNaN(v) || v === 0) return;
+              void doGainXp(v, xpReason.trim() || undefined);
+              setXpReason('');
+            }}
+            disabled={acting}
+          >
+            Add
+          </button>
+        </div>
+      )}
 
       {editing && draft && (
         <>

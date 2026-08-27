@@ -53,7 +53,12 @@ public record CombatSnapshot(
         Map<String, Integer> statOverrides,
         // Reactions readied this turn (2026-08-27) — AP already paid; the list index is
         // what POST /actions/resolve-reaction takes.
-        List<PreparedReactionView> preparedReactions
+        List<PreparedReactionView> preparedReactions,
+        // Experience (2026-08-27): lifetime total, the total that unlocks the next level
+        // (null at the cap), and whether the level-up flow may be run now.
+        int xp,
+        Integer xpToNext,
+        boolean levelAvailable
 ) {
     public record PreparedReactionView(String note, int apCost) {}
     public record HpView(int current, int max, int temp) {}

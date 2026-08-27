@@ -52,7 +52,9 @@ public class CharacterService {
                             AuditService audit,
                             CombatActionService combatActions,
                             TurnFlowService turnFlow,
-                            CombatantLookup combatants) {
+                            CombatantLookup combatants,
+                            XpRules xpRules) {
+        this.xpRules = xpRules;
         this.combatActions = combatActions;
         this.turnFlow = turnFlow;
         this.combatants = combatants;
@@ -601,6 +603,35 @@ public class CharacterService {
 
         repo.save(c);
         audit.log(c, "spend-resource", "Spent " + req.amount() + " " + req.resource() + noteSuffix);
+        return new ActionResponse<>(result, buildCombatSnapshot(c));
+    }
+
+    private final XpRules xpRules;
+
+    /**
+     * XP earned outside combat — missions, discovery, items (ruling 2026-08-27). Combat XP
+     * arrives through the encounter payout ({@link XpService#award}); this is the manual
+     * input beside it. Negative = GM correction; the total floors at 0. Never levels anyone:
+     * the snapshot flags {@code levelAvailable} and the level-up flow makes the choices.
+     */
+    public ActionResponse<CombatSnapshot> gainXp(String playerId, GainXpRequest req) {
+        var c = getCharacter(playerId);
+        if (req.amount() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "amount must not be 0");
+        }
+        var result = new ResolutionResult();
+        int before = c.getXp();
+        c.setXp(before + req.amount());
+        String reason = req.reason() != null && !req.reason().isBlank() ? " — " + req.reason().trim() : "";
+        result.addStep("xp", (req.amount() > 0 ? "Gained " : "Lost ") + Math.abs(req.amount()) + " XP" + reason,
+                before, c.getXp());
+        int unlocked = xpRules.levelFor(c.getXp());
+        if (unlocked > c.getLevel()) {
+            result.addStep("level-available", "Level " + (c.getLevel() + 1) + " available — use the level-up flow",
+                    c.getLevel(), unlocked);
+        }
+        repo.save(c);
+        audit.log(c, "xp", (req.amount() > 0 ? "+" : "") + req.amount() + " XP" + reason + " (total " + c.getXp() + ")");
         return new ActionResponse<>(result, buildCombatSnapshot(c));
     }
 
@@ -2749,7 +2780,10 @@ public class CharacterService {
                 Map.copyOf(c.getStatOverrides()),
                 c.getPreparedReactions().stream()
                         .map(r -> new CombatSnapshot.PreparedReactionView(r.getNote(), r.getApCost()))
-                        .toList()
+                        .toList(),
+                c.getXp(),
+                xpRules.xpToNext(c.getLevel()),
+                xpRules.levelFor(c.getXp()) > c.getLevel()
         );
     }
 

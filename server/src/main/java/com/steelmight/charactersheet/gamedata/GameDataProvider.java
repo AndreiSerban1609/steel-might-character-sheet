@@ -43,6 +43,8 @@ public class GameDataProvider {
     private JsonNode races;
     private JsonNode characterCreation;
     private JsonNode spellcasting;
+    /** xp-table.json (ruling 2026-08-27) — parsed by engine.XpRules. */
+    private JsonNode xpTable;
     private JsonNode pricing;
     private JsonNode skills;
     private JsonNode mounts;
@@ -99,6 +101,7 @@ public class GameDataProvider {
         races = loadFile("races.json");
         characterCreation = loadFile("character-creation.json");
         spellcasting = loadFile("spellcasting.json");
+        xpTable = loadFile("xp-table.json");
         pricing = loadFile("pricing.json");
         skills = loadFile("skills.json");
         mounts = loadFile("mounts.json");
@@ -376,6 +379,7 @@ public class GameDataProvider {
     public JsonNode getRaces() { return races; }
     public JsonNode getCharacterCreation() { return characterCreation; }
     public JsonNode getSpellcasting() { return spellcasting; }
+    public JsonNode getXpTable() { return xpTable; }
     public JsonNode getPricing() { return pricing; }
     public JsonNode getSkills() { return skills; }
     public JsonNode getMounts() { return mounts; }

@@ -20,6 +20,27 @@ export function EncounterTracker() {
   const overrideInitiative = useCharacterStore((s) => s.overrideInitiative);
   const monsters = useCharacterStore((s) => s.monsters);
   const endMonsterTurn = useCharacterStore((s) => s.endMonsterTurn);
+  const lastXpAward = useCharacterStore((s) => s.lastXpAward);
+  const dismissXpAward = useCharacterStore((s) => s.dismissXpAward);
+
+  // The payout of the combat that just ended (2026-08-27) — every client that ended it sees it.
+  const awardBanner = lastXpAward && (
+    <div className="xp-award" role="status">
+      <span className="xp-award-title">
+        Combat over — {lastXpAward.total} XP split {lastXpAward.recipients} ways: {lastXpAward.perPlayer} each
+      </span>
+      {lastXpAward.awarded.map((a) => (
+        <span key={a.playerId}>
+          {a.name} {a.xp}
+          {a.xpToNext != null ? `/${a.xpToNext}` : ''}
+          {a.levelAvailable && <span className="xp-award-level"> ✦ level {a.level + 1} unlocked</span>}
+        </span>
+      ))}
+      <button className="btn btn--ghost" onClick={dismissXpAward}>
+        OK
+      </button>
+    </div>
+  );
 
   const isGm = role === 'gm';
   const [editing, setEditing] = useState<string | null>(null);
@@ -34,7 +55,7 @@ export function EncounterTracker() {
   }, [loadEncounter, obrMode]);
 
   if (!encounter?.active) {
-    if (!isGm) return null;
+    if (!isGm) return awardBanner || null;
 
     function toggleSurprised(playerId: string) {
       setSurprised((prev) => {
@@ -47,6 +68,7 @@ export function EncounterTracker() {
 
     return (
       <div className="encounter encounter--idle">
+        {awardBanner}
         <div className="encounter-idle-row">
           <span className="encounter-label">No encounter running</span>
           <button
@@ -108,6 +130,11 @@ export function EncounterTracker() {
         <span className="encounter-round">
           {encounter.round === 0 ? 'Surprise round' : `Round ${encounter.round}`}
         </span>
+        {encounter.xpPool > 0 && (
+          <span className="encounter-xp" title="XP banked from kills — split evenly among the players when the combat ends">
+            {encounter.xpPool} XP banked
+          </span>
+        )}
         <span className="encounter-turn">
           {current ? (
             <>

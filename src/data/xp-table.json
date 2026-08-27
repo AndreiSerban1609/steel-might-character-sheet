@@ -1,0 +1,22 @@
+[
+  { "level": 1, "monsterXp": 100, "xpToNext": 200 },
+  { "level": 2, "monsterXp": 250, "xpToNext": 700 },
+  { "level": 3, "monsterXp": 400, "xpToNext": 1400 },
+  { "level": 4, "monsterXp": 550, "xpToNext": 2500 },
+  { "level": 5, "monsterXp": 750, "xpToNext": 4800 },
+  { "level": 6, "monsterXp": 1000, "xpToNext": 8000 },
+  { "level": 7, "monsterXp": 1300, "xpToNext": 12000 },
+  { "level": 8, "monsterXp": 1650, "xpToNext": 17000 },
+  { "level": 9, "monsterXp": 2000, "xpToNext": 23000 },
+  { "level": 10, "monsterXp": 2450, "xpToNext": 30000 },
+  { "level": 11, "monsterXp": 3000, "xpToNext": 40000 },
+  { "level": 12, "monsterXp": 3600, "xpToNext": 52000 },
+  { "level": 13, "monsterXp": 4300, "xpToNext": 68000 },
+  { "level": 14, "monsterXp": 5100, "xpToNext": 88000 },
+  { "level": 15, "monsterXp": 6000, "xpToNext": 113000 },
+  { "level": 16, "monsterXp": 7000, "xpToNext": 144000 },
+  { "level": 17, "monsterXp": 8200, "xpToNext": 183000 },
+  { "level": 18, "monsterXp": 9600, "xpToNext": 230000 },
+  { "level": 19, "monsterXp": 11000, "xpToNext": 290000 },
+  { "level": 20, "monsterXp": 13000, "xpToNext": null }
+]

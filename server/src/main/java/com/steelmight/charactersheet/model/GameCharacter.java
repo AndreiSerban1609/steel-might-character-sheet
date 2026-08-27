@@ -67,6 +67,10 @@ public class GameCharacter implements Combatant {
     private Boolean pendingDeathFight;
     private Integer downsThisCombat;
 
+    /** Lifetime experience (ruling 2026-08-27) — cumulative; wrapper so old rows read as 0. */
+    @Column(name = "xp")
+    private Integer xp;
+
     // --- Bio / Narrative ---
 
     @Column(length = 4000)
@@ -343,6 +347,8 @@ public class GameCharacter implements Combatant {
 
     public int getDownsThisCombat() { return downsThisCombat != null ? downsThisCombat : 0; }
     public void setDownsThisCombat(int downsThisCombat) { this.downsThisCombat = downsThisCombat; }
+    public int getXp() { return xp != null ? xp : 0; }
+    public void setXp(int xp) { this.xp = Math.max(0, xp); }
 
     public List<AbilityScore> getSavingThrowProficiencies() { return savingThrowProficiencies; }
     public List<ActiveEffect> getActiveEffects() { return activeEffects; }

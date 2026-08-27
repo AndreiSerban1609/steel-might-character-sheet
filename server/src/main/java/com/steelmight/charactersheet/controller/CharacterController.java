@@ -206,6 +206,13 @@ public class CharacterController {
         return service.resolveReaction(playerId, req);
     }
 
+    /** XP earned outside combat (missions, discovery, items) — negative = GM correction (2026-08-27). */
+    @PostMapping("/{playerId}/actions/gain-xp")
+    public ActionResponse<CombatSnapshot> gainXp(@PathVariable String playerId,
+                                                  @Valid @RequestBody GainXpRequest req) {
+        return service.gainXp(playerId, req);
+    }
+
     @PostMapping("/{playerId}/actions/gain-resource")
     public ActionResponse<CombatSnapshot> gainResource(@PathVariable String playerId,
                                                         @Valid @RequestBody GainResourceRequest req) {
